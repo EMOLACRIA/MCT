@@ -23,6 +23,8 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
 2. **PT-002 — Spotify ve adblock:** boş ekranın güncel pakette giderildiğini
    gerçek uygulamada doğrula; desteklenmeyen özel başlatıcı varsa uyumlandır.
    Adblock'un korunması kurulum çıktısı kadar gerçek başlatma ile de kontrol edilir.
+   17 Ekim: Spotify 1.3.4 / CLI 2.45.3 belgelenmiş Linux aralığı dışında.
+   2.2.5 kurulum korumaları uygulandı; çalışan 1.3.4 desteği veya UI kabulü yok.
 3. **PT-003 — Dolphin okunabilirliği:** normal/seçili yazılar beyaz; menü,
    pasif pencere, araç çubuğu ve 16/22 px ikonlar gerçek Dolphin'de okunaklı olmalı.
 4. **PT-004 — OSD ve tray:** fonksiyon tuşları, slider, sessize alma, şarj

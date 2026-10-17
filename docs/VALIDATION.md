@@ -29,12 +29,22 @@ işlemleri kontrollü örneklerle değiştirilir; gerçek süreçlere sinyal gö
 Profilin başka kullanıcı altında/başka dizinde bulunması ve ilgisiz shell/IPC
 istemcilerinin korunması bu kapsamda kontrol edilir.
 
-## Eski checks kaynakları
+## PT-002 için bağımsız regresyon kontrolü
+
+`python3 checks/test_spotify_install.py` — 10 stdlib testi. Sürüm/preflight,
+eksik tema çıktısı, fresh/update rollback, adblock ortamı ve eylemleri, ilk yedek,
+restore, gerçek stdout/stderr birleştirmesi ve salt okunur tanılama kontrol edilir.
+`python3 checks/test_app_installers.py` de bağımsız checkout'ta çalışır.
+2026-10-17: iki komut geçti. Spotify yerine geçici dosyalar/kontrollü CLI kullanılır;
+hesap, gerçek Spotify/Spicetify veya ağ erişimi kullanılmaz.
+
+## Diğer eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında
 `build/desktop-style`, eski 1.4 fixture'ı, `tmp/` altında upstream kaynak/binary ve
 özel PySide6 kurulumunu arar. Bunlar temiz checkout içinde mevcut değildir.
-Bu görevde bağımsız test paketine dönüştürülmedi ve CI varmış gibi sunulmadı.
+Yukarıda belirtilenler dışındaki kontroller bağımsız test paketine dönüştürülmedi;
+CI varmış gibi sunulmadı.
 QA-001 bu borcu M1/M4 için izler. Gereksiz test dosyası eklemek yerine ilgili
 kontroller bağımsız fixture/dependency düzenine taşınmalıdır.
 

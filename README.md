@@ -5,7 +5,7 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.2.4 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
+**Durum:** 2.2.5 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
 Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanmadı.
 
 ## Projeyi okumaya buradan başla
@@ -24,6 +24,22 @@ Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanm
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.2.5 — Spotify kurulumunu doğrulama
+
+17 Ekim tanılamasında sistem Spotify paketi `1:1.3.4.258-2`, Spicetify CLI
+`2.45.3-1`. Bu CLI'nin belgelenmiş Linux desteği `1.2.14–1.2.96` olduğu için
+bu birleşimde yeni tema uygulaması dosyalar değiştirilmeden durur. Bu koruma,
+Spotify 1.3.4 için çalışan bir tema yaması değildir; PT-002 açık kalır.
+
+Kurucu artık stdout/stderr günlüğünü birlikte saklar ve CSS, palet, HTML
+bağlantıları ile tema metadata'sını kontrol eder. Eksik çıktı önceki kopyaya
+geri döner. Tanılama özel kopyanın kayıtlı sürümlerini ayrıca gösterir; eski
+kurulumun sürümünü sistem paketinin sürümünden tahmin etmez.
+
+Kontroller: `python3 checks/test_spotify_install.py` (10 test) ve
+`python3 checks/test_app_installers.py` (uygulama/restore örnekleri).
+Ayrıntı ve mevcut kurulumu geri alma: [uygulama eklentileri](apps/README.md).
 
 ## 2.2.4 — Eski shell profillerini tanıma
 

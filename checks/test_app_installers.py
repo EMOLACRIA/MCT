@@ -1,7 +1,8 @@
 import importlib.util,json,tempfile,shutil
 from pathlib import Path
 from unittest.mock import patch
-p=Path('build/desktop-style/apps/manage.py').resolve();spec=importlib.util.spec_from_file_location('apps',p);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+from test_spotify_install import SUPPORTED,theme_output
+p=Path(__file__).resolve().parents[1]/'apps/manage.py';spec=importlib.util.spec_from_file_location('apps',p);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 with tempfile.TemporaryDirectory() as td:
  root=Path(td);m.HOME=root;m.CONFIG=root/'config';m.DATA=root/'data';m.STATE=root/'state';m.SPOTIFY=m.DATA/'desktop-style-apps/spotify'
  for d in [m.CONFIG,m.DATA,m.STATE]:d.mkdir()
@@ -25,13 +26,10 @@ with tempfile.TemporaryDirectory() as td:
   config=(m.SPOTIFY/'config/spicetify/config-xpui.ini').read_text()
   assert 'inject_theme_js = 0' in config and str(m.SPOTIFY/'client') in config
   (m.SPOTIFY/'client/Apps/xpui.spa').write_text('themed fixture')
-  xpui=m.SPOTIFY/'client/Apps/xpui';xpui.mkdir()
-  (xpui/'index.html').write_text('<body><script defer="defer" src="/xpui-snapshot.js"></script></body>')
-  (xpui/'xpui-snapshot.js').write_text('globalThis.loaded=__webpack_modules__.value;')
-  (xpui/'xpui-modules.js').write_text('var __webpack_modules__={value:42};')
+  theme_output(m.SPOTIFY/'client')
   return 'Spicetify fixture success'
  def which(name):return '/fixture/spicetify' if name=='spicetify' else None
- with patch.object(m,'closed'),patch.object(m,'spotify_source',return_value=source),patch.object(m.shutil,'which',side_effect=which),patch.object(m,'run',side_effect=fake_run):
+ with patch.object(m,'closed'),patch.object(m,'spotify_source',return_value=source),patch.object(m,'spotify_versions',return_value=SUPPORTED),patch.object(m.shutil,'which',side_effect=which),patch.object(m,'run',side_effect=fake_run):
   m.spotify(True);assert launcher.read_bytes()==baseline and not m.SPOTIFY.exists()
   m.spotify();assert 'launch.sh' in launcher.read_text() and (source/'Apps/xpui.spa').read_text()=='archive-fixture'
   first=json.loads((m.STATE/'spotify.json').read_text())['backup'];m.spotify();assert json.loads((m.STATE/'spotify.json').read_text())['backup']==first

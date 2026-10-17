@@ -1,6 +1,6 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.2.4 geliştirme sürümü**.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.2.5 geliştirme sürümü**.
 Aşama: **M0 tamamlandı; M1 — mevcut kurulumu sağlamlaştırma**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
@@ -17,11 +17,11 @@ Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yok
 | Kimlik | Durum | Kanıt / sonraki adım |
 |---|---|---|
 | PT-001 | Doğrulandı | 2026-10-17: kullanıcı PR #1 dalını uygulayıp launcher/Super+E tutarlılığını “Aynen çalışıyor” diyerek onayladı. Kod: `62cfe809d0274fd2ec99a8aca4e37f117b20fe9f`; 12 regresyon kontrolü de geçti. |
-| PT-002 | Canlı doğrulama bekliyor | 16 Ekim: Spotify boş ekran, adblock girişinde tema yok. 2.2.1 bootstrap/başlatıcı düzeltmeleri kaynakta; son kullanıcı sonucu henüz gelmedi. |
+| PT-002 | Açık / sürüm uyumu engeli | 17 Ekim: sistem Spotify 1:1.3.4.258-2, spotify-adblock 1:1.1.1-1, Spicetify CLI 2.45.3-1. Kullanıcı girdileri temalı sarmalayıcıya yönleniyor ve LD_PRELOAD korunmuş. CLI'nin belgelenmiş Linux üst sınırı 1.2.96. Özel kopyanın sürümü ve güncel UI sonucu bilinmiyor. 2.2.5 bilinen uyumsuz uygulamayı durdurur ve tema çıktılarını doğrular; 1.3.4 desteği eklemez. |
 | PT-003 | Canlı doğrulama bekliyor | Dolphin yazıları/ikonları zor okunuyordu. 2.2.2 beyaz normal/seçili metin ayarı kaynakta; bütün başlatma yolları kontrol edilmedi. |
 | PT-004 | Canlı doğrulama bekliyor | OSD 2.2.0 IPC `present` düzeltmesi; önceki raporda tuşlar çalışıyor fakat OSD yoktu. Son gerçek sonuç ayrıca kaydedilmeli. Steam menüsü/şarj durumu da kabul kontrolünde. |
 | PT-005 | Uygulandı / hedef oturum doğrulaması bekliyor | 2.2.4: mevcut HOME/XDG HyprCade profilleri veya ilk yedekte kayıtlı tam komut seçicileri kullanılır. IPC/list/kill/log istemcileri shell sayılmaz. 10 kontrollü süreç keşfi testi geçti; gerçek sinyal gönderilmedi. |
-| QA-001 | Kısmen açık | `checks/test_file_manager.py` ve `checks/test_session_discovery.py` bağımsız checkout içinde çalışır. Diğer eski kontroller çalışma alanı/Qt fixturelerine bağlı; genel CI henüz yok. |
+| QA-001 | Kısmen açık | File-manager, session-discovery, spotify-install ve app-installers kontrolleri bağımsız checkout içinde çalışır. Diğer eski kontroller çalışma alanı/Qt fixturelerine bağlı; genel CI henüz yok. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
 ## Önceki hazırlama kontrolleri
@@ -62,9 +62,32 @@ PID'lerin seçildiği doğrulandı; gerçek süreç durdurulmadı.
 PR #1 kullanıcı onayından sonra `b32cea4412cf0b3f3e5997b4e475f96ae7b739b7`
 merge commit'iyle ana dala birleştirildi.
 
+## 2.2.5 Spotify tanılama ve kurulum kontrolü
+
+2026-10-17 kullanıcı tanılaması: normal/adblock masaüstü girdilerinde sarmalayıcı
+ve LD_PRELOAD doğru görünüyor. `apply.log` sadece stdout kaydettiğinden başarılı
+apply ilerlemesinin stderr satırları eksik olabilir; günlük tek başına kısmi
+uygulama kanıtı değildir. Sistem paket sürümü eski özel kopyayı tanımlamaz.
+
+Upstream `v2.45.3` sürüm notları aynı tarihte kontrol edildi: Linux Spotify
+`1.2.14–1.2.96`. Bilinen aralık dışı birleşim için kurucu preflight koruması,
+birleştirilmiş günlük ve gerçek tema dosyası denetimleri eklendi.
+
+`python3 checks/test_spotify_install.py` — **10 test geçti**. Destek sınırları,
+değişiklik öncesi durma, eksik çıktıda fresh/update rollback, ilk yedek,
+adblock ortam/eylemleri, restore, stdout/stderr ve salt okunur tanılama denetlendi.
+`python3 checks/test_app_installers.py` — Dolphin ve Spotify uygulama/restore
+kontrolleri geçti; dosya kendi konumundan checkout'u bulacak şekilde taşındı.
+Gerçek Spotify arayüzü veya reklam engelleme sonucu bu ortamda doğrulanmadı.
+Aynı tarihte mevcut 12 file-manager ve 10 session-discovery testi de tekrar geçti.
+29 Python kaynağı parse edildi; 25 Bash dosyası, yerel Markdown bağlantıları ve
+`git diff --check` kontrolü geçti.
+
 ## Sonraki iş
 
-PT-001 kullanıcı tarafından doğrulandı. PT-002 için güncel Spotify/adblock
-başlatma sonucuna ihtiyaç var; sorun sürüyorsa `bash apps/diagnose.sh` çıktısı
-alınacak. PT-005 bağımsız düzeltmesi hazır; gerçek oturum kabulü bekliyor.
+PT-001 kullanıcı tarafından doğrulandı. PT-002 için güncel UI sonucu ve özel
+kopyanın sürümü gerekiyor; kurulu CLI'nin Linux destek sınırı aşılmış durumda.
+Uyumlu sürüm birleşimi ve native kabul sağlanmadan PT-002 kapanmaz. Bozuk tema
+geri alınabilir; otomatik paket indirme/düşürme yapılmaz. PT-005 PR #2'de;
+gerçek oturum kabulü bekliyor.
 Alt+Tab, hesaplama ve ayarlar henüz uygulanmadı; ROADMAP sırası korunuyor.
