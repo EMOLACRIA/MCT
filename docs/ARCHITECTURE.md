@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.2.3
+## Mevcut 2.2.4
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -31,6 +31,19 @@ Ayrıntı: [ADR-0002](decisions/0002-dolphin-desktop-entry.md).
 
 Bu ayrım planlanan sözleşmedir; bu belgede hayali klasörler mevcutmuş gibi
 listelenmez. Somut dosya şeması refactor uygulanırken karar kaydıyla seçilir.
+
+## Süreç seçimi
+
+`scripts/session.py` yalnızca gerçek `qs`/`quickshell` başlatmalarındaki tek
+`-p/--path` veya `-c/--config` seçicisini tanır. Dosya yolları normalize edilir;
+IPC/list/log/kill/msg ve yardım/sürüm komutları shell değildir.
+
+Eski HyprCADE için mevcut kullanıcı HOME/XDG dizininde gerçekten `shell.qml`
+içeren standart profil veya orijinal restore manifest'inde kayıtlı tam seçici
+kullanılır. Adı benziyor diye başka bir QuickShell profili seçilmez. Kurulumun
+süreç yedeği aynı seçimi kullanır; restore yalnızca kayıtlı komutları geri açar.
+Eski manifest'te süreç listesi hiç yoksa shell yolu uydurulmaz.
+Ayrıntı ve otomatik keşfin sınırı: [ADR-0003](decisions/0003-shell-process-selection.md).
 
 ## Yaşam döngüsü ve uyum
 

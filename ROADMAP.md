@@ -27,9 +27,9 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
    pasif pencere, araç çubuğu ve 16/22 px ikonlar gerçek Dolphin'de okunaklı olmalı.
 4. **PT-004 — OSD ve tray:** fonksiyon tuşları, slider, sessize alma, şarj
    simgesi ve Steam sağ tık menüsü canlı oturumda yeniden kontrol edilmeli.
-5. **PT-005 — Taşınabilirlik:** `session.py` içindeki eski `/home/emo/...`
-   süreç yolu kaldırılmalı veya önceki kurulumun gerçekten doğrulanmış yolundan
-   türetilmeli; geniş bir süreç öldürme eşleşmesine dönüştürülmemeli.
+5. **PT-005 — Taşınabilirlik:** 2.2.4 kodu uygulandı. Mevcut HOME/XDG profili
+   veya ilk yedekte kayıtlı tam seçici kullanılır; ilgisiz QuickShell profilleri
+   ve IPC istemcileri korunur. 10 kontrollü test geçti; hedef oturum kabulü bekliyor.
 6. Kurulum, tekrar güncelleme, başarısız güncelleme ve restore; ilk yedeğin
    korunması ve sonradan değiştirilmiş kullanıcı ayarlarına saygı.
 

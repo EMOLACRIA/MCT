@@ -13,9 +13,58 @@ import time
 
 STYLE=Path.home()/'.config/desktop-style'
 STATE=Path.home()/'.local/state/desktop-style'
-OLD_SHELL='/home/emo/Programs/HyprCade/config/quickshell/HyprCade'
 FEEDBACK=str(STYLE/'feedback')
 SHELL=str(STYLE/'shell')
+
+def shell_selector(args):
+    """Identify a launched profile, never an IPC/list/kill command targeting it."""
+    if not args or not all(isinstance(arg,str) for arg in args) or Path(args[0]).name not in {'quickshell','qs'}:
+        return None
+    selectors=[];index=1
+    while index<len(args):
+        arg=args[index]
+        if arg in {'ipc','msg','log','list','kill','--help','-h','--version','-V'}:
+            return None
+        option,separator,value=arg.partition('=')
+        if option in {'-p','--path','-c','--config'}:
+            if not separator:
+                index+=1
+                if index>=len(args):return None
+                value=args[index]
+            if option in {'-p','--path'}:
+                path=Path(value)
+                if not path.is_absolute():return None
+                path=path.resolve()
+                if path.name=='shell.qml':path=path.parent
+                selectors.append(('path',str(path)))
+            else:selectors.append(('config',value))
+        index+=1
+    return selectors[0] if len(selectors)==1 else None
+
+def legacy_shell_selectors():
+    """Use existing conventional profiles or exact commands saved by our backup."""
+    home=Path.home()
+    config=Path(os.environ.get('XDG_CONFIG_HOME') or home/'.config')
+    if not config.is_absolute():config=home/'.config'
+    profile=config/'quickshell/HyprCade'
+    candidates=[home/'Programs/HyprCade/config/quickshell/HyprCade',profile]
+    selectors={('path',str(path.resolve())) for path in candidates if (path/'shell.qml').is_file()}
+    if (profile/'shell.qml').is_file():selectors.add(('config','HyprCade'))
+    try:
+        backup=Path((STATE/'current-backup').read_text().strip())
+        record=json.loads((backup/'manifest.json').read_text())
+        commands=record.get('processes',[]) if isinstance(record,dict) else []
+        if isinstance(commands,list):
+            for command in commands:
+                if isinstance(command,list):
+                    selector=shell_selector(command)
+                    if selector is not None:selectors.add(selector)
+    except (OSError,ValueError):pass
+    return selectors
+
+def is_legacy_shell(args):
+    selector=shell_selector(args)
+    return selector is not None and selector in legacy_shell_selectors()
 
 def processes():
     for entry in Path('/proc').iterdir():
@@ -27,14 +76,15 @@ def processes():
         except (OSError,ValueError):pass
 
 def is_shell(args):
-    return Path(args[0]).name in {'quickshell','qs'} and any(a in {SHELL,SHELL+'/shell.qml'} for a in args)
+    return shell_selector(args)==('path',str(Path(SHELL).resolve()))
 
 def is_feedback(args):
-    return is_shell(args) or (Path(args[0]).name in {'quickshell','qs'} and FEEDBACK in args)
+    return is_shell(args) or shell_selector(args)==('path',str(Path(FEEDBACK).resolve()))
 
 def managed(args,wallpaper=False):
+    if not args:return False
     name=Path(args[0]).name
-    return name in {'waybar','dunst'} or (wallpaper and name=='hyprpaper') or is_feedback(args) or (name in {'quickshell','qs'} and OLD_SHELL in args) or (name=='wofi' and any(str(STYLE/'wofi'/n) in args for n in ['config','launcher.conf','power.conf'])) or str(STYLE/'scripts/menu.py') in args
+    return name in {'waybar','dunst'} or (wallpaper and name=='hyprpaper') or is_feedback(args) or is_legacy_shell(args) or (name=='wofi' and any(str(STYLE/'wofi'/n) in args for n in ['config','launcher.conf','power.conf'])) or str(STYLE/'scripts/menu.py') in args
 
 def ipc(method):
     exe=shutil.which('quickshell') or shutil.which('qs')

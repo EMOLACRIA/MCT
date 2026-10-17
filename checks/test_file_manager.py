@@ -99,7 +99,7 @@ class Session:
         self.original=[['quickshell','-p',self.OLD_SHELL]]
         self.commands=self.original.copy();self.fail=fail;self.ready=False
     def processes(self):return [(100+i,args) for i,args in enumerate(self.commands)]
-    def managed(self,args):return args[0]=='quickshell'
+    def managed(self,args,wallpaper=False):return args[0]=='quickshell'
     def read_services(self):return {}
     def suppress_services(self,record):pass
     def restore_services(self,record):pass
