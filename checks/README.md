@@ -164,3 +164,22 @@ kontrol eder; offscreen Qt testinin yerine geçmeyen ayrı bir native kontroldü
 
 
 2026-10-17 GitHub temeli: bu dosyalar eski hazırlama çalışma alanından korunmuştur; bağımsız checkout CI paketi değildir. QA-001 ve ../docs/VALIDATION.md takip edilir.
+
+## Tema paket çekirdeği (2.7.0)
+
+```bash
+python3 checks/test_theme_core.py
+```
+
+28 stdlib testi, geçici kök ve fake runtime: paket/preview bütünlüğü, kaynak
+eşitliği, path/symlink/şema/yüzey/hook redleri; readonly check, apply/iki varyant
+rollback, dosya modları, preferences/keybind/backup korunması; config/readiness/
+state kayıt hatasında otomatik geri dönüş; kesinti/commit journal toparlama;
+manuel düzenleme, snapshot bozulması ve önceki kurulum epoch koruması; ortak
+kilit ve gerçek updater'ın kilit içi koruması; idempotent apply, native wallpaper
+komut argümanları ve yalnız MCT process seçimi. Fixture varyantı tmp altında
+üretilir, ikinci ürün teması değildir.
+
+GitHub workflow `theme-core.yml` bu suite'i ve 15 preferences / 12 file-manager
+testini, Python/Bash syntax'ı çalıştırır. Başka eski checks dosyalarının hepsinin
+CI'a taşındığı iddia edilmez. Native komutlar mock'tur; PAM/gerçek desktop yoktur.

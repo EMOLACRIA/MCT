@@ -1,6 +1,15 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.6.2
+## Mevcut 2.7.0
+
+Yeni CLI çekirdeği [THEME_PACKAGES](THEME_PACKAGES.md) ve
+[ADR-0012](decisions/0012-theme-package-core.md) içindedir. Paket, görsel QML/varlık
+ve izinli appearance/lock-medya/Kitty dosyalarını taşır; ortak state ve servisler
+payload'da kalır. Mevcut bazı view dosyaları klavye/fare bağlantıları da içerir;
+bütün etkileşim kodunun görsel bileşenlerden çıkarıldığı iddia edilmez. Gelecek
+temalar özellik sözleşmesi testleriyle kabul edilir. Menü veya runtime göçü yoktur.
+
+### Önceki 2.6.2 shell tabanı
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`

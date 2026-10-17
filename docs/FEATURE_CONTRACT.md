@@ -79,7 +79,8 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 
 ## Ortak ayarlar
 
-- 2.5.0'da kaynakta uygulanmıştır; native oturum kabulü bekliyor. Kontrol panelinin
+- 2.5.0'da uygulandı; 17 Ekim kullanıcı son canlı kontrol maddesinin tamamını
+  ve gün boyu kullanımını onayladı. Kontrol panelinin
   dişlisi açar, Esc kapatır; UiState içinde diğer panellerle tek örnektir.
 - Shell font ölçeği %90–120, hareketi azaltma, ana yüzey alpha %75–100. Metin alpha'sı
   azaltılmaz. Varsayılanlar %100 yazı, hareket açık, %96 yüzeydir.
@@ -128,3 +129,22 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - M5 tema seçimi her temanın gerçek ekran görüntüsünü önizleme kartında gösterir.
   Bu gereksinim 17 Ekim kullanıcı onayıdır; henüz uygulanmadı. Kart dizilimi ve
   menünün açıldığı yer kullanıcıyla ayrıca seçilir.
+
+## Tema çekirdeği — 2.7.0 uygulanmış sınır
+
+- CLI list/status kurulu shell veya root yetkisi istemez. check mevcut dosyaları
+  değiştirmez; native QML adayını geçici tam shell kökünde yalnız derler.
+- apply/rollback/recover yalnız çekirdekte izin verilen görsel dosyalara yazar.
+  Script, IPC, native servis, kısayol, preferences.json ve bildirim geçmişi paket
+  hedefi değildir. Paket hook/exec alanı kabul edilmez; QML/Lua güvenilir kaynak koddur.
+- Paket dosya bütünlüğü ve PNG yapısı denetlenir; bozuk/yarım paket uygulanmaz.
+  Önce snapshot ve journal; sonra dosyalar/reload/hazır olma kontrolü. Hata önceki
+  dosya, aktif tema kaydı ve monitör başına wallpaper yoluna döner. Yarım kalan
+  işlem recover ile alınır; kurtarma başarısızsa journal/snapshot saklanır.
+- Sonradan elle değiştirilmiş dosya/symlink sessizce ezilmez. Snapshot başka bir
+  MCT kurulumuna uygulanmaz. Aynı paket zaten aktifse shell tekrar başlatılmaz.
+- Kaynak update aktif görsel dosyayı değiştirecekse işlem durur; önce tema
+  rollback'i, sonra update ve yeniden apply gerekir. Byte-identical update geçer.
+- SDDM, Dolphin ve Spotify ayrı kuruculardır; çekirdek bunları yeniden kurmaz.
+  Lock medya ve Kitty include'unu yönetmek, parola akışını veya her terminalin
+  paletini yeniden kurmak anlamına gelmez. Yeni CLI'nin native kabulü ayrı testtir.
