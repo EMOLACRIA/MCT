@@ -1,38 +1,21 @@
-# ZIP içeriğini GitHub'a yükleme
+# GitHub çalışma düzeni
 
-Bu arşiv tam kaynakları, görselleri ve proje belgelerini içerir. `.git`, Python
-önbelleği, log, kurulum yedeği ve yerel bağımlılık ortamı içermez.
-`PROJECT_BRIEF.txt` ürün hedefini, `ROADMAP.md` aşamaları ve `AGENTS.md` asistan
-çalışma kurallarını tutar. `STATUS.md` açık sorunları gizlemeden kaydeder.
+Ana depo: https://github.com/EMOLACRIA/MCT
+Başlangıç commit'i: `dd146961f82e2a02034152e9ba6e3501ee4af5e1`.
+Tam kaynaklar kullanıcı tarafından ana dala yüklendi; eski ZIP yükleme notları
+artık güncel akış değildir. `.gitignore` önbellek/log/yedekleri dışarıda tutar.
 
-## Yeni bir boş depo kullanacaksan
+Yerel kaynak klasöründe önce `git status`, sonra `git fetch origin` ile mevcut
+çalışma kontrol edilir. Geliştirme dallarında küçük, doğrulanabilir değişiklikler
+hazırlanır; kullanıcı düzenlemeleri silinmez ve force push kullanılmaz.
 
-GitHub'da istediğin adla boş bir repo aç. README/lisans/.gitignore ekletme;
-bu ZIP'teki dosyalar ilk commit olacak. ZIP'i temiz bir klasöre çıkarıp içindeki
-`desktop-style` klasöründe:
-
-```bash
-git init -b main
-git add .
-git status --short
-git commit -m "Import Plague Tale desktop sources and project roadmap"
-```
-
-Ardından kendi deponun gerçek URL'sini ekle:
+PT-001 değişikliğini denemek için, yerel düzenleme yoksa:
 
 ```bash
-git remote add origin https://github.com/EMOLACRIA/DEPO_ADI.git
-git push -u origin main
+git fetch origin
+git switch --track origin/fix/dolphin-launch-consistency
+bash update.sh --check && bash update.sh
 ```
 
-`DEPO_ADI` seçtiğin gerçek repo adıyla değiştirilmeli.
-
-## Mevcut HyprCade deposu
-
-Hazırlama sırasında `plague-tale-foundation` dalı mevcut `main` commit'inden
-oluşturuldu. Bu proje o dala henüz commit edilmedi; dal yeni kaynakları içermiyor.
-Mevcut bir repo kullanacaksan önce o deponun kendi clone'unda çalış; bu yeni
-ZIP klasöründen mevcut branch üzerine force push yapma. Kaynak yerleşimini
-bilerek seçip `git status`/diff'i gözden geçirerek normal commit/push kullan.
-
-Bu belge otomatik bir uploader çalıştırmaz ve kurulum scripti çalıştırmayı gerektirmez.
+Dal yerelde zaten varsa `git switch fix/dolphin-launch-consistency` kullanılır.
+Bu kurulum işlemi yalnızca kullanıcının hedef Hyprland oturumunda yapılır.

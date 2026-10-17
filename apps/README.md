@@ -16,13 +16,15 @@ sudo pacman -S --needed qt6ct breeze-icons
 bash apps/install.sh dolphin --check && bash apps/install.sh dolphin
 ```
 
-Sonra **Super+R içindeki Dolphin girişinden aç**. Dosya adları, menü/düğme yazıları ve seçili metinler saf beyazdır (`#ffffff`); ikincil metinler açık gridir. Seçimler koyu pirinç zemindedir. Aktif ve pasif pencereler aynı okunaklı paleti kullanır. Araç çubuğu ikonları Breeze Dark'tan gelir; klasör çizgileri güçlendirildi.
+Sonra **Super+R veya Super+E üzerinden aç** (Super+E düzeltmesi için 2.2.3 masaüstü güncellemesi uygulanmış olmalı). Dosya adları, menü/düğme yazıları ve seçili metinler saf beyazdır (`#ffffff`); ikincil metinler açık gridir. Seçimler koyu pirinç zemindedir. Aktif ve pasif pencereler aynı okunaklı paleti kullanır. Araç çubuğu ikonları Breeze Dark'tan gelir; klasör çizgileri güçlendirildi.
 
 `org.kde.dolphin.desktop` girdisi yalnızca Dolphin için `QT_QPA_PLATFORMTHEME=qt6ct` ve `QT_STYLE_OVERRIDE=Fusion` kullanır. Oturumun genel ortam değişkenleri değiştirilmez. Terminalden doğrudan açmak için:
 
 ```bash
-env QT_QPA_PLATFORMTHEME=qt6ct QT_STYLE_OVERRIDE=Fusion dolphin
+bash ~/.config/desktop-style/scripts/file-manager.sh
 ```
+
+2.2.3 Super+E yardımcısı `.desktop` girdisini her açılışta yeniden bulur; eklentiyi geri alınca eski Qt ortamı kısayolda kalmaz. `gio` komutu Arch/CachyOS `glib2` paketindedir.
 
 `dolphinrc` içindeki renk/ikon seçimi ile `qt6ct.conf` dosyasındaki Appearance grubunun ilgili beş anahtarı yedeklenir. Qt6ct kullanan başka uygulamalar da bu paleti okuyabilir; mevcut yazı tipi ve diğer ayarlar korunur. Qt6ct arayüzünü ayrıca açıp bir şey seçmene gerek yok.
 

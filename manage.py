@@ -20,7 +20,7 @@ STYLE = BASE / '.config/desktop-style'
 STATE = BASE / '.local/state/desktop-style'
 HYPR = BASE / '.config/hypr'
 TARGETS = ['appearance.lua', 'autostart.lua', 'keybinds.lua', 'misc.lua', 'hyprpaper.conf', 'hyprlock.conf']
-REQUIRED = ['hyprctl', 'kitty', 'hyprlock', 'hyprpaper', 'brightnessctl', 'wpctl', 'quickshell', 'busctl']
+REQUIRED = ['hyprctl', 'kitty', 'hyprlock', 'hyprpaper', 'brightnessctl', 'wpctl', 'quickshell', 'busctl', 'gio']
 
 def run(args):
     return subprocess.run(args, text=True, capture_output=True, timeout=15)

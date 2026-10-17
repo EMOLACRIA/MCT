@@ -23,6 +23,18 @@ def ensure_clean_config():
         errors=m.run(['hyprctl','configerrors'])
     if errors.returncode or errors.stdout.strip():raise RuntimeError('Resolve existing config errors first: '+errors.stdout+errors.stderr)
 
+def patch_file_manager(text):
+    # Only migrate our stock binding/command, including the published manual fix.
+    # A user's different file manager or custom Super+E remains their choice.
+    standard = 'hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))'
+    if sum(line.strip() == standard for line in text.splitlines()) != 1:
+        return text
+    pattern = r'(?m)^(local fileManager\s*=\s*)("(?:dolphin|env QT_QPA_PLATFORMTHEME=qt6ct QT_STYLE_OVERRIDE=Fusion dolphin)")(\s*(?:--[^\n]*)?)$'
+    if len(re.findall(pattern, text)) != 1:
+        return text
+    return re.sub(pattern, lambda match: match[1] + 'styleCommand("file-manager.sh")' + match[3], text)
+
+
 def patch_bindings(text):
     mapping=json.loads((m.PACKAGE/'feedback-bindings.json').read_text())
     for before,action in mapping.items():text=text.replace('"'+before+'"','styleCommand("feedback.sh") .. " '+action+'"')
@@ -40,7 +52,7 @@ def patch_bindings(text):
     if not any('styleCommand("'+name+'")' in lines[index] for name in ['applications.sh','hardware.sh']):
         raise RuntimeError('Custom Super+T binding needs adaptation. Nothing changed.')
     lines[index]=lines[index].replace('styleCommand("applications.sh")','styleCommand("hardware.sh")')
-    return ''.join(lines)
+    return patch_file_manager(''.join(lines))
 
 def lock_config(text):
     block='# desktop-style media begin\nsource = '+str(m.STYLE/'hyprlock/media.conf')+'\n# desktop-style media end'

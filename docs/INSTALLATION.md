@@ -1,4 +1,6 @@
-# Masaüstü görünümü — 2.2.2 QuickShell
+# Masaüstü görünümü — 2.2.3 QuickShell
+
+2.2.3: Super+E, launcher ile aynı Dolphin desktop girdisini GIO üzerinden açar. `bash update.sh --check && bash update.sh` yeterlidir; mevcut uygulama eklentisini yeniden kurmak gerekmez. Stock ve yayımlanan elle düzeltme taşınır; özel dosya yöneticisi/kısayol korunur. `gio` komutu (`glib2`) ön kontrolde aranır.
 
 2.2.2: Dolphin normal ve seçili metinleri saf beyaz, ikincil metinleri açık gri. Yalnızca `bash apps/install.sh dolphin` ile uygulanır.
 

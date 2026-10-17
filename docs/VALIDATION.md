@@ -16,6 +16,12 @@ Yeni docs bağlantıları ve kaynak listesi ayrıca kontrol edilir.
 `--check` son kullanıcı kabulünün veya native uygulama içeriğinin yerine geçmez.
 Kurucuların gerçek uygulama adımları dosya/süreç değiştirir; preview ile karıştırılmaz.
 
+## PT-001 için bağımsız regresyon kontrolü
+
+Checkout kökünden `python3 checks/test_file_manager.py` (stdlib, 12 test).
+Geçici dizin ve kontrollü servis/komut örnekleri kullanır; kullanıcının oturumunu,
+dosyalarını veya servislerini değiştirmez. Native GIO/Dolphin/Hyprland testi değildir.
+
 ## Eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında

@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.2.2
+## Mevcut 2.2.3
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -10,8 +10,12 @@ oturum/süreç yönetimi; `shell/shell.qml` layer-shell pencereleri ve IPC;
 
 `ui/Theme.qml` ortak renk/fontların bir kısmını içerir. Bileşenlerde sabit renkler
 ve ölçüler de vardır. Dolayısıyla mevcut kod “tam tema motoru” değildir.
-Dolphin'in desktop girdisi Qt ortamını ayarlarken Super+E düz `dolphin` çalıştırır;
-başlatma davranışı henüz tek yerde tanımlanmamıştır.
+Dolphin'in desktop girdisi Qt ortamını tanımlar. Super+E `scripts/file-manager.sh`
+üzerinden kullanıcı/system XDG sırasında aynı girdiyi `gio launch` ile açar;
+Exec satırını veya Qt ortamını ikinci kez üretmez. Girdi yoksa düz Dolphin'e döner;
+mevcut girdi başarısız olursa temayı düşürerek ikinci kez uygulama açmaz.
+Özel kullanıcı dosya yöneticisi/kısayolu update tarafından sahiplenilmez.
+Ayrıntı: [ADR-0002](decisions/0002-dolphin-desktop-entry.md).
 
 ## Hedef ayrım
 
