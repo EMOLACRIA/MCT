@@ -61,8 +61,8 @@ Item {
     property string copiedText:""
     function copyText(text) {copiedText=text;lastAction="Preview · Copied "+text;}
     function launchApplication(id) { lastAction="Preview · Open " + id; }
-    function trayClick() {}
-    function trayScroll() {}
+    function trayClick(index,button) {lastAction="Preview · Tray "+index+" · button "+button;}
+    function trayScroll(index,delta) {lastAction="Preview · Tray "+index+" · scroll "+delta;}
     function setVolume(v) { volume=v;feedbackRequested("volume",v,muted); }
     function setMicrophoneVolume(v) {feedbackRequested("microphone",v,microphoneMuted);}
     function toggleMute() { muted=!muted;feedbackRequested("volume",volume,muted); }
@@ -78,5 +78,5 @@ Item {
     function dismissToast() { toasts=[]; }
     function sessionAction(code) { lastAction="Preview · " + code + " selected"; }
     function mediaCommand(code) { if(code==="toggle")mediaPlaying=!mediaPlaying;else lastAction="Preview · " + code + " track"; }
-    function selectPlayer() {}
+    function selectPlayer(id) {players=players.map(p=>({id:p.id,name:p.name,selected:p.id===id}));lastAction="Preview · Player "+id;}
 }

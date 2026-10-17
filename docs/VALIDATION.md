@@ -165,6 +165,38 @@ başlatma ve restart kabulü raporlanmadan PT-012 kapanmaz.
 17 Ekim PT-011 normal kullanım kullanıcı onayı kaydedildi. Bu, her clipboard alt
 testinin tek tek bildirildiği anlamına gelmez; önceki ortam sınırları korunur.
 
+## M3 ilk yerleşim denetimi (2.5.1)
+
+17 Ekim: kullanıcı terminal ve Dolphin açılışını onayladı. PR #7 merge
+`683686f68729ae58cf277d7fb174bb687dfd328a`; PT-012 restart/kalıcılık kabulü açık.
+
+2026-10-17: `MCT_QT_TEST_PATH=... python3 checks/test_shell_ui.py` — **7 test geçti**.
+Qt 6.10.2 software/offscreen: yedi panelin 1600×1000/900×600/640×480 sınırları,
+%90/%120 font ve boş listeler; barın 900/1132/1200/1600 genişliğinde 0/1/12/40 simgesi;
+gezintiyle son tray simgesine sağ tık; uzun medya adı/eylem sınırı ve klavye odağını
+görünür tutma; küçük güç menüsü ve onay korunması. PNG'ler görsel olarak incelendi.
+Bar için 900 mantıksal genişlik ve üzeri kontrol edildi; daha dar alanda kalabalık
+tray'e tam erişim iddia edilmez. 640×480 kontrolü panel içeriği/sınırları içindir.
+
+Aynı tarihte mevcut `test_preferences_ui.py` (10), `test_shell_revisions.py`
+(ikon/OSD/drag/hover), `test_shell_imports.py`, `test_shell_syntax.py` (30 QML),
+`test_shell_api.py` (105 native binding, 0.3.1 kaynak) ve Node backend kontrolü geçti.
+Kontroller gerçek Qt render/etkileşimi veya kontrollü adaptörlerdir; native oturum
+ve gerçek uygulama tekerlek/sağ tık kabulü yerine geçmez.
+
+Hedef oturumda yeni dalı uyguladıktan sonra:
+
+1. Normal ekranda saat/simgeler hizalı kalmalı. Tray çoksa oklarla son simgeye git;
+   Steam sağ tık menüsü doğru yerde açılmalı, uygulama tekerlek eylemi korunmalı.
+2. Ayarlarda %120 yazı seçip medya, güç ve bildirim paneline bak. Uzun oynatıcı
+   adları/eylemler çerçeveyi aşmamalı; gerekince kaydırma çalışmalı.
+3. Küçük kullanılabilir alanda Super+M, ↑/↓ ile son satıra git; seçili işlem görünmeli.
+   Enter yalnız onay ekranına geçmeli; testi Esc ile kapatabilirsin.
+4. PT-012 için ayarı kapat/aç ve normal shell restart sonrası korunduğunu ayrıca
+   bildir. Uygulama açılışı onayı tek başına bu testi kapatmaz.
+
+Bu revizyon ikinci tema veya tema değiştirici eklemez; M3/M4 tamamlanmış değildir.
+
 ## Kalan eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında

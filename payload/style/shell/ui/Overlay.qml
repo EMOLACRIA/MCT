@@ -12,7 +12,7 @@ FocusScope {
         id:frame; objectName:"activePanelFrame"
         readonly property bool centered:Theme.preferences.centerPanels || uiState.activePanel==="settings" || uiState.activePanel==="launcher" || uiState.activePanel==="power" || uiState.activePanel==="hardware"
         width:Math.max(250,Math.min(root.width-48,uiState.activePanel==="settings" ? 720 : uiState.activePanel==="hardware" ? 650 : uiState.activePanel==="launcher" ? 620 : uiState.activePanel==="power" ? 550 : uiState.activePanel==="notifications" ? 460 : 420))
-        height:Math.max(210,Math.min(root.height-100,uiState.activePanel==="settings" ? 740 : uiState.activePanel==="hardware" ? 660 : uiState.activePanel==="launcher" ? 580 : uiState.activePanel==="power" ? uiState.confirmation ? 260 : 465 : uiState.activePanel==="notifications" ? 650 : uiState.activePanel==="controls" ? 610 : 520))
+        height:Math.max(210,Math.min(root.height-100,uiState.activePanel==="settings" ? 740 : uiState.activePanel==="hardware" ? 660 : uiState.activePanel==="launcher" ? 580 : uiState.activePanel==="power" ? Math.round((uiState.confirmation ? 280 : 465)*Theme.fontScale) : uiState.activePanel==="notifications" ? 650 : uiState.activePanel==="controls" ? 610 : 520))
         x:centered ? (root.width-width)/2 : root.width-width-16
         y:centered ? (root.height-height)/2 : 74
         MouseArea { anchors.fill:parent }

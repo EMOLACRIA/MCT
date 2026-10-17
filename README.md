@@ -5,8 +5,8 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.5.0 geliştirme sürümü. Alt+Tab ve hesaplamalı launcher normal kullanımı onaylandı. Ortak ayarlar uygulandı; hedef oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
-Sırada M3 ortak/görsel denetim; tema değiştirici M4 sonrasında.
+**Durum:** 2.5.1 geliştirme sürümü. Alt+Tab, hesaplamalı launcher ve terminal/Dolphin açılışı onaylandı. Ayarların native kalıcılık kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
 
@@ -25,6 +25,18 @@ Sırada M3 ortak/görsel denetim; tema değiştirici M4 sonrasında.
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
 
+## 2.5.1 — Uzun içerik ve dar panel düzeltmeleri
+
+Kalabalık tray saat ve kontrol düğmelerinin üzerine büyümez; yan oklarla bütün
+simgelere erişilir. Simgenin sağ tık ve tekerlek eylemleri kendi uygulamasına gider.
+Uzun tarih gerektiğinde kısaltılır; saat ortada kalır. Medyada uzun oynatıcı adları
+panel genişliğine sığar, kalabalık liste kaydırılır. Güç menüsünde satırlar sıkışmaz;
+klavye seçimi görünür tutulur. Uzun bildirim eylemleri de kart sınırına uyar.
+
+7 gerçek Qt yerleşim testi ve mevcut ayar/OSD/ikon/import/derleme kontrolleri geçti.
+Bu ilk M3 denetimidir; native oturum ve geniş yayın kapısı hâlâ açıktır.
+[Doğrulama ve deneme adımları](docs/VALIDATION.md#m3-ilk-yerleşim-denetimi-251).
+
 ## 2.5.0 — Ortak ayarlar
 
 Bardaki ses düğmesi → kontrol panelinin üstündeki **dişli** → Preferences.
@@ -39,7 +51,8 @@ bellekte kalır. [Ayarlar rehberi](docs/SETTINGS.md) aralıkları ve sınırlar�
 
 15 Python ve 10 gerçek Qt ayar testi, mevcut Alt+Tab/launcher/OSD/update kontrolleri,
 30 QML bytecode ve 105 native binding karşılaştırması geçti. Gerçek QuickShell
-restart/uygulama açma kabulü hedef cihazda bekliyor.
+restart kabulü hedef cihazda bekliyor. Terminal/Dolphin açılışı 17 Ekim kullanıcı
+tarafından onaylandı; bu bildirim kalıcılık testinin yapıldığı anlamına gelmez.
 
 ## 2.4.0 — Launcher içinde hesaplama
 
