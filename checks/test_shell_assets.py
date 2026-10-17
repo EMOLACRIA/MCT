@@ -11,13 +11,13 @@ import json
 from pathlib import Path
 os.environ['QT_QPA_PLATFORM']='offscreen'
 os.environ['QT_QUICK_BACKEND']='software'
-sys.path.insert(0,str(Path('build/qs-qt-check').resolve()))
+if os.environ.get('MCT_QT_TEST_PATH'):sys.path.insert(0,os.environ['MCT_QT_TEST_PATH'])
 from PySide6.QtCore import QObject,QUrl,QTimer
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtGui import QGuiApplication,QImageReader
 from PySide6.QtQml import QQmlComponent,QQmlExpression,QQmlEngine
 from PySide6.QtQuick import QQuickView
 
-shell=Path('build/desktop-style/payload/style/shell').resolve()
+shell=Path(__file__).resolve().parents[1]/'payload/style/shell'
 
 def resolve(origin,relative):
     url=QUrl('qs:@/qs/'+origin).resolved(QUrl(relative))
@@ -38,12 +38,17 @@ for origin,relative in [('PreviewScene.qml','../wallpaper.png'),('ui/OrnamentFra
         assert 'qs-blackhole' in str(exc)
 print('Reproduced original wallpaper/corner paths crossing the QuickShell root.',flush=True)
 urls=[]
-for origin in ['PreviewScene.qml','ui/OrnamentFrame.qml']:
-    for relative in re.findall(r'source\s*:\s*"([^"]+)"',(shell/origin).read_text()):
-        urls.append(resolve(origin,relative))
+origin='ui/Theme.qml'
+for relative in re.findall(r'readonly property url \w+:Qt.resolvedUrl\("([^"]+)"\)',(shell/origin).read_text()):
+    urls.append(resolve(origin,relative))
 assert len(urls)==5
 assert {QUrl(u).fileName() for u in urls}=={'wallpaper.png','tl.svg','tr.svg','bl.svg','br.svg'}
 app=QGuiApplication([])
+pngs=list(shell.parents[2].rglob('*.png'))
+for path in pngs:
+    reader=QImageReader(str(path))
+    assert not reader.read().isNull(),str(path)+': '+reader.errorString()
+print(f'PASS: {len(pngs)} payload/greeter/preview PNG assets fully decode.',flush=True)
 view=QQuickView()
 component=QQmlComponent(view.engine())
 items=''.join(f'Image {{ x:{i*48}; width:40; height:40; source:{json.dumps(u)} }}' for i,u in enumerate(urls))

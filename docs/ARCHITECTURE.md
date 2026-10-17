@@ -1,12 +1,14 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.6.1
+## Mevcut 2.6.2
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
 oturum/süreç yönetimi; `shell/shell.qml` layer-shell pencereleri ve IPC;
 `LiveContext.qml` native servisler; `DemoContext.qml` örnek veriler;
 `ui/` paylaşılan görsel bileşenler. `apps/` ve `sddm/` ayrı kuruculardır.
+2.6.2 SDDM form sınırı/klavye kaydırması ve lock medya cache doğrulaması ekler;
+servis/tema arayüzü değişmez. [ADR-0011](decisions/0011-release-polish.md).
 
 `ui/Theme.qml` shell QML renklerinin semantik kaynağıdır; font aileleri, font/motion
 ölçekleme, köşe/wallpaper URL'leri de buradadır. `SurfaceLayout.qml` bar/panel/OSD/

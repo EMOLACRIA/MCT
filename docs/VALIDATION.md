@@ -255,6 +255,81 @@ Hedef oturumda yeni dalı uyguladıktan sonra:
 
 Bu revizyon ikinci tema veya tema değiştirici eklemez; M3/M4 tamamlanmış değildir.
 
+## 2.6.2 — Son cila ve kabul sınırı
+
+17 Ekim 2026, kontrollü HOME/dosya ve Qt 6.10.2 offscreen ortamı. Sürüm 2.6.2.
+Bu komutların hepsi başarılı tamamlandı:
+
+```bash
+python3 checks/test_file_manager.py
+python3 checks/test_session_discovery.py
+python3 checks/test_spotify_install.py
+python3 checks/test_app_installers.py
+python3 checks/test_preferences.py
+python3 checks/test_switcher_bindings.py
+python3 checks/test_terminal_medallion.py
+python3 checks/test_sddm_install.py
+node checks/test_shell_backend.js
+node checks/test_calculator.js
+node checks/test_preferences_model.js
+```
+
+PySide6 erişimi için bu ortamda `MCT_QT_TEST_PATH` ayrı Qt 6.10.2 kurulumuna
+ayarlandı. Aşağıdaki kontroller aynı ortam değişkeniyle geçti:
+
+```bash
+python3 checks/test_shell_ui.py
+python3 checks/test_preferences_ui.py
+python3 checks/test_window_switcher.py
+python3 checks/test_launcher_calculator.py
+python3 checks/test_notification_watcher.py
+python3 checks/test_shell_revisions.py
+python3 checks/test_app_revision23.py
+python3 checks/test_shell_imports.py
+python3 checks/test_shell_assets.py
+python3 checks/test_sddm_ui.py
+```
+
+12/10/11/7/4 Qt suite testi; OSD/ikon ve palet etkileşimleri; network import;
+17 PNG decode; 5 greeter testi. Watcher'ın ilk koşusunda fixture'a logic import
+yolu eksikti; düzeltmeden sonra 4 test geçti. SDDM modeli sahtedir: parola gerçek
+bir servise verilmez, reboot/powerOff sayaçtan ibarettir. 1600×1000 ve 640×480
+render'ları görüntülenerek saat/kart/scroll sınırı incelendi. SDDM dosya kontrolü
+4, CP437 testi 6 stdlib senaryosudur; ilk backup, symlink hedefi ve manuel dosya
+değişikliği korunur. CP437 byte/UTF-8 eşitliği ve 61×29 / 39×17 boyutları geçti.
+
+```bash
+MCT_HYPRLOCK_SOURCE=/path/to/hyprlock-0.9.6/ConfigManager.cpp python3 checks/test_revision_helpers.py
+MCT_QMLCACHEGEN=/path/to/qmlcachegen python3 checks/test_shell_syntax.py
+MCT_QS_SOURCE=/path/to/quickshell-0.3.1 python3 checks/test_shell_api.py
+```
+
+Helper sensör/medya/OSD hata kontrolleri ve Hyprlock alanları; 37 QML bytecode,
+122 native binding kontrolü geçti. 40 Python `ast.parse`, 26 `bash -n`, yerel
+Markdown dosya yolları ve `git diff --check` geçti. Tam CI paketi iddiası yoktur.
+
+### Hedef oturumda kalan kabul
+
+Önceki normal kullanım onayları tekrar istenmez. Henüz ayrı kanıtı olmayanlar:
+
+1. **Kalıcılık:** bir görünüm tercihini kaydet, paneli ve normal shell restart'ını
+   dene; update/rollback sonrasında tercih ve özel kısayol/ofset korunmalı.
+2. **Giriş/kilit:** ayrı SDDM preview; sonraki doğal girişte hesap/oturum seçimi ve
+   gerçek giriş. Hyprlock parola hatası/başarı, seçili oyuncu, parça değişimi ve
+   kontrol davranışı. Buradaki fake SDDM testleri bunları kapatmaz.
+3. **Donanım:** şarj tak/çıkar, kayıp sensör/oynatıcı, çoklu oynatıcı, normal
+   suspend/resume; imkân varsa ikinci ekran ve çıkarma/odak. Olmayan donanım için
+   açık N/A kaydı tutulur; yapılmış sayılmaz.
+4. **Uygulamalar/terminal:** Spotify adblock girdisinde tema + gerçek reklam
+   engelleme; yeni terminalde CP437 madalyonunun bilgi sütunuyla son görsel onayı.
+5. **Geri dönüş:** kullanıcı cihazında güvenli bir yedek/test oturumu planıyla
+   fresh install/full restore; ilk backup, monitor/input/GPU ve özel dosyalar.
+   Günlük oturum sırf test için kapatılmadı, hizmet restart edilmedi.
+
+Güncel iki örnek: [Power](../previews/power.png), [SDDM](../previews/sddm.png).
+M4, native kabul ve yayın/lisans maddeleri tamamlanana kadar açıktır. Tema
+menüsünün konumu kullanıcı kararını bekler; bu cila arayüz eklemez.
+
 ## Kalan eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında
