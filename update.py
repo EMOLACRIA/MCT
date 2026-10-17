@@ -35,6 +35,23 @@ def patch_file_manager(text):
     return re.sub(pattern, lambda match: match[1] + 'styleCommand("file-manager.sh")' + match[3], text)
 
 
+def patch_switcher_bindings(text):
+    block=(m.PACKAGE/'switcher-bindings.lua').read_text().strip()
+    pattern=r'-- desktop-style window switcher begin\n.*?-- desktop-style window switcher end'
+    owned=re.findall(pattern,text,re.S)
+    if 'desktop-style window switcher' in text and (len(owned)!=1 or owned[0]!=block):
+        print('Custom window-switcher block kept unchanged.');return text
+    remainder=re.sub(pattern,'',text,flags=re.S) if owned else text
+    for expression in re.findall(r'(?m)^[^\S\n]*hl\.bind\s*\(\s*([^,]+),',remainder):
+        literal=re.fullmatch(r'''(["'])(.*?)\1''',expression.strip(),re.S)
+        key=literal.group(2).upper().replace(' ','') if literal else expression.upper()
+        conflict=('ALT_L' in key or 'ALT_R' in key or ('TAB' in key and (not literal or 'ALT' in key or 'MOD1' in key)))
+        if conflict:
+            print('Custom Alt/Tab bindings kept; window switcher shortcuts not added.')
+            return remainder if owned else text
+    return text if owned else text.rstrip()+'\n\n'+block+'\n'
+
+
 def patch_bindings(text):
     mapping=json.loads((m.PACKAGE/'feedback-bindings.json').read_text())
     for before,action in mapping.items():text=text.replace('"'+before+'"','styleCommand("feedback.sh") .. " '+action+'"')
@@ -52,7 +69,7 @@ def patch_bindings(text):
     if not any('styleCommand("'+name+'")' in lines[index] for name in ['applications.sh','hardware.sh']):
         raise RuntimeError('Custom Super+T binding needs adaptation. Nothing changed.')
     lines[index]=lines[index].replace('styleCommand("applications.sh")','styleCommand("hardware.sh")')
-    return patch_file_manager(''.join(lines))
+    return patch_switcher_bindings(patch_file_manager(''.join(lines)))
 
 def lock_config(text):
     block='# desktop-style media begin\nsource = '+str(m.STYLE/'hyprlock/media.conf')+'\n# desktop-style media end'
