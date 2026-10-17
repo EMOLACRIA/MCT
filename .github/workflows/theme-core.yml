@@ -1,0 +1,46 @@
+name: Theme core checks
+
+on:
+  push:
+    branches: [feature/theme-core]
+    paths:
+      - theme_core.py
+      - checks/test_theme_core.py
+      - .github/workflows/theme-core.yml
+      - update.py
+      - themes/**
+  pull_request:
+    paths:
+      - theme_core.py
+      - checks/test_theme_core.py
+      - .github/workflows/theme-core.yml
+      - update.py
+      - themes/**
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Fetch exact revision
+        env:
+          MCT_TEST_SHA: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin https://github.com/EMOLACRIA/MCT.git
+          git fetch --depth=1 origin "$MCT_TEST_SHA"
+          git checkout --detach FETCH_HEAD
+      - name: Existing isolated checks
+        run: |
+          python3 checks/test_preferences.py
+          python3 checks/test_file_manager.py
+      - name: Theme core checks
+        run: |
+          python3 checks/test_theme_core.py
+      - name: Source syntax
+        run: |
+          python3 -m py_compile theme_core.py update.py checks/test_theme_core.py
+          bash -n theme.sh

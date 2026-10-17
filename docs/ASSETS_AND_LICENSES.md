@@ -22,3 +22,8 @@ Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.
   değiştirme ve bildirim gereksinimi bu kayda eklenir.
 - Proje için yeni bir MIT/GPL lisansı bu görevde kullanıcı adına seçilmedi.
   Açık kaynak lisansı seçimi ve varlıkların kapsamı genel yayından önce netleştirilir.
+
+2.7.0 tema paketindeki 38 dosya mevcut payload'ın birebir kopyalarıdır;
+`themes/plague-tale/preview.png`, mevcut `previews/desktop.png` dosyasının birebir
+kopyasıdır. Yeni dış görsel/font/kod alınmadı. Manifest git blob kimlikleriyle
+kaynak eşitliğini doğrular; bu kayıt yeni lisans veya üçüncü taraf hak devri değildir.

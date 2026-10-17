@@ -343,3 +343,22 @@ kontroller bağımsız fixture/dependency düzenine taşınmalıdır.
 Native Hyprland, QuickShell Wayland, gerçek Spotify/Dolphin/Steam ve güvenli
 Hyprlock/SDDM oturumu hazırlama ortamında yoktur. Bu davranışlar hedef cihazda
 kontrol edilmeden “tamamlandı” sayılmaz.
+
+## 2.7.0 — Kullanıcı son kabulü ve yeni CLI çekirdeği
+
+17 Ekim: kullanıcı önceki son canlı kontrol maddesinin tamamını bitirdiğini ve
+gün boyu full kullandığını onayladı. Bu Plague Tale ürün/kullanım kapanışıdır;
+aynı eski son kabul yeniden istenmez. Ayrı ayrı ölçüm/log sunulmuş sayılmaz.
+
+Yeni çekirdek kodu `6d3b6f2eb9472256b49049e30c72efdb63ecc2a2`,
+[GitHub Actions 39054714755](https://github.com/EMOLACRIA/MCT/actions/runs/39054714755):
+`python3 checks/test_theme_core.py` **28**, preferences **15**, file-manager
+**12** test; Python py_compile ve `bash -n theme.sh` geçti. Yerel executor
+kullanılamadı; sonuçlar GitHub runner job log'undan okundu. Core testleri geçici
+dosya kökü/fake runtime kullanır; gerçek servis, kilit veya oturum çalıştırmaz.
+
+Bu koddan sonraki yalnız belge commit'i için Markdown dosya yolları ve trailing
+whitespace JavaScript ile kontrol edilir; runtime testi tekrar çalıştırılmış
+gibi gösterilmez. Yeni CLI'nin ilk native kabul komutları
+[THEME_PACKAGES](THEME_PACKAGES.md) içindedir. Paket mevcut render'ı kullanır;
+menü/ikinci tema yoktur. Adaptör otomasyonu sınırı ve update guard belgelenmiştir.

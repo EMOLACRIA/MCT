@@ -37,7 +37,14 @@ DEĞİŞMEZ ÜRÜN KARARLARI
 11. 17 Ekim: kullanıcı ortak davranış + ayrı görsel paket + uygulama adaptörleri
     yaklaşımını onayladı. Tema seçiminde her temayı temsil eden gerçek ekran
     görüntülü önizleme kartları bulunacak. Kartların dizilimi ve menünün açıldığı
-    yer açık; somut paket şeması ve geçiş uygulaması henüz geliştirilmedi.
+    yer açık. 2.7.0 paket şeması/CLI çekirdeği docs/THEME_PACKAGES.md içindedir.
+
+SON KAPANIŞ / SIRADAKİ İŞ (2026-10-17)
+Kullanıcı son canlı kontrol maddesinin tamamlandığını, gün boyu full kullandığını
+ve güzel çalıştığını açıkça onayladı. Bu, Plague Tale ürün/kullanım kapanışıdır;
+ayrı ayrı ölçülmüş tüm donanım logları veya genel yayın lisansı onayı değildir.
+Geçiş çekirdeği 2.7.0'da uygulandı ve izole CI'da doğrulandı. İkinci oyunun
+seçimi bu işten sonra kullanıcıyla konuşulacak; henüz seçilmiş ikinci oyun yok.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER
 - Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.

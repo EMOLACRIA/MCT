@@ -5,8 +5,9 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.6.2 geliştirme sürümü. Alt+Tab, hesaplamalı launcher, terminal/Dolphin açılışı ve bar ipucu düzeltmesinin normal kullanımı onaylandı. Son cilada SDDM varlık/yerleşimi ve lock medya hata durumları düzeltildi. Ayarların native kalıcılık ve geniş oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
-M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
+**Durum:** 2.7.0 geliştirme sürümü. Kullanıcı Plague Tale'in son canlı kontrolünü
+ve gün boyu kullanımını onayladı. Tema paket çekirdeği eklendi; fotoğraflı tema
+menüsünün konumu açık, ikinci tema henüz seçilmedi. Genel yayın/lisans işleri ayrı.
 
 ## Projeyi okumaya buradan başla
 
@@ -26,6 +27,30 @@ M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.7.0 — Tema paket çekirdeği
+
+İlk paket Plague Tale; mevcut masaüstünün gerçek PNG önizlemesi ve görsel dosya
+envanteriyle gelir. Menü eklenmedi. [Tam rehber](docs/THEME_PACKAGES.md).
+
+```bash
+bash theme.sh list
+bash theme.sh status
+bash theme.sh check plague-tale
+bash theme.sh apply plague-tale
+bash theme.sh rollback --check
+bash theme.sh rollback
+```
+
+check hiçbir kurulu dosyayı değiştirmez. apply yalnız MCT shell'i yeniden açar;
+oturumu kapatmaz. Tercihler, kişisel kısayollar ve ilk restore yedeği korunur.
+Görünüm aynı kalabilir: ilk apply mevcut Plague Tale'i kayıtlı paket haline getirir.
+SDDM/Dolphin/Spotify ayrı kurucularıyla kalır. Kaynak update aktif tema dosyalarını
+değiştirecekse önce açık tema rollback'i gerekir; sessiz görünüm sıfırlaması yapılmaz.
+
+28 çekirdek + 27 mevcut izole test ve syntax CI'da geçti. Gerçek cihazda ilk
+çekirdek denemesi yukarıdaki check/apply/rollback akışıdır. Eski Plague Tale
+kullanım onayı bu yeni komutların native çalıştırılmış olduğu anlamına gelmez.
 
 ## 2.6.2 — Son cila ve yayın öncesi denetim
 

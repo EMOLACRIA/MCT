@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.6.2 geliştirme sürümü**.
-Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 kalıcılık kabulü bekliyor; M3 ortak shell sunumu uygulandı / kabul bekliyor**. Plague Tale tamamlanmış değildir.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.7.0 geliştirme sürümü**.
+Aşama: **Plague Tale ürün/kullanım kapanışı kullanıcı tarafından onaylandı; M5 paket/geçiş çekirdeği uygulandı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -13,18 +13,52 @@ Shell QML paleti/font aileleri/varlıkları/hareketi `Theme.qml`, dış yüzey �
 `SurfaceLayout.qml` üzerinden paylaşılır. Yerel çizim/iç düzen ölçüleri ve harici
 adaptörler ayrı kalır; bu tam tema motoru değildir.
 Alt+Tab ve hesaplamalı launcher normal kullanımı kullanıcı tarafından onaylandı.
-Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; terminal/Dolphin açılışı onaylandı,
-yeniden başlatmada kalıcılık kabulü bekliyor.
-Tema değiştirici **yoktur**.
+Ortak ayarlar, terminal/Dolphin ve Plague Tale'in son canlı kabulü kullanıcı tarafından
+onaylandı. Komut satırı tema çekirdeği vardır; görsel tema menüsü henüz yoktur.
 Menünün yeri kullanıcı kararını bekler; Preferences konumu kabul edilmedi.
-17 Ekim yeni karar: kullanıcı ortak davranış + görsel paket + uygulama adaptörleri
+Önceki 17 Ekim karar kaydı: kullanıcı ortak davranış + görsel paket + uygulama adaptörleri
 yaklaşımını ve gerçek ekran görüntülü tema önizleme kartlarını onayladı. Bu,
-seçicinin uygulanması veya ikinci temanın başlaması değildir. Son mesaj 2.6.2
-native giriş/kalıcılık/restore testlerinin yapıldığına dair sonuç içermiyor;
-mevcut kabul durumları korunur. Yalnız gereksinim belgeleri güncellendi;
+seçicinin uygulanması veya ikinci temanın başlaması değildir. O mesaj native giriş/kalıcılık/restore sonucunu içermiyordu;
+aşağıdaki daha yeni kullanıcı onayı bu bekleme durumunun yerine geçer. Yalnız gereksinim belgeleri güncellendi;
 yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime değişmedi.
 
-## 2.6.2 — Son cila ve kontroller
+## 2.7.0 — Kullanıcı kapanışı ve tema paket çekirdeği
+
+2026-10-17 Europe/Riga: kullanıcı önceki yanıttaki **1. son canlı kontrol maddesine**
+“1 zaten tamam full + full kullandım gün boyunca gayet güzeldi” dedi; **2. geçiş
+çekirdeğini** Codex'e bıraktı ve ikinci oyun seçimini bu işin sonrasına erteledi.
+Kullanıcının açık tamamlandı beyanı, son kullanım/görsel kapanış onayı olarak
+esas alındı. Tek tek log/cihaz ölçümü sunulmuş veya burada PAM testi yapılmış
+sayılmaz; aynı kabul tekrar istenmez. PR #10 beklenen baş
+`a7fe18d4fb8d430934c3b8180f3b31583a26a5b6` ile main'e alındı
+(merge `b3cb98f565d20ba89fcf3ba92bc74df91a7279f9`).
+
+`theme_core.py` ve `theme.sh`: list/status/check/apply/rollback/recover.
+`themes/plague-tale/` manifest, gerçek mevcut masaüstü preview PNG'si ve 38
+görsel dosya içerir. Ortak servis/state/IPC/kısayol kodu paket dışında kalır.
+Engine salt ön kontrol, geçici QML derleme, işlem snapshot'ı, atomik dosya yazımı,
+hazır olma denetimi ve otomatik geri dönüş yapar. Manuel dosya değişikliği,
+symlink, başka kurulumun snapshot'ı ve bozuk paket reddedilir. Wallpaper yolları
+monitör başına kaydedilir; fit modu mevcut hyprpaper config'inden okunur.
+Update aynı kilidi kullanır; aktif temayı değiştirecek kaynak güncellemesi
+önce açık tema rollback'i ister, sessizce varsayılana dönmez.
+
+Bu çekirdek shell/görsel varlıklar, Hyprland appearance, lock **medya** alanı ve
+Kitty include dosyasını yönetir. SDDM, Dolphin ve Spotify ayrı kuruculardır;
+“uygulandı” sonucu onların yeniden kurulduğu anlamına gelmez. İlk paket mevcut
+kabul edilmiş Plague Tale görünümüdür. İkinci tema seçilmedi/üretilmedi; menü
+konumu açık, fotoğraflı kart gereksinimi kabul edilmiş fakat UI uygulanmamıştır.
+
+Yerel çalışma ortamı bu tur kullanılamadı; GitHub üzerinden kaynaklar okundu ve
+GitHub Actions runner'ında test çalıştırıldı. **28 çekirdek + 15 preferences +
+12 file-manager = 55 test**, Python/Bash syntax başarılı:
+[CI run](https://github.com/EMOLACRIA/MCT/actions/runs/39054714755),
+kod başı `6d3b6f2eb9472256b49049e30c72efdb63ecc2a2`.
+Süreç/Hyprland/Quickshell etkileşimi fake runtime ile kontrol edildi. Yeni
+çekirdeğin gerçek Wayland/PAM/harici uygulama işlemi CI'da çalıştırılmadı.
+[Rehber](docs/THEME_PACKAGES.md) · [ADR-0012](docs/decisions/0012-theme-package-core.md).
+
+## 2.6.2 — Son cila ve kontroller (önceki kayıt)
 
 17 Ekim: kullanıcı 2.6.1 normal kullanımını onayladı; PR #9 beklenen head
 `136f43a29e56617597b77e78abbad4abda3abdc4` ile main'e alındı
@@ -68,11 +102,11 @@ gözlem/çıkarım ve runtime sınırları belgeli. Menü yeri kararlaştırılm
 | PT-005 | Normal güncelleme kullanıcı onayı / geniş restore kabulü M4'te | Kullanıcı kümülatif PR #4 dalında sorun bildirmedi. 10 kontrollü süreç keşfi testi geçti. Farklı kullanıcıyla fresh install/restore canlı testi yapılmış sayılmaz. |
 | PT-010 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “alt tab çok güzel çalışıyor” diyerek PR #5 kullanımını onayladı. Main merge `915a9990a7d835cba6281b43b08af1911328355f`. Çoklu monitör çıkarma ve yakalama gibi ayrı ayrıntılar raporlanmadı; M4 listesinde kalır. |
 | PT-011 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “Güzel çalışıyor devam edebilirsin” diyerek PR #6 akışını onayladı. Enter seçili satırı çalıştırır; Ctrl+Enter seçimden bağımsız hesap sonucunu kopyalar. Her alt test ayrı ayrı raporlanmış sayılmaz. |
-| PT-012 | Uygulama açma onaylandı / kalıcılık kabulü bekliyor | 17 Ekim kullanıcı “konsol da dolphin de düzgün açılıyor” dedi. PR #7 ana dala `683686f68729ae58cf277d7fb174bb687dfd328a` ile alındı. Bu bildirim ayarların restart/update/rollback sonrası korunduğu, native bar reserve/OSD tercihlerinin tek tek denendiği anlamına gelmez. 15 Python + 10 Qt kontrollü testi önceki kayıttadır. |
+| PT-012 | Son canlı kontrol kullanıcı onayı | Önceki uygulama açılışı onayına ek olarak 17 Ekim kullanıcı önceki son kontrol maddesinin tamamlandığını ve gün boyu full kullandığını söyledi. Bu kullanıcı beyanı kabul edildi; bağımsız cihaz logu ölçümü değildir. |
 | PT-013 | Normal kullanımda sorun bildirilmedi / ayrıntılı kabul açık | 17 Ekim kullanıcı “Şuan bi sıkıntı yok gibi. Devam edelim” dedi. PR #8 ana dala `3c8b1e0215be52fbf465ee696f4a98e0ca7e1456` ile alındı (head `94814c7d91bcdc82851fb1e4e491d85ad4287748`). 2.5.1: tray, medya/power kaydırma ve uzun ad sınırları; 7 Qt testi. Her tray/ölçek/çoklu ekran alt testi tek tek raporlanmış sayılmaz. |
 | PT-014 | İpucu düzeltmesi normal kullanım kullanıcı onayı / geniş kabul açık | 17 Ekim: kullanıcı 2.6.1 sonrası “Tamamdır gayer güzel” dedi. İncelenen head `f0525e0b19cbfca4a454b188681b7e79bdd79ed0`; ipucu düzeltmesi normal kullanımda onaylandı. 12 Qt testi, 37 QML, 122 native binding önceki kayıttadır. Bu bildirim bütün M3 yüzeyleri, çoklu ekran veya PT-012 kalıcılık kabulü değildir. |
 | QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23, shell-syntax ve artık shell-ui kendi checkout'unu bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
-| ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
+| ASSET-001 | Son canlı kontrol kullanıcı onayı | CP437 dosya/kurulum testlerine ek olarak 17 Ekim kullanıcı önceki son kontrol maddesinin tamamını onayladı; madalyon son görünümü bu beyanla kabul edildi. |
 
 ## Önceki hazırlama kontrolleri
 

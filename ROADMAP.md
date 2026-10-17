@@ -128,6 +128,13 @@ nereden alacağı tanımlıdır. İkinci tema hâlâ başlatılmaz.
 
 ## M4 — Plague Tale tamamlanma ve yayın kapısı
 
+**17 Ekim güncellemesi:** kullanıcı önceki son canlı kontrol maddesini tamamladığını
+ve gün boyu full kullandığını onayladı. Plague Tale ürün/kullanım kapanışı kabul
+edildi ve M5 çekirdeğine geçiş açıkça yetkilendirildi. Genel dağıtım/lisans ve
+ayrı raporlanmamış donanım alt testleri geniş yayın kaydında korunur; kullanıcının
+aynı son kabulü tekrar vermesi beklenmez. Aşağıdaki eski kapı metni bu güncel
+kullanıcı beyanıyla birlikte okunur.
+
 [RELEASE_CHECKLIST](docs/RELEASE_CHECKLIST.md) uygulanır. Açık zorunlu özellik veya
 bilinen kullanım engeli kalmaz. Gerçek oturumda restart/login, çoklu ekran/ölçek,
 boş durumlar, uygulama başlatma ve güvenilir restore kontrol edilir.
@@ -138,6 +145,12 @@ Kullanıcı ilk temanın bitmiş görünümünü ve kullanımını onaylar.
 kapanmış olduğu anlamına gelmez.
 
 ## M5 — Tema değiştirici
+
+**2.7.0: CLI paket çekirdeği uygulandı.** Manifest + gerçek fotoğraf + 38 görsel
+kaynak; doğrulama/uygulama/rollback/recover, tercih koruma, güncelleme çakışma
+koruması. 28 çekirdek ve 27 mevcut izole test geçti. [Rehber](docs/THEME_PACKAGES.md).
+Görsel menü ve kartlar uygulanmadı; menünün konumu açık. SDDM/Spotify/Dolphin ayrı
+kuruculardır; tek tıkla bütün uygulamaların canlı yeniden stillenmesi yoktur.
 
 **Menünün konumu açık:** kullanıcı düşünüp seçecek. Preferences yerleşimi
 kararlaştırılmadı. 17 Ekim talebiyle M4 cila kontrollerinden sonra
