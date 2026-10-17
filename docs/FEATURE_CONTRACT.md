@@ -109,6 +109,10 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - Yedi panelin ortak başlığı kendi kapatma/ek eylemini bağlar; Settings ↔ Controls
   geçişi korunur. Preview aynı başlık, toast yığını ve dış yüzey ölçülerini kullanır;
   native servis/oturum eylemi başlatmaz. Uzun ipuçları koyu yüzeyde sarılır.
+- İpucu sürekli hover'da 600 ms bekler; owner değişince süre yeniden başlar,
+  basma/ayrılma gizler. Bar ipucu 8 px aşağıda ayrı native pencerededir; klavye
+  odağı veya pointer grab almaz, boş input maskesi tıklamaları geçirir. Panel/preview
+  fallback'i de etkileşimsizdir. Gecikme reduceMotion ile sıfırlanmaz.
 - Uzun medya/oturum içeriği sıkıştırılmaz; kullanılabilir yükseklik yetmiyorsa
   kaydırılır, klavye seçimi görünür tutulur. Uzun oynatıcı/eylem adları paneli
   genişletmez; tam ad hover'da okunabilir. Güç işlemlerinin onay koşulu değişmez.

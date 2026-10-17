@@ -108,6 +108,8 @@ ortaklaştırıldı; başlık, ipucu, toast/geçmiş eylemleri paylaşılıyor. 
 35 QML derlemesi ve önceki etkileşim kontrolleri geçti. [Yüzey haritası](docs/THEME_SURFACES.md) ·
 [Karar](docs/decisions/0010-shared-shell-presentation.md).
 Hedef oturum kabulü, lock/SDDM/uygulama bütünlüğü ve sözleşmenin tamamı hâlâ açık.
+2.6.1: kullanıcı bar ipucunun tıklamayı engellediğini bildirdi. Gecikmeli,
+input-transparent ayrı bar popup'ı uygulandı; aynı inceleme dalında kabul bekliyor.
 
 - Görsel kimlik: font, ikon, çerçeve, panel, OSD, bildirim, medya, settings,
   Alt+Tab, launcher, Hyprlock, SDDM ve uygulama eklentilerinin bütünlüğü.

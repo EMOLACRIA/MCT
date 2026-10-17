@@ -1,10 +1,10 @@
-## Ortak sunum / yerleşim (2.6.0)
+## Ortak sunum / yerleşim (2.6.1)
 
 ```bash
 python3 checks/test_shell_ui.py
 ```
 
-9 gerçek Qt testi. PySide6 gerekir; ayrı kurulum için `MCT_QT_TEST_PATH` kullanılır.
+12 gerçek Qt testi. PySide6 gerekir; ayrı kurulum için `MCT_QT_TEST_PATH` kullanılır.
 Artık eski build/desktop-style ağacına bağlı değildir; checkout'u kendi bulur.
 `MCT_UI_PREVIEW_DIR=/tmp/mct-review` isteğe bağlı beş PNG üretir; varsayılan test
 repo içine görsel yazmaz. 7 panel, %90/%120 font, 1600×1000/900×600/640×480 sınırları;
@@ -14,6 +14,12 @@ klavye görünürlüğü, güç onayı, uzun eylem ve boş veri kontrol edilir.
 eylem/kapatma/panel açıkken gizlenmesini kontrol eder. Ortak `qmldir`, asset URL'leri
 ve komponentler network import testinden de geçer; Theme dışı literal shell paleti
 bu kontrolde reddedilir. Saydam kompozisyon ve SVG varlık verileri ayrı tutulur.
+2.6.1: 200 ms'de gizli/700 ms'de görünür ipucu; düğmenin altında olma, açık ipucuna
+rağmen gerçek fare tıklaması; basma/ayrılma iptali; owner değişince yeni süre;
+bütün bar hint'lerinin native component bağlantısı ve QObject Loader bridge
+yükleme/boşaltması denetlenir. Son test native pencere yerine QtObject kullanır.
+API kontrolü PopupWindow/anchor/Region alanlarını 0.3.1 kaynağından, boş maskenin
+WindowTransparentForInput ve grabFocus:false'ın ToolTip flag yolunu denetler.
 Native Wayland/tray/power komutu çalışmaz. 900 altındaki kalabalık tray tam erişimi
 bu kabulün kapsamı değildir. `test_preferences_ui.py` ortak Qt harness'ını kullanır.
 

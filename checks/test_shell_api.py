@@ -17,6 +17,8 @@ contracts={
  'ScreencopyView':['wayland/screencopy/view.hpp'],
  'Variants':['core/variants.hpp','core/reload.hpp'],
  'PanelWindow':['window/panelinterface.hpp','window/windowinterface.hpp','core/types.hpp'],
+ 'PopupWindow':['window/popupwindow.hpp','window/windowinterface.hpp'],
+ 'Region':['core/region.hpp'],
  'ShellRoot':['core/shell.hpp','core/reload.hpp'],
  'Scope':['core/reload.hpp'],
  'IpcHandler':['io/ipchandler.hpp'],
@@ -82,6 +84,10 @@ def inspect(text,filename):
      valid=True # inherited QtQuick.Item properties
     elif name.startswith('WlrLayershell.'):
      valid=name.split('.',1)[1] in properties(contracts['WlrLayershell'])
+    elif kind=='PopupWindow' and name.startswith('anchor.'):
+     parts=name.split('.')[1:]
+     valid=parts[0] in properties(['core/popupanchor.hpp'])
+     if len(parts)>1:valid=valid and parts[0]=='rect' and len(parts)==2 and parts[1] in properties(['core/types.hpp'])
     elif name.startswith(('anchors.','margins.')):
      group,leaf=name.split('.',1)
      valid=group in allowed and leaf in properties(paths)
@@ -121,3 +127,10 @@ entries=(src/'core/desktopentry.hpp').read_text()
 assert 'Q_PROPERTY(QVector<QString> categories' in entries
 assert 'Q_PROPERTY(QString id' in entries
 print('PASS: native DesktopEntry categories/id declarations used by file-manager choices')
+
+popup=(shell/'HintPopup.qml').read_text()
+assert 'mask:Region {width:0;height:0}' in popup and 'grabFocus:false' in popup
+proxy=(src/'window/proxywindow.cpp').read_text()
+assert 'Qt::WindowTransparentForInput, this->mMask != nullptr && mask.isEmpty()' in proxy
+assert 'this->bWantsGrab ? Qt::Popup : Qt::ToolTip' in (src/'window/popupwindow.cpp').read_text()
+print('PASS: native hint empty mask maps to WindowTransparentForInput; grabFocus false selects ToolTip window flag')

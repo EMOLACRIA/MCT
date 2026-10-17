@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.6.0
+## Mevcut 2.6.1
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -21,6 +21,11 @@ toast ve geçmişin aynı backend eylemini kullanan genişliği sınırlı gör�
 `ToastStack` canlı shell ile preview'de paylaşılır; preview DemoContext kullanır.
 `SurfaceHint` palet/font ve metin sarması ortak olan ipucudur. Eylem/4500 ms
 bildirim süresi gibi davranışlar tema token'larına taşınmaz.
+2.6.1'de SurfaceHint 600 ms bekleme/iptal ve gösterim bileşeni seçimini yönetir; HintBubble
+salt görünümdür. Native bar shell.qml'den HintPopup component'i alır; bu
+QuickShell PopupWindow, anchor.item/rect ile düğmenin altına bağlanır. Boş Region
+input maskesi ve grabFocus:false, pointer/focus engelini önler. Panel/preview
+aynı bubble'ı etkileşimsiz Qt ToolTip ile gösterir; dar bar penceresine sıkıştırılmaz.
 [Yüzey haritası](THEME_SURFACES.md) · [ADR-0010](decisions/0010-shared-shell-presentation.md).
 Dolphin'in desktop girdisi Qt ortamını tanımlar. Super+E `scripts/file-manager.sh`
 üzerinden kullanıcı/system XDG sırasında aynı girdiyi `gio launch` ile açar;

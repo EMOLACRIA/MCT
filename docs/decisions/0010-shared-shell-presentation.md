@@ -42,3 +42,29 @@ eşitliği iddiası değildir. Qt software render örnekleri incelendi. Native
 Wayland tooltip/toast, gerçek bar reserve ve yeniden başlatmada kalıcılık hâlâ
 kullanıcı oturumu kontrolüdür. Harici adaptör/eksik kabul haritası
 [THEME_SURFACES](../THEME_SURFACES.md) içindedir; M3/M4 kapısı açık kalır.
+
+## 2.6.1 düzeltme — native bar ipucu
+
+17 Ekim kullanıcı ipucunun düğmeyi örttüğünü bildirdi. 2.6.0 offscreen sahnesi tam
+ekran olduğu için 48 px native bar penceresinde Qt ToolTip clamp sorununu
+yakalamamıştı. Gecikme de açıkça tanımlanmamıştı. PR #9 aynı dalda düzeltildi.
+
+SurfaceHint artık Item tabanlı 600 ms bekleme/iptal modelidir; basılı düğmede veya
+ayrılmada ipucu kapanır, başka owner için süre baştan başlar. HintBubble görünümü
+native bar ve Qt fallback paylaşır. shell.qml, bar ActionButton/workspace/tray
+hint'lerine HintPopup component'ini geçirir; Loader yalnız gösterilirken yaratır.
+Native popup target'a bağlanıp 8 px aşağıda açılır; yatay slide ekran kenarını
+korur, boş Region maskesi click-through, grabFocus:false ToolTip pencere flag'i
+sağlar. Panel/preview fallback focus/modal/etkileşim almaz; yer varsa aşağı,
+yoksa yukarı konumlanır. Gecikme bir animasyon süresi değildir.
+
+Birincil kaynaklar: QuickShell **v0.3.1**
+[PopupWindow](https://quickshell.org/docs/v0.3.1/types/Quickshell/PopupWindow/),
+[PopupAnchor](https://quickshell.org/docs/v0.3.1/types/Quickshell/PopupAnchor/),
+[QsWindow.mask](https://quickshell.org/docs/v0.3.1/types/Quickshell/QsWindow/),
+yerel aynı tag proxywindow.cpp/popupwindow.cpp ve
+[Qt 6.8 Loader non-visual components](https://doc.qt.io/qt-6.8/qml-qtquick-loader.html).
+
+12 Qt testi; 37 QML bytecode; 122 native binding ve input-mask/flag kaynak kontrolü
+geçti. QtObject presenter fixture'ı Loader köprüsünü çalıştırır; gerçek Wayland
+popup/click-through çalıştırılmış sayılmaz. Native son kabul yine açıktır.

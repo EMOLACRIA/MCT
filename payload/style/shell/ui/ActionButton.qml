@@ -5,6 +5,7 @@ AbstractButton {
     id: root
     property string symbol: ""
     property string hint: ""
+    property Component hintPopup:null
     property real iconLevel: 100
     property bool iconCharging: false
     property color iconColor: destructive ? Theme.danger : Theme.brass
@@ -17,7 +18,7 @@ AbstractButton {
     activeFocusOnTab: true
     Accessible.name: text || symbol
     opacity: enabled ? 1 : .38
-    SurfaceHint {visible:root.visible && root.hovered && text!=="";text:root.hint}
+    SurfaceHint {active:root.visible && root.hovered && !root.pressed && text!=="";text:root.hint;target:root;popupComponent:root.hintPopup}
     background: Rectangle {
         color: root.down || root.selected ? Theme.selectedSurface : root.hovered || root.activeFocus ? Theme.raised : "transparent"
         border.color: root.selected || root.activeFocus ? Theme.brass : root.hovered ? Theme.line : "transparent"

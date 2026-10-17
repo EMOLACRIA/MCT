@@ -54,9 +54,10 @@ ShellRoot {
             implicitHeight:SurfaceLayout.barHeight; exclusiveZone:Theme.preferences.barFloating ? SurfaceLayout.floatingBarReservedHeight : SurfaceLayout.barHeight; color:"transparent"
             WlrLayershell.layer:WlrLayer.Top
             WlrLayershell.namespace:"desktop-bar"
-            Bar { anchors.fill:parent; backend:services; uiState:shellState; screenToken:barWindow.modelData.name; nativeWindow:barWindow }
+            Bar { anchors.fill:parent; backend:services; uiState:shellState; screenToken:barWindow.modelData.name; nativeWindow:barWindow;hintPopup:nativeHint }
         }
     }
+    Component {id:nativeHint;HintPopup {}}
     PanelWindow {
         visible:switcher.active && root.switcherScreen!==null
         screen:root.switcherScreen;anchors {top:true;bottom:true;left:true;right:true}

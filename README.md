@@ -5,7 +5,7 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.6.0 geliştirme sürümü. Alt+Tab, hesaplamalı launcher ve terminal/Dolphin açılışı onaylandı; 2.5.1 normal kullanımında sorun bildirilmedi. Ayarların native kalıcılık kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+**Durum:** 2.6.1 geliştirme sürümü. Alt+Tab, hesaplamalı launcher ve terminal/Dolphin açılışı onaylandı; 2.5.1 normal kullanımında sorun bildirilmedi. 2.6.0 bar ipucu tıklama engeli düzeltildi; hedef oturum kontrolü bekliyor. Ayarların native kalıcılık kabulü bekliyor. Plague Tale henüz tamamlanmadı.
 M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
@@ -25,6 +25,18 @@ M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.6.1 — Bar ipucu tıklamayı engellemez
+
+İpucu 600 ms hover sonrası açılır; düğmeye basınca veya imleç ayrılınca kapanır.
+Barın 48 px penceresine sıkıştırılmaz: ayrı, odak almayan ve tıklamaları geçiren
+QuickShell popup'ı düğmenin 8 px altında açılır. Panel/preview Qt ipuçları da
+etkileşime girmez ve düğmenin dışında konumlanır. Gecikme hareketi azaltma
+seçeneğinden bağımsızdır. Düzeltme mevcut `refactor/shared-shell-presentation`
+dalındadır; ayrı kurulum/restore gerektirmez.
+
+12 Qt yerleşim/etkileşim testi, 37 QML derlemesi ve 122 native binding kontrolü
+geçti. Native Wayland popup konumu yine hedef cihazda denenmelidir.
 
 ## 2.6.0 — Ortak shell sunumu
 

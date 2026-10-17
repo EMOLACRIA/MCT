@@ -165,6 +165,31 @@ başlatma ve restart kabulü raporlanmadan PT-012 kapanmaz.
 17 Ekim PT-011 normal kullanım kullanıcı onayı kaydedildi. Bu, her clipboard alt
 testinin tek tek bildirildiği anlamına gelmez; önceki ortam sınırları korunur.
 
+## Bar ipucu tıklama regresyonu (2.6.1)
+
+17 Ekim kullanıcı 2.6.0'da ipucunun anında düğmeyi örterek tıklamayı engellediğini
+bildirdi. PR #9 onaylanmış veya ana dala alınmış sayılmadı. Aynı dalda düzeltme:
+SurfaceHint 600 ms gecikme/iptal; native bar ayrı PopupWindow ve boş Region maskesi,
+grabFocus:false; panel/preview ToolTip etkileşimsiz ve düğme dışındadır.
+
+2026-10-17: `MCT_QT_TEST_PATH=... python3 checks/test_shell_ui.py` — **12 test geçti**.
+Yeni üç test: gecikme/konum/açıkken tıklama ve basmada gizleme; owner değişimi ve
+ayrılmada iptal; bütün bar hint'lerine native component aktarımı ve non-Item Loader
+bridge yükleme/boşaltması. Native presenter bu son testte QtObject fixture'ıdır;
+gerçek PopupWindow açıldığı anlamına gelmez. Qt 6.10.2 software/offscreen.
+
+`test_shell_syntax.py` — **37 QML**; `test_shell_api.py` — **122 native binding**;
+PopupWindow.anchor alanları ve Region kaynak sözleşmesine eklendi. 0.3.1
+proxywindow.cpp boş non-null maskede WindowTransparentForInput; popupwindow.cpp
+grabFocus false iken Qt::ToolTip flag yolunu doğruladı. Network import ve mevcut
+ikon/OSD etkileşim kontrolü geçti. Kaynak/karar ek notu ADR-0010'dadır.
+
+Hedef oturumda aynı dalda `git pull --ff-only`, ardından
+`bash update.sh --check && bash update.sh`. İmleci barın bir düğmesine götür:
+ilk anda ipucu olmamalı; kısa beklemeden sonra aşağıda görünmeli. Açıkken aynı
+düğmeye basılabilmeli; imleç ayrılınca kapanmalı. Native scale/kenar yerleşimi ve
+click-through son kabulü kullanıcı oturumundadır.
+
 ## M3 ortak shell sunumu (2.6.0)
 
 17 Ekim: kullanıcı “Şuan bi sıkıntı yok gibi. Devam edelim” diyerek 2.5.1 normal

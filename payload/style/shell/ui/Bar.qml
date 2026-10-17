@@ -7,11 +7,12 @@ OrnamentFrame {
     required property var uiState
     property string screenToken: ""
     property var nativeWindow: null
+    property Component hintPopup:null
     implicitHeight:SurfaceLayout.barHeight
     Row {
         id:leftGroup
         anchors.left:parent.left; anchors.leftMargin:14; anchors.verticalCenter:parent.verticalCenter; spacing:root.width<800 ? 2 : root.width<1100 ? 3 : 7
-        ActionButton { width:34; height:34; padding:7; symbol:"search"; onClicked:uiState.toggle("launcher",root.screenToken); hint:"Applications · Super+R" }
+        ActionButton { width:34; height:34; padding:7; symbol:"search"; onClicked:uiState.toggle("launcher",root.screenToken); hintPopup:root.hintPopup; hint:"Applications · Super+R" }
         Rectangle { width:1; height:22; color:Theme.line; anchors.verticalCenter:parent.verticalCenter }
         Repeater {
             model:backend.workspaces
@@ -27,7 +28,7 @@ OrnamentFrame {
                     Rectangle { anchors.bottom:parent.bottom; anchors.bottomMargin:2; anchors.horizontalCenter:parent.horizontalCenter; width:workspaceButton.chosen ? 14 : 3; height:workspaceButton.chosen ? 2 : 3; radius:1; visible:workspaceButton.chosen || workspaceButton.modelData.count > 0; color:Theme.brass }
                 }
                 onClicked:backend.activateWorkspace(modelData.id)
-                SurfaceHint {visible:parent.visible && parent.hovered;text:workspaceButton.modelData.count+" windows"}
+                SurfaceHint {active:workspaceButton.visible && workspaceButton.hovered && !workspaceButton.pressed;text:workspaceButton.modelData.count+" windows";target:workspaceButton;popupComponent:root.hintPopup}
             }
         }
     }
@@ -43,14 +44,14 @@ OrnamentFrame {
     Row {
         id:rightGroup; objectName:"barActions"
         anchors.right:parent.right; anchors.rightMargin:14; anchors.verticalCenter:parent.verticalCenter; spacing:root.width<800 ? 2 : 5
-        ActionButton { width:32; height:34; padding:7; symbol:"hardware"; onClicked:uiState.toggle("hardware",root.screenToken); hint:"Hardware · Super+T" }
-        ActionButton { width:32; height:34; padding:7; symbol:"music"; onClicked:uiState.toggle("media",root.screenToken); hint:"Media" }
-        ActionButton { width:32; height:34; padding:7; symbol:"bell"; selected:backend.unread > 0; onClicked: {backend.markRead();uiState.toggle("notifications",root.screenToken);} hint:"Notifications · Super+B" }
-        ActionButton { width:text ? implicitWidth : 32; height:34; padding:7; symbol:backend.muted ? "mute" : "audio"; text:root.width>1050 ? backend.volume + "%" : ""; onClicked:uiState.toggle("controls",root.screenToken); hint:"Sound and brightness" }
-        ActionButton { width:32; height:34; padding:7; symbol:"network"; onClicked:uiState.toggle("controls",root.screenToken); hint:backend.network }
-        ActionButton { width:text ? implicitWidth : 32; height:34; padding:7; symbol:"battery"; iconLevel:backend.battery; iconCharging:backend.batteryCharging; iconColor:backend.battery>=0 && backend.battery<=15 && !backend.batteryCharging ? Theme.danger : Theme.brass; text:root.width>1050 && backend.battery >= 0 ? backend.battery + "%" : ""; onClicked:uiState.toggle("controls",root.screenToken); hint:backend.batteryText }
+        ActionButton { width:32; height:34; padding:7; symbol:"hardware"; onClicked:uiState.toggle("hardware",root.screenToken); hintPopup:root.hintPopup; hint:"Hardware · Super+T" }
+        ActionButton { width:32; height:34; padding:7; symbol:"music"; onClicked:uiState.toggle("media",root.screenToken); hintPopup:root.hintPopup; hint:"Media" }
+        ActionButton { width:32; height:34; padding:7; symbol:"bell"; selected:backend.unread > 0; onClicked: {backend.markRead();uiState.toggle("notifications",root.screenToken);} hintPopup:root.hintPopup;hint:"Notifications · Super+B" }
+        ActionButton { width:text ? implicitWidth : 32; height:34; padding:7; symbol:backend.muted ? "mute" : "audio"; text:root.width>1050 ? backend.volume + "%" : ""; onClicked:uiState.toggle("controls",root.screenToken); hintPopup:root.hintPopup; hint:"Sound and brightness" }
+        ActionButton { width:32; height:34; padding:7; symbol:"network"; onClicked:uiState.toggle("controls",root.screenToken); hintPopup:root.hintPopup; hint:backend.network }
+        ActionButton { width:text ? implicitWidth : 32; height:34; padding:7; symbol:"battery"; iconLevel:backend.battery; iconCharging:backend.batteryCharging; iconColor:backend.battery>=0 && backend.battery<=15 && !backend.batteryCharging ? Theme.danger : Theme.brass; text:root.width>1050 && backend.battery >= 0 ? backend.battery + "%" : ""; onClicked:uiState.toggle("controls",root.screenToken); hintPopup:root.hintPopup; hint:backend.batteryText }
         Rectangle { width:1; height:22; color:Theme.line; anchors.verticalCenter:parent.verticalCenter }
-        ActionButton { width:34; height:34; padding:7; symbol:"power"; onClicked:uiState.toggle("power",root.screenToken); hint:"Session · Super+M" }
+        ActionButton { width:34; height:34; padding:7; symbol:"power"; onClicked:uiState.toggle("power",root.screenToken); hintPopup:root.hintPopup; hint:"Session · Super+M" }
     }
     Item {
         id:tray; objectName:"barTray"
@@ -90,7 +91,7 @@ OrnamentFrame {
                             anchors.fill:parent; acceptedButtons:Qt.LeftButton|Qt.RightButton|Qt.MiddleButton; hoverEnabled:true
                             onClicked:mouse=> {const p=trayIcon.mapToItem(root,0,trayIcon.height);backend.trayClick(trayIcon.index,mouse.button,root.nativeWindow,p.x,p.y);}
                             onWheel:wheel=>backend.trayScroll(trayIcon.index,wheel.angleDelta.y)
-                            SurfaceHint {visible:parent.visible && parent.containsMouse;text:trayIcon.modelData.title}
+                            SurfaceHint {active:parent.visible && parent.containsMouse && !parent.pressed;text:trayIcon.modelData.title;target:trayIcon;popupComponent:root.hintPopup}
                         }
                     }
                 }

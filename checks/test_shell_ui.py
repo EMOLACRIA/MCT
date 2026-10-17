@@ -6,6 +6,7 @@ from pathlib import Path
 import unittest
 
 import test_preferences_ui as qt
+from PySide6.QtCore import QPoint
 
 
 class ResponsiveUiTests(unittest.TestCase):
@@ -154,6 +155,59 @@ class ResponsiveUiTests(unittest.TestCase):
         self.fixture.click('closePanel');qt.QTest.qWait(20)
         self.fixture.click('dismissToast-toast-fixture')
         self.assertFalse(stack.property('visible'))
+
+    def hint(self,text):
+        return next(item for item in self.root.findChildren(qt.QObject,'surfaceHint') if item.property('text')==text)
+    def hover_hint(self,hint):
+        button=hint.property('target')
+        point=button.mapToScene(button.boundingRect().center()).toPoint()
+        qt.QTest.mouseMove(self.view,point);return button,point
+
+    def test_bar_hint_delay_position_and_click_after_visible(self):
+        hint=self.hint('Hardware · Super+T');button,point=self.hover_hint(hint)
+        qt.QTest.qWait(200);self.assertFalse(hint.property('shown'))
+        qt.QTest.qWait(500);self.assertTrue(hint.property('shown'))
+        tip=hint.findChild(qt.QObject,'hintFallback');self.assertTrue(tip.property('opened'))
+        bubble=tip.property('contentItem');x,y,w,h=self.rect(bubble,button)
+        self.assertGreaterEqual(y,button.height()+7)
+        self.assertGreater(w,0);self.assertGreater(h,0)
+        self.assertFalse(tip.property('focus'));self.assertFalse(tip.property('enabled'))
+        qt.QTest.mousePress(self.view,qt.Qt.LeftButton,pos=point)
+        self.assertFalse(hint.property('shown'))
+        qt.QTest.mouseRelease(self.view,qt.Qt.LeftButton,pos=point)
+        self.assertEqual(self.js('uiState.activePanel'),'hardware')
+
+    def test_hint_owner_change_restarts_delay_and_leaving_cancels(self):
+        first=self.hint('Media');second=self.hint('Hardware · Super+T')
+        self.hover_hint(first);qt.QTest.qWait(300)
+        self.hover_hint(second);qt.QTest.qWait(350)
+        self.assertFalse(first.property('shown'));self.assertFalse(second.property('shown'))
+        qt.QTest.qWait(350);self.assertTrue(second.property('shown'))
+        qt.QTest.mouseMove(self.view,QPoint(500,400));qt.QTest.qWait(700)
+        self.assertFalse(second.property('shown'))
+
+    def test_native_presenter_loader_binds_hint_and_unloads_on_leave(self):
+        # Exercise the non-Item Loader bridge without creating a native window.
+        hint=self.hint('Hardware · Super+T')
+        engine=self.view.engine();component=qt.QQmlComponent(engine)
+        component.setData(b'import QtQuick\nQtObject {property var hint:null}',qt.QUrl())
+        self.assertEqual(component.status(),qt.QQmlComponent.Ready)
+        self.js('backend.trayItems=[{icon:"",title:"Fixture tray"}]');qt.QTest.qWait(20)
+        bar=self.item('barActions').parentItem()
+        self.assertTrue(bar.setProperty('hintPopup',component))
+        def gather(item):
+            found=[item] if item.objectName()=='surfaceHint' else []
+            for child in item.childItems():found.extend(gather(child))
+            return found
+        bar_hints=gather(bar);self.assertGreaterEqual(len(bar_hints),19)
+        for entry in bar_hints:self.assertEqual(entry.property('popupComponent'),component)
+        self.hover_hint(hint);qt.QTest.qWait(700)
+        loader=hint.findChild(qt.QObject,'hintNativeLoader');presenter=loader.property('item')
+        self.assertIsNotNone(presenter);self.assertEqual(presenter.property('hint'),hint)
+        self.assertFalse(hint.findChild(qt.QObject,'hintFallback').property('visible'))
+        qt.QTest.mouseMove(self.view,QPoint(500,400));qt.QTest.qWait(30)
+        self.assertIsNone(loader.property('item'))
+        bar.setProperty('hintPopup',None)
 
 
 if __name__=='__main__':unittest.main()

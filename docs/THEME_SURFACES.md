@@ -1,6 +1,6 @@
 # Görsel yüzey haritası
 
-2026-10-17 · **2.6.0 kaynak durumu**. Bu harita mevcut Plague Tale sunumunu
+2026-10-17 · **2.6.1 kaynak durumu**. Bu harita mevcut Plague Tale sunumunu
 tanımlar. Yeni bir tema paketi yükleyicisi veya tema seçici uygulanmış değildir.
 İkinci tema M4 sonrasında başlar. İşlevlerin kaynağı [özellik sözleşmesidir](FEATURE_CONTRACT.md).
 
@@ -13,6 +13,7 @@ tanımlar. Yeni bir tema paketi yükleyicisi veya tema seçici uygulanmış değ
 | `ui/OrnamentFrame.qml`, `Glyph.qml` | Çerçeve ve vektör çizimi | Şekil/geometri sunumdur; pil şarj/level değerini backend sağlar |
 | `ui/PanelHeader.qml` | Yedi panelde ikon, başlık, durum, ek eylem ve kapatma | `closed` sinyali parent tarafından UiState'e bağlanır; ikinci durum makinesi yoktur |
 | `ui/ActionButton.qml`, `SurfaceHint.qml` | Hover/focus/selected/disabled; koyu ve sarılabilen ipucu | Native komut içermez; parent eylemi bağlar |
+| `ui/HintBubble.qml`, `payload/style/shell/HintPopup.qml` | Aynı bubble'ın Qt fallback veya ayrı native popup sunumu | 600 ms sonrası; native boş input maskesi, grabFocus:false; tıklamayı engellemez |
 | `ui/NotificationActions.qml`, `ToastStack.qml` | Toast/geçmiş eylemlerinin genişlik sınırı; paylaşılan toast yığını | Aynı notification key/action backend'e gider; süre/DND/unread kopyalanmaz |
 | `shell.qml`, `PreviewScene.qml` | Native pencere veya örnek sahne | Aynı ölçüler/sunum; yalnız native LiveContext gerçek servisleri kullanır |
 
@@ -64,7 +65,8 @@ Gelecekte bunlar için üretim/apply/rollback gerekir; böyle bir üretici henü
 
 ## Kalan kapı
 
-2.5.1 normal kullanımında sorun bildirilmedi. 2.6.0 hazırlama kontrolleri
+2.5.1 normal kullanımında sorun bildirilmedi. 2.6.0'da bar ipucu regresyonu
+bildirildi; 2.6.1 düzeltmesi aynı dalda kabul bekliyor. Hazırlama kontrolleri
 [VALIDATION](VALIDATION.md) içinde; native yeni başlık/hint/toast yerleşimi ayrıca
 kontrol edilmeli. Ayarların restart sonrası kalıcılığı, lock/SDDM gerçek giriş,
 çoklu ekran ve kapsamlı restore kabulü açıktır. Bu harita M3/M4'ü kapatmaz.
