@@ -100,6 +100,10 @@ def check():
     if version.returncode or '0.56.2' not in version.stdout:raise RuntimeError('This package targets the supplied Hyprland 0.56.2 Lua configuration.')
     original=Path((m.STATE/'current-backup').read_text().strip())/'manifest.json'
     if not original.is_file():raise RuntimeError('The original restore manifest is missing.')
+    # The shared updater and theme engine serialize on the same update.lock.
+    # Preflight also refuses a pending journal or a skin the payload would reset.
+    import theme_core
+    theme_core.Engine(m.PACKAGE, m.STYLE, m.STATE, m.HYPR).guard_update()
     ensure_clean_config();m.check_quickshell()
     return patch_bindings((m.HYPR/'keybinds.lua').read_text())
 
@@ -157,6 +161,8 @@ def update(check_only=False):
     m.STATE.mkdir(parents=True,exist_ok=True)
     with (m.STATE/'update.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        import theme_core
+        theme_core.Engine(m.PACKAGE, m.STYLE, m.STATE, m.HYPR).guard_update()
         dest=m.STATE/'revisions'/datetime.now().strftime('%Y%m%d-%H%M%S-%f');dest.mkdir(parents=True,mode=0o700)
         shutil.copytree(m.STYLE,dest/'style',symlinks=True)
         keybinds=m.HYPR/'keybinds.lua';shutil.copy2(keybinds,dest/'keybinds.lua')

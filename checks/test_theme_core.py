@@ -101,6 +101,9 @@ class CoreTests(unittest.TestCase):
         manifest, output = self.engine.load("plague-tale")
         self.assertEqual(set(manifest["surfaces"]), theme.SURFACES)
         self.assertGreater(len(output), 30)
+        for entry in manifest["files"]:
+            self.assertEqual((self.package / "themes/plague-tale" / entry["source"]).read_bytes(),
+                             (ROOT / "payload" / entry["target"]).read_bytes(), entry["target"])
         self.assertIn(str(self.engine.style).encode(), output["style/hyprlock/media.conf"])
         self.assertNotIn(b"@STYLE@", output["style/hyprlock/media.conf"])
 
@@ -288,8 +291,31 @@ class CoreTests(unittest.TestCase):
             return subprocess.CompletedProcess(args, 0, output, "")
         with patch.object(native, "run", side_effect=run): native.reload()
         commands = [c[-1] for c in calls if "wallpaper" in c]
-        self.assertEqual(commands, ["eDP-1," + str(self.engine.style / "wallpaper.png") + ",contain",
-                                    "DP-2," + str(self.engine.style / "wallpaper.png") + ",tile"])
+        cached = self.engine.data / "wallpapers" / (theme.digest((self.engine.style / "wallpaper.png").read_bytes()) + ".png")
+        self.assertEqual(commands, ["eDP-1," + str(cached) + ",contain", "DP-2," + str(cached) + ",tile"])
+        self.assertEqual(cached.read_bytes(), (self.engine.style / "wallpaper.png").read_bytes())
+
+    def test_reapply_same_package_does_not_restart_or_add_snapshot(self):
+        self.engine.apply("plague-tale")
+        before = self.state(); self.runtime.events.clear()
+        self.assertIsNone(self.engine.apply("plague-tale"))
+        self.assertEqual(before, self.state())
+        self.assertNotIn("stop", self.runtime.events)
+
+    def test_update_allows_identical_payload_and_blocks_theme_loss(self):
+        self.engine.apply("plague-tale"); self.engine.guard_update()
+        source = self.package / "payload/style/shell/ui/Theme.qml"
+        source.write_bytes(source.read_bytes() + b"\n// source update")
+        before = self.state()
+        with self.assertRaisesRegex(theme.ThemeError, "would replace"): self.engine.guard_update()
+        self.assertEqual(before, self.state())
+
+    def test_update_guard_blocks_variant_and_interrupted_transaction(self):
+        self.variant(); self.engine.apply("fixture-variant")
+        with self.assertRaisesRegex(theme.ThemeError, "would replace"): self.engine.guard_update()
+        self.engine.rollback()
+        self.interrupt()
+        with self.assertRaisesRegex(theme.ThemeError, "interrupted"): self.engine.guard_update()
 
     def test_cli_list_and_status_need_no_native_session(self):
         for action in ("list", "status"):

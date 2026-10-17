@@ -227,10 +227,14 @@ class Native:
         self.run(["hyprctl", "reload"])
         self.clean()
         # The selected monitor, fit mode and GPU settings are not changed.
+        data = (self.engine.style / "wallpaper.png").read_bytes()
+        cached = safe(self.engine.data, "wallpapers/" + digest(data) + ".png")
+        if not cached.is_file() or cached.read_bytes() != data:
+            atomic(cached, data, 0o644)
         for monitor in self.monitors():
             fit = self.wallpaper_fits.get(monitor, self.wallpaper_fits.get("", "cover"))
             self.run(["hyprctl", "hyprpaper", "wallpaper",
-                      monitor + "," + str(self.engine.style / "wallpaper.png") + "," + fit])
+                      monitor + "," + str(cached) + "," + fit])
 
 
 class Engine:
@@ -358,6 +362,8 @@ class Engine:
                 if not path.is_file() or digest(path.read_bytes()) != known[name]:
                     raise ThemeError("Theme file changed manually; kept unchanged: " + name)
             elif path.exists():
+                if not path.is_file():
+                    raise ThemeError("Not a regular theme file: " + name)
                 base = safe(self.root / "payload", name)
                 expected = base.read_bytes().replace(b"@STYLE@", str(self.style).encode()) if base.is_file() else None
                 if expected is None or path.read_bytes() != expected:
@@ -487,6 +493,25 @@ class Engine:
                                  + ". Run recover after resolving: " + str(recovery)) from original
             raise ThemeError("Theme operation failed; previous state restored: " + str(original)) from original
         return ident
+
+    def guard_update(self):
+        """Stop a source update from silently resetting a managed skin.
+
+        A byte-identical update is safe; a changed presentation needs an explicit
+        rollback/apply, keeping the original installer restore point untouched.
+        """
+        if self.optional("pending.json") is not None:
+            raise ThemeError("Recover the interrupted theme transaction before updating.")
+        active = self.optional("active.json")
+        if active is None:
+            return
+        _, known = self.ownership(())
+        for name in known:
+            source = safe(self.root / "payload", name)
+            data = source.read_bytes().replace(b"@STYLE@", str(self.style).encode()) if source.is_file() else None
+            if data is None or digest(data) != known[name]:
+                raise ThemeError("Update would replace the active theme. Run 'bash theme.sh rollback' "
+                                 "until no active theme remains, update, then apply the theme again.")
 
     def apply(self, name):
         with self.lock():
