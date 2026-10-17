@@ -5,7 +5,7 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.5.1 geliştirme sürümü. Alt+Tab, hesaplamalı launcher ve terminal/Dolphin açılışı onaylandı. Ayarların native kalıcılık kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+**Durum:** 2.6.1 geliştirme sürümü. Alt+Tab, hesaplamalı launcher ve terminal/Dolphin açılışı onaylandı; 2.5.1 normal kullanımında sorun bildirilmedi. 2.6.0 bar ipucu tıklama engeli düzeltildi; hedef oturum kontrolü bekliyor. Ayarların native kalıcılık kabulü bekliyor. Plague Tale henüz tamamlanmadı.
 M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
@@ -18,12 +18,40 @@ M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 | [STATUS.md](STATUS.md) | Kaynakta olanlar, açık sorunlar, doğrulama durumu |
 | [Özellik sözleşmesi](docs/FEATURE_CONTRACT.md) | Her temada aynı kalan işlev ve alışkanlıklar |
 | [Mimari](docs/ARCHITECTURE.md) | Mevcut yapı ile planlanan ayrım |
+| [Görsel yüzey haritası](docs/THEME_SURFACES.md) | Shell'in ortak sunumu ve ayrı lock/SDDM/uygulama adaptörleri |
 | [Yayın kontrolü](docs/RELEASE_CHECKLIST.md) | İlk tema ne zaman bitmiş sayılır? |
 | [Vitreus / Caelestia](docs/INSPIRATION.md) | Referanslar, incelenen sürümler ve alınacak fikirler |
 | [Doğrulama sınırları](docs/VALIDATION.md) | Gerçekten çalıştırılan ile hedef oturum kontrolü farkı |
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.6.1 — Bar ipucu tıklamayı engellemez
+
+İpucu 600 ms hover sonrası açılır; düğmeye basınca veya imleç ayrılınca kapanır.
+Barın 48 px penceresine sıkıştırılmaz: ayrı, odak almayan ve tıklamaları geçiren
+QuickShell popup'ı düğmenin 8 px altında açılır. Panel/preview Qt ipuçları da
+etkileşime girmez ve düğmenin dışında konumlanır. Gecikme hareketi azaltma
+seçeneğinden bağımsızdır. Düzeltme mevcut `refactor/shared-shell-presentation`
+dalındadır; ayrı kurulum/restore gerektirmez.
+
+12 Qt yerleşim/etkileşim testi, 37 QML derlemesi ve 122 native binding kontrolü
+geçti. Native Wayland popup konumu yine hedef cihazda denenmelidir.
+
+## 2.6.0 — Ortak shell sunumu
+
+Shell renkleri, yazı aileleri, süs varlıkları ve hareket süreleri `Theme.qml`;
+bar/panel/OSD/toast/Alt+Tab dış ölçüleri `SurfaceLayout.qml` üzerinden yönetilir.
+Canlı shell ile önizleme aynı yüzey ölçülerini kullanır. Yedi panelin başlıkları
+ve kapatma düğmeleri ortak bileşendedir; medya/arayüz eylemleri korunur.
+
+Uzun bildirim butonları toast ve geçmişte aynı bileşenle sığdırılır. İpuçları
+koyu paleti izler ve uzun metni sarar. Toast'lar artık önizlemede de gösterilebilir.
+Bu iç düzenleme yeni bir tema seçici değildir; lock/SDDM/Dolphin/Spotify ayrı
+adaptörlerdir. [Yüzey haritası ve sınırlar](docs/THEME_SURFACES.md).
+
+9 yerleşim/etkileşim testi, mevcut ayar/launcher/Alt+Tab/OSD kontrolleri, network
+import ve 35 QML derlemesi geçti. Hedef oturum kabulü ayrıca gerekir.
 
 ## 2.5.1 — Uzun içerik ve dar panel düzeltmeleri
 

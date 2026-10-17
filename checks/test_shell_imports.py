@@ -5,6 +5,7 @@ file: imports can discover unlisted siblings and therefore mask incomplete
 manifests; a network URL requires every component to be registered.
 """
 import os
+import re
 import sys
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -23,6 +24,9 @@ shell = style / 'shell'
 old_manifest = 'singleton Theme 1.0 Theme.qml\n'
 registered = {line.split()[-1] for line in (shell / 'ui/qmldir').read_text().splitlines() if line.strip()}
 assert registered == {p.name for p in (shell / 'ui').glob('*.qml')}
+palette_leaks=[str(p.relative_to(shell)) for p in shell.rglob('*.qml')
+               if p.name!='Theme.qml' and re.search(r'#[0-9a-fA-F]{3,8}\b|Qt\.rgba\(',p.read_text())]
+assert not palette_leaks, 'Shell palette literals must live in Theme.qml: '+str(palette_leaks)
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
@@ -112,7 +116,7 @@ def verify_fixed(component):
             e=QQmlExpression(context,scene,'uiState.toggle("settings","preview")');e.evaluate()
             assert not e.hasError(),e.error().toString()
             assert scene.findChild(QObject,'settingsPanel') is not None
-            print('PASS: complete qmldir, scene, Calculator.js and preference panel load through network directory imports.',flush=True)
+            print('PASS: complete qmldir, shared presentation types, scene, Calculator.js and preference panel load through network imports; palette literals stay in Theme.qml.',flush=True)
             app.quit()
         except Exception as exc:
             print('FAIL:',repr(exc),flush=True);app.exit(1)

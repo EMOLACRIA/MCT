@@ -99,9 +99,18 @@ davranış sözleşmesine yazılmış ve canlı oturumda kabul edilmiş olmalı.
 
 **Başladı — PT-013 / 2.5.1:** ilk dar ekran/uzun içerik denetiminde tray-saat
 çakışması, medya ve güç menüsü taşması, uzun bildirim eylemleri düzeltildi.
-7 Qt testi ve görsel örnekler kontrol edildi; canlı kabul bekliyor.
-Sabit görsel değerlerin ortak sunum katmanında toplanması, lock/SDDM/uygulama
-bütünlüğü ve sözleşmenin tamamı henüz kapanmadı. [Karar](docs/decisions/0009-responsive-surfaces.md).
+7 Qt testi ve görsel örnekler kontrol edildi. 17 Ekim kullanıcı normal kullanımda
+sorun bildirmedi; ayrıntılı tray/çoklu ekran testleri ayrıca raporlanmadı.
+[Karar](docs/decisions/0009-responsive-surfaces.md).
+
+**PT-014 / 2.6.0 uygulandı:** shell paleti/font/varlık/hareket ve dış yüzey ölçüleri
+ortaklaştırıldı; başlık, ipucu, toast/geçmiş eylemleri paylaşılıyor. 9 Qt testi,
+35 QML derlemesi ve önceki etkileşim kontrolleri geçti. [Yüzey haritası](docs/THEME_SURFACES.md) ·
+[Karar](docs/decisions/0010-shared-shell-presentation.md).
+Hedef oturum kabulü, lock/SDDM/uygulama bütünlüğü ve sözleşmenin tamamı hâlâ açık.
+2.6.1: kullanıcı bar ipucunun tıklamayı engellediğini bildirdi. Gecikmeli,
+input-transparent ayrı bar popup'ı uygulandı. 17 Ekim kullanıcı “Tamamdır gayer güzel”
+diyerek düzeltmenin normal kullanımını onayladı; geniş M3/M4 ve PT-012 kabulü açık.
 
 - Görsel kimlik: font, ikon, çerçeve, panel, OSD, bildirim, medya, settings,
   Alt+Tab, launcher, Hyprlock, SDDM ve uygulama eklentilerinin bütünlüğü.

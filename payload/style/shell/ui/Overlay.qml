@@ -6,23 +6,23 @@ FocusScope {
     visible:uiState.activePanel!==""
     focus:visible
     Keys.onEscapePressed:uiState.close()
-    Rectangle { anchors.fill:parent; color:"#55000000" }
+    Rectangle { anchors.fill:parent; color:Theme.panelScrim }
     MouseArea { anchors.fill:parent; onClicked:uiState.close() }
     OrnamentFrame {
         id:frame; objectName:"activePanelFrame"
-        readonly property bool centered:Theme.preferences.centerPanels || uiState.activePanel==="settings" || uiState.activePanel==="launcher" || uiState.activePanel==="power" || uiState.activePanel==="hardware"
-        width:Math.max(250,Math.min(root.width-48,uiState.activePanel==="settings" ? 720 : uiState.activePanel==="hardware" ? 650 : uiState.activePanel==="launcher" ? 620 : uiState.activePanel==="power" ? 550 : uiState.activePanel==="notifications" ? 460 : 420))
-        height:Math.max(210,Math.min(root.height-100,uiState.activePanel==="settings" ? 740 : uiState.activePanel==="hardware" ? 660 : uiState.activePanel==="launcher" ? 580 : uiState.activePanel==="power" ? Math.round((uiState.confirmation ? 280 : 465)*Theme.fontScale) : uiState.activePanel==="notifications" ? 650 : uiState.activePanel==="controls" ? 610 : 520))
-        x:centered ? (root.width-width)/2 : root.width-width-16
-        y:centered ? (root.height-height)/2 : 74
+        readonly property bool centered:SurfaceLayout.panelCentered(uiState.activePanel,Theme.preferences.centerPanels)
+        width:SurfaceLayout.panelWidth(uiState.activePanel,root.width)
+        height:SurfaceLayout.panelHeight(uiState.activePanel,root.height,uiState.confirmation,Theme.fontScale)
+        x:centered ? (root.width-width)/2 : root.width-width-SurfaceLayout.panelSideMargin
+        y:centered ? (root.height-height)/2 : SurfaceLayout.panelTop
         MouseArea { anchors.fill:parent }
         Loader {
-            id:content; anchors.fill:parent; anchors.margins:24
+            id:content; anchors.fill:parent; anchors.margins:SurfaceLayout.panelPadding
             sourceComponent:uiState.activePanel==="launcher" ? launcher : uiState.activePanel==="power" ? power : uiState.activePanel==="controls" ? controls : uiState.activePanel==="notifications" ? notifications : uiState.activePanel==="media" ? media : uiState.activePanel==="hardware" ? hardware : uiState.activePanel==="settings" ? settings : null
             onLoaded: {appear.restart();activateContent.restart();}
             Timer {id:activateContent;interval:0;onTriggered:if(content.item && content.item.activate)content.item.activate()}
         }
-        NumberAnimation { id:appear; target:frame; property:"opacity"; from:0; to:1; duration:Theme.duration(140); easing.type:Easing.OutQuad }
+        NumberAnimation { id:appear; target:frame; property:"opacity"; from:0; to:1; duration:Theme.duration(Theme.panelEnterMotion); easing.type:Easing.OutQuad }
     }
     Component { id:launcher; Launcher { backend:root.backend; uiState:root.uiState } }
     Component { id:power; Power { backend:root.backend; uiState:root.uiState } }

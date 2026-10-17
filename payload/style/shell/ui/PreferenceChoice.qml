@@ -8,7 +8,7 @@ ComboBox {
     model:choices;textRole:"name";valueRole:"id"
     currentIndex:choices.findIndex(c=>c.id===selection)
     displayText:currentIndex<0 ? selection : currentText
-    implicitHeight:44;font.pixelSize:Theme.fontSize(13)
+    implicitHeight:44;font.family:Theme.bodyFont;font.pixelSize:Theme.fontSize(13)
     onActivated:index=> {if(choices[index])chosen(choices[index].id);}
     contentItem:Text {text:control.displayText;leftPadding:12;rightPadding:30;verticalAlignment:Text.AlignVCenter;elide:Text.ElideRight;color:Theme.ink;font:control.font}
     indicator:Glyph {symbol:"chevron";x:control.width-width-10;anchors.verticalCenter:parent.verticalCenter;width:18;height:18}

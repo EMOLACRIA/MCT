@@ -14,6 +14,21 @@ QtObject {
     readonly property color brass: "#b5a37c"
     readonly property color line: "#5d5949"
     readonly property color danger: "#ce9582"
+    // Semantic surface roles: callers do not choose their own palette literals.
+    readonly property color selectedSurface: "#39392f"
+    readonly property color activeWorkspaceSurface: "#35362d"
+    readonly property color inputSurface: "#242620"
+    readonly property color panelScrim: "#55000000"
+    readonly property color switcherScrim: "#880c0d0b"
+    readonly property color previewStatusSurface: "#e6191a18"
     readonly property string displayFont: "serif"
     readonly property string bodyFont: "sans-serif"
+    readonly property int quickMotion:110
+    readonly property int panelEnterMotion:140
+    readonly property int ornamentSize:20
+    readonly property url wallpaper:Qt.resolvedUrl("../assets/wallpaper.png")
+    readonly property url cornerTopLeft:Qt.resolvedUrl("../assets/tl.svg")
+    readonly property url cornerTopRight:Qt.resolvedUrl("../assets/tr.svg")
+    readonly property url cornerBottomLeft:Qt.resolvedUrl("../assets/bl.svg")
+    readonly property url cornerBottomRight:Qt.resolvedUrl("../assets/br.svg")
 }

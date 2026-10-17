@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.5.1
+## Mevcut 2.6.1
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -8,8 +8,25 @@ oturum/süreç yönetimi; `shell/shell.qml` layer-shell pencereleri ve IPC;
 `LiveContext.qml` native servisler; `DemoContext.qml` örnek veriler;
 `ui/` paylaşılan görsel bileşenler. `apps/` ve `sddm/` ayrı kuruculardır.
 
-`ui/Theme.qml` ortak renk/fontların bir kısmını içerir. Bileşenlerde sabit renkler
-ve ölçüler de vardır. Dolayısıyla mevcut kod “tam tema motoru” değildir.
+`ui/Theme.qml` shell QML renklerinin semantik kaynağıdır; font aileleri, font/motion
+ölçekleme, köşe/wallpaper URL'leri de buradadır. `SurfaceLayout.qml` bar/panel/OSD/
+toast/Alt+Tab dış ölçülerini, panel türü varsayılanlarını ve sınır hesabını paylaşır.
+Canlı native pencere ile PreviewScene aynı değerleri tüketir. Çizim/iç düzen
+ölçülerinin tamamı merkezileştirilmedi; harici adaptörler ayrı kaldı.
+Dolayısıyla mevcut kod tam tema motoru değildir.
+
+`PanelHeader` yedi panelin başlık/ek eylem/kapatma sunumudur. Eylemi parent'ın
+closed sinyal bağlantısı yürütür; UiState kopyalanmaz. `NotificationActions`
+toast ve geçmişin aynı backend eylemini kullanan genişliği sınırlı görünümüdür.
+`ToastStack` canlı shell ile preview'de paylaşılır; preview DemoContext kullanır.
+`SurfaceHint` palet/font ve metin sarması ortak olan ipucudur. Eylem/4500 ms
+bildirim süresi gibi davranışlar tema token'larına taşınmaz.
+2.6.1'de SurfaceHint 600 ms bekleme/iptal ve gösterim bileşeni seçimini yönetir; HintBubble
+salt görünümdür. Native bar shell.qml'den HintPopup component'i alır; bu
+QuickShell PopupWindow, anchor.item/rect ile düğmenin altına bağlanır. Boş Region
+input maskesi ve grabFocus:false, pointer/focus engelini önler. Panel/preview
+aynı bubble'ı etkileşimsiz Qt ToolTip ile gösterir; dar bar penceresine sıkıştırılmaz.
+[Yüzey haritası](THEME_SURFACES.md) · [ADR-0010](decisions/0010-shared-shell-presentation.md).
 Dolphin'in desktop girdisi Qt ortamını tanımlar. Super+E `scripts/file-manager.sh`
 üzerinden kullanıcı/system XDG sırasında aynı girdiyi `gio launch` ile açar;
 Exec satırını veya Qt ortamını ikinci kez üretmez. Girdi yoksa düz Dolphin'e döner;

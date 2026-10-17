@@ -50,13 +50,14 @@ ShellRoot {
             required property var modelData
             screen:modelData
             anchors {top:true;left:true;right:true}
-            margins {top:Theme.preferences.barFloating ? 10 : 0;left:Theme.preferences.barFloating ? 16 : 0;right:Theme.preferences.barFloating ? 16 : 0}
-            implicitHeight:48; exclusiveZone:Theme.preferences.barFloating ? 60 : 48; color:"transparent"
+            margins {top:Theme.preferences.barFloating ? SurfaceLayout.barTopMargin : 0;left:Theme.preferences.barFloating ? SurfaceLayout.barSideMargin : 0;right:Theme.preferences.barFloating ? SurfaceLayout.barSideMargin : 0}
+            implicitHeight:SurfaceLayout.barHeight; exclusiveZone:Theme.preferences.barFloating ? SurfaceLayout.floatingBarReservedHeight : SurfaceLayout.barHeight; color:"transparent"
             WlrLayershell.layer:WlrLayer.Top
             WlrLayershell.namespace:"desktop-bar"
-            Bar { anchors.fill:parent; backend:services; uiState:shellState; screenToken:barWindow.modelData.name; nativeWindow:barWindow }
+            Bar { anchors.fill:parent; backend:services; uiState:shellState; screenToken:barWindow.modelData.name; nativeWindow:barWindow;hintPopup:nativeHint }
         }
     }
+    Component {id:nativeHint;HintPopup {}}
     PanelWindow {
         visible:switcher.active && root.switcherScreen!==null
         screen:root.switcherScreen;anchors {top:true;bottom:true;left:true;right:true}
@@ -92,8 +93,8 @@ ShellRoot {
         visible:shellState.feedbackVisible && root.focusedScreen!==null
         screen:root.focusedScreen
         anchors {top:Theme.preferences.osdPosition==="top";bottom:Theme.preferences.osdPosition!=="top"}
-        margins {top:80;bottom:80}
-        implicitWidth:370; implicitHeight:100; color:"transparent"
+        margins {top:SurfaceLayout.osdEdgeMargin;bottom:SurfaceLayout.osdEdgeMargin}
+        implicitWidth:SurfaceLayout.osdWidth; implicitHeight:SurfaceLayout.osdHeight; color:"transparent"
         exclusionMode:ExclusionMode.Ignore; focusable:false
         WlrLayershell.layer:WlrLayer.Overlay
         WlrLayershell.namespace:"desktop-feedback"
@@ -103,14 +104,11 @@ ShellRoot {
         visible:services.toasts.length>0 && shellState.activePanel==="" && root.focusedScreen!==null
         screen:root.focusedScreen
         anchors {top:true;right:true}
-        margins {top:76;right:16}
-        implicitWidth:390; implicitHeight:toastColumn.implicitHeight; color:"transparent"
+        margins {top:SurfaceLayout.toastTop;right:SurfaceLayout.toastSideMargin}
+        implicitWidth:SurfaceLayout.toastWidth; implicitHeight:toastColumn.implicitHeight; color:"transparent"
         exclusionMode:ExclusionMode.Ignore; focusable:false
         WlrLayershell.layer:WlrLayer.Overlay
         WlrLayershell.namespace:"desktop-notifications"
-        Column {
-            id:toastColumn; width:parent.width; spacing:10
-            Repeater { model:services.toasts; delegate:Toast { required property var modelData; width:toastColumn.width; height:implicitHeight; note:modelData; backend:services } }
-        }
+        ToastStack {id:toastColumn;width:parent.width;backend:services}
     }
 }

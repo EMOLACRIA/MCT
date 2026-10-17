@@ -74,7 +74,7 @@ Item {
     function toggleDnd() { doNotDisturb=!doNotDisturb; }
     function clearHistory() { history=[];unread=0; }
     function dismissHistory(key) { history=history.filter(n=>n.key!==key); }
-    function notificationAction() {}
+    function notificationAction(key,id) {lastAction="Preview · Notification "+key+" · "+id;}
     function dismissToast() { toasts=[]; }
     function sessionAction(code) { lastAction="Preview · " + code + " selected"; }
     function mediaCommand(code) { if(code==="toggle")mediaPlaying=!mediaPlaying;else lastAction="Preview · " + code + " track"; }

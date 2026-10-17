@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.5.1 geliştirme sürümü**.
-Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 kalıcılık kabulü bekliyor; M3 ilk yerleşim denetimi uygulandı**. Plague Tale tamamlanmış değildir.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.6.1 geliştirme sürümü**.
+Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 kalıcılık kabulü bekliyor; M3 ortak shell sunumu uygulandı / kabul bekliyor**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -9,7 +9,9 @@ Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yoruml
 QuickShell bar; launcher; güç menüsü; kontrol paneli; bildirim geçmişi/toast/DND;
 MPRIS medya; donanım paneli; sürüklenebilir OSD; pil/şarj durumu; Hyprlock medya
 bölümü; ayrı SDDM teması; Dolphin/Spotify eklentileri; kurulum/güncelleme/restore.
-`Theme.qml` vardır fakat bütün görsel değerler henüz bu dosyada toplanmış değildir.
+Shell QML paleti/font aileleri/varlıkları/hareketi `Theme.qml`, dış yüzey ölçüleri
+`SurfaceLayout.qml` üzerinden paylaşılır. Yerel çizim/iç düzen ölçüleri ve harici
+adaptörler ayrı kalır; bu tam tema motoru değildir.
 Alt+Tab ve hesaplamalı launcher normal kullanımı kullanıcı tarafından onaylandı.
 Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; terminal/Dolphin açılışı onaylandı,
 yeniden başlatmada kalıcılık kabulü bekliyor.
@@ -27,7 +29,8 @@ Tema değiştirici **yoktur**.
 | PT-010 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “alt tab çok güzel çalışıyor” diyerek PR #5 kullanımını onayladı. Main merge `915a9990a7d835cba6281b43b08af1911328355f`. Çoklu monitör çıkarma ve yakalama gibi ayrı ayrıntılar raporlanmadı; M4 listesinde kalır. |
 | PT-011 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “Güzel çalışıyor devam edebilirsin” diyerek PR #6 akışını onayladı. Enter seçili satırı çalıştırır; Ctrl+Enter seçimden bağımsız hesap sonucunu kopyalar. Her alt test ayrı ayrı raporlanmış sayılmaz. |
 | PT-012 | Uygulama açma onaylandı / kalıcılık kabulü bekliyor | 17 Ekim kullanıcı “konsol da dolphin de düzgün açılıyor” dedi. PR #7 ana dala `683686f68729ae58cf277d7fb174bb687dfd328a` ile alındı. Bu bildirim ayarların restart/update/rollback sonrası korunduğu, native bar reserve/OSD tercihlerinin tek tek denendiği anlamına gelmez. 15 Python + 10 Qt kontrollü testi önceki kayıttadır. |
-| PT-013 | İlk M3 yerleşim düzeltmesi uygulandı / canlı kabul bekliyor | 2.5.1: sınırlandırılmış tray ve gezinme okları, medya/power kaydırma, uzun ad/eylem sınırları. 7 gerçek Qt testi; bütün 7 panelin %90/%120 ve 1600×1000/900×600/640×480 sınırları, barın 900–1600 genişlik örnekleri denetlendi. Bu tam görsel sözleşme veya native çoklu ekran kabulü değildir. |
+| PT-013 | Normal kullanımda sorun bildirilmedi / ayrıntılı kabul açık | 17 Ekim kullanıcı “Şuan bi sıkıntı yok gibi. Devam edelim” dedi. PR #8 ana dala `3c8b1e0215be52fbf465ee696f4a98e0ca7e1456` ile alındı (head `94814c7d91bcdc82851fb1e4e491d85ad4287748`). 2.5.1: tray, medya/power kaydırma ve uzun ad sınırları; 7 Qt testi. Her tray/ölçek/çoklu ekran alt testi tek tek raporlanmış sayılmaz. |
+| PT-014 | İpucu düzeltmesi normal kullanım kullanıcı onayı / geniş kabul açık | 17 Ekim: kullanıcı 2.6.1 sonrası “Tamamdır gayer güzel” dedi. İncelenen head `f0525e0b19cbfca4a454b188681b7e79bdd79ed0`; ipucu düzeltmesi normal kullanımda onaylandı. 12 Qt testi, 37 QML, 122 native binding önceki kayıttadır. Bu bildirim bütün M3 yüzeyleri, çoklu ekran veya PT-012 kalıcılık kabulü değildir. |
 | QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23, shell-syntax ve artık shell-ui kendi checkout'unu bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
@@ -259,3 +262,45 @@ Mevcut 10 Qt preferences, shell-revisions ikon/OSD, network import, 30 QML bytec
 Native tray menü konumu/tekerlek ve çoklu ekran hedef oturumda bekliyor.
 Görsel sabitlerin tamamını ayırma, lock/SDDM/uygulama bütünlüğü denetimi ve M4
 kabulü henüz tamamlanmadı. İkinci tema/tema değiştirici geliştirilmedi.
+
+## 2.6.0 — M3 ortak shell sunumu
+
+2026-10-17: 2.5.1 için normal kullanımda sorun bildirilmedi; PR #8 merge
+`3c8b1e0215be52fbf465ee696f4a98e0ca7e1456`. Ayrıntılı native kabul/kalıcılık
+onayı varsayılmadı. Shell QML literal paleti, gövde/başlık font aileleri,
+varlık URL'leri ve açık görsel animasyon süreleri Theme'e bağlandı. SurfaceLayout
+bar/panel/OSD/toast/Alt+Tab dış ölçülerini native/preview arasında paylaşır.
+Yedi panel ortak başlık; toast/geçmiş ortak eylemler; koyu ve sarılan ipuçları;
+preview'de paylaşılan toast yığını uygulandı. Uzun toast eylemi taşması giderildi.
+
+`MCT_QT_TEST_PATH=... python3 checks/test_shell_ui.py` — **9 test geçti**.
+Başlık close/ek eylemleri, uzun/boş içerik, toast eylem/close/gizleme ve önceki
+ölçek/sınır/klavye kontrolleri. 10 preference, 7 launcher, 11 Alt+Tab Qt testi,
+ikon/OSD drag-hover, network import ve **35 QML bytecode** kontrolü geçti.
+QuickShell 0.3.1 kaynak karşılaştırmasında **105 native binding** aynı kaldı.
+Qt software render örnekleri incelendi. Bunlar native session kabulü değildir.
+
+Yüzey ve harici adaptör haritası `docs/THEME_SURFACES.md`; karar
+`docs/decisions/0010-shared-shell-presentation.md`. Yerel çizim/iç yerleşim
+ölçülerinin tamamı merkezileştirilmedi. Harici uygulama/lock/SDDM kaynakları
+shell paletini doğrudan import etmez; otomatik tema üreticisi yoktur.
+Bu sürüm tema seçici eklemez; M3/M4 ve PT-012 kalıcılık kabulü açık kalır.
+
+## 2.6.1 — İpucunun bar düğmesini örtmesi
+
+2026-10-17 kullanıcı bar ipucunun anında açıldığını, düğmeyi kaplayıp tıklamayı
+engellediğini bildirdi. Önceki offscreen sahnenin tam ekranı bu native 48 px
+pencere clamp sorununu yakalamamıştı. PR #9 ana dala alınmadan aynı dal düzeltildi.
+600 ms hover; basma/ayrılmada iptal; owner değişince yeni süre. HintBubble görünümü
+paylaşılır; native bar HintPopup (PopupWindow) kullanır: target +8 px aşağı,
+yatay slide, grabFocus:false, boş Region input maskesi. Panel/preview fallback
+etkileşimsizdir ve owner'ın dışında konumlanır.
+
+`MCT_QT_TEST_PATH=... python3 checks/test_shell_ui.py` — **12 test geçti**.
+Yeni gecikme/konum/açıkken fare tıklaması ve basma iptali, owner/leave, bütün bar
+hint'lerinin presenter bağlantısı ve QObject Loader bridge yükleme/boşaltması.
+`test_shell_syntax.py`: **37 QML**; `test_shell_api.py`: **122 native binding**,
+boş maskenin WindowTransparentForInput ve grabFocus:false'ın Qt::ToolTip flag
+karşılığı 0.3.1 kaynağından doğrulandı. Network import ve ikon/OSD testleri geçti.
+Native PopupWindow burada çalıştırılmadı; gerçek bar click-through/konumu kullanıcı
+oturumunda son kontrol bekliyor. Kapsamlı PT-012/M3/M4 kabulü açık kalır.

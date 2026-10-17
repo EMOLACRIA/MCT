@@ -8,11 +8,7 @@ Item {
     function activate() { root.forceActiveFocus(); }
     ColumnLayout {
         anchors.fill:parent; spacing:20
-        RowLayout {
-            Glyph { symbol:"music"; width:25; height:25 }
-            Text { text:"Now playing"; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(26); Layout.fillWidth:true }
-            ActionButton { symbol:"close"; width:36; height:36; padding:8; onClicked:uiState.close() }
-        }
+        PanelHeader {title:"Now playing";symbol:"music";onClosed:uiState.close()}
         Flickable {
             id:mediaScroll; objectName:"mediaScroll"
             Layout.fillWidth:true; Layout.fillHeight:true; clip:true
@@ -32,7 +28,7 @@ Item {
                 ColumnLayout {
                     Layout.fillWidth:true; spacing:6
                     Text { Layout.fillWidth:true; text:backend.mediaTitle || "No active player"; textFormat:Text.PlainText; wrapMode:Text.WordWrap; maximumLineCount:2; elide:Text.ElideRight; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(22); horizontalAlignment:Text.AlignHCenter }
-                    Text { Layout.fillWidth:true; text:backend.mediaArtist; textFormat:Text.PlainText; elide:Text.ElideRight; color:Theme.muted; font.pixelSize:Theme.fontSize(12); horizontalAlignment:Text.AlignHCenter }
+                    Text { font.family:Theme.bodyFont; Layout.fillWidth:true; text:backend.mediaArtist; textFormat:Text.PlainText; elide:Text.ElideRight; color:Theme.muted; font.pixelSize:Theme.fontSize(12); horizontalAlignment:Text.AlignHCenter }
                 }
                 RowLayout {
                     Layout.alignment:Qt.AlignHCenter; spacing:18
@@ -49,7 +45,7 @@ Item {
                             width:Math.min(implicitWidth,mediaContent.width); text:modelData.name; selected:modelData.selected
                             onClicked:backend.selectPlayer(modelData.id)
                             onActiveFocusChanged:if(activeFocus)mediaScroll.reveal(this)
-                            ToolTip.visible:hovered; ToolTip.text:text
+                            hint:text
                         }
                     }
                 }
