@@ -29,11 +29,13 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
    olarak ölçülmedi. Genel 1.3.4 uyumu iddia edilmez.
 3. **PT-003 — Dolphin okunabilirliği:** normal/seçili yazılar beyaz; menü,
    pasif pencere, araç çubuğu ve 16/22 px ikonlar gerçek Dolphin'de okunaklı olmalı.
+   17 Ekim PR #4 sonrası istenen kullanım kontrolü kullanıcı tarafından onaylandı.
 4. **PT-004 — OSD ve tray:** fonksiyon tuşları, slider, sessize alma, şarj
    simgesi ve Steam sağ tık menüsü canlı oturumda yeniden kontrol edilmeli.
    2.2.6: bildirimlerde milisaniye süresi, property değişimlerinin aynı karta
    yansıması ve zamanlayıcı temizliği düzeltildi. Qt OSD/ikon ve kontrollü tray
-   eylem testleri geçti; native oturum kabulü hâlâ bekliyor.
+   eylem testleri geçti. PR #4 sonrası istenen OSD/Steam kontrolleri kullanıcı
+   tarafından onaylandı; varsayılan/toast 4500 ms. Fiziksel pil geçişi M4'te kalır.
 5. **PT-005 — Taşınabilirlik:** 2.2.4 kodu uygulandı. Mevcut HOME/XDG profili
    veya ilk yedekte kayıtlı tam seçici kullanılır; ilgisiz QuickShell profilleri
    ve IPC istemcileri korunur. 10 kontrollü test geçti; hedef oturum kabulü bekliyor.

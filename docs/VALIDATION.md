@@ -69,14 +69,14 @@ Bu kaynak incelemesinde Dolphin renkleri ve OSD görünümü değiştirilmedi.
 `notify-send` varsa süre ve aynı kartta yenileme kontrolü:
 
 ```bash
-notify-send -t 1200 "Kısa bildirim" "Yaklaşık 1,2 saniyede kapanmalı"
+notify-send -t 4500 "Bildirim" "Yaklaşık 4,5 saniyede kapanmalı"
 notice_id=$(notify-send -p -t 8000 "Aktarım" "Başladı")
 notify-send -r "$notice_id" -t 8000 "Aktarım" "Yüzde 75"
 ```
 
 İkinci/üçüncü komut aynı kartı günceller; unread ikinci kez artmamalı.
 Süre dolunca toast/canlı eylemler kapanır, geçmiş metni kalabilir. `0` süreli
-bildirimin toast'ı 5 saniye sonra saklanabilir; native bildirim canlı kalır.
+bildirimin toast'ı 4,5 saniye sonra saklanabilir; native bildirim canlı kalır.
 
 ## Kalan eski checks kaynakları
 

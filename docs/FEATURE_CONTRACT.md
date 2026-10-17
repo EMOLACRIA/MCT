@@ -49,7 +49,8 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 
 - Bildirimde değişen başlık/metin/eylemler aynı kartı günceller, unread sayısını
   yeniden artırmaz. Bildirimin geçerli süresi dolunca canlı eylemler kaldırılır;
-  arşiv metni kalabilir. `0` süresiz, `-1` sunucu varsayılanıdır. Hedef sürümün
+  arşiv metni kalabilir. `0` süresiz, `-1` sunucu varsayılanıdır (4500 ms).
+  Toast en fazla 4500 ms görünür; uygulamanın daha kısa geçerli süresi korunur. Hedef sürümün
   aynı nesne güncellemeleri ve zaman birimi adaptör tarafından ele alınır.
 
 - Paneller tek örnek: aynı kısayol kapatır, başka panel önceki paneli değiştirir.

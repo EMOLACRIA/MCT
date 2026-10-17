@@ -28,7 +28,7 @@ Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanm
 ## 2.2.6 — Bildirim süresi ve güncellenen kartlar
 
 QuickShell 0.3.1'in aktardığı bildirim süresi doğrudan milisaniye olarak kullanılır;
-5000 ms artık 5000 saniyeye dönüşmez. `-1` varsayılan 5 saniye, `0` süresizdir.
+5000 ms artık 5000 saniyeye dönüşmez. `-1` varsayılan 4,5 saniye, `0` süresizdir.
 Bir bildirimin başlık/metin/eylem değişiklikleri mevcut kartı günceller; okunmamış
 sayısı tekrar artmaz. Önceki zamanlayıcılar yenilemede/kapanışta temizlenir.
 

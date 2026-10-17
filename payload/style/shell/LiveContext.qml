@@ -93,7 +93,7 @@ Scope {
     }
     Component {
         id:toastExpiry
-        Timer { required property string notificationKey; required property int generation; interval:5000; onTriggered: {if(root.notificationGenerations[notificationKey]===generation) {delete root.toastTimers[notificationKey];root.toasts=root.toasts.filter(n=>n.key!==notificationKey);}destroy();} }
+        Timer { required property string notificationKey; required property int generation; interval:4500; onTriggered: {if(root.notificationGenerations[notificationKey]===generation) {delete root.toastTimers[notificationKey];root.toasts=root.toasts.filter(n=>n.key!==notificationKey);}destroy();} }
     }
     Component {
         id:notificationWatcher
@@ -154,7 +154,7 @@ Scope {
     function notificationTimeout(value) {
         // QuickShell 0.3.1 forwards the D-Bus millisecond value unchanged.
         const timeout=Number(value);
-        if(!Number.isFinite(timeout) || timeout<0)return 5000;
+        if(!Number.isFinite(timeout) || timeout<0)return 4500;
         return Math.min(2147483647,Math.max(0,Math.round(timeout)));
     }
     function receive(n) {

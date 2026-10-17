@@ -22,7 +22,8 @@ kalıyordu. receive'in tekrar çağrılması da unread ve closed handler'ların�
 
 ## Karar
 
-- Pozitif süre doğrudan Qt Timer'a milisaniye verilir; varsayılan 5000 ms,
+- Pozitif süre doğrudan Qt Timer'a milisaniye verilir; kullanıcı tercihine göre
+  varsayılan ve toast görünürlük sınırı 4500 ms,
   `0` için expiry timer yoktur. Qt int aralığı gözetilir.
 - Her native nesne için bir watcher; başlık, gövde, uygulama, eylem, süre ve
   transient property sinyalleri event döngüsü sonunda tek refresh üretir.

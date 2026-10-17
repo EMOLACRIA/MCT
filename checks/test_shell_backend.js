@@ -43,7 +43,7 @@ root.setVolume(150);assert(root.volume===100);root.toggleMute();assert(root.mute
 root.activateWorkspace(9);assert(events.includes('hl.dsp.focus({workspace=9})'));
 root.setBrightness(0);assert(events.some(e=>Array.isArray(e)&&e[2]==='brightness'&&e[3]==='0'));
 root.sessionAction('bad');assert(!events.some(e=>Array.isArray(e)&&e.includes('bad')));
-for(const [id,timeout,expected] of [[20,-1,5000],[21,120,120],[22,0,0]]) {
+for(const [id,timeout,expected] of [[20,-1,4500],[21,120,120],[22,0,0]]) {
  const message=note(id,{expireTimeout:timeout});root.receive(message);
  const k=Object.keys(root.liveNotifications).find(k=>root.liveNotifications[k]===message);
  if(expected===0)assert(!root.notificationTimers[k]);else assert(root.notificationTimers[k].interval===expected);

@@ -18,9 +18,9 @@ Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yok
 |---|---|---|
 | PT-001 | Doğrulandı | 2026-10-17: kullanıcı PR #1 dalını uygulayıp launcher/Super+E tutarlılığını “Aynen çalışıyor” diyerek onayladı. Kod: `62cfe809d0274fd2ec99a8aca4e37f117b20fe9f`; 12 regresyon kontrolü de geçti. |
 | PT-002 | Çalışma onaylandı / adblock sonucu ayrıca ölçülmedi | 17 Ekim: kullanıcı “Yo çalışıyo bende” diyerek Spotify'ın çalıştığını onayladı. Sistem Spotify 1:1.3.4.258-2, adblock 1:1.1.1-1, CLI 2.45.3-1. Girdiler temalı sarmalayıcıya yönleniyor ve LD_PRELOAD korunmuş. Belgelenmiş Linux aralığı dışında olmak hata kanıtı değildir; 2.2.5 yalnız uyarı verir. Özel kopyanın kesin sürümü ve reklam engelleme ölçümü kayıtlı değil. |
-| PT-003 | Canlı doğrulama bekliyor | 17 Ekim: mevcut paletin gerçek Qt aktif/pasif metin başlangıcı ve kontrast kontrolü geçti; kaynakta yeni renk değişikliği gerektiren kanıt bulunmadı. Bütün başlatma yolları ve ikonların native Dolphin görünümü ayrıca kabul edilmeli. |
-| PT-004 | Bildirim düzeltmesi uygulandı / canlı doğrulama bekliyor | 2.2.6: bildirim süresi milisaniye; aynı nesnenin başlık/metin/eylem değişimleri aynı karta yansır, unread tekrar artmaz; eski timer'lar temizlenir. Qt OSD hover/drag ve ikon merkezleri, kontrollü tray eylemleri geçti. Native OSD/Steam/şarj kabulü açık. |
-| PT-005 | Uygulandı / hedef oturum doğrulaması bekliyor | 2.2.4: mevcut HOME/XDG HyprCade profilleri veya ilk yedekte kayıtlı tam komut seçicileri kullanılır. IPC/list/kill/log istemcileri shell sayılmaz. 10 kontrollü süreç keşfi testi geçti; gerçek sinyal gönderilmedi. |
+| PT-003 | Kullanıcı onayı | 17 Ekim: kullanıcı PR #4'ün Dolphin/OSD/Steam kontrolleri sonrasında bildirim süresi dışında sorun olmadığını onayladı. Önceki gerçek Qt aktif/pasif metin ve kontrast kontrolü de geçti. |
+| PT-004 | Kullanıcı onayı / süre tercihi uygulandı | 17 Ekim: PR #4 testleri için süre dışında sorun yok onayı geldi. Varsayılan/toast süresi 4500 ms yapıldı; 1200 ms yalnız önceki test komutuydu. Fiziksel şarj geçişi ayrıca raporlanmadı; M4 kabul listesinde korunur. |
+| PT-005 | Normal güncelleme kullanıcı onayı / geniş restore kabulü M4'te | Kullanıcı kümülatif PR #4 dalında sorun bildirmedi. 10 kontrollü süreç keşfi testi geçti. Farklı kullanıcıyla fresh install/restore canlı testi yapılmış sayılmaz. |
 | QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23 ve shell-syntax da checkout'u kendi bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
@@ -116,12 +116,17 @@ bağlantıları ve `git diff --check` kontrolü geçti.
 Native QuickShell bildirim D-Bus oturumu, Steam menüsü, gerçek pil geçişi ve
 Dolphin arayüzü burada çalıştırılmadı. Değişmeyen payload'la hiç property
 sinyali üretmeyen bir Notify tekrarını bu watcher algılayamaz; ADR-0005 sınırı
-açıklar. PT-003/004 tamamlandı sayılmıyor.
+açıklar. Sonraki kullanıcı onayı aşağıda ayrıca kaydedildi.
+
+17 Ekim PR #4 sonrası kullanıcı “Onun dışında sorun yok devam edebilirsin”
+diyerek istenen Dolphin/OSD/Steam kontrollerini onayladı. Bildirim varsayılanı
+ve toast sınırı isteğiyle 4500 ms yapıldı; uygulamanın açıkça istediği daha kısa
+süreler korunur. `node checks/test_shell_backend.js` yeni varsayılanla geçti.
 
 ## Sonraki iş
 
 PT-001 ve mevcut Spotify çalışma durumu kullanıcı tarafından onaylandı.
-Sürüm aralığına dayalı Spotify engeli yok. PT-003/004 için Dolphin okunabilirliği,
-OSD/tray/şarj kabulü sırada; adblock'un ölçülmüş sonucu ayrı kabul maddesi olarak
-korunuyor. PT-005 PR #2'de; gerçek oturum kabulü bekliyor.
+Sürüm aralığına dayalı Spotify engeli yok. PR #2–4'ün normal kullanım akışı
+onaylandı; M2 Alt+Tab sırada. Adblock ölçümü, fiziksel şarj geçişi ve farklı
+kullanıcıyla fresh install/restore gibi geniş kontroller M4 listesinde korunur.
 Alt+Tab, hesaplama ve ayarlar henüz uygulanmadı; ROADMAP sırası korunuyor.
