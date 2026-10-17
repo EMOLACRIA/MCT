@@ -1,3 +1,15 @@
+## Bağımsız PT-002 uygulama kontrolleri
+
+```bash
+python3 checks/test_spotify_install.py
+python3 checks/test_app_installers.py
+```
+
+İlk komut 10 stdlib testi: sürüm uyarısı, aralık dışı sürümle devam etme, tema çıktısı,
+fresh/update rollback, ilk yedek/adblock/restore, günlük ve salt okunur tanılama.
+İkinci dosya artık checkout'u kendi konumundan bulur; Dolphin ve Spotify dosya
+uygulama/restore örneklerini denetler. Native uygulama veya ağ çalıştırılmaz.
+
 ## Bağımsız PT-005 süreç tanıma kontrolü
 
 ```bash

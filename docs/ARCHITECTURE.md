@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.2.4
+## Mevcut 2.2.5
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -16,6 +16,14 @@ Exec satırını veya Qt ortamını ikinci kez üretmez. Girdi yoksa düz Dolphi
 mevcut girdi başarısız olursa temayı düşürerek ikinci kez uygulama açmaz.
 Özel kullanıcı dosya yöneticisi/kısayolu update tarafından sahiplenilmez.
 Ayrıntı: [ADR-0002](decisions/0002-dolphin-desktop-entry.md).
+
+Spotify adaptörü sistem paketinin sürümünü ve CLI sürümünü preflight'ta okur;
+CLI 2.45.3'ün belgelenmiş Linux aralığı dışında uyarı verir, uygulamayı engellemez.
+Kullanıcının çalışan kurulum onayı belge aralığına göre geçersiz sayılmaz.
+Başarılı süreç çıkışından
+sonra CSS/palet/link/metadata denetlenir; eksik çıktı mevcut rollback yoluna gider.
+Yeni özel kopyanın sürümleri kaydedilir. Salt okunur tanılama eski kopyanın
+sürümünü uydurmaz. Ayrıntı: [ADR-0004](decisions/0004-spotify-output-validation.md).
 
 ## Hedef ayrım
 

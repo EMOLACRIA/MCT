@@ -2,6 +2,7 @@
 import importlib.util,json,os,subprocess,tempfile,sys
 from pathlib import Path
 from unittest.mock import patch
+from test_spotify_install import SUPPORTED,theme_output
 spec=importlib.util.spec_from_file_location('apps',Path('build/desktop-style/apps/manage.py').resolve());m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 with tempfile.TemporaryDirectory(prefix='apps23-') as td:
  root=Path(td);m.HOME=root;m.CONFIG=root/'config';m.DATA=root/'data';m.STATE=root/'state';m.SPOTIFY=m.DATA/'desktop-style-apps/spotify'
@@ -24,12 +25,9 @@ with tempfile.TemporaryDirectory(prefix='apps23-') as td:
  normal=applications/'spotify.desktop';normal.write_text('[Desktop Entry]\nName=Spotify\nExec=spotify --ozone-platform=wayland %U\n')
  adblock=applications/'spotify-adblock.desktop';adtext='[Desktop Entry]\nName=Spotify (adblock)\nExec=env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --foo %U\n\n[Desktop Action Play]\nExec=env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --play\n';adblock.write_text(adtext)
  def apply(args,**kwargs):
-  xpui=m.SPOTIFY/'client/Apps/xpui';xpui.mkdir()
-  (xpui/'xpui-modules.js').write_text('var __webpack_modules__={answer:42};')
-  (xpui/'xpui-snapshot.js').write_text('if(__webpack_modules__.answer!==42)throw Error("boot");')
-  (xpui/'index.html').write_text('<body><script defer="defer" src="/xpui-snapshot.js"></script></body>')
+  theme_output(m.SPOTIFY/'client')
   return 'fixture'
- with patch.object(m,'closed'),patch.object(m,'spotify_source',return_value=source),patch.object(m.shutil,'which',side_effect=lambda n:'/fixture' if n=='spicetify' else None),patch.object(m,'run',side_effect=apply),patch.dict(os.environ,{'XDG_DATA_DIRS':str(root/'system')}):
+ with patch.object(m,'closed'),patch.object(m,'spotify_source',return_value=source),patch.object(m,'spotify_versions',return_value=SUPPORTED),patch.object(m.shutil,'which',side_effect=lambda n:'/fixture' if n=='spicetify' else None),patch.object(m,'run',side_effect=apply),patch.dict(os.environ,{'XDG_DATA_DIRS':str(root/'system')}):
   m.spotify();assert adblock.read_text().count('LD_PRELOAD=/usr/lib/spotify-adblock.so')==2;assert '--foo %U' in adblock.read_text() and '--play' in adblock.read_text();assert 'launch.sh' in adblock.read_text()
   xpui=m.SPOTIFY/'client/Apps/xpui';tags=m.ScriptTags();tags.feed((xpui/'index.html').read_text());assert tags.sources==['/xpui-modules.js','/xpui-snapshot.js']
   node='/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node'

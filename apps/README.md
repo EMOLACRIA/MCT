@@ -36,7 +36,15 @@ bash apps/restore.sh dolphin
 
 ## Spotify
 
-Senin normal paket kurulumun (`spotify 1:1.2.96.518-2`) hedeflenir. Önce Spicetify CLI kur:
+Yerel Spotify paketi ve ayrı temalı kopya kullanılır. **17 Ekim güncel durum:**
+`spotify 1:1.3.4.258-2`, `spicetify-cli 2.45.3-1`. CLI 2.45.3'ün resmî Linux
+uyum aralığı **1.2.14–1.2.96**; kullanıcı aynı gün Spotify'ın çalıştığını onayladı.
+Bu nedenle aralık dışı sürüm yalnız uyarıdır, kurulum engeli değildir. Çıktı
+dosyaları ayrıca denetlenir. Kullanıcının mevcut kurulum onayı, özel kopyanın
+kesin sürümünü veya bütün 1.3.4 kurulumlarının uyumunu kanıtlamaz.
+Kurucu paket sürümü düşürmez veya güncellemez.
+
+Uyumlu bir Spotify/CLI birleşiminde önce Spicetify CLI kur:
 
 ```bash
 paru -S --needed spicetify-cli
@@ -56,6 +64,14 @@ Sistem paketinin dosyaları ve izinleri değiştirilmez. Spotify, `~/.local/shar
 
 Spotify paketini güncellediğinde, uygulamayı kapatıp `bash apps/install.sh spotify` komutunu yeniden çalıştır. Böylece yeni paket kopyalanır ve tema tekrar uygulanır. Spicetify yeni Spotify sürümünü desteklemiyorsa uygulama aşaması hata verebilir; kurucu başarısızlıkta önceki temalı kopyayı korur. Bu ortamda senin Spotify sürümünde canlı görsel test yapılmadı.
 
+2.2.5: CLI 2.45.3'ün belgelenmiş aralığı dışında preflight uyarısı gösterilir;
+kurulum devam edebilir. Diğer CLI sürümleri kayıtlı değilse uyarı gösterilir; desteklendiği
+iddia edilmez. Başarılı CLI çıkışı sonrası CSS içeriği, bütün tema renkleri,
+HTML stylesheet bağlantıları ve DesktopStyle/Ash metadata'sı doğrulanır.
+Eksik/yanlış çıktı başarı sayılmaz, önceki kopya ve başlatıcılar geri gelir.
+Günlük stdout ile stderr'i birlikte tutar. Yeni özel kopyanın paket/CLI sürümleri
+`versions.json` içine yazılır. Eski kopyanın sürümü kayıt yoksa bilinmiyor sayılır.
+
 2.2.1, CSS-only Spicetify uygulamasında `xpui-modules.js` dosyasının `xpui-snapshot.js` öncesinde yüklenmesini sağlar; eksik başlangıç dosyaları bulunduğunda önceki kuruluma döner. Bu, kaynak kodunda bulunan bir yükleme eksikliğini giderir; ekran görüntüsündeki boşluğun tek olası nedeni olduğunu iddia etmez.
 
 Boş ekran devam ederse önce Spotify'ı tamamen kapatıp aynı adblock girişinden yeniden aç. Ardından şu çıktıyı paylaş:
@@ -64,7 +80,11 @@ Boş ekran devam ederse önce Spotify'ı tamamen kapatıp aynı adblock girişin
 bash apps/diagnose.sh
 ```
 
-Tanılama sürümleri, başlatıcı komutlarını, uygulama günlüğünü ve başlangıç dosya boyutlarını gösterir; Spotify hesap/tercih dosyasını okumaz. Özel başlatıcı komutuna gizli bilgi eklediysen paylaşmadan önce sil.
+Tanılama sürümleri, başlatıcı komutlarını, uygulama günlüğünü, başlangıç dosya
+boyutlarını, özel kopyanın kayıtlı sürümlerini ve tema çıktı kontrolünü gösterir;
+Spotify hesap/tercih dosyasını okumaz. Tema dosyalarının geçerli olması native
+UI'nin veya adblock'un çalıştığını doğrulamaz. Özel başlatıcı komutuna gizli
+bilgi eklediysen paylaşmadan önce sil.
 
 Geri almak için Spotify kapalıyken:
 
@@ -73,6 +93,8 @@ bash apps/restore.sh spotify
 ```
 
 Bu işlem orijinal başlatıcıları geri getirir ve temalı kopyayı kaldırır. Spotify hesabını veya çalma listelerini silmez. Mevcut normal Spicetify kurulum ayarlarına dokunulmaz.
+Sürüm uyumsuzluğu bu geri alma işlemini engellemez. Orijinal adblock girdisi
+yedekteyse o da geri gelir; adblock'un yeni Spotify ile çalışma durumu ayrıdır.
 
 ## Yedek ve doğrulama
 
@@ -81,6 +103,7 @@ Bu işlem orijinal başlatıcıları geri getirir ve temalı kopyayı kaldırır
 Kontrollü dosya testleri: tekrar uygulama, orijinal yedeğin korunması, Dolphin'in ilgisiz tercihlerinin korunması, Spotify paketinin değişmemesi, ayrı Spicetify ayar/çalışma klasörleri, başarısız uygulamada geri dönüş ve orijinal başlatıcının geri yüklenmesi. Dolphin 26.08.2 ve KDE ColorScheme/IconThemes kaynaklarıyla kullanılan ayar adları kontrol edildi. Gerçek Dolphin/Spotify uygulamaları bu hazırlama ortamında çalıştırılmadı; Spotify arayüz güncellemeleri bazı CSS seçicilerini etkileyebilir.
 
 Kaynaklar:
+- https://github.com/spicetify/cli/releases/tag/v2.45.3
 - https://spicetify.app/docs/customization/themes
 - https://spicetify.app/docs/getting-started
 - https://spicetify.app/docs/cli/commands

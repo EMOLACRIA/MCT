@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Optional application themes. Run as the desktop user; no root/package writes."""
 import argparse
+import configparser
 import shlex
 from html.parser import HTMLParser
 import fcntl
@@ -23,9 +24,34 @@ STATE=Path(os.environ.get('XDG_STATE_HOME',HOME/'.local/state'))/'desktop-style-
 SPOTIFY=DATA/'desktop-style-apps/spotify'
 
 def run(args,**kw):
-    result=subprocess.run(list(map(str,args)),text=True,capture_output=True,timeout=180,**kw)
-    if result.returncode:raise RuntimeError(result.stderr.strip() or result.stdout.strip() or 'Command failed: '+str(args[0]))
+    # Spicetify writes its apply progress to stderr even on success.
+    result=subprocess.run(list(map(str,args)),text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=180,**kw)
+    if result.returncode:raise RuntimeError(result.stdout.strip() or 'Command failed: '+str(args[0]))
     return result.stdout.strip()
+
+def version_tuple(value):
+    match=re.search(r'(\d+)\.(\d+)\.(\d+)',value)
+    if not match:raise RuntimeError('Could not read application version: '+value)
+    return tuple(map(int,match.groups()))
+
+def spotify_versions(spice):
+    pacman=shutil.which('pacman')
+    if not pacman:raise RuntimeError('This native Spotify adapter requires pacman package version information.')
+    package=run([pacman,'-Q','spotify']).split()
+    if len(package)!=2 or package[0]!='spotify':raise RuntimeError('Could not read the native Spotify package version.')
+    cli=run([spice,'--version'])
+    version_tuple(package[1]);parsed=version_tuple(cli)
+    return {'spotify':package[1],'spicetify':'.'.join(map(str,parsed))}
+
+def check_spotify_compatibility(versions):
+    # Published release ranges are advisory: the user reports a working client
+    # outside v2.45.3's listed Linux range. Validate actual output instead.
+    spotify=version_tuple(versions['spotify']);spice=version_tuple(versions['spicetify'])
+    if spice==(2,45,3):
+        if not (1,2,14)<=spotify<=(1,2,96):
+            print('Warning: Spicetify 2.45.3 documents Linux Spotify support from 1.2.14 through 1.2.96; installed package is '+versions['spotify']+'. Continuing with generated theme output validation.')
+    else:
+        print('Warning: Spicetify '+versions['spicetify']+' compatibility is not recorded here; verify its Linux release notes. Generated theme files will still be checked.')
 
 def atomic(path,text):
     path.parent.mkdir(parents=True,exist_ok=True)
@@ -195,11 +221,36 @@ def refresh_desktop_database():
         subprocess.run(['update-desktop-database',str(DATA/'applications')],capture_output=True,timeout=15)
 
 class ScriptTags(HTMLParser):
-    def __init__(self):super().__init__();self.sources=[]
+    def __init__(self):super().__init__();self.sources=[];self.stylesheets=[]
     def handle_starttag(self,tag,attrs):
+        attrs=dict(attrs)
         if tag=='script':
-            source=dict(attrs).get('src')
+            source=attrs.get('src')
             if source:self.sources.append(source)
+        if tag=='link' and 'stylesheet' in (attrs.get('rel') or '').split():
+            href=attrs.get('href')
+            if href:self.stylesheets.append(href)
+
+def verify_spotify_theme(client):
+    """Read-only checks: a zero exit status alone does not prove theme output."""
+    xpui=client/'Apps/xpui';index=xpui/'index.html'
+    if not index.is_file():raise RuntimeError('Spotify theme output missing: index.html')
+    tags=ScriptTags();tags.feed(index.read_text())
+    links={src.split('?')[0].lstrip('/') for src in tags.stylesheets}
+    for name in ['user.css','colors.css']:
+        if name not in links or not (xpui/name).is_file() or not (xpui/name).stat().st_size:
+            raise RuntimeError('Spotify theme output missing or not linked: '+name)
+    if (xpui/'user.css').read_bytes()!=(PACKAGE/'spotify/user.css').read_bytes():
+        raise RuntimeError('Spotify theme output does not contain the requested user.css.')
+    palette=configparser.ConfigParser();palette.read(PACKAGE/'spotify/color.ini')
+    colors=(xpui/'colors.css').read_text()
+    for key,value in palette['Ash'].items():
+        if not re.search(r'--spice-'+re.escape(key)+r'\s*:\s*#'+re.escape(value)+r'\s*;',colors,re.I):
+            raise RuntimeError('Spotify theme output has an incorrect palette: '+key)
+    try:config=json.loads((xpui/'spicetify-config.json').read_text())
+    except (OSError,ValueError) as exc:raise RuntimeError('Spotify theme metadata is missing or invalid.') from exc
+    if not isinstance(config,dict) or config.get('theme_name')!='DesktopStyle' or config.get('scheme_name')!='Ash':
+        raise RuntimeError('Spotify theme metadata does not match DesktopStyle/Ash.')
 
 def repair_spotify_bootstrap(client):
     # Spicetify 2.x htmlMod returns early for CSS-only configs, before it adds
@@ -271,6 +322,7 @@ def spotify(check=False,restore=False):
         print('Original Spotify launchers restored.');return
     spice=shutil.which('spicetify')
     if not spice:raise RuntimeError('Install spicetify-cli first (paru -S --needed spicetify-cli or yay -S --needed spicetify-cli).')
+    versions=spotify_versions(spice);check_spotify_compatibility(versions)
     source=spotify_source();prefs=CONFIG/'spotify/prefs'
     if not prefs.is_file():raise RuntimeError('Open Spotify, sign in, wait a minute, then close it before applying the theme.')
     if SPOTIFY.exists() and not record:raise RuntimeError('Unmanaged Spotify theme folder exists: '+str(SPOTIFY))
@@ -304,6 +356,8 @@ def spotify(check=False,restore=False):
         output=run([spice,'backup','apply','--no-restart'],env=env);print(output)
         atomic(SPOTIFY/'apply.log',output+'\n')
         repair_spotify_bootstrap(client)
+        verify_spotify_theme(client)
+        atomic(SPOTIFY/'versions.json',json.dumps(versions,indent=2)+'\n')
         wrapper=Path('/usr/bin/spotify');launch=SPOTIFY/'launch.sh'
         launch_text='#!/usr/bin/env bash\nexec '+shlex.quote(str(client/'spotify'))+' "$@"\n'
         if wrapper.is_file() and not wrapper.is_symlink():
