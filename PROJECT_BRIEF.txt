@@ -64,7 +64,9 @@ CachyOS / Arch, Hyprland 0.56.2 Lua, QuickShell 0.3.1, Hyprlock 0.9.6.
 eDP-1: 2560x1600, 240 Hz, ölçek 1.6. Mantıksal çalışma alanı yaklaşık 1600x1000.
 Spotify: 1:1.3.4.258-2, spotify-adblock 1:1.1.1-1; Spicetify CLI 2.45.3-1
 (17 Ekim tanılaması). Bu Spotify sürümü CLI 2.45.3'ün belgelenmiş Linux destek
-aralığının dışındadır; temalı özel kopyanın sürümü eski kayıtta bulunmuyor.
+aralığının dışındadır; kullanıcı aynı gün Spotify'ın çalıştığını onayladı.
+Aralık bilgisi kurulum engeli değildir. Temalı özel kopyanın sürümü eski
+kayıtta bulunmuyor; adblock'un reklam engelleme sonucu ayrıca ölçülmedi.
 Dolphin: 26.08.2-1.1. Qt6ct/Breeze ikon eklentisi ayrı uygulanır.
 Bunlar evrensel destek veya güncel paket sorgusu değildir; yeni log geldiğinde
 STATUS.md ile birlikte güncellenir.

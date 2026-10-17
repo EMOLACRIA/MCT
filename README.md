@@ -28,9 +28,9 @@ Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanm
 ## 2.2.5 — Spotify kurulumunu doğrulama
 
 17 Ekim tanılamasında sistem Spotify paketi `1:1.3.4.258-2`, Spicetify CLI
-`2.45.3-1`. Bu CLI'nin belgelenmiş Linux desteği `1.2.14–1.2.96` olduğu için
-bu birleşimde yeni tema uygulaması dosyalar değiştirilmeden durur. Bu koruma,
-Spotify 1.3.4 için çalışan bir tema yaması değildir; PT-002 açık kalır.
+`2.45.3-1`. Kullanıcı aynı gün Spotify'ın çalıştığını onayladı. Bu CLI'nin
+belgelenmiş Linux aralığı `1.2.14–1.2.96` olsa da çalışan kurulumu engellemez;
+yalnız uyarı verir. Sistem paket sürümü özel kopyanın sürümünü kanıtlamaz.
 
 Kurucu artık stdout/stderr günlüğünü birlikte saklar ve CSS, palet, HTML
 bağlantıları ile tema metadata'sını kontrol eder. Eksik çıktı önceki kopyaya

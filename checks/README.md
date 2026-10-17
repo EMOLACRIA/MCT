@@ -5,7 +5,7 @@ python3 checks/test_spotify_install.py
 python3 checks/test_app_installers.py
 ```
 
-İlk komut 10 stdlib testi: sürüm sınırı, değişiklik öncesi durma, tema çıktısı,
+İlk komut 10 stdlib testi: sürüm uyarısı, aralık dışı sürümle devam etme, tema çıktısı,
 fresh/update rollback, ilk yedek/adblock/restore, günlük ve salt okunur tanılama.
 İkinci dosya artık checkout'u kendi konumundan bulur; Dolphin ve Spotify dosya
 uygulama/restore örneklerini denetler. Native uygulama veya ağ çalıştırılmaz.

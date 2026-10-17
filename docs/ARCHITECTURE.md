@@ -18,7 +18,9 @@ mevcut girdi başarısız olursa temayı düşürerek ikinci kez uygulama açmaz
 Ayrıntı: [ADR-0002](decisions/0002-dolphin-desktop-entry.md).
 
 Spotify adaptörü sistem paketinin sürümünü ve CLI sürümünü preflight'ta okur;
-bilinen CLI 2.45.3 Linux sınırı dışında uygulama yapmaz. Başarılı süreç çıkışından
+CLI 2.45.3'ün belgelenmiş Linux aralığı dışında uyarı verir, uygulamayı engellemez.
+Kullanıcının çalışan kurulum onayı belge aralığına göre geçersiz sayılmaz.
+Başarılı süreç çıkışından
 sonra CSS/palet/link/metadata denetlenir; eksik çıktı mevcut rollback yoluna gider.
 Yeni özel kopyanın sürümleri kaydedilir. Salt okunur tanılama eski kopyanın
 sürümünü uydurmaz. Ayrıntı: [ADR-0004](decisions/0004-spotify-output-validation.md).

@@ -31,7 +31,8 @@ istemcilerinin korunması bu kapsamda kontrol edilir.
 
 ## PT-002 için bağımsız regresyon kontrolü
 
-`python3 checks/test_spotify_install.py` — 10 stdlib testi. Sürüm/preflight,
+`python3 checks/test_spotify_install.py` — 10 stdlib testi. Sürüm uyarısı,
+belgelenmiş aralık dışında preflight/uygulamaya devam etme,
 eksik tema çıktısı, fresh/update rollback, adblock ortamı ve eylemleri, ilk yedek,
 restore, gerçek stdout/stderr birleştirmesi ve salt okunur tanılama kontrol edilir.
 `python3 checks/test_app_installers.py` de bağımsız checkout'ta çalışır.

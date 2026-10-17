@@ -66,22 +66,28 @@ class SpotifyTests(unittest.TestCase):
         for version in ['1:1.2.14.0-1','1:1.2.96.518-2']:
             apps.check_spotify_compatibility({'spotify':version,'spicetify':'2.45.3'})
         for version in ['1.2.13.0','1.2.97.0','1:1.3.4.258-2']:
-            with self.subTest(version=version),self.assertRaisesRegex(RuntimeError,'Linux Spotify support'):
+            with self.subTest(version=version),contextlib.redirect_stdout(io.StringIO()) as output:
                 apps.check_spotify_compatibility({'spotify':version,'spicetify':'2.45.3'})
+                self.assertIn('Warning:',output.getvalue())
+                self.assertIn('Continuing',output.getvalue())
         with contextlib.redirect_stdout(io.StringIO()) as output:
             apps.check_spotify_compatibility({'spotify':'1.3.4.258','spicetify':'2.45.4'})
         self.assertIn('compatibility is not recorded',output.getvalue())
 
-    def test_unsupported_pair_stops_check_and_apply_before_mutation(self):
+    def test_reported_working_pair_outside_range_can_check_and_apply(self):
         self.versions.return_value={'spotify':'1:1.3.4.258-2','spicetify':'2.45.3'}
-        for check in [True,False]:
-            with self.subTest(check=check),patch.object(apps,'first_backup') as backup,patch.object(apps,'run') as run:
-                with self.assertRaisesRegex(RuntimeError,'1.2.96'):apps.spotify(check=check)
-                backup.assert_not_called();run.assert_not_called()
-                self.assertEqual(self.normal.read_text(),self.original)
-                self.assertEqual(self.adblock.read_text(),self.adtext)
-                self.assertFalse(apps.SPOTIFY.exists())
-                self.assertFalse((apps.STATE/'spotify.json').exists())
+        with patch.object(apps,'run',side_effect=self.apply) as run,contextlib.redirect_stdout(io.StringIO()) as output:
+            apps.spotify(check=True)
+            run.assert_not_called()
+            self.assertEqual(self.normal.read_text(),self.original)
+            self.assertEqual(self.adblock.read_text(),self.adtext)
+            self.assertFalse(apps.SPOTIFY.exists())
+            apps.spotify()
+        self.assertIn('Continuing',output.getvalue())
+        self.assertEqual(json.loads((apps.SPOTIFY/'versions.json').read_text()),self.versions.return_value)
+        self.assertIn('launch.sh',self.normal.read_text())
+        self.assertIn('LD_PRELOAD=/usr/lib/spotify-adblock.so',self.adblock.read_text())
+        apps.verify_spotify_theme(apps.SPOTIFY/'client')
 
     def test_supported_check_is_read_only(self):
         with patch.object(apps,'run') as run:apps.spotify(check=True)

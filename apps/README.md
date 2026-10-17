@@ -38,10 +38,11 @@ bash apps/restore.sh dolphin
 
 Yerel Spotify paketi ve ayrı temalı kopya kullanılır. **17 Ekim güncel durum:**
 `spotify 1:1.3.4.258-2`, `spicetify-cli 2.45.3-1`. CLI 2.45.3'ün resmî Linux
-uyum aralığı **1.2.14–1.2.96**; bu birleşimde kurucu artık dosyaları değiştirmeden
-durur. Spotify 1.3.4 teması şu anda doğrulanmış değildir. Yeni bir CLI sürümü
-için Linux sürüm notları ayrıca kontrol edilmelidir; farklı CLI'ye geçmek tek
-başına native UI kabulü sayılmaz. Kurucu paket sürümü düşürmez veya güncellemez.
+uyum aralığı **1.2.14–1.2.96**; kullanıcı aynı gün Spotify'ın çalıştığını onayladı.
+Bu nedenle aralık dışı sürüm yalnız uyarıdır, kurulum engeli değildir. Çıktı
+dosyaları ayrıca denetlenir. Kullanıcının mevcut kurulum onayı, özel kopyanın
+kesin sürümünü veya bütün 1.3.4 kurulumlarının uyumunu kanıtlamaz.
+Kurucu paket sürümü düşürmez veya güncellemez.
 
 Uyumlu bir Spotify/CLI birleşiminde önce Spicetify CLI kur:
 
@@ -63,8 +64,8 @@ Sistem paketinin dosyaları ve izinleri değiştirilmez. Spotify, `~/.local/shar
 
 Spotify paketini güncellediğinde, uygulamayı kapatıp `bash apps/install.sh spotify` komutunu yeniden çalıştır. Böylece yeni paket kopyalanır ve tema tekrar uygulanır. Spicetify yeni Spotify sürümünü desteklemiyorsa uygulama aşaması hata verebilir; kurucu başarısızlıkta önceki temalı kopyayı korur. Bu ortamda senin Spotify sürümünde canlı görsel test yapılmadı.
 
-2.2.5: bilinen CLI 2.45.3 uyumsuzluğu preflight'ta kontrol edilir. Diğer CLI
-sürümleri destek tablosunda kayıtlı değilse uyarı gösterilir; desteklendiği
+2.2.5: CLI 2.45.3'ün belgelenmiş aralığı dışında preflight uyarısı gösterilir;
+kurulum devam edebilir. Diğer CLI sürümleri kayıtlı değilse uyarı gösterilir; desteklendiği
 iddia edilmez. Başarılı CLI çıkışı sonrası CSS içeriği, bütün tema renkleri,
 HTML stylesheet bağlantıları ve DesktopStyle/Ash metadata'sı doğrulanır.
 Eksik/yanlış çıktı başarı sayılmaz, önceki kopya ve başlatıcılar geri gelir.

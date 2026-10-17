@@ -44,12 +44,12 @@ def spotify_versions(spice):
     return {'spotify':package[1],'spicetify':'.'.join(map(str,parsed))}
 
 def check_spotify_compatibility(versions):
-    # Upstream v2.45.3 release notes, checked 2026-10-17. This is a known
-    # compatibility bound, not a prediction about future CLI releases.
+    # Published release ranges are advisory: the user reports a working client
+    # outside v2.45.3's listed Linux range. Validate actual output instead.
     spotify=version_tuple(versions['spotify']);spice=version_tuple(versions['spicetify'])
     if spice==(2,45,3):
         if not (1,2,14)<=spotify<=(1,2,96):
-            raise RuntimeError('Spicetify 2.45.3 documents Linux Spotify support from 1.2.14 through 1.2.96; installed package is '+versions['spotify']+'. No client or launcher was changed. Use a release that documents support for your Spotify version. To remove the existing theme: bash apps/restore.sh spotify')
+            print('Warning: Spicetify 2.45.3 documents Linux Spotify support from 1.2.14 through 1.2.96; installed package is '+versions['spotify']+'. Continuing with generated theme output validation.')
     else:
         print('Warning: Spicetify '+versions['spicetify']+' compatibility is not recorded here; verify its Linux release notes. Generated theme files will still be checked.')
 

@@ -17,7 +17,7 @@ Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yok
 | Kimlik | Durum | Kanıt / sonraki adım |
 |---|---|---|
 | PT-001 | Doğrulandı | 2026-10-17: kullanıcı PR #1 dalını uygulayıp launcher/Super+E tutarlılığını “Aynen çalışıyor” diyerek onayladı. Kod: `62cfe809d0274fd2ec99a8aca4e37f117b20fe9f`; 12 regresyon kontrolü de geçti. |
-| PT-002 | Açık / sürüm uyumu engeli | 17 Ekim: sistem Spotify 1:1.3.4.258-2, spotify-adblock 1:1.1.1-1, Spicetify CLI 2.45.3-1. Kullanıcı girdileri temalı sarmalayıcıya yönleniyor ve LD_PRELOAD korunmuş. CLI'nin belgelenmiş Linux üst sınırı 1.2.96. Özel kopyanın sürümü ve güncel UI sonucu bilinmiyor. 2.2.5 bilinen uyumsuz uygulamayı durdurur ve tema çıktılarını doğrular; 1.3.4 desteği eklemez. |
+| PT-002 | Çalışma onaylandı / adblock sonucu ayrıca ölçülmedi | 17 Ekim: kullanıcı “Yo çalışıyo bende” diyerek Spotify'ın çalıştığını onayladı. Sistem Spotify 1:1.3.4.258-2, adblock 1:1.1.1-1, CLI 2.45.3-1. Girdiler temalı sarmalayıcıya yönleniyor ve LD_PRELOAD korunmuş. Belgelenmiş Linux aralığı dışında olmak hata kanıtı değildir; 2.2.5 yalnız uyarı verir. Özel kopyanın kesin sürümü ve reklam engelleme ölçümü kayıtlı değil. |
 | PT-003 | Canlı doğrulama bekliyor | Dolphin yazıları/ikonları zor okunuyordu. 2.2.2 beyaz normal/seçili metin ayarı kaynakta; bütün başlatma yolları kontrol edilmedi. |
 | PT-004 | Canlı doğrulama bekliyor | OSD 2.2.0 IPC `present` düzeltmesi; önceki raporda tuşlar çalışıyor fakat OSD yoktu. Son gerçek sonuç ayrıca kaydedilmeli. Steam menüsü/şarj durumu da kabul kontrolünde. |
 | PT-005 | Uygulandı / hedef oturum doğrulaması bekliyor | 2.2.4: mevcut HOME/XDG HyprCade profilleri veya ilk yedekte kayıtlı tam komut seçicileri kullanılır. IPC/list/kill/log istemcileri shell sayılmaz. 10 kontrollü süreç keşfi testi geçti; gerçek sinyal gönderilmedi. |
@@ -70,11 +70,11 @@ apply ilerlemesinin stderr satırları eksik olabilir; günlük tek başına kı
 uygulama kanıtı değildir. Sistem paket sürümü eski özel kopyayı tanımlamaz.
 
 Upstream `v2.45.3` sürüm notları aynı tarihte kontrol edildi: Linux Spotify
-`1.2.14–1.2.96`. Bilinen aralık dışı birleşim için kurucu preflight koruması,
+`1.2.14–1.2.96`. Belgelenmiş aralık dışı birleşim için kurucu preflight uyarısı,
 birleştirilmiş günlük ve gerçek tema dosyası denetimleri eklendi.
 
-`python3 checks/test_spotify_install.py` — **10 test geçti**. Destek sınırları,
-değişiklik öncesi durma, eksik çıktıda fresh/update rollback, ilk yedek,
+`python3 checks/test_spotify_install.py` — **10 test geçti**. Sürüm uyarısı,
+belgelenmiş aralık dışında check/apply devamı, eksik çıktıda fresh/update rollback, ilk yedek,
 adblock ortam/eylemleri, restore, stdout/stderr ve salt okunur tanılama denetlendi.
 `python3 checks/test_app_installers.py` — Dolphin ve Spotify uygulama/restore
 kontrolleri geçti; dosya kendi konumundan checkout'u bulacak şekilde taşındı.
@@ -83,11 +83,16 @@ Aynı tarihte mevcut 12 file-manager ve 10 session-discovery testi de tekrar ge�
 29 Python kaynağı parse edildi; 25 Bash dosyası, yerel Markdown bağlantıları ve
 `git diff --check` kontrolü geçti.
 
+17 Ekim kullanıcı düzeltmesi: Spotify çalışıyor. Sürüm notlarından kesin
+uyumsuzluk çıkarımı yapılarak eklenen otomatik engel kaldırıldı; yerine uyarı
+kondu. Bu onay mevcut kurulum içindir; yeni özel kopya veya bütün 1.3.4 paketleri
+canlı doğrulanmış sayılmaz. Kullanıcıdan çalışan kurulumu yeniden uygulaması
+veya geri alması istenmiyor.
+
 ## Sonraki iş
 
-PT-001 kullanıcı tarafından doğrulandı. PT-002 için güncel UI sonucu ve özel
-kopyanın sürümü gerekiyor; kurulu CLI'nin Linux destek sınırı aşılmış durumda.
-Uyumlu sürüm birleşimi ve native kabul sağlanmadan PT-002 kapanmaz. Bozuk tema
-geri alınabilir; otomatik paket indirme/düşürme yapılmaz. PT-005 PR #2'de;
-gerçek oturum kabulü bekliyor.
+PT-001 ve mevcut Spotify çalışma durumu kullanıcı tarafından onaylandı.
+Sürüm aralığına dayalı Spotify engeli yok. PT-003/004 için Dolphin okunabilirliği,
+OSD/tray/şarj kabulü sırada; adblock'un ölçülmüş sonucu ayrı kabul maddesi olarak
+korunuyor. PT-005 PR #2'de; gerçek oturum kabulü bekliyor.
 Alt+Tab, hesaplama ve ayarlar henüz uygulanmadı; ROADMAP sırası korunuyor.
