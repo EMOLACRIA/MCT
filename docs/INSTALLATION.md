@@ -1,4 +1,6 @@
-# Masaüstü görünümü — 2.2.3 QuickShell
+# Masaüstü görünümü — 2.2.4 QuickShell
+
+2.2.4: Eski shell yolu HOME/XDG ve ilk yedekte kayıtlı komuttan doğrulanır; başka QuickShell profilleri/IPC istemcileri shell sayılmaz. Kurulum ve restore aynı süreç tanımını kullanır. Native süreç davranışı hedef oturumda doğrulanmalıdır.
 
 2.2.3: Super+E, launcher ile aynı Dolphin desktop girdisini GIO üzerinden açar. `bash update.sh --check && bash update.sh` yeterlidir; mevcut uygulama eklentisini yeniden kurmak gerekmez. Stock ve yayımlanan elle düzeltme taşınır; özel dosya yöneticisi/kısayol korunur. `gio` komutu (`glib2`) ön kontrolde aranır.
 

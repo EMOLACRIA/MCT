@@ -22,6 +22,13 @@ Checkout kökünden `python3 checks/test_file_manager.py` (stdlib, 12 test).
 Geçici dizin ve kontrollü servis/komut örnekleri kullanır; kullanıcının oturumunu,
 dosyalarını veya servislerini değiştirmez. Native GIO/Dolphin/Hyprland testi değildir.
 
+## PT-005 için bağımsız regresyon kontrolü
+
+`python3 checks/test_session_discovery.py` — 10 stdlib testi. Süreç ve sinyal
+işlemleri kontrollü örneklerle değiştirilir; gerçek süreçlere sinyal gönderilmez.
+Profilin başka kullanıcı altında/başka dizinde bulunması ve ilgisiz shell/IPC
+istemcilerinin korunması bu kapsamda kontrol edilir.
+
 ## Eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında

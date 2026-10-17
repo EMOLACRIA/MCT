@@ -7,6 +7,7 @@ class Session:
  OLD_SHELL='old-shell'
  def __init__(self):self.cmd=[['quickshell','-p','old-shell']];self.services={};self.ready=False
  def processes(self):return [(200+i,a) for i,a in enumerate(self.cmd)]
+ def managed(self,args,wallpaper=False):return args[0]=='quickshell' or (wallpaper and args[0]=='hyprpaper')
  def read_services(self):return self.services
  def suppress_services(self,s):pass
  def restore_services(self,s):pass

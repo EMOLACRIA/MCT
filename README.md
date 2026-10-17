@@ -5,7 +5,7 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.2.3 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
+**Durum:** 2.2.4 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
 Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanmadı.
 
 ## Projeyi okumaya buradan başla
@@ -24,6 +24,21 @@ Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanm
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.2.4 — Eski shell profillerini tanıma
+
+Eski HyprCADE yolu kullanıcı adına bağlı sabit bir dizin değildir. Mevcut HOME/XDG
+profilinden veya ilk restore yedeğinin kaydettiği tam komuttan bulunur. İlgisiz
+QuickShell profilleri ve IPC/list/kill/log istemcileri çalışan shell olarak seçilmez.
+Restore, kaydedilmemiş bir eski shell komutunu tahmin ederek başlatmaz.
+
+```bash
+python3 checks/test_session_discovery.py
+```
+
+10 kontrollü keşif testi ve önceki 12 Dolphin/kurulum testi geçti; gerçek oturum
+süreçlerine bu ortamda sinyal gönderilmedi. Dolphin düzeltmesi kullanıcı tarafından
+onaylandı ve PR #1 ana dala birleştirildi.
 
 ## 2.2.3 — Dolphin başlatma tutarlılığı
 

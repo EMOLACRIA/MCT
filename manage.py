@@ -154,7 +154,7 @@ def restore_files(dest, metadata):
         shutil.rmtree(STYLE)
 
 def launch_original(session, metadata):
-    commands = metadata.get('processes', [['hyprpaper'], ['quickshell', '-p', session.OLD_SHELL]])
+    commands = metadata.get('processes', [['hyprpaper']])
     running = [args for _, args in session.processes()]
     for args in commands:
         if args not in running:
@@ -170,7 +170,7 @@ def install(check_only=False):
     print('Backup: ' + str(dest))
     stopped = False
     written = False
-    metadata['processes'] = [args for _, args in session.processes() if Path(args[0]).name in {'waybar', 'dunst', 'hyprpaper'} or (Path(args[0]).name in {'qs', 'quickshell'} and session.OLD_SHELL in args)]
+    metadata['processes'] = [args for _, args in session.processes() if session.managed(args, wallpaper=True)]
     metadata['desktop_services'] = session.read_services()
     (dest/'manifest.json').write_text(json.dumps(metadata, indent=2))
     try:

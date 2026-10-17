@@ -1,3 +1,12 @@
+## Bağımsız PT-005 süreç tanıma kontrolü
+
+```bash
+python3 checks/test_session_discovery.py
+```
+
+Python stdlib ile 10 kontrollü test; gerçek süreç başlatmaz/durdurmaz.
+HOME/XDG, taşınmış/symlink profil, restore kaydı, IPC ve ilgisiz shell ayrımı.
+
 ## Bağımsız PT-001 regresyon kontrolü
 
 ```bash

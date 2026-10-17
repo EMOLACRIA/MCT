@@ -9,13 +9,15 @@ Yerel kaynak klasöründe önce `git status`, sonra `git fetch origin` ile mevcu
 çalışma kontrol edilir. Geliştirme dallarında küçük, doğrulanabilir değişiklikler
 hazırlanır; kullanıcı düzenlemeleri silinmez ve force push kullanılmaz.
 
-PT-001 değişikliğini denemek için, yerel düzenleme yoksa:
+PR #1 Dolphin düzeltmesi kullanıcı tarafından denendi ve ana dala birleştirildi.
+Güncel ana dalı almak için, yerel düzenleme yoksa:
 
 ```bash
 git fetch origin
-git switch --track origin/fix/dolphin-launch-consistency
-bash update.sh --check && bash update.sh
+git switch main
+git pull --ff-only
 ```
 
-Dal yerelde zaten varsa `git switch fix/dolphin-launch-consistency` kullanılır.
-Bu kurulum işlemi yalnızca kullanıcının hedef Hyprland oturumunda yapılır.
+Yeni geliştirme PR'ları kendi dallarından denenebilir. Hedef Hyprland oturumunda
+uygulama: `bash update.sh --check && bash update.sh`.
+Spotify sonucu için salt okunur tanılama: `bash apps/diagnose.sh`.
