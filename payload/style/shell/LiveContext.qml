@@ -7,6 +7,7 @@ import Quickshell.Services.Mpris
 import Quickshell.Services.UPower
 import Quickshell.Services.SystemTray
 import Quickshell.Services.Notifications
+import "ui"
 
 Scope {
     id:root
@@ -65,6 +66,8 @@ Scope {
     property var toasts:[]
     property var liveNotifications:({})
     property var notificationGenerations:({})
+    property var notificationTimers:({})
+    property var toastTimers:({})
     property bool historyLoaded:false
     signal feedbackRequested(string kind,int level,bool muted)
 
@@ -86,11 +89,15 @@ Scope {
     Timer { id:saveTimer; interval:200; onTriggered:historyFile.setText(JSON.stringify({version:1,dnd:root.doNotDisturb,unread:root.unread,history:root.history.slice(0,100)})) }
     Component {
         id:expiry
-        Timer { required property string notificationKey; required property int generation; running:true; onTriggered: {if(root.notificationGenerations[notificationKey]===generation)root.expireNotification(notificationKey);destroy();} }
+        Timer { required property string notificationKey; required property int generation; onTriggered: {if(root.notificationGenerations[notificationKey]===generation) {delete root.notificationTimers[notificationKey];root.expireNotification(notificationKey);}destroy();} }
     }
     Component {
         id:toastExpiry
-        Timer { required property string notificationKey; required property int generation; interval:5000; running:true; onTriggered: {if(root.notificationGenerations[notificationKey]===generation)root.toasts=root.toasts.filter(n=>n.key!==notificationKey);destroy();} }
+        Timer { required property string notificationKey; required property int generation; interval:5000; onTriggered: {if(root.notificationGenerations[notificationKey]===generation) {delete root.toastTimers[notificationKey];root.toasts=root.toasts.filter(n=>n.key!==notificationKey);}destroy();} }
+    }
+    Component {
+        id:notificationWatcher
+        NotificationWatcher { onUpdated:root.receive(notification) }
     }
     NotificationServer {
         id:server
@@ -140,22 +147,41 @@ Scope {
     function sessionAction(code) { if(["lock","suspend","logout","restart","poweroff"].indexOf(code)>=0)runAction("session",code); }
     function selectPlayer(id) { selectedPlayer=id; }
     function mediaCommand(code) { if(!player)return;if(code==="toggle" && canPlayPause)player.togglePlaying();else if(code==="previous" && canPrevious)player.previous();else if(code==="next" && canNext)player.next(); }
+    function stopNotificationTimer(timers,key) {
+        const timer=timers[key];delete timers[key];
+        if(timer) {timer.stop();timer.destroy();}
+    }
+    function notificationTimeout(value) {
+        // QuickShell 0.3.1 forwards the D-Bus millisecond value unchanged.
+        const timeout=Number(value);
+        if(!Number.isFinite(timeout) || timeout<0)return 5000;
+        return Math.min(2147483647,Math.max(0,Math.round(timeout)));
+    }
     function receive(n) {
         restoreHistory();n.tracked=true;
         let oldKey=Object.keys(liveNotifications).find(k=>liveNotifications[k] && liveNotifications[k].id===n.id);
+        const firstTracking=oldKey===undefined;
         if(!oldKey && n.lastGeneration) {const old=history.find(h=>h.sourceId===n.id);if(old)oldKey=old.key;}
         const key=oldKey || String(Date.now())+":"+n.id;
         const generation=(notificationGenerations[key] || 0)+1;notificationGenerations[key]=generation;
+        stopNotificationTimer(notificationTimers,key);stopNotificationTimer(toastTimers,key);
         liveNotifications[key]=n;
         const note={key:key,sourceId:n.id,app:String(n.appName || "Notification").slice(0,200),title:String(n.summary || "").slice(0,300),body:String(n.body || "").replace(/<[^>]*>/g,"").slice(0,2000),time:Qt.formatDateTime(new Date(),"HH:mm"),actions:n.actions.map(a=>({id:a.identifier,text:a.text}))};
-        if(!n.transient) {history=[note].concat(history.filter(h=>h.key!==key)).slice(0,100);if(!n.lastGeneration)unread=Math.min(100,unread+1);persist();}
-        if(!doNotDisturb && !n.lastGeneration) {toasts=[note].concat(toasts.filter(t=>t.key!==key)).slice(0,3);toastExpiry.createObject(root,{notificationKey:key,generation:generation});}
-        n.closed.connect(()=>{
-            if(liveNotifications[key]!==n)return;
-            delete liveNotifications[key];toasts=toasts.filter(t=>t.key!==key);
-            history=history.map(h=>h.key===key ? {key:h.key,sourceId:h.sourceId,app:h.app,title:h.title,body:h.body,time:h.time,actions:[]} : h);persist();
-        });
-        if(n.expireTimeout!==0)expiry.createObject(root,{notificationKey:key,generation:generation,interval:Math.max(1000,(n.expireTimeout<0 ? 5 : n.expireTimeout)*1000)});
+        if(!n.transient) {history=[note].concat(history.filter(h=>h.key!==key)).slice(0,100);if(firstTracking && !n.lastGeneration)unread=Math.min(100,unread+1);persist();}
+        else if(history.some(h=>h.key===key)) {history=history.filter(h=>h.key!==key);unread=Math.min(unread,history.length);persist();}
+        if(!doNotDisturb && !n.lastGeneration) {toasts=[note].concat(toasts.filter(t=>t.key!==key)).slice(0,3);const timer=toastExpiry.createObject(root,{notificationKey:key,generation:generation});toastTimers[key]=timer;timer.start();}
+        if(firstTracking) {
+            notificationWatcher.createObject(root,{notification:n});
+            n.closed.connect(()=>{
+                if(liveNotifications[key]!==n)return;
+                stopNotificationTimer(notificationTimers,key);stopNotificationTimer(toastTimers,key);
+                delete notificationGenerations[key];
+                delete liveNotifications[key];toasts=toasts.filter(t=>t.key!==key);
+                history=history.map(h=>h.key===key ? {key:h.key,sourceId:h.sourceId,app:h.app,title:h.title,body:h.body,time:h.time,actions:[]} : h);persist();
+            });
+        }
+        const timeout=notificationTimeout(n.expireTimeout);
+        if(timeout!==0) {const timer=expiry.createObject(root,{notificationKey:key,generation:generation,interval:timeout});notificationTimers[key]=timer;timer.start();}
     }
     function expireNotification(key) {const n=liveNotifications[key];if(n)n.expire();}
     function markRead() {unread=0;persist();}

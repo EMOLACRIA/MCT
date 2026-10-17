@@ -31,6 +31,9 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
    pasif pencere, araç çubuğu ve 16/22 px ikonlar gerçek Dolphin'de okunaklı olmalı.
 4. **PT-004 — OSD ve tray:** fonksiyon tuşları, slider, sessize alma, şarj
    simgesi ve Steam sağ tık menüsü canlı oturumda yeniden kontrol edilmeli.
+   2.2.6: bildirimlerde milisaniye süresi, property değişimlerinin aynı karta
+   yansıması ve zamanlayıcı temizliği düzeltildi. Qt OSD/ikon ve kontrollü tray
+   eylem testleri geçti; native oturum kabulü hâlâ bekliyor.
 5. **PT-005 — Taşınabilirlik:** 2.2.4 kodu uygulandı. Mevcut HOME/XDG profili
    veya ilk yedekte kayıtlı tam seçici kullanılır; ilgisiz QuickShell profilleri
    ve IPC istemcileri korunur. 10 kontrollü test geçti; hedef oturum kabulü bekliyor.

@@ -1,9 +1,11 @@
 """Regression fixtures for palette initialization, launcher migration and bootstrap order."""
-import importlib.util,json,os,subprocess,tempfile,sys
+import importlib.util,json,os,subprocess,tempfile,sys,shutil
 from pathlib import Path
 from unittest.mock import patch
 from test_spotify_install import SUPPORTED,theme_output
-spec=importlib.util.spec_from_file_location('apps',Path('build/desktop-style/apps/manage.py').resolve());m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+ROOT=Path(__file__).resolve().parents[1]
+NODE=shutil.which('node');assert NODE,'Node.js is required for this bootstrap check.'
+spec=importlib.util.spec_from_file_location('apps',ROOT/'apps/manage.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 with tempfile.TemporaryDirectory(prefix='apps23-') as td:
  root=Path(td);m.HOME=root;m.CONFIG=root/'config';m.DATA=root/'data';m.STATE=root/'state';m.SPOTIFY=m.DATA/'desktop-style-apps/spotify'
  for p in [m.CONFIG,m.DATA,m.STATE]:p.mkdir()
@@ -30,7 +32,7 @@ with tempfile.TemporaryDirectory(prefix='apps23-') as td:
  with patch.object(m,'closed'),patch.object(m,'spotify_source',return_value=source),patch.object(m,'spotify_versions',return_value=SUPPORTED),patch.object(m.shutil,'which',side_effect=lambda n:'/fixture' if n=='spicetify' else None),patch.object(m,'run',side_effect=apply),patch.dict(os.environ,{'XDG_DATA_DIRS':str(root/'system')}):
   m.spotify();assert adblock.read_text().count('LD_PRELOAD=/usr/lib/spotify-adblock.so')==2;assert '--foo %U' in adblock.read_text() and '--play' in adblock.read_text();assert 'launch.sh' in adblock.read_text()
   xpui=m.SPOTIFY/'client/Apps/xpui';tags=m.ScriptTags();tags.feed((xpui/'index.html').read_text());assert tags.sources==['/xpui-modules.js','/xpui-snapshot.js']
-  node='/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node'
+  node=NODE
   bad=subprocess.run([node,'-e',(xpui/'xpui-snapshot.js').read_text()],capture_output=True);assert bad.returncode
   good=subprocess.run([node,'-e','\n'.join((xpui/src.lstrip('/')).read_text() for src in tags.sources)],capture_output=True);assert good.returncode==0,good.stderr
   before=(xpui/'index.html').read_bytes();m.repair_spotify_bootstrap(m.SPOTIFY/'client');assert (xpui/'index.html').read_bytes()==before
@@ -47,7 +49,8 @@ with tempfile.TemporaryDirectory(prefix='apps23-') as td:
   m.spotify(restore=True);assert adblock.read_text()==adtext;assert '--ozone-platform=wayland' in normal.read_text()
  print('PASS: adblock env, arguments/actions, bootstrap JavaScript order/idempotence, failed-update rollback, original multi-launcher restore')
  # Parse exactly as qt6ct does, using real Qt QSettings + QPalette and a graphics view.
- sys.path.insert(0,str(Path('build/qs-qt-check').resolve()));os.environ['QT_QPA_PLATFORM']='offscreen'
+ if os.environ.get('MCT_QT_TEST_PATH'):sys.path.insert(0,os.environ['MCT_QT_TEST_PATH'])
+ os.environ['QT_QPA_PLATFORM']='offscreen'
  from PySide6.QtCore import QSettings
  from PySide6.QtGui import QPalette,QColor
  from PySide6.QtWidgets import QApplication,QGraphicsScene,QGraphicsView,QGraphicsWidget

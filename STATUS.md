@@ -1,6 +1,6 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.2.5 geliştirme sürümü**.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.2.6 geliştirme sürümü**.
 Aşama: **M0 tamamlandı; M1 — mevcut kurulumu sağlamlaştırma**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
@@ -18,10 +18,10 @@ Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yok
 |---|---|---|
 | PT-001 | Doğrulandı | 2026-10-17: kullanıcı PR #1 dalını uygulayıp launcher/Super+E tutarlılığını “Aynen çalışıyor” diyerek onayladı. Kod: `62cfe809d0274fd2ec99a8aca4e37f117b20fe9f`; 12 regresyon kontrolü de geçti. |
 | PT-002 | Çalışma onaylandı / adblock sonucu ayrıca ölçülmedi | 17 Ekim: kullanıcı “Yo çalışıyo bende” diyerek Spotify'ın çalıştığını onayladı. Sistem Spotify 1:1.3.4.258-2, adblock 1:1.1.1-1, CLI 2.45.3-1. Girdiler temalı sarmalayıcıya yönleniyor ve LD_PRELOAD korunmuş. Belgelenmiş Linux aralığı dışında olmak hata kanıtı değildir; 2.2.5 yalnız uyarı verir. Özel kopyanın kesin sürümü ve reklam engelleme ölçümü kayıtlı değil. |
-| PT-003 | Canlı doğrulama bekliyor | Dolphin yazıları/ikonları zor okunuyordu. 2.2.2 beyaz normal/seçili metin ayarı kaynakta; bütün başlatma yolları kontrol edilmedi. |
-| PT-004 | Canlı doğrulama bekliyor | OSD 2.2.0 IPC `present` düzeltmesi; önceki raporda tuşlar çalışıyor fakat OSD yoktu. Son gerçek sonuç ayrıca kaydedilmeli. Steam menüsü/şarj durumu da kabul kontrolünde. |
+| PT-003 | Canlı doğrulama bekliyor | 17 Ekim: mevcut paletin gerçek Qt aktif/pasif metin başlangıcı ve kontrast kontrolü geçti; kaynakta yeni renk değişikliği gerektiren kanıt bulunmadı. Bütün başlatma yolları ve ikonların native Dolphin görünümü ayrıca kabul edilmeli. |
+| PT-004 | Bildirim düzeltmesi uygulandı / canlı doğrulama bekliyor | 2.2.6: bildirim süresi milisaniye; aynı nesnenin başlık/metin/eylem değişimleri aynı karta yansır, unread tekrar artmaz; eski timer'lar temizlenir. Qt OSD hover/drag ve ikon merkezleri, kontrollü tray eylemleri geçti. Native OSD/Steam/şarj kabulü açık. |
 | PT-005 | Uygulandı / hedef oturum doğrulaması bekliyor | 2.2.4: mevcut HOME/XDG HyprCade profilleri veya ilk yedekte kayıtlı tam komut seçicileri kullanılır. IPC/list/kill/log istemcileri shell sayılmaz. 10 kontrollü süreç keşfi testi geçti; gerçek sinyal gönderilmedi. |
-| QA-001 | Kısmen açık | File-manager, session-discovery, spotify-install ve app-installers kontrolleri bağımsız checkout içinde çalışır. Diğer eski kontroller çalışma alanı/Qt fixturelerine bağlı; genel CI henüz yok. |
+| QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23 ve shell-syntax da checkout'u kendi bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
 ## Önceki hazırlama kontrolleri
@@ -88,6 +88,35 @@ uyumsuzluk çıkarımı yapılarak eklenen otomatik engel kaldırıldı; yerine 
 kondu. Bu onay mevcut kurulum içindir; yeni özel kopya veya bütün 1.3.4 paketleri
 canlı doğrulanmış sayılmaz. Kullanıcıdan çalışan kurulumu yeniden uygulaması
 veya geri alması istenmiyor.
+
+## 2.2.6 bildirim yaşam döngüsü ve M1 kontrolleri
+
+2026-10-17: hedef QuickShell `v0.3.1` kaynakları incelendi. D-Bus `Notify`,
+timeout'u `Notification::updateProperties` üzerinden doğrudan `bExpireTimeout`
+alanına aktarır. Header açıklaması saniye dese de uygulama birim dönüşümü
+yapmaz. Bizim tekrar 1000 ile çarpmamız kaldırıldı. Aynı nesnenin güncellenmesi
+ayrı `notification` olayı üretmediği için property sinyalleri izleniyor.
+
+`node checks/test_shell_backend.js` geçti: 5000/120 ms, varsayılan/süresiz süre,
+yenilemede unread/kart/handler tekliği, timer temizliği, DND/geçmiş/eylemler,
+transient geçişi ve sağ/sol/orta tray eylemleri kontrollü servislerle denetlendi.
+`python3 checks/test_notification_watcher.py` — **4 gerçek Qt testi geçti**;
+sinyal grubunu tek yenileme, eylem/süre/transient değişimi ve kapanış sonrası
+bekleyen yenilemenin iptali kontrol edildi.
+
+Qt 6.10.2 ile `test_shell_revisions.py` OSD hover, ses drag/parlaklık bırakma,
+gizlenme gecikmesi, ikon merkezleri ve düşük pil çizimini geçti.
+`test_app_revision23.py` gerçek Qt paleti/kontrastı, önceki yedek geçişi ve
+kontrollü Spotify başlangıç/rollback kontrollerini geçti. Bu dosyalar artık
+eski build/ klasörü yerine kendi checkout'larını kullanır.
+`test_shell_syntax.py` 23 QML dosyasını bytecode'a derledi.
+Aynı tarihte 30 Python dosyası parse, 25 Bash dosyası syntax, yerel Markdown
+bağlantıları ve `git diff --check` kontrolü geçti.
+
+Native QuickShell bildirim D-Bus oturumu, Steam menüsü, gerçek pil geçişi ve
+Dolphin arayüzü burada çalıştırılmadı. Değişmeyen payload'la hiç property
+sinyali üretmeyen bir Notify tekrarını bu watcher algılayamaz; ADR-0005 sınırı
+açıklar. PT-003/004 tamamlandı sayılmıyor.
 
 ## Sonraki iş
 

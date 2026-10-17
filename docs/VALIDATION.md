@@ -39,7 +39,46 @@ restore, gerçek stdout/stderr birleştirmesi ve salt okunur tanılama kontrol e
 2026-10-17: iki komut geçti. Spotify yerine geçici dosyalar/kontrollü CLI kullanılır;
 hesap, gerçek Spotify/Spicetify veya ağ erişimi kullanılmaz.
 
-## Diğer eski checks kaynakları
+## 2.2.6 Qt / bildirim kontrolleri
+
+Checkout kökünde:
+
+```bash
+node checks/test_shell_backend.js
+python3 checks/test_notification_watcher.py
+python3 checks/test_shell_revisions.py
+python3 checks/test_app_revision23.py
+python3 checks/test_shell_syntax.py
+```
+
+Node testi üretim JS fonksiyonlarını kontrollü servislerle çalıştırır. Watcher
+testi (4 vaka) gerçek Qt sinyal/event döngüsünü kullanır. OSD/ikon testi mevcut
+PreviewScene'i; palet testi Qt QSettings/QPalette/QGraphicsWidget'ı kullanır.
+23 QML bytecode kontrolü native QuickShell modüllerini instantiate etmez.
+2026-10-17: hepsi Node.js ve Qt 6.10.2 ile geçti. PySide6 normal import yolunda
+yoksa `MCT_QT_TEST_PATH`; qmlcachegen PATH'te yoksa `MCT_QMLCACHEGEN` kullanılır.
+Gereken bağımlılık eksikse bu komutlar başarılı sayılmaz veya native teste dönüşmez.
+
+### Hedef oturum kabulü
+
+Yeni dal hedef Hyprland oturumunda `bash update.sh --check && bash update.sh`
+ile uygulanır. Ses/parlaklık tuşları, OSD slider hover/drag, mute, Steam sağ tık,
+pil şarj geçişi ve Dolphin'in aktif/pasif metni kullanıcı tarafından kontrol edilir.
+Bu kaynak incelemesinde Dolphin renkleri ve OSD görünümü değiştirilmedi.
+
+`notify-send` varsa süre ve aynı kartta yenileme kontrolü:
+
+```bash
+notify-send -t 1200 "Kısa bildirim" "Yaklaşık 1,2 saniyede kapanmalı"
+notice_id=$(notify-send -p -t 8000 "Aktarım" "Başladı")
+notify-send -r "$notice_id" -t 8000 "Aktarım" "Yüzde 75"
+```
+
+İkinci/üçüncü komut aynı kartı günceller; unread ikinci kez artmamalı.
+Süre dolunca toast/canlı eylemler kapanır, geçmiş metni kalabilir. `0` süreli
+bildirimin toast'ı 5 saniye sonra saklanabilir; native bildirim canlı kalır.
+
+## Kalan eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında
 `build/desktop-style`, eski 1.4 fixture'ı, `tmp/` altında upstream kaynak/binary ve

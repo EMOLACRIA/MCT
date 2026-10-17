@@ -5,7 +5,7 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.2.5 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
+**Durum:** 2.2.6 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
 Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanmadı.
 
 ## Projeyi okumaya buradan başla
@@ -24,6 +24,18 @@ Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanm
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.2.6 — Bildirim süresi ve güncellenen kartlar
+
+QuickShell 0.3.1'in aktardığı bildirim süresi doğrudan milisaniye olarak kullanılır;
+5000 ms artık 5000 saniyeye dönüşmez. `-1` varsayılan 5 saniye, `0` süresizdir.
+Bir bildirimin başlık/metin/eylem değişiklikleri mevcut kartı günceller; okunmamış
+sayısı tekrar artmaz. Önceki zamanlayıcılar yenilemede/kapanışta temizlenir.
+
+Node davranış kontrolleri, gerçek Qt watcher sinyalleri (4 test), OSD hover/drag,
+ikon merkezleri ve Dolphin aktif/pasif palet kontrastı geçti. 23 QML dosyası Qt
+6.10.2 bytecode kontrolünden geçti. Bunlar native QuickShell/Steam/Dolphin kabulü
+değildir; hedef oturum kontrolü bekliyor. Ayrıntı: [doğrulama](docs/VALIDATION.md).
 
 ## 2.2.5 — Spotify kurulumunu doğrulama
 

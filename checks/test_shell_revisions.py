@@ -2,7 +2,8 @@
 import os,sys
 from pathlib import Path
 os.environ['QT_QPA_PLATFORM']='offscreen';os.environ['QT_QUICK_BACKEND']='software'
-sys.path.insert(0,str(Path('build/qs-qt-check').resolve()))
+if os.environ.get('MCT_QT_TEST_PATH'):sys.path.insert(0,os.environ['MCT_QT_TEST_PATH'])
+ROOT=Path(__file__).resolve().parents[1]
 from PySide6.QtCore import QObject,QUrl,QPoint,QPointF,Qt,qInstallMessageHandler
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlExpression
@@ -13,7 +14,7 @@ def message(kind,context,text):
  if 'QML' in text or 'file:' in text:warnings.append(text)
 qInstallMessageHandler(message)
 app=QGuiApplication([]);view=QQuickView();view.setResizeMode(QQuickView.SizeRootObjectToView)
-view.setSource(QUrl.fromLocalFile(str(Path('build/desktop-style/payload/style/shell/PreviewScene.qml').resolve())))
+view.setSource(QUrl.fromLocalFile(str(ROOT/'payload/style/shell/PreviewScene.qml')))
 assert view.status()==QQuickView.Ready,view.errors()
 view.resize(1600,1000);view.show();QTest.qWait(100)
 root=view.rootObject();state=root.findChild(QObject,'uiState');backend=root.findChild(QObject,'demoContext')
@@ -41,7 +42,7 @@ QTest.mousePress(view,Qt.LeftButton,Qt.NoModifier,point(slider,.25));QTest.mouse
 assert backend.property('volume')>=75,backend.property('volume')
 QTest.mouseRelease(view,Qt.LeftButton,Qt.NoModifier,point(slider,.8));QTest.qWait(100)
 assert 75<=backend.property('volume')<=85
-assert view.grabWindow().save('build/desktop-style/previews/osd.png')
+assert not view.grabWindow().isNull()
 js('backendUnderTest.setBrightness(35)');QTest.qWait(50)
 QTest.mousePress(view,Qt.LeftButton,Qt.NoModifier,point(slider,.35));QTest.mouseMove(view,point(slider,.6),30);QTest.mouseRelease(view,Qt.LeftButton,Qt.NoModifier,point(slider,.6));QTest.qWait(130)
 assert 55<=backend.property('brightness')<=65
