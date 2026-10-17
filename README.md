@@ -5,8 +5,8 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.2.6 geliştirme sürümü. M0 tamamlandı; M1 sağlamlaştırma sürüyor. Plague Tale henüz tamamlanmadı.
-Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanmadı.
+**Durum:** 2.3.0 geliştirme sürümü. M1 normal kullanım onaylandı; M2 Alt+Tab uygulandı, hedef oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+Launcher hesaplama ve ortak ayarlar ekranı sıradaki işler; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
 
@@ -25,6 +25,29 @@ Alt+Tab, launcher hesaplama ve ortak ayarlar ekranı planlandı; henüz uygulanm
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
 
+## 2.3.0 — Çalışma alanları arasında Alt+Tab
+
+Alt+Tab ileri, Alt+Shift+Tab geri seçer. Alt bırakılınca seçili pencere açılır;
+Enter da onaylar, Esc veya dışarı tıklama iptal eder. Listede bütün çalışma
+alanlarının uygulama simgesi/adı, pencere başlığı, alan ve monitör bilgisi vardır.
+MRU sırası seçim boyunca sabittir; yeni pencere sona eklenir, kapanan kaldırılır.
+
+Seçici açıldığı ekranda kalır. Desteklenen toplevel yakalamasında seçili pencerenin
+tek karesi gösterilir; yakalama yoksa uygulama bilgisiyle seçim devam eder.
+Kapalıyken yakalama bileşeni kaldırılır. Mevcut özel Alt/Tab kısayolu bulunursa
+güncelleme onu korur ve seçici bağlarını eklemediğini bildirir.
+
+```bash
+bash preview.sh
+bash update.sh --check && bash update.sh
+```
+
+Preview örnek pencereler kullanır. 11 gerçek Qt durum/klavye/yerleşim testi,
+6 kısayol geçiş testi, backend ve QML kaynak kontrolleri geçti. Native Alt bırakma,
+alana geçiş, ekran çıkarma ve yakalama hedef cihazda ayrıca denenmeli.
+[Doğrulama](docs/VALIDATION.md#pt-010-alttab-kontrolü) ·
+[ADR-0006](docs/decisions/0006-window-switcher.md).
+
 ## 2.2.6 — Bildirim süresi ve güncellenen kartlar
 
 QuickShell 0.3.1'in aktardığı bildirim süresi doğrudan milisaniye olarak kullanılır;
@@ -35,7 +58,7 @@ sayısı tekrar artmaz. Önceki zamanlayıcılar yenilemede/kapanışta temizlen
 Node davranış kontrolleri, gerçek Qt watcher sinyalleri (4 test), OSD hover/drag,
 ikon merkezleri ve Dolphin aktif/pasif palet kontrastı geçti. 23 QML dosyası Qt
 6.10.2 bytecode kontrolünden geçti. Bunlar native QuickShell/Steam/Dolphin kabulü
-değildir; hedef oturum kontrolü bekliyor. Ayrıntı: [doğrulama](docs/VALIDATION.md).
+değildir; PR #4 sonrası normal Dolphin/OSD/Steam akışı kullanıcı tarafından onaylandı. Ayrıntı: [doğrulama](docs/VALIDATION.md).
 
 ## 2.2.5 — Spotify kurulumunu doğrulama
 

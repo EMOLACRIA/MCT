@@ -9,10 +9,13 @@ Item {
     property alias backend:demo
     Image { anchors.fill:parent; source:"assets/wallpaper.png"; fillMode:Image.PreserveAspectCrop }
     DemoContext { id:demo }
-    UiState { id:shellState; objectName:"uiState" }
+    UiState { id:shellState; objectName:"uiState";onActivePanelChanged:if(activePanel!=="")switcher.cancel() }
+    WindowSwitcherState {id:switcher;objectName:"windowSwitcherState";windows:demo.windows;activeWindowId:demo.activeWindowId;onCommitted:windowId=>demo.activateWindow(windowId)}
+    function cycleWindows(direction) {shellState.close();switcher.begin(direction,"preview");}
     Connections { target:demo; function onFeedbackRequested(kind,level,muted) {shellState.showFeedback(kind,level,muted);} }
     Bar { x:16; y:10; width:parent.width-32; height:48; backend:demo; uiState:shellState; screenToken:"preview" }
     Overlay { anchors.fill:parent; backend:demo; uiState:shellState }
+    WindowSwitcher {anchors.fill:parent;controller:switcher}
     Feedback { anchors.horizontalCenter:parent.horizontalCenter; anchors.bottom:parent.bottom; anchors.bottomMargin:80; width:370; height:100; backend:demo; uiState:shellState; visible:shellState.feedbackVisible }
     Rectangle {
         anchors.horizontalCenter:parent.horizontalCenter; anchors.bottom:parent.bottom; anchors.bottomMargin:18
@@ -20,8 +23,10 @@ Item {
         Text { id:status; anchors.centerIn:parent; text:demo.lastAction || "Preview · changes stay in this window"; color:Theme.muted; font.pixelSize:11 }
     }
     Shortcut { sequence:"Meta+R"; onActivated:shellState.toggle("launcher","preview") }
+    Shortcut { sequence:"Alt+Tab";enabled:!switcher.active;onActivated:root.cycleWindows(1) }
+    Shortcut { sequence:"Alt+Shift+Tab";enabled:!switcher.active;onActivated:root.cycleWindows(-1) }
     Shortcut { sequence:"Meta+M"; onActivated:shellState.toggle("power","preview") }
     Shortcut { sequence:"Meta+T"; onActivated:shellState.toggle("hardware","preview") }
     Shortcut { sequence:"Meta+B"; onActivated:shellState.toggle("notifications","preview") }
-    Shortcut { sequence:"Escape"; onActivated:shellState.close() }
+    Shortcut { sequence:"Escape"; onActivated:{switcher.cancel();shellState.close();} }
 }

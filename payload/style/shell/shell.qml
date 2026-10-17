@@ -3,14 +3,29 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import "ui"
 
 ShellRoot {
     id:root
     LiveContext { id:services; hardwareMonitoring:shellState.activePanel==="hardware" }
-    UiState { id:shellState }
+    UiState { id:shellState;onActivePanelChanged:if(activePanel!=="")switcher.cancel() }
+    WindowSwitcherState {
+        id:switcher;windows:services.windows;activeWindowId:services.activeWindowId
+        onCommitted:windowId=>services.activateWindow(windowId)
+    }
+    function cycleWindows(direction) {
+        shellState.close();
+        if(!switcher.active)services.refreshWindows();
+        switcher.begin(direction,root.focusedScreen ? root.focusedScreen.name : "");
+    }
+    GlobalShortcut {appid:"desktop-style";name:"window-next";description:"Next window";onPressed:root.cycleWindows(1)}
+    GlobalShortcut {appid:"desktop-style";name:"window-previous";description:"Previous window";onPressed:root.cycleWindows(-1)}
+    GlobalShortcut {appid:"desktop-style";name:"window-accept";description:"Accept selected window";onPressed:switcher.commit();onReleased:switcher.commit()}
     readonly property var focusedScreen:Quickshell.screens.find(s=>s.name===services.focusedScreenName) || Quickshell.screens[0] || null
     readonly property var panelScreen:Quickshell.screens.find(s=>s.name===shellState.screenName) || focusedScreen
+    readonly property var switcherScreen:Quickshell.screens.find(s=>s.name===switcher.screenName) || null
+    onSwitcherScreenChanged:if(switcher.active && !switcherScreen)switcher.cancel()
     Connections { target:services; function onFeedbackRequested(kind,level,muted) {shellState.showFeedback(kind,level,muted);} }
     IpcHandler {
         target:"desktop"
@@ -39,6 +54,29 @@ ShellRoot {
             WlrLayershell.layer:WlrLayer.Top
             WlrLayershell.namespace:"desktop-bar"
             Bar { anchors.fill:parent; backend:services; uiState:shellState; screenToken:barWindow.modelData.name; nativeWindow:barWindow }
+        }
+    }
+    PanelWindow {
+        visible:switcher.active && root.switcherScreen!==null
+        screen:root.switcherScreen;anchors {top:true;bottom:true;left:true;right:true}
+        color:"transparent";exclusionMode:ExclusionMode.Ignore
+        WlrLayershell.layer:WlrLayer.Overlay
+        WlrLayershell.keyboardFocus:WlrKeyboardFocus.Exclusive
+        WlrLayershell.namespace:"desktop-window-switcher"
+        WindowSwitcher {anchors.fill:parent;controller:switcher;previewComponent:windowCaptureView}
+    }
+    Component {
+        id:windowCaptureView
+        Item {
+            property alias hasContent:stream.hasContent
+            ScreencopyView {
+                id:stream
+                anchors.centerIn:parent
+                width:sourceSize.width>0 && sourceSize.height>0 ? Math.min(parent.width,parent.height*sourceSize.width/sourceSize.height) : parent.width
+                height:sourceSize.width>0 && sourceSize.height>0 ? Math.min(parent.height,parent.width*sourceSize.height/sourceSize.width) : parent.height
+                captureSource:switcher.active ? services.windowCapture(switcher.selectedId) : null
+                live:false;paintCursor:false
+            }
         }
     }
     PanelWindow {

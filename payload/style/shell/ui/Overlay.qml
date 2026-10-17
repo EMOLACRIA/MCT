@@ -19,7 +19,8 @@ FocusScope {
         Loader {
             id:content; anchors.fill:parent; anchors.margins:24
             sourceComponent:uiState.activePanel==="launcher" ? launcher : uiState.activePanel==="power" ? power : uiState.activePanel==="controls" ? controls : uiState.activePanel==="notifications" ? notifications : uiState.activePanel==="media" ? media : uiState.activePanel==="hardware" ? hardware : null
-            onLoaded: { appear.restart();Qt.callLater(()=>{if(item && item.activate)item.activate();}); }
+            onLoaded: {appear.restart();activateContent.restart();}
+            Timer {id:activateContent;interval:0;onTriggered:if(content.item && content.item.activate)content.item.activate()}
         }
         NumberAnimation { id:appear; target:frame; property:"opacity"; from:0; to:1; duration:140; easing.type:Easing.OutQuad }
     }

@@ -78,6 +78,34 @@ notify-send -r "$notice_id" -t 8000 "Aktarım" "Yüzde 75"
 Süre dolunca toast/canlı eylemler kapanır, geçmiş metni kalabilir. `0` süreli
 bildirimin toast'ı 4,5 saniye sonra saklanabilir; native bildirim canlı kalır.
 
+## PT-010 Alt+Tab kontrolü
+
+2.3.0 için `python3 checks/test_window_switcher.py` (PySide6, 11 test),
+`python3 checks/test_switcher_bindings.py` (stdlib, 6 test), Node backend,
+25 QML bytecode ve 99 native binding kaynak kontrolü 2026-10-17'de geçti.
+API kontrolü `MCT_QS_SOURCE` ile QuickShell v0.3.1 checkout'unu alır;
+Qt/derleyici bağımlılıkları yukarıdakiyle aynıdır. Kaynaklar/karar:
+[ADR-0006](decisions/0006-window-switcher.md).
+
+Hedef oturumda `bash update.sh --check && bash update.sh` sonrasında:
+
+1. Alan 4 ve 9 gibi farklı alanlarda pencereler aç; Alt+Tab listesinde ikisini,
+   başlıkları ve alan numaralarını gör. Alt basılıyken Tab/Shift+Tab ile dolaş;
+   Alt bırakınca seçili pencerenin alanına geçip doğru pencereyi odaklamalı.
+2. Hızlı Alt+Tab, tekrarlı Tab, sağ/sol Alt ve Alt basılı Esc iptalini dene.
+   Esc sonrası Alt bırakma eski seçimi açmamalı. Enter ve fare seçimi de çalışmalı.
+3. Seçili pencereyi dışarıdan kapat; yeni pencere aç; liste boşalsın. Kapanmış
+   adres odaklanmamalı, liste seçim sırasında kendiliğinden yeniden sıralanmamalı.
+4. İkinci ekran varsa farklı ölçeklerde dene: başladığı ekranda kalmalı;
+   ekran çıkarıldığında veya dışarı odak gidince iptal edilmeli. Başka shell paneli
+   açılması da seçimi iptal etmeli. Tek ekran kullanımı bu çoklu ekran kabulü değildir.
+5. Desteklenen yakalamada tek kare görünmeli; görüntü çıkmasa da liste/odak/iptal
+   çalışmalı. Kapalıyken yakalama devam etmemeli. `shell.log` hata kaydını kontrol et.
+6. Özel Alt/Tab bağı varsa update bunu korur ve yeni bağ eklemediğini yazar;
+   otomatik geçiş yapılmadığı durumda eski kısayolun çalışması beklenir.
+
+Sonuçlar kullanıcı cihazında raporlanmadan canlı kabul kapanmaz.
+
 ## Kalan eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında

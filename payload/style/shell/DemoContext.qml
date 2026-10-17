@@ -8,6 +8,13 @@ Item {
     property string clock:"17:55"
     property string date:"WEDNESDAY · 14 OCTOBER"
     property string focusedScreenName:"preview"
+    property string activeWindowId:"0x101"
+    property var windows:[
+        {id:"0x101",title:"Terminal",appName:"Kitty",icon:"",workspaceLabel:"4",monitor:"eDP-1",focusOrder:0},
+        {id:"0x102",title:"Project files",appName:"Dolphin",icon:"",workspaceLabel:"9",monitor:"eDP-1",focusOrder:1},
+        {id:"0x103",title:"Documentation",appName:"Browser",icon:"",workspaceLabel:"2",monitor:"DP-1",focusOrder:2},
+        {id:"0x104",title:"Music library",appName:"Spotify",icon:"",workspaceLabel:"10",monitor:"eDP-1",focusOrder:3}]
+    function activateWindow(id) {if(windows.some(w=>w.id===id)) {lastAction="Preview · Focus "+id;activeWindowId=id;}}
     property var workspaces:[{id:1,count:2,active:false},{id:2,count:1,active:false},{id:3,count:0,active:false},{id:4,count:3,active:true},{id:5,count:0,active:false},{id:6,count:0,active:false},{id:7,count:0,active:false},{id:8,count:0,active:false},{id:9,count:1,active:false},{id:10,count:0,active:false}]
     property var applications:[{id:"kitty",name:"Kitty",comment:"Terminal emulator",icon:""},{id:"dolphin",name:"Dolphin",comment:"File manager",icon:""},{id:"zen",name:"Zen Browser",comment:"Browse the web",icon:""},{id:"godot",name:"Godot",comment:"Game engine",icon:""},{id:"blender",name:"Blender",comment:"3D modelling",icon:""},{id:"code",name:"Visual Studio Code",comment:"Code editor",icon:""},{id:"spotify",name:"Spotify",comment:"Music",icon:""}]
     property var trayItems:[]
