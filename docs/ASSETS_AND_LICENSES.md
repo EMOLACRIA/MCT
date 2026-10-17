@@ -10,8 +10,9 @@ Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.
   son kullanıcının özel bildirim/hesap ekran görüntülerini içermez.
 - SVG köşe süsleri, Dolphin klasör ikonları, Spotify CSS ve shell kaynakları önceki
   proje çalışmasının parçalarıdır. Genel bir üçüncü taraf lisansı uydurulmaz.
-- CP437 terminal madalyonunun önceki ayrı paketi bu ana kaynak ağacında bulunmadı;
-  kaynağı/teslimi ASSET-001 ile takip ediliyor.
+- CP437 terminal madalyonu kullanıcı tarafından `terminal-medallion/` altında
+  MCT başlangıcına eklendi. CP437 byte dosyaları ve UTF-8 Fastfetch sürümleri
+  mevcut; ilk temayla entegrasyon/canlı kabul ASSET-001 ile takip ediliyor.
 - Bu görevde Vitreus/Caelestia kodu veya görselleri kopyalanmadı. Referans linkleri
   `INSPIRATION.md` içindedir. Gelecekte alınan dosya için kaynak commit'i, lisans,
   değiştirme ve bildirim gereksinimi bu kayda eklenir.

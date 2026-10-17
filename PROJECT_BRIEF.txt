@@ -1,7 +1,8 @@
 PROJE HEDEFİ — PLAGUE TALE ÖNCE, ORTAK MASAÜSTÜ SONRA
 Karar tarihi: 2026-10-17 (Europe/Riga)
 Sahip: Emirhan / EMOLACRIA
-Çalışma adı: desktop-style. Nihai ürün adı henüz seçilmedi.
+Depo/çalışma adı: MCT (https://github.com/EMOLACRIA/MCT).
+Kurulum dizini: desktop-style. Nihai ürün markası ayrıca seçilebilir.
 
 BU DOSYANIN AMACI
 Yeni bir sohbet, model veya katkıcı projenin niyetini tahmin etmek zorunda

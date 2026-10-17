@@ -5,7 +5,7 @@ local function styleCommand(name)
     return "bash \"" .. styleScripts .. name .. "\""
 end
 local terminal = "kitty"
-local fileManager = "dolphin"
+local fileManager = styleCommand("file-manager.sh")
 
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more

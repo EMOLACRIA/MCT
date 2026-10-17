@@ -4,7 +4,7 @@ Karar tarihi: **17 Ekim 2026**. Ürün kapsamı: [PROJECT_BRIEF.txt](PROJECT_BRI
 Durumlar: **planlandı**, **uygulandı / doğrulama bekliyor**, **doğrulandı**, **ertelendi**.
 Tarihler taahhüt edilmedi; bir aşama kendi çıkış koşulları karşılanınca kapanır.
 
-## M0 — Projeyi kayıt altına al ve GitHub'a taşı
+## M0 — Projeyi kayıt altına al ve GitHub'a taşı — tamamlandı
 
 Bu görevde yapılan iş. Ürün ve ajan talimatları; güncel durum; referanslar;
 ortak özellik sözleşmesi; mimari ve yayın kontrol listesi oluşturulur.
@@ -17,9 +17,9 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
 
 Öncelik sırası:
 
-1. **PT-001 — Dolphin başlatma tutarlılığı:** Super+E, launcher, dosya/klasör
-   açma yolları aynı paleti/stili kullanmalı. Sohbette verilen elle düzeltme
-   henüz dağıtılan `payload/hypr/keybinds.lua` içine uygulanmış değildir.
+1. **PT-001 — Dolphin başlatma tutarlılığı:** **doğrulandı**. Kullanıcı 17 Ekim
+   2026 tarihinde PR #1 dalını uygulayıp launcher ve Super+E açılışını onayladı.
+   Sonraki değişikliklerde bu davranış korunacak.
 2. **PT-002 — Spotify ve adblock:** boş ekranın güncel pakette giderildiğini
    gerçek uygulamada doğrula; desteklenmeyen özel başlatıcı varsa uyumlandır.
    Adblock'un korunması kurulum çıktısı kadar gerçek başlatma ile de kontrol edilir.

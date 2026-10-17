@@ -33,7 +33,8 @@
 
 - `rg` ile ara. Mevcut arayüzleri ve kurucunun rollback/ilk yedek davranışını koru.
 - Eşdeğer başlatma yolları aynı uygulama ayarına ulaşmalı; özellikle Dolphin
-  launcher/Super+E farkı açık bir regresyondur, çözülmüş varsayma.
+  launcher/Super+E için ortak desktop girdisi kullanımını koru; güncel kabul
+  durumu STATUS.md üzerinden kontrol edilir.
 - QuickShell `feedback.present` adını koru; CLI'nin `show` alt komutuyla eski çakışmayı tekrarlama.
 - İlgili, mevcut kontrolleri çalıştır. Basit metin/renk değişikliğine kopya test ekleme.
 - `checks/` kaynaklarının bir bölümü eski hazırlama çalışma alanına bağlıdır;
