@@ -14,7 +14,10 @@ global.Quickshell={shellPath:x=>x,env:()=>'/home/fixture',execDetached:x=>events
 global.historyFile={text:()=>JSON.stringify({dnd:false,unread:1,history:[{key:'stored',app:'Old',title:'Previous notification',body:'saved',time:'17:00',actions:[{id:'dead',text:'expired action'}]}]})};
 global.saveTimer={restart:()=>events.push('persist')};
 function timerFactory(r,v){const timer={...v,running:false,destroyed:false,start(){this.running=true;},stop(){this.running=false;},destroy(){this.destroyed=true;}};scheduled.push(timer);return timer;}
-global.expiry={createObject:timerFactory};global.toastExpiry={createObject:timerFactory};
+global.expiry={createObject:timerFactory};
+// Preserve the Timer component default which createObject inherits in real QML.
+const toastInterval=Number(source.match(/id:toastExpiry\s+Timer\s*\{[^}]*interval:(\d+)/)[1]);
+global.toastExpiry={createObject:(r,v)=>timerFactory(r,{interval:toastInterval,...v})};
 const watchers=[];global.notificationWatcher={createObject:(r,v)=>watchers.push(v)};
 global.SystemTray={items:{values:[]}};
 const root={historyLoaded:false,history:[],unread:0,doNotDisturb:false,toasts:[],liveNotifications:{},notificationGenerations:{},notificationTimers:{},toastTimers:{},workspaces:[{id:9,count:1,active:true,monitor:'eDP-1'}],audioAvailable:true,sink:{audio:{volume:.5,muted:false}},microphoneAvailable:true,microphone:{audio:{volume:.8,muted:false}},feedbackRequested:(...v)=>events.push(v),lastError:'',networkSettingsAvailable:true};
@@ -26,6 +29,7 @@ const n=note(8);root.receive(n);assert(n.tracked&&root.history.length===2&&root.
 const key=root.history[0].key;const generation=root.notificationGenerations[key];
 const firstTimer=root.notificationTimers[key],firstToast=root.toastTimers[key],beforeUnread=root.unread;
 assert(firstTimer.interval===5000&&firstTimer.running);
+assert(firstToast.interval===4500&&firstToast.running);
 n.summary='Copy 75%';n.body='Updated';root.receive(n);
 assert(root.history.length===2&&root.notificationGenerations[key]===generation+1);
 assert(root.history[0].title==='Copy 75%'&&root.toasts[0].body==='Updated');
@@ -58,4 +62,18 @@ root.trayClick(0,Qt.LeftButton,window,12,32);assert.deepStrictEqual(menuEvents.p
 root.trayClick(0,Qt.MiddleButton,window,12,32);assert.deepStrictEqual(menuEvents.pop(),['secondary']);
 root.trayScroll(0,120);assert.deepStrictEqual(menuEvents.pop(),['scroll',120,false]);
 SystemTray.items.values[0].onlyMenu=true;root.trayClick(0,Qt.LeftButton,window,12,32);assert(menuEvents.pop()[0]==='menu');
-console.log('PASS: notification millisecond/default/persistent timeouts, update deduplication, unread count, timer cleanup, archive/DND/actions/transient filtering, tray routing and Lua dispatch.');
+// Only currently listed, valid addresses may reach either dispatcher syntax.
+root.windows=[{id:'0xabc'}];
+const capture={id:'native-toplevel'};
+Hyprland.toplevels={values:[{address:'abc',wayland:capture}]};
+let refreshCount=0;Hyprland.refreshToplevels=()=>refreshCount++;
+root.refreshWindows();assert.strictEqual(refreshCount,1);
+assert.strictEqual(root.windowCapture('0xabc'),capture);
+assert.strictEqual(root.windowCapture('0xdead'),null);
+root.activateWindow('0xabc');assert.strictEqual(events.pop(),'hl.dsp.focus({window="address:0xabc"})');
+Hyprland.usingLua=false;root.activateWindow('0xabc');assert.strictEqual(events.pop(),'focuswindow address:0xabc');
+const beforeInvalid=events.length;
+for(const id of ['0xdead','0xabc"})','bad',null])root.activateWindow(id);
+assert.strictEqual(events.length,beforeInvalid);
+root.windows=[];root.activateWindow('0xabc');assert.strictEqual(events.length,beforeInvalid);
+console.log('PASS: window activation/capture/refresh routing; notification millisecond/default/persistent timeouts, update deduplication, unread count, timer cleanup, archive/DND/actions/transient filtering, tray routing and Lua dispatch.');

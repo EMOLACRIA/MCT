@@ -3,13 +3,18 @@
 This supplements qmlcachegen syntax checks; it is a source-contract check,
 not a substitute for loading the configuration in the user's native runtime.
 """
+import os
 import re
 from pathlib import Path
-src=Path('tmp/qs-docs/quickshell-0.3.1/src')
-shell=Path('build/desktop-style/payload/style/shell')
+root=Path(__file__).resolve().parents[1]
+src=Path(os.environ.get('MCT_QS_SOURCE',str(root/'tmp/qs-docs/quickshell-0.3.1')))/'src'
+shell=root/'payload/style/shell'
+assert src.is_dir(), 'Set MCT_QS_SOURCE to a QuickShell v0.3.1 source checkout.'
 
 # Include real inherited base declarations and FileView's QML wrapper.
 contracts={
+ 'GlobalShortcut':['wayland/hyprland/global_shortcuts/qml.hpp','core/reload.hpp'],
+ 'ScreencopyView':['wayland/screencopy/view.hpp'],
  'Variants':['core/variants.hpp','core/reload.hpp'],
  'PanelWindow':['window/panelinterface.hpp','window/windowinterface.hpp','core/types.hpp'],
  'ShellRoot':['core/shell.hpp','core/reload.hpp'],
@@ -73,7 +78,9 @@ def inspect(text,filename):
    allowed=properties(paths)|handlers(paths)|custom|{'on'+n[0].upper()+n[1:]+'Changed' for n in custom}|{'id','Component.onCompleted'}
    # PanelWindow's attached WlrLayershell properties belong to its own source.
    for name in names:
-    if name.startswith('WlrLayershell.'):
+    if kind=='ScreencopyView' and name in {'anchors.centerIn','width','height'}:
+     valid=True # inherited QtQuick.Item properties
+    elif name.startswith('WlrLayershell.'):
      valid=name.split('.',1)[1] in properties(contracts['WlrLayershell'])
     elif name.startswith(('anchors.','margins.')):
      group,leaf=name.split('.',1)

@@ -15,3 +15,5 @@ Power 1.0 Power.qml
 Toast 1.0 Toast.qml
 UiState 1.0 UiState.qml
 Hardware 1.0 Hardware.qml
+WindowSwitcherState 1.0 WindowSwitcherState.qml
+WindowSwitcher 1.0 WindowSwitcher.qml

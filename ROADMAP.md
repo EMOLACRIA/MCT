@@ -38,7 +38,8 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
    tarafından onaylandı; varsayılan/toast 4500 ms. Fiziksel pil geçişi M4'te kalır.
 5. **PT-005 — Taşınabilirlik:** 2.2.4 kodu uygulandı. Mevcut HOME/XDG profili
    veya ilk yedekte kayıtlı tam seçici kullanılır; ilgisiz QuickShell profilleri
-   ve IPC istemcileri korunur. 10 kontrollü test geçti; hedef oturum kabulü bekliyor.
+   ve IPC istemcileri korunur. 10 kontrollü test geçti; normal güncelleme onaylandı.
+   Farklı kullanıcıyla fresh install/restore geniş kabulü M4 listesinde kalır.
 6. Kurulum, tekrar güncelleme, başarısız güncelleme ve restore; ilk yedeğin
    korunması ve sonradan değiştirilmiş kullanıcı ayarlarına saygı.
 
@@ -48,6 +49,10 @@ kullanımda kayıp panel/çoğalan süreç, okunmayan metin ve hatalı oturum i�
 ## M2 — İlk temanın ortak günlük kullanım özelliklerini bitir
 
 ### PT-010 — Alt+Tab pencere seçici
+
+**2.3.0: uygulandı / hedef oturum doğrulaması bekliyor.** 11 gerçek Qt testi,
+6 kısayol geçiş kontrolü ve kaynak API karşılaştırması geçti. Önizleme tek kare;
+canlı video zorunlu kabul ölçütü değildir. [Karar](docs/decisions/0006-window-switcher.md).
 
 - Bütün çalışma alanlarındaki pencereler; uygulama simgesi, başlık ve alan numarası.
 - MRU gezinme; Alt+Tab ileri, Alt+Shift+Tab geri, Alt bırakınca seç, Esc ile iptal.

@@ -26,6 +26,17 @@ Scope {
     readonly property string clock:Qt.formatDateTime(now,"HH:mm")
     readonly property string date:Qt.formatDateTime(now,"dddd · dd MMMM").toUpperCase()
     readonly property string focusedScreenName:Hyprland.focusedMonitor ? Hyprland.focusedMonitor.name : ""
+    readonly property string activeWindowId:Hyprland.activeToplevel ? "0x"+Hyprland.activeToplevel.address.replace(/^0x/,"") : ""
+    readonly property var windows:Hyprland.toplevels.values.map(t=>{
+        const raw=t.lastIpcObject || {},address=String(t.address || "").replace(/^0x/,"");
+        if(!/^[0-9a-f]+$/i.test(address) || /^0+$/.test(address) || raw.mapped===false)return null;
+        const appId=(t.wayland ? t.wayland.appId : "") || raw.class || raw.initialClass || "Application";
+        const entry=DesktopEntries.heuristicLookup(appId);
+        const workspace=t.workspace ? String(t.workspace.name || t.workspace.id) : raw.workspace ? String(raw.workspace.name || raw.workspace.id) : "?";
+        return {id:"0x"+address,title:t.title || appId,appName:entry ? entry.name : appId,
+                icon:entry && entry.icon ? Quickshell.iconPath(entry.icon,true) : "",workspaceLabel:workspace,
+                monitor:t.monitor ? t.monitor.name : "",focusOrder:typeof raw.focusHistoryID==="number" ? raw.focusHistoryID : -1};
+    }).filter(w=>w!==null)
     readonly property var workspaces: Array.from({length:10},(_,i)=>{
         const w=Hyprland.workspaces.values.find(w=>w.id===i+1);
         return {id:i+1,count:w ? w.toplevels.values.length : 0,active:w ? w.active : false,monitor:w && w.monitor ? w.monitor.name : ""};
@@ -132,6 +143,12 @@ Scope {
         else if(button===Qt.MiddleButton)item.secondaryActivate();else if(button===Qt.LeftButton)item.activate();
     }
     function trayScroll(index,delta) { const item=SystemTray.items.values[index];if(item)item.scroll(delta,false); }
+    function refreshWindows() {Hyprland.refreshToplevels();}
+    function windowCapture(id) {const t=Hyprland.toplevels.values.find(t=>"0x"+t.address.replace(/^0x/,"")===id);return t ? t.wayland : null;}
+    function activateWindow(id) {
+        if(!/^0x[0-9a-f]+$/i.test(id) || !windows.some(w=>w.id===id))return;
+        Hyprland.dispatch(Hyprland.usingLua ? "hl.dsp.focus({window=\"address:"+id+"\"})" : "focuswindow address:"+id);
+    }
     function setVolume(value) {
         if(!audioAvailable)return;
         sink.audio.volume=Math.max(0,Math.min(100,value))/100;

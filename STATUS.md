@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.2.6 geliştirme sürümü**.
-Aşama: **M0 tamamlandı; M1 — mevcut kurulumu sağlamlaştırma**. Plague Tale tamamlanmış değildir.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.3.0 geliştirme sürümü**.
+Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 — Alt+Tab kabulü bekliyor**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -10,7 +10,8 @@ QuickShell bar; launcher; güç menüsü; kontrol paneli; bildirim geçmişi/toa
 MPRIS medya; donanım paneli; sürüklenebilir OSD; pil/şarj durumu; Hyprlock medya
 bölümü; ayrı SDDM teması; Dolphin/Spotify eklentileri; kurulum/güncelleme/restore.
 `Theme.qml` vardır fakat bütün görsel değerler henüz bu dosyada toplanmış değildir.
-Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yoktur**.
+Alt+Tab seçici kaynakta uygulanmıştır; canlı kabulü bekler. Ayarlar ekranı,
+launcher hesaplama ve tema değiştirici **yoktur**.
 
 ## Son kullanıcı geri bildirimi ve açık işler
 
@@ -21,6 +22,7 @@ Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yok
 | PT-003 | Kullanıcı onayı | 17 Ekim: kullanıcı PR #4'ün Dolphin/OSD/Steam kontrolleri sonrasında bildirim süresi dışında sorun olmadığını onayladı. Önceki gerçek Qt aktif/pasif metin ve kontrast kontrolü de geçti. |
 | PT-004 | Kullanıcı onayı / süre tercihi uygulandı | 17 Ekim: PR #4 testleri için süre dışında sorun yok onayı geldi. Varsayılan/toast süresi 4500 ms yapıldı; 1200 ms yalnız önceki test komutuydu. Fiziksel şarj geçişi ayrıca raporlanmadı; M4 kabul listesinde korunur. |
 | PT-005 | Normal güncelleme kullanıcı onayı / geniş restore kabulü M4'te | Kullanıcı kümülatif PR #4 dalında sorun bildirmedi. 10 kontrollü süreç keşfi testi geçti. Farklı kullanıcıyla fresh install/restore canlı testi yapılmış sayılmaz. |
+| PT-010 | Uygulandı / canlı kabul bekliyor | 2.3.0: MRU model, bütün alanlar, klavye/fare, tek kare yakalama ve kısayol geçişi. 11 Qt + 6 stdlib testi geçti; gerçek odak/Alt bırakma/çoklu monitör/yakalama hedef cihazda denenmeli. |
 | QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23 ve shell-syntax da checkout'u kendi bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
@@ -123,10 +125,36 @@ diyerek istenen Dolphin/OSD/Steam kontrollerini onayladı. Bildirim varsayılan�
 ve toast sınırı isteğiyle 4500 ms yapıldı; uygulamanın açıkça istediği daha kısa
 süreler korunur. `node checks/test_shell_backend.js` yeni varsayılanla geçti.
 
+## 2.3.0 — Alt+Tab ve ana dal durumu
+
+17 Ekim: kullanıcının süre tercihi uygulandı; PR #2–4 onaylanan düzeltmeler
+ana dala birleştirildi. Main başı `cc546faabcf926f2d09c01cacf699e5f6892be33`.
+Yeni PT-010 bu tabandan geliştirildi; diğer M2 işlerine henüz başlanmadı.
+
+`WindowSwitcherState` MRU sırasını açıkken sabit tutar; bütün alanları ve alan/ekran
+etiketlerini gösterir. Açılan/kapanan pencere, dış odak ve boş liste ele alınır.
+Alt bırakma/Enter commit, Esc iptal; ekran çıkarma iptal; isteğe bağlı tek kare
+önizleme. Özel Alt/Tab bağları korunur. Mevcut Overlay'in Loader sonrasında
+kalan ertelenmiş focus callback'i, Loader'a bağlı Timer ile düzeltildi.
+
+2026-10-17 kontrolleri: `checks/test_window_switcher.py` **11 gerçek Qt testi**;
+`checks/test_switcher_bindings.py` **6 stdlib testi**; `checks/test_file_manager.py`
+**12 kontrollü kurulum/güncelleme/restore testi**. Backend Node testi geçerli/eksik/
+kapanmış pencere ve Lua/legacy dispatch'i denetler. `checks/test_shell_api.py`
+**99 native property/handler** için QuickShell v0.3.1 kaynak karşılaştırması;
+`checks/test_shell_syntax.py` **25 QML dosyası** bytecode derlemesi. Qt önizlemesi
+1600×1000'de görüntülenerek liste ve seçili satır incelendi; 500×400 sınırları da
+test edildi. OSD/ikon regresyon kontrolü tekrar geçti. 32 Python kaynağı parse,
+25 Bash syntax, yerel Markdown yolları ve git diff whitespace kontrolü geçti.
+
+Bu kontroller native Hyprland katman odağı, global kısayol, monitör çıkarma veya
+pencere yakalama çalıştırmaz. Bunlar [hedef kabul listesinde](docs/VALIDATION.md#pt-010-alttab-kontrolü)
+açıktır; özellik tamamlandı/canlı onaylandı sayılmaz.
+
 ## Sonraki iş
 
 PT-001 ve mevcut Spotify çalışma durumu kullanıcı tarafından onaylandı.
 Sürüm aralığına dayalı Spotify engeli yok. PR #2–4'ün normal kullanım akışı
-onaylandı; M2 Alt+Tab sırada. Adblock ölçümü, fiziksel şarj geçişi ve farklı
+onaylandı; M2 Alt+Tab hedef oturum kabulü sırada. Adblock ölçümü, fiziksel şarj geçişi ve farklı
 kullanıcıyla fresh install/restore gibi geniş kontroller M4 listesinde korunur.
-Alt+Tab, hesaplama ve ayarlar henüz uygulanmadı; ROADMAP sırası korunuyor.
+Alt+Tab uygulandı; kabul sonrasında hesaplama ve ayarlar gelir. ROADMAP sırası korunuyor.

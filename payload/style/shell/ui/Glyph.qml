@@ -18,7 +18,8 @@ Canvas {
         c.lineWidth = 1.45; c.lineCap = "round"; c.lineJoin = "round";
         function line(x,y,a,b) { c.beginPath(); c.moveTo(x,y); c.lineTo(a,b); c.stroke(); }
         function arc(x,y,r,a,b) { c.beginPath(); c.arc(x,y,r,a,b); c.stroke(); }
-        if (symbol === "search") { arc(10,10,6,0,Math.PI*2); line(15,15,21,21); }
+        if (symbol === "windows") {c.strokeRect(3,7,14,13);line(7,3,21,3);line(21,3,21,16);}
+        else if (symbol === "search") { arc(10,10,6,0,Math.PI*2); line(15,15,21,21); }
         else if (symbol === "power") { arc(12,13,8,-Math.PI*.32,Math.PI*1.32); line(12,2,12,12); }
         else if (symbol === "audio" || symbol === "mute") {
             c.beginPath(); c.moveTo(3,9); c.lineTo(7,9); c.lineTo(12,5); c.lineTo(12,19); c.lineTo(7,15); c.lineTo(3,15); c.closePath(); c.stroke();

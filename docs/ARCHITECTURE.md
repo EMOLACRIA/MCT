@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.2.6
+## Mevcut 2.3.0
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -24,6 +24,15 @@ Başarılı süreç çıkışından
 sonra CSS/palet/link/metadata denetlenir; eksik çıktı mevcut rollback yoluna gider.
 Yeni özel kopyanın sürümleri kaydedilir. Salt okunur tanılama eski kopyanın
 sürümünü uydurmaz. Ayrıntı: [ADR-0004](decisions/0004-spotify-output-validation.md).
+
+`ui/WindowSwitcherState.qml` servislerden bağımsız MRU/seçim modelidir;
+`ui/WindowSwitcher.qml` tema görünümü ve klavye/fare etkileşimidir. LiveContext
+native pencere metadata'sı ve adres doğrulamalı odak komutunu sağlar. Shell,
+GlobalShortcut kayıtları ve açıldığı ekrana bağlı özel layer yüzeyini kurar.
+Preview aynı model/görünümü DemoContext ile kullanır, global kayıt oluşturmaz.
+Tek kare yakalama bileşeni sadece seçici açıkken yaşar. Varsayılan kısayol bloğu
+`switcher-bindings.lua` içinde; update özel bağları korur, ilk restore yedeğine
+dokunmaz. [ADR-0006](decisions/0006-window-switcher.md).
 
 ## Hedef ayrım
 

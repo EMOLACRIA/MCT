@@ -15,7 +15,7 @@ uygulanır. Yeni tema kabulünde her satır denetlenir.
 | Super+B | Bildirim geçmişi ve DND; tema değiştirme kısayolu olarak yeniden kullanılmaz. |
 | Super+T | Donanım paneli; launcher açmaz. |
 | Super+L | Güvenli kilit; medya alanı mevcut seçili oynatıcıya bağlı. |
-| Alt+Tab / Alt+Shift+Tab | Tüm çalışma alanlarından ileri/geri pencere seçimi; alan numarası görünür. **Hedef, henüz uygulanmadı.** |
+| Alt+Tab / Alt+Shift+Tab | Tüm çalışma alanlarından ileri/geri pencere seçimi; alan numarası görünür. **2.3.0 uygulandı; hedef oturum kabulü bekliyor.** |
 | Ses/parlaklık tuşları | Gerçek cihazı değiştirir, ölçülen değeri OSD'de gösterir; Dunst bildirimine dönmez. |
 | Esc | Açık shell panelini veya seçimi iptal eder. |
 
@@ -44,6 +44,17 @@ Ek ayarlar ekranının kısayolu henüz seçilmedi. Mevcut kişisel kısayollar 
 Hedef donanımda bulunmayan mikrofon/pil/sensör ve oynatıcının desteklemediği
 kontrol, sahte değer üretmez. Yetenek yok mesajı veya pasif durum gösterilir;
 bu, bir temanın özelliği unuttuğu anlamına gelmez.
+
+## Pencere seçimi
+
+- Alt+Tab MRU sırasında ileri; Alt+Shift+Tab geri gider. Liste seçim sırasında
+  yeniden sıralanmaz. Alt bırakma/Enter seçimi açar; Esc/dışarı tıklama iptal eder.
+- Uygulama ikonu yoksa ortak sembol; başlık, çalışma alanı ve monitör bilgisi kalır.
+- Kapanan seçim geçerli komşuya geçer; boş liste kapanır. Yeni pencere sona eklenir.
+- Seçici başladığı ekranda kalır; ekran çıkarılırsa, dış odak değişirse veya başka
+  shell paneli açılırsa iptal edilir. Seçim pencerenin kendi çalışma alanına odaklar.
+- Önizleme isteğe bağlı tek karedir; kapalıyken yakalama yoktur. Yakalama eksikliği
+  seçim/iptal işlevini değiştirmez. Mevcut kişisel Alt/Tab bağları korunur.
 
 ## Panel ve ayar davranışı
 

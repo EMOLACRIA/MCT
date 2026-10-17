@@ -1,3 +1,21 @@
+## Alt+Tab kontrolleri (2.3.0)
+
+```bash
+python3 checks/test_switcher_bindings.py
+python3 checks/test_window_switcher.py
+node checks/test_shell_backend.js
+python3 checks/test_shell_syntax.py
+MCT_QS_SOURCE=/path/to/quickshell-0.3.1 python3 checks/test_shell_api.py
+```
+
+Kısayol testi stdlib, pencere testi PySide6 ister (`MCT_QT_TEST_PATH` desteklenir).
+11 Qt testi gerçek state/event/klavye ve 1600×1000 / 500×400 yerleşimini kullanır;
+6 geçiş testi stock/idempotent/custom bağları kontrol eder. QtTest modifier-up
+sentezlediği için fiziksel Alt basılıyken Tab-up doğrudan QKeyEvent ile iletilir.
+API testi upstream **v0.3.1** kaynak checkout'u ister; uygulama kurmaz. Screencopy
+native alanları header'dan, üç QtQuick.Item alanı açık temel listeden denetlenir.
+Bu testler gerçek Hyprland odak geçişi/global kısayol/yakalama kanıtı değildir.
+
 ## Bildirim / OSD / palet kontrolleri (2.2.6)
 
 ```bash
