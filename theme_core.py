@@ -349,8 +349,13 @@ class Engine:
             if not current.is_file() or current.read_bytes() != source.read_bytes():
                 raise ThemeError("Shared shell ABI differs; update MCT before applying a theme: " + relative)
 
+    def installation(self):
+        return safe(self.state, "current-backup").read_text().strip()
+
     def ownership(self, targets):
         active = self.optional("active.json")
+        if active is not None and active.get("installation") != self.installation():
+            raise ThemeError("Theme state belongs to a previous MCT installation; archive it before reuse.")
         if active is not None and (active.get("schema") != 1 or not isinstance(active.get("files"), dict)
                 or not all(isinstance(k, str) and allowed(k) and isinstance(v, str)
                            and re.fullmatch(r"[0-9a-f]{64}", v) for k, v in active["files"].items())):
@@ -418,6 +423,8 @@ class Engine:
         record = read_json(safe(dest, "manifest.json"))
         if not isinstance(record, dict) or record.get("schema") != 1:
             raise ThemeError("Invalid transaction record")
+        if record.get("installation") != self.installation():
+            raise ThemeError("Snapshot belongs to a previous MCT installation; it was not restored.")
         for name, item in record["before"].items():
             self.path(name)
             if item is not None:
@@ -446,7 +453,7 @@ class Engine:
         ident = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ-") + os.urandom(4).hex()
         dest = safe(self.data, "transactions/" + ident)
         dest.mkdir(parents=True, mode=0o700)
-        record = {"schema": 1, "kind": kind, "status": "prepared", "beforeActive": before_active,
+        record = {"schema": 1, "installation": self.installation(), "kind": kind, "status": "prepared", "beforeActive": before_active,
                   "beforeLast": before_last, "before": {}, "after": {}}
         for name in sorted(set(output) | set(remove)):
             path = self.path(name)
@@ -516,7 +523,7 @@ class Engine:
     def apply(self, name):
         with self.lock():
             manifest, output, known = self.prepare(name)
-            active = {"schema": 1, "id": name, "version": manifest["version"],
+            active = {"schema": 1, "installation": self.installation(), "id": name, "version": manifest["version"],
                       "files": {key: digest(data) for key, data in output.items()},
                       "adapters": {key: "separate-installer" for key in manifest["adapters"]}}
             if self.optional("active.json") == active:

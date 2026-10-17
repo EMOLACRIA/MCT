@@ -7,11 +7,15 @@ on:
       - theme_core.py
       - checks/test_theme_core.py
       - .github/workflows/theme-core.yml
+      - update.py
+      - themes/**
   pull_request:
     paths:
       - theme_core.py
       - checks/test_theme_core.py
       - .github/workflows/theme-core.yml
+      - update.py
+      - themes/**
 
 permissions:
   contents: read
@@ -35,6 +39,8 @@ jobs:
           python3 checks/test_file_manager.py
       - name: Theme core checks
         run: |
-          if test -f checks/test_theme_core.py; then
-            python3 checks/test_theme_core.py
-          fi
+          python3 checks/test_theme_core.py
+      - name: Source syntax
+        run: |
+          python3 -m py_compile theme_core.py update.py checks/test_theme_core.py
+          bash -n theme.sh

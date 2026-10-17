@@ -317,6 +317,17 @@ class CoreTests(unittest.TestCase):
         self.interrupt()
         with self.assertRaisesRegex(theme.ThemeError, "interrupted"): self.engine.guard_update()
 
+    def test_old_installation_snapshot_is_never_restored_into_a_fresh_install(self):
+        self.engine.apply("plague-tale")
+        marker = self.engine.state / "current-backup"
+        original = marker.read_bytes()
+        try:
+            marker.write_text("/a-new-original-backup")
+            for action in (lambda: self.engine.check("plague-tale"), self.engine.rollback):
+                with self.assertRaisesRegex(theme.ThemeError, "previous MCT installation"): action()
+        finally:
+            marker.write_bytes(original)
+
     def test_cli_list_and_status_need_no_native_session(self):
         for action in ("list", "status"):
             env = dict(os.environ); env["HOME"] = str(self.base)
