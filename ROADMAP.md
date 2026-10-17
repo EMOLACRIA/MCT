@@ -80,7 +80,8 @@ kontrolleri geçti. Yüzde `/100`, kopyalanan metin 12 anlamlı basamaktır.
 
 ### PT-012 — Ortak ayarlar ekranı
 
-**2.5.0: uygulandı / hedef oturum kabulü bekliyor.** Görünüm/bar/panel ve shell
+**2.5.0: uygulandı / kalıcılık kabulü bekliyor.** 17 Ekim terminal ve Dolphin
+açılışı kullanıcı tarafından onaylandı; restart/tercih korunması ayrıca raporlanmadı. Görünüm/bar/panel ve shell
 varsayılan uygulamaları; ayrı sürümlü JSON, doğrulama, atomik kayıt, yedekli reset
 ve tanılama. 15 Python + 10 Qt testi geçti. [Rehber](docs/SETTINGS.md) ·
 [Karar](docs/decisions/0008-user-preferences.md). Henüz tema değiştirici yoktur.
@@ -95,6 +96,12 @@ ve tanılama. 15 Python + 10 Qt testi geçti. [Rehber](docs/SETTINGS.md) ·
 davranış sözleşmesine yazılmış ve canlı oturumda kabul edilmiş olmalı.
 
 ## M3 — Plague Tale'i ortak sözleşmenin referans uygulaması yap
+
+**Başladı — PT-013 / 2.5.1:** ilk dar ekran/uzun içerik denetiminde tray-saat
+çakışması, medya ve güç menüsü taşması, uzun bildirim eylemleri düzeltildi.
+7 Qt testi ve görsel örnekler kontrol edildi; canlı kabul bekliyor.
+Sabit görsel değerlerin ortak sunum katmanında toplanması, lock/SDDM/uygulama
+bütünlüğü ve sözleşmenin tamamı henüz kapanmadı. [Karar](docs/decisions/0009-responsive-surfaces.md).
 
 - Görsel kimlik: font, ikon, çerçeve, panel, OSD, bildirim, medya, settings,
   Alt+Tab, launcher, Hyprlock, SDDM ve uygulama eklentilerinin bütünlüğü.

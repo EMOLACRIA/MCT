@@ -15,7 +15,7 @@ Item {
         }
         RowLayout {
             Layout.fillWidth:true
-            ActionButton { text:backend.doNotDisturb ? "Do not disturb: on" : "Do not disturb: off"; symbol:"moon"; selected:backend.doNotDisturb; onClicked:backend.toggleDnd() }
+            ActionButton { Layout.fillWidth:true; Layout.minimumWidth:0; text:backend.doNotDisturb ? "Do not disturb: on" : "Do not disturb: off"; symbol:"moon"; selected:backend.doNotDisturb; onClicked:backend.toggleDnd(); ToolTip.visible:hovered; ToolTip.text:text }
             Item { Layout.fillWidth:true }
             ActionButton { text:"Clear"; enabled:backend.history.length>0; onClicked:backend.clearHistory() }
         }
@@ -38,7 +38,7 @@ Item {
                         width:noteColumn.width; spacing:6
                         Repeater {
                             model:entry.modelData.actions || []
-                            delegate: ActionButton { required property var modelData; text:modelData.text; height:32; onClicked:backend.notificationAction(entry.modelData.key,modelData.id) }
+                            delegate: ActionButton { required property var modelData; objectName:"notificationAction-"+modelData.id; width:Math.min(implicitWidth,noteColumn.width); text:modelData.text; height:32; onClicked:backend.notificationAction(entry.modelData.key,modelData.id); ToolTip.visible:hovered; ToolTip.text:text }
                         }
                     }
                 }

@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.5.0
+## Mevcut 2.5.1
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -54,6 +54,11 @@ fontSize/duration/surface alpha'yı ve bar/panel konumunu bu modelden alır. Yen
 tema motoru veya global kısayol eklenmez. [ADR-0008](decisions/0008-user-preferences.md).
 
 ## Hedef ayrım
+
+İlk M3 yerleşim düzenlemesi servis veya ayar şemasını değiştirmez. Tray viewport'u
+görünümde yer kaplar; eylemler aynı backend'e ve native pencere koordinatına gider.
+Medya/oturum kaydırması tema yüzeyinde kalır; komut/onay davranışı kopyalanmaz.
+[ADR-0009](decisions/0009-responsive-surfaces.md).
 
 1. **Ortak servisler/eylemler:** pencere, workspace, ses, medya, bildirim, cihaz,
    başlatma, oturum; görünümden bağımsız tek davranış.

@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.5.0 geliştirme sürümü**.
-Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 — ortak ayarlar kabulü bekliyor**. Plague Tale tamamlanmış değildir.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.5.1 geliştirme sürümü**.
+Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 kalıcılık kabulü bekliyor; M3 ilk yerleşim denetimi uygulandı**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -11,7 +11,8 @@ MPRIS medya; donanım paneli; sürüklenebilir OSD; pil/şarj durumu; Hyprlock m
 bölümü; ayrı SDDM teması; Dolphin/Spotify eklentileri; kurulum/güncelleme/restore.
 `Theme.qml` vardır fakat bütün görsel değerler henüz bu dosyada toplanmış değildir.
 Alt+Tab ve hesaplamalı launcher normal kullanımı kullanıcı tarafından onaylandı.
-Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; hedef oturum kabulü bekliyor.
+Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; terminal/Dolphin açılışı onaylandı,
+yeniden başlatmada kalıcılık kabulü bekliyor.
 Tema değiştirici **yoktur**.
 
 ## Son kullanıcı geri bildirimi ve açık işler
@@ -25,8 +26,9 @@ Tema değiştirici **yoktur**.
 | PT-005 | Normal güncelleme kullanıcı onayı / geniş restore kabulü M4'te | Kullanıcı kümülatif PR #4 dalında sorun bildirmedi. 10 kontrollü süreç keşfi testi geçti. Farklı kullanıcıyla fresh install/restore canlı testi yapılmış sayılmaz. |
 | PT-010 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “alt tab çok güzel çalışıyor” diyerek PR #5 kullanımını onayladı. Main merge `915a9990a7d835cba6281b43b08af1911328355f`. Çoklu monitör çıkarma ve yakalama gibi ayrı ayrıntılar raporlanmadı; M4 listesinde kalır. |
 | PT-011 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “Güzel çalışıyor devam edebilirsin” diyerek PR #6 akışını onayladı. Enter seçili satırı çalıştırır; Ctrl+Enter seçimden bağımsız hesap sonucunu kopyalar. Her alt test ayrı ayrı raporlanmış sayılmaz. |
-| PT-012 | Uygulandı / canlı kabul bekliyor | 2.5.0: görünüm, bar/panel, varsayılan terminal/dosya yöneticisi, kalıcı tercih, tanılama ve yedekli reset. 15 Python + 10 Qt testi geçti; native Process/yeniden başlatma ve uygulama açma hedef cihazda denenmeli. |
-| QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23 ve shell-syntax da checkout'u kendi bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
+| PT-012 | Uygulama açma onaylandı / kalıcılık kabulü bekliyor | 17 Ekim kullanıcı “konsol da dolphin de düzgün açılıyor” dedi. PR #7 ana dala `683686f68729ae58cf277d7fb174bb687dfd328a` ile alındı. Bu bildirim ayarların restart/update/rollback sonrası korunduğu, native bar reserve/OSD tercihlerinin tek tek denendiği anlamına gelmez. 15 Python + 10 Qt kontrollü testi önceki kayıttadır. |
+| PT-013 | İlk M3 yerleşim düzeltmesi uygulandı / canlı kabul bekliyor | 2.5.1: sınırlandırılmış tray ve gezinme okları, medya/power kaydırma, uzun ad/eylem sınırları. 7 gerçek Qt testi; bütün 7 panelin %90/%120 ve 1600×1000/900×600/640×480 sınırları, barın 900–1600 genişlik örnekleri denetlendi. Bu tam görsel sözleşme veya native çoklu ekran kabulü değildir. |
+| QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23, shell-syntax ve artık shell-ui kendi checkout'unu bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
 ## Önceki hazırlama kontrolleri
@@ -234,3 +236,26 @@ açıktır; bu testler Plague Tale tamamlanma kapısını kapatmaz.
 PT-012 hedef oturum kabulü; ardından M3 görsel/ortak sözleşme denetimi. Tema
 değiştirici ve ikinci tema M4 kapısından önce başlamaz. Adblock ölçümü, fiziksel
 şarj geçişi ve farklı kullanıcıyla fresh install/restore M4 listesinde korunur.
+
+## 2.5.1 — M3 ilk yerleşim denetimi
+
+2026-10-17: terminal/Dolphin açılışı kullanıcı onayı kaydedildi; PR #7 birleştirildi.
+Ayarların native yeniden başlatmada korunması ayrıca doğrulanmış sayılmadı.
+Kalabalık tray saat bölgesini aşmıyor; oklarla son simge erişilebilir, eylemler aynı
+backend'e gidiyor. Uzun medya listesi ve küçük güç menüsü kaydırılabilir; klavye
+seçimi görünür tutulur. Uzun oynatıcı/bildirim eylemi adları paneli genişletmez.
+Normal güç menüsü %100/%120 ve yeterli yükseklikte kaydırma gerektirmez.
+
+`MCT_QT_TEST_PATH=... python3 checks/test_shell_ui.py` — **7 gerçek Qt testi geçti**.
+Eski build/desktop-style bağımlılığı kaldırıldı. Bütün 7 panelde %90/%120 font,
+1600×1000/900×600/640×480 sınırları; 900/1132/1200/1600 bar genişlikleri ve 40'a
+kadar tray; sağ tık, uzun içerik, boş veri, medya/güç klavye görünürlüğü denetlendi.
+PNG örnekleri incelendi. Barın kalabalık tray kabulü en az 900 mantıksal genişliktir;
+640×480 panel kontrolü daha dar barın tam tray erişimi anlamına gelmez.
+Mevcut 10 Qt preferences, shell-revisions ikon/OSD, network import, 30 QML bytecode,
+105 native binding ve Node backend kontrolleri geçti. Sınırlar ve kullanıcı denemesi
+`docs/VALIDATION.md`; karar `docs/decisions/0009-responsive-surfaces.md` içindedir.
+
+Native tray menü konumu/tekerlek ve çoklu ekran hedef oturumda bekliyor.
+Görsel sabitlerin tamamını ayırma, lock/SDDM/uygulama bütünlüğü denetimi ve M4
+kabulü henüz tamamlanmadı. İkinci tema/tema değiştirici geliştirilmedi.
