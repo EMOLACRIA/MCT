@@ -50,7 +50,8 @@ kullanımda kayıp panel/çoğalan süreç, okunmayan metin ve hatalı oturum i�
 
 ### PT-010 — Alt+Tab pencere seçici
 
-**2.3.0: uygulandı / hedef oturum doğrulaması bekliyor.** 11 gerçek Qt testi,
+**2.3.0: normal kullanım 17 Ekim kullanıcı onayıyla doğrulandı.** Çoklu ekran
+çıkarma/yakalama ayrıntıları ayrıca raporlanmadı; M4 listesinde korunur. 11 gerçek Qt testi,
 6 kısayol geçiş kontrolü ve kaynak API karşılaştırması geçti. Önizleme tek kare;
 canlı video zorunlu kabul ölçütü değildir. [Karar](docs/decisions/0006-window-switcher.md).
 
@@ -63,6 +64,11 @@ canlı video zorunlu kabul ölçütü değildir. [Karar](docs/decisions/0006-win
 - Tam çalışma alanı düzenleme/drag-and-drop overview ayrı zorunlu özellik değildir.
 
 ### PT-011 — Launcher hesaplama
+
+**2.4.0: uygulandı / hedef oturum kabulü bekliyor.** Ortak parser, karma sonuç
+listesi ve pano adaptörü; Node, 7 gerçek Qt etkileşimi ve network JS import
+kontrolleri geçti. Yüzde `/100`, kopyalanan metin 12 anlamlı basamaktır.
+[Karar](docs/decisions/0007-launcher-calculator.md).
 
 - Super+R mevcut tüm uygulama aramasını korur; yazarken aritmetik sonucu gösterir.
 - Parantez, ondalık sayılar, negatif değerler, çarpma/bölme ve yüzde davranışı açıkça

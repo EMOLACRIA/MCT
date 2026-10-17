@@ -15,7 +15,7 @@ uygulanır. Yeni tema kabulünde her satır denetlenir.
 | Super+B | Bildirim geçmişi ve DND; tema değiştirme kısayolu olarak yeniden kullanılmaz. |
 | Super+T | Donanım paneli; launcher açmaz. |
 | Super+L | Güvenli kilit; medya alanı mevcut seçili oynatıcıya bağlı. |
-| Alt+Tab / Alt+Shift+Tab | Tüm çalışma alanlarından ileri/geri pencere seçimi; alan numarası görünür. **2.3.0 uygulandı; hedef oturum kabulü bekliyor.** |
+| Alt+Tab / Alt+Shift+Tab | Tüm çalışma alanlarından ileri/geri pencere seçimi; alan numarası görünür. **2.3.0 normal kullanım kullanıcı onayı.** |
 | Ses/parlaklık tuşları | Gerçek cihazı değiştirir, ölçülen değeri OSD'de gösterir; Dunst bildirimine dönmez. |
 | Esc | Açık shell panelini veya seçimi iptal eder. |
 
@@ -44,6 +44,26 @@ Ek ayarlar ekranının kısayolu henüz seçilmedi. Mevcut kişisel kısayollar 
 Hedef donanımda bulunmayan mikrofon/pil/sensör ve oynatıcının desteklemediği
 kontrol, sahte değer üretmez. Yetenek yok mesajı veya pasif durum gösterilir;
 bu, bir temanın özelliği unuttuğu anlamına gelmez.
+
+## Launcher hesaplama
+
+- Super+R uygulama aramasını korur. Aritmetik tanınırsa sonuç ilk satırda yer alır;
+  eşleşen uygulamalar aşağıda kalır. ↑/↓ seçer; Enter seçili uygulamayı açar veya
+  sonucu kopyalar. Ctrl+Enter seçili satırdan bağımsız sonucu kopyalar; Ctrl+C
+  metin alanının normal kopyalama davranışıdır. Fare/Copy de sonucu kopyalar.
+- Kopyalama launcher'ı kapatmaz veya ifadeyi silmez; kartta geçici “Copied” görünür.
+  Yeni girdi eski kopyalama durumunu kaldırır. Hata/eksik ifadede eski sonuç kopyalanmaz.
+- `+ - * / ^`, parantez, unary `+/-`, ondalık nokta veya virgül; `× ÷ −`
+  sembolleri ve bilimsel sayı gösterimi desteklenir. Binlik ayıracı/örtük çarpma yoktur.
+- Yüzde postfix `/100` anlamındadır: `50%=0.5`, `200*10%=20`, `200+10%=200.1`.
+  `^` sağdan birleşir; `-2^2=-4`, `2^-2=0.25`. Modulo/bağlamsal indirim değildir.
+- Standart IEEE-754 double kullanılır. Görünen/kopyalanan metin en fazla 12 anlamlı
+  basamak; noktalı, binlik gruplamasızdır. Sonsuz/NaN sonuç gösterilmez.
+- Eksik ifade veya sıfıra bölme satır içi mesajdır. Parser yalnız aritmetik okur;
+  eval/Function, shell, dosya veya fonksiyon çağrısı çalıştırmaz. En çok 512 karakter,
+  256 token ve 32 iç içe ifade. `=` öneki açık hesaplama niyetini belirtir; uygulama
+  adları (ör. `1password`) arama olarak kalır. Birim dönüşümü henüz uygulanmadı.
+- 2.4.0 kaynakta uygulanmıştır; gerçek Wayland panosu için kullanıcı kabulü bekliyor.
 
 ## Pencere seçimi
 

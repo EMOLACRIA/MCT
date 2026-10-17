@@ -23,6 +23,7 @@ global.SystemTray={items:{values:[]}};
 const root={historyLoaded:false,history:[],unread:0,doNotDisturb:false,toasts:[],liveNotifications:{},notificationGenerations:{},notificationTimers:{},toastTimers:{},workspaces:[{id:9,count:1,active:true,monitor:'eDP-1'}],audioAvailable:true,sink:{audio:{volume:.5,muted:false}},microphoneAvailable:true,microphone:{audio:{volume:.8,muted:false}},feedbackRequested:(...v)=>events.push(v),lastError:'',networkSettingsAvailable:true};
 Object.defineProperties(root,{volume:{get:()=>Math.round(root.sink.audio.volume*100)},muted:{get:()=>root.sink.audio.muted},microphoneMuted:{get:()=>root.microphone.audio.muted}});
 new Function('root','with(root){'+funcs.join('\n')+'}')(root);
+root.copyText('0.333333333333');assert.strictEqual(Quickshell.clipboardText,'0.333333333333');
 root.restoreHistory();assert(root.history.length===1&&root.history[0].actions.length===0);
 function note(id,opts={}){const callbacks=[];return {id,appName:'Files',summary:'Copy complete',body:'<b>Done</b>',actions:[],tracked:false,transient:false,lastGeneration:false,expireTimeout:5000,callbacks,closed:{connect:f=>callbacks.push(f)},dismiss(){callbacks.forEach(f=>f(1));},expire(){callbacks.forEach(f=>f(2));},...opts};}
 const n=note(8);root.receive(n);assert(n.tracked&&root.history.length===2&&root.toasts.length===1&&root.history[0].body==='Done');

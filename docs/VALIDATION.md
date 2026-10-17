@@ -104,7 +104,35 @@ Hedef oturumda `bash update.sh --check && bash update.sh` sonrasında:
 6. Özel Alt/Tab bağı varsa update bunu korur ve yeni bağ eklemediğini yazar;
    otomatik geçiş yapılmadığı durumda eski kısayolun çalışması beklenir.
 
-Sonuçlar kullanıcı cihazında raporlanmadan canlı kabul kapanmaz.
+17 Ekim kullanıcı Alt+Tab için “çok güzel çalışıyor” diyerek normal kullanımı
+onayladı. Çoklu ekran çıkarma/yakalama ayrıntıları ayrıca raporlanmadı; M4 listesi
+bu kabulü daha geniş test yapılmış gibi yorumlamaz.
+
+## PT-011 Launcher hesaplama kontrolü
+
+2026-10-17: `node checks/test_calculator.js`, `checks/test_launcher_calculator.py`
+(7 gerçek Qt testi), `checks/test_shell_imports.py` (network JS import), Node
+backend clipboard adaptörü, 99 native binding + clipboard kaynak karşılaştırması,
+25 QML bytecode, 11 Alt+Tab Qt ve mevcut OSD/ikon + 12 update/restore kontrolü geçti.
+PySide6 için `MCT_QT_TEST_PATH`, qmlcachegen için `MCT_QMLCACHEGEN` ve QuickShell
+v0.3.1 kaynakları için `MCT_QS_SOURCE` aynı biçimde kullanılır. Network import
+kontrolü yalnız yerel test HTTP sunucusunu açar; gerçek shell servisi açmaz.
+
+Hedef oturumda update sonrası:
+
+1. Super+R'de `(12+3)*4` yaz: 60 sonucu. Enter ve Copy ile ayrı ayrı kopyala;
+   başka uygulamada Ctrl+V ile **60** gelmeli. Launcher ve ifade açık kalmalı.
+2. `200*10%` → 20, `200+10%` → 200.1, `1,5+2.25` → 3.75, `2^-2` → 0.25.
+3. `2+` tamamlanma mesajı, `1/0` hata göstermeli. Enter eski sonucu kopyalamamalı.
+   Yeni girdi sonrası eski “Copied” durumu kaldırılmalı.
+4. Uygulama araması/↑↓/Enter ve Esc/Super+R kapatma aynı çalışmalı. Sayıyla
+   eşleşen uygulama varsa sonuç satırından aşağı geçerek açılabilmeli.
+5. Sonuç varken Ctrl+Enter kopyalamalı; metin seçip Ctrl+C normal seçili ifadeyi
+   kopyalamalı. Clipboard kontrolü başka uygulamaya yapıştırılarak yapılır;
+   yalnız kartta “Copied” görmek native pano kabulü sayılmaz.
+
+Preview hesaplar fakat DemoContext yalnız test pano değerini kaydeder; sistem
+panosuna sonuç yazmaz. Gerçek clipboard yalnız kurulu QuickShell adaptöründedir.
 
 ## Kalan eski checks kaynakları
 

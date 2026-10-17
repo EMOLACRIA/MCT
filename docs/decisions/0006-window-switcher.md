@@ -1,6 +1,6 @@
 # ADR-0006 — Pencere seçimi ve Alt bırakma
 
-Tarih: 2026-10-17. Durum: uygulandı; hedef oturum kabulü bekliyor.
+Tarih: 2026-10-17. Durum: normal kullanım kullanıcı tarafından onaylandı.
 
 ## Karar
 
@@ -55,3 +55,7 @@ nesne yok olduktan sonra çalışabildiği için Loader'a bağlı Timer'a taşı
 Bu ortamda Hyprland layer odağı/global release, çalışma alanı geçişi, monitör
 çıkarma veya native yakalama denenmedi. Kaynak/API ve offscreen Qt doğrulaması,
 hedef oturumun yerine geçmez. Canlı kabul listesi `../VALIDATION.md` içindedir.
+
+17 Ekim kullanıcı “alt tab çok güzel çalışıyor” diyerek normal kullanımı onayladı.
+PR #5 ana dala birleştirildi. Çoklu monitör çıkarma/yakalama ayrıntıları bu kısa
+onaydan çıkarılmaz; M4 geniş kabul listesinde kalır.

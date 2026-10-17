@@ -49,6 +49,8 @@ Item {
     signal feedbackRequested(string kind,int level,bool muted)
     function workspaceActive(id,screen) { return workspaces.some(w=>w.id===id && w.active); }
     function activateWorkspace(id) { workspaces=workspaces.map(w=>({id:w.id,count:w.count,active:w.id===id})); }
+    property string copiedText:""
+    function copyText(text) {copiedText=text;lastAction="Preview · Copied "+text;}
     function launchApplication(id) { lastAction="Preview · Open " + id; }
     function trayClick() {}
     function trayScroll() {}
