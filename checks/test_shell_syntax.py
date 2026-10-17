@@ -4,13 +4,15 @@ qmlcachegen --only-bytecode checks QML/JS syntax without instantiating native
 services. It does not replace the user's QuickShell validate.qml type check.
 """
 from pathlib import Path
+import os
+import shutil
 import subprocess
 import tempfile
 
-package=Path('build/desktop-style')
+package=Path(__file__).resolve().parents[1]
 shell=package/'payload/style/shell'
-compiler=Path('build/qs-qt-check/PySide6/Qt/libexec/qmlcachegen').resolve()
-assert compiler.is_file(), 'This preparation check requires the bundled Qt test runtime.'
+compiler=Path(os.environ.get('MCT_QMLCACHEGEN') or shutil.which('qmlcachegen') or '/missing-qmlcachegen')
+assert compiler.is_file(), 'Qt qmlcachegen is required; set MCT_QMLCACHEGEN to its executable path.'
 files=sorted(shell.rglob('*.qml'))
 assert shell/'shell.qml' in files and shell/'LiveContext.qml' in files
 

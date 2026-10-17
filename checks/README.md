@@ -1,3 +1,21 @@
+## Bildirim / OSD / palet kontrolleri (2.2.6)
+
+```bash
+node checks/test_shell_backend.js
+python3 checks/test_notification_watcher.py
+python3 checks/test_shell_revisions.py
+python3 checks/test_app_revision23.py
+python3 checks/test_shell_syntax.py
+```
+
+Backend testi Node.js ve kontrollü servisler kullanır; gerçek D-Bus açmaz.
+Watcher (4 test), shell-revisions ve app-revision23 için PySide6 gerekir;
+app-revision23 ayrıca Node.js kullanır. PySide6 ayrı bir test dizinindeyse
+`MCT_QT_TEST_PATH` onu içeren dizini belirtebilir; normal kurulumda gerekmez.
+Syntax kontrolü Qt `qmlcachegen` ister: PATH'te yoksa `MCT_QMLCACHEGEN` tam
+çalıştırılabilir dosya yoludur. Testler artık checkout'u kendi dosya konumundan
+bulur; uygulama kurulumu veya kullanıcı oturumu üzerinde işlem yapmaz.
+
 ## Bağımsız PT-002 uygulama kontrolleri
 
 ```bash
@@ -31,7 +49,12 @@ restore/rollback. Gerçek GIO/Dolphin/Hyprland çalıştırılmaz.
 
 ## Önceki hazırlama kontrolleri
 
-Bu klasör hazırlama sırasında çalıştırılan doğrulama kaynaklarını saklar. Testler `build/` çalışmaalanı, 1.4 masaüstü fixtureleri, PySide6 Essentials 6.10.2 ve QuickShell 0.3.1 kaynak kodlarıyla çalıştırılmıştır. Testlerin bu bağımlılık ve klasör düzeni README'deki doğrulama sınırlarıyla birlikte değerlendirilmelidir. Kullanıcı oturumundaki kontrol için `bash update.sh --check` kendi QuickShell QML derlemesini ve canlı Hyprland durumunu kontrol eder.
+Bu klasör hazırlama sırasında çalıştırılan doğrulama kaynaklarını saklar.
+Yukarıda taşınan kontroller dışındaki bazı testler hâlâ eski `build/` alanı,
+1.4 masaüstü fixtureleri veya `tmp/` kaynakları ister. Önceki test ortamı PySide6
+Essentials 6.10.2 ve QuickShell 0.3.1 kaynak kodlarıydı. Kullanıcı oturumunda
+`bash update.sh --check` gerçek QuickShell QML derlemesini ve Hyprland durumunu
+kontrol eder; offscreen Qt testinin yerine geçmeyen ayrı bir native kontroldür.
 
 2.1 ek kontrolleri: test_shell_revisions.py gerçek Qt fare sürükleme/hover ve ikon merkezlerini; test_revision_helpers.py sensör hesapları, NVIDIA uyku durumu, Hyprlock metin/kapak yardımcıları ve bildirim üretmeyen OSD hata yolunu kontrol eder. Hyprlock alan adları için tmp/hyprlock-0.9.6/ConfigManager.cpp gerekir.
 

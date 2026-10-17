@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.2.5
+## Mevcut 2.2.6
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -54,6 +54,13 @@ Eski manifest'te süreç listesi hiç yoksa shell yolu uydurulmaz.
 Ayrıntı ve otomatik keşfin sınırı: [ADR-0003](decisions/0003-shell-process-selection.md).
 
 ## Yaşam döngüsü ve uyum
+
+Bildirim başına `NotificationWatcher` property değişimlerini tek event döngüsünde
+birleştirir. Aynı native nesne için yeni kart, unread artışı veya ikinci closed
+handler'ı oluşturulmaz. Süre ve toast timer'ları yenilemede/kapanışta iptal edilir;
+generation kontrolü eski callback'lerin yeni durumu kapatmasını önler. Süre
+QuickShell 0.3.1'in gerçek aktarımına göre milisaniyedir.
+[ADR-0005](decisions/0005-notification-lifecycle.md) kaynak kanıtını ve sınırını kaydeder.
 
 Tek QuickShell instance ve bildirim servisinin tek sahibi; IPC hazır kontrolü;
 atomik durum yazımı; ilk restore yedeğini koruyan revizyonlar sürdürülür.

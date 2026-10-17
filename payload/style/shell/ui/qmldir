@@ -8,6 +8,7 @@ Launcher 1.0 Launcher.qml
 LevelControl 1.0 LevelControl.qml
 Media 1.0 Media.qml
 Notifications 1.0 Notifications.qml
+NotificationWatcher 1.0 NotificationWatcher.qml
 OrnamentFrame 1.0 OrnamentFrame.qml
 Overlay 1.0 Overlay.qml
 Power 1.0 Power.qml
