@@ -16,7 +16,7 @@ Ayarlar ekranı, Alt+Tab seçici, launcher hesaplama ve tema değiştirici **yok
 
 | Kimlik | Durum | Kanıt / sonraki adım |
 |---|---|---|
-| PT-001 | Uygulandı / canlı doğrulama bekliyor | 2.2.3: Super+E, XDG sırasıyla aynı Dolphin desktop girdisini GIO üzerinden açıyor. Stock ve yayımlanmış elle düzeltme update sırasında taşınıyor; özel tercihler korunuyor. 12 regresyon kontrolü geçti. Gerçek Dolphin görünümü kullanıcı oturumunda bekliyor. |
+| PT-001 | Doğrulandı | 2026-10-17: kullanıcı PR #1 dalını uygulayıp launcher/Super+E tutarlılığını “Aynen çalışıyor” diyerek onayladı. Kod: `62cfe809d0274fd2ec99a8aca4e37f117b20fe9f`; 12 regresyon kontrolü de geçti. |
 | PT-002 | Canlı doğrulama bekliyor | 16 Ekim: Spotify boş ekran, adblock girişinde tema yok. 2.2.1 bootstrap/başlatıcı düzeltmeleri kaynakta; son kullanıcı sonucu henüz gelmedi. |
 | PT-003 | Canlı doğrulama bekliyor | Dolphin yazıları/ikonları zor okunuyordu. 2.2.2 beyaz normal/seçili metin ayarı kaynakta; bütün başlatma yolları kontrol edilmedi. |
 | PT-004 | Canlı doğrulama bekliyor | OSD 2.2.0 IPC `present` düzeltmesi; önceki raporda tuşlar çalışıyor fakat OSD yoktu. Son gerçek sonuç ayrıca kaydedilmeli. Steam menüsü/şarj durumu da kabul kontrolünde. |
@@ -53,7 +53,7 @@ GIO/Dolphin native başlatması ve Hyprland oturumu bu ortamda çalıştırılma
 
 ## Sonraki iş
 
-PT-001'in canlı kontrolü: güncel dalda `bash update.sh --check && bash update.sh`;
-bütün Dolphin pencerelerini kapatıp launcher ve Super+E ile aç. Metin/palet/ikon
-aynılığı ile `hyprctl configerrors` sonucunu kaydet. Sonra PT-002 Spotify tanılaması.
+PT-001 kullanıcı tarafından doğrulandı. PT-002 için güncel Spotify/adblock
+başlatma sonucuna ihtiyaç var; sorun sürüyorsa `bash apps/diagnose.sh` çıktısı
+alınacak. Bu sırada bağımsız PT-005 eski shell yolu taşınabilirliği ele alınabilir.
 Alt+Tab, hesaplama ve ayarlar henüz uygulanmadı; ROADMAP sırası korunuyor.

@@ -17,9 +17,9 @@ commit kimliği ve kontrol sonuçları `STATUS.md` içinde izlenebilir olmalı.
 
 Öncelik sırası:
 
-1. **PT-001 — Dolphin başlatma tutarlılığı:** 2.2.3 kodu uygulandı, canlı doğrulama
-   bekliyor. Super+E aynı desktop girdisini kullanır; launcher ve Dolphin
-   dosya/klasör açma akışının gerçek oturumdaki görünümü kontrol edilecek.
+1. **PT-001 — Dolphin başlatma tutarlılığı:** **doğrulandı**. Kullanıcı 17 Ekim
+   2026 tarihinde PR #1 dalını uygulayıp launcher ve Super+E açılışını onayladı.
+   Sonraki değişikliklerde bu davranış korunacak.
 2. **PT-002 — Spotify ve adblock:** boş ekranın güncel pakette giderildiğini
    gerçek uygulamada doğrula; desteklenmeyen özel başlatıcı varsa uyumlandır.
    Adblock'un korunması kurulum çıktısı kadar gerçek başlatma ile de kontrol edilir.

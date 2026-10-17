@@ -1,6 +1,6 @@
 # ADR-0002 — Dolphin için tek desktop girdisi
 
-Tarih: 2026-10-17. Durum: **Uygulandı; native kullanıcı kabulü bekliyor**.
+Tarih: 2026-10-17. Durum: **Uygulandı ve kullanıcı tarafından 2026-10-17 tarihinde doğrulandı**.
 
 ## Sorun
 
@@ -30,3 +30,8 @@ başka uygulamaysa zorla değiştirilmez. Tam varsayılan uygulama ayar ekranı 
 
 - https://docs.gtk.org/gio/method.AppInfo.launch.html
 - https://archlinux.org/packages/core/x86_64/glib2/files/
+
+## Kullanıcı kabulü
+
+PR #1 dalındaki `62cfe809d0274fd2ec99a8aca4e37f117b20fe9f` uygulandıktan sonra
+kullanıcı launcher/Super+E karşılaştırmasını “Aynen çalışıyor” diyerek onayladı.
