@@ -1,0 +1,305 @@
+"""Filesystem/transaction tests use temporary roots and a fake runtime only."""
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import stat
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location("theme_core", ROOT / "theme_core.py")
+theme = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(theme)
+
+
+class Runtime:
+    def __init__(self):
+        self.events = []
+        self.fail = {}
+
+    def call(self, name):
+        self.events.append(name)
+        if self.fail.get(name, 0):
+            self.fail[name] -= 1
+            raise theme.ThemeError("fixture " + name)
+
+    def preflight(self): self.call("preflight")
+    def prepare_recovery(self): self.call("recover-preflight")
+    def validate(self, style, appearance):
+        self.call("validate")
+        assert (style / "shell/ui/Theme.qml").is_file()
+        assert appearance.is_file()
+    def stop(self): self.call("stop")
+    def start(self): self.call("start")
+    def reload(self): self.call("reload")
+
+
+class CoreTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name)
+        self.package = self.base / "source"
+        shutil.copytree(ROOT / "themes", self.package / "themes")
+        self.runtime = Runtime()
+        self.engine = theme.Engine(self.package, self.base / "config/desktop-style",
+                                  self.base / "state/desktop-style", self.base / "config/hypr", self.runtime)
+        self.engine.state.mkdir(parents=True)
+        (self.engine.state / "current-backup").write_text("/original-backup")
+        self.engine.hypr.mkdir(parents=True)
+        self.protected = {
+            self.base / "config/mct/preferences.json": b'{"schema":1,"fontScale":1.2}',
+            self.engine.state / "notifications.json": b'{"history":["keep"]}',
+            self.engine.hypr / "keybinds.lua": b"-- my bindings",
+            self.engine.hypr / "monitors.lua": b"-- my monitor and GPU settings",
+            self.engine.hypr / "hyprpaper.conf": b"wallpaper {\n monitor =\n fit_mode = contain\n}\n",
+            self.base / "original-backup": b"keep original backup",
+        }
+        for path, data in self.protected.items():
+            path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(data)
+        manifest = theme.read_json(ROOT / "themes/plague-tale/manifest.json")
+        for entry in manifest["files"]:
+            name = entry["target"]
+            data = (ROOT / "payload" / name).read_bytes()
+            source = self.package / "payload" / name
+            source.parent.mkdir(parents=True, exist_ok=True); source.write_bytes(data)
+            path = self.engine.path(name)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data.replace(b"@STYLE@", str(self.engine.style).encode()))
+        for name in theme.SHARED:
+            data = (ROOT / "payload/style" / name).read_bytes()
+            for path in (self.package / "payload/style" / name, self.engine.style / name):
+                path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(data)
+
+    def tearDown(self):
+        for path, data in self.protected.items():
+            self.assertEqual(path.read_bytes(), data, str(path))
+
+    def state(self):
+        return {str(p.relative_to(self.base)): p.read_bytes() for p in self.base.rglob("*")
+                if p.is_file() and not p.is_symlink()}
+
+    def variant(self):
+        folder = self.package / "themes/fixture-variant"
+        shutil.copytree(self.package / "themes/plague-tale", folder)
+        manifest = theme.read_json(folder / "manifest.json")
+        manifest["id"] = "fixture-variant"; manifest["name"] = "Fixture"
+        for entry in manifest["files"]:
+            if entry["target"] == "style/shell/ui/Theme.qml":
+                path = folder / entry["source"]
+                data = path.read_bytes().replace(b"#b5a37c", b"#aa9966")
+                path.write_bytes(data); entry["gitBlob"] = theme.git_blob(data)
+        (folder / "manifest.json").write_bytes(theme.json_bytes(manifest))
+        return folder, manifest
+
+    def test_builtin_package_integrity_and_screenshot(self):
+        manifest, output = self.engine.load("plague-tale")
+        self.assertEqual(set(manifest["surfaces"]), theme.SURFACES)
+        self.assertGreater(len(output), 30)
+        self.assertIn(str(self.engine.style).encode(), output["style/hyprlock/media.conf"])
+        self.assertNotIn(b"@STYLE@", output["style/hyprlock/media.conf"])
+
+    def test_check_is_readonly_and_does_not_stop_or_start(self):
+        before = self.state()
+        self.assertEqual(self.engine.check("plague-tale")["id"], "plague-tale")
+        self.assertEqual(before, self.state())
+        self.assertEqual(self.runtime.events, ["preflight", "validate"])
+
+    def test_apply_variant_and_chained_rollback_preserve_original_backup(self):
+        self.engine.apply("plague-tale")
+        first = self.engine.pointer()
+        original = self.engine.optional("active.json")
+        self.variant(); self.engine.apply("fixture-variant")
+        self.assertEqual(self.engine.optional("active.json")["id"], "fixture-variant")
+        before = self.state(); self.engine.rollback(True)
+        self.assertEqual(before, self.state())
+        self.engine.rollback()
+        self.assertEqual(self.engine.optional("active.json"), original)
+        self.assertEqual(self.engine.pointer(), first)
+        self.engine.rollback()
+        self.assertIsNone(self.engine.optional("active.json"))
+        self.assertIsNone(self.engine.pointer())
+
+    def test_original_file_mode_is_restored(self):
+        file = self.engine.style / "kitty/theme.conf"
+        file.chmod(0o600)
+        self.engine.apply("plague-tale"); self.engine.rollback()
+        self.assertEqual(stat.S_IMODE(file.stat().st_mode), 0o600)
+
+    def test_failed_validation_changes_no_installed_files(self):
+        self.runtime.fail["validate"] = 1
+        before = self.state()
+        with self.assertRaisesRegex(theme.ThemeError, "validate"): self.engine.check("plague-tale")
+        self.assertEqual(before, self.state())
+        self.assertNotIn("stop", self.runtime.events)
+
+    def test_reload_and_readiness_failures_automatically_restore(self):
+        for failure in ("reload", "start"):
+            with self.subTest(failure=failure):
+                self.runtime.fail[failure] = 1
+                before = {e["target"]: self.engine.path(e["target"]).read_bytes()
+                          for e in theme.read_json(self.package / "themes/plague-tale/manifest.json")["files"]}
+                with self.assertRaisesRegex(theme.ThemeError, "previous state restored"):
+                    self.engine.apply("plague-tale")
+                self.assertIsNone(self.engine.optional("active.json"))
+                self.assertIsNone(self.engine.optional("pending.json"))
+                for name, data in before.items(): self.assertEqual(self.engine.path(name).read_bytes(), data)
+
+    def test_manual_edits_block_first_adoption_apply_and_rollback(self):
+        file = self.engine.style / "shell/ui/Theme.qml"
+        saved = file.read_bytes()
+        file.write_bytes(saved + b"\n// my edits")
+        with self.assertRaisesRegex(theme.ThemeError, "Untracked custom"):
+            self.engine.check("plague-tale")
+        file.write_bytes(saved); self.engine.apply("plague-tale")
+        file.write_bytes(saved + b"\n// later edits")
+        for action in (lambda: self.engine.apply("plague-tale"), self.engine.rollback):
+            with self.assertRaisesRegex(theme.ThemeError, "changed"): action()
+        self.assertTrue(file.read_bytes().endswith(b"// later edits"))
+
+    def test_target_and_parent_symlinks_are_refused_without_touching_target(self):
+        file = self.engine.style / "kitty/theme.conf"; data = file.read_bytes()
+        external = self.base / "external"; external.write_bytes(data)
+        file.unlink(); file.symlink_to(external)
+        with self.assertRaisesRegex(theme.ThemeError, "Symlink"): self.engine.check("plague-tale")
+        self.assertEqual(external.read_bytes(), data)
+        file.unlink(); file.write_bytes(data)
+        folder = self.engine.style / "kitty"
+        folder.rename(self.engine.style / "real-kitty")
+        folder.symlink_to("real-kitty", target_is_directory=True)
+        with self.assertRaisesRegex(theme.ThemeError, "Symlink"): self.engine.check("plague-tale")
+
+    def test_duplicate_json_unsupported_schema_missing_surface_hooks_and_traversal(self):
+        path = self.package / "themes/plague-tale/manifest.json"
+        original = path.read_bytes()
+        variants = []
+        good = json.loads(original)
+        for key, value in (("schema", 99), ("shellAbi", "other"), ("surfaces", ["bar"]), ("hooks", ["rm -rf ~"])):
+            item = json.loads(original); item[key] = value; variants.append(theme.json_bytes(item))
+        item = json.loads(original); item["files"][0]["source"] = "../escape"; variants.append(theme.json_bytes(item))
+        item = json.loads(original); item["files"][0]["target"] = "style/scripts/start.sh"; variants.append(theme.json_bytes(item))
+        variants.append(original.replace(b'"schema": 1', b'"schema": 1, "schema": 1'))
+        for data in variants:
+            path.write_bytes(data)
+            with self.assertRaises(theme.ThemeError): self.engine.load("plague-tale")
+        path.write_bytes(original)
+
+    def test_corrupt_package_preview_and_missing_asset_are_refused(self):
+        folder = self.package / "themes/plague-tale"
+        manifest = theme.read_json(folder / "manifest.json")
+        file = folder / manifest["files"][0]["source"]
+        saved = file.read_bytes(); file.write_bytes(saved + b"x")
+        with self.assertRaisesRegex(theme.ThemeError, "integrity"): self.engine.load("plague-tale")
+        file.write_bytes(saved)
+        preview = folder / manifest["preview"]["source"]
+        saved = preview.read_bytes(); preview.write_bytes(saved[:-50])
+        manifest["preview"]["gitBlob"] = theme.git_blob(preview.read_bytes())
+        (folder / "manifest.json").write_bytes(theme.json_bytes(manifest))
+        with self.assertRaisesRegex(theme.ThemeError, "PNG"): self.engine.load("plague-tale")
+
+    def test_shared_abi_mismatch_and_corrupt_state_are_refused(self):
+        file = self.engine.style / theme.SHARED[0]; saved = file.read_bytes(); file.write_bytes(b"old shell")
+        with self.assertRaisesRegex(theme.ThemeError, "ABI"): self.engine.check("plague-tale")
+        file.write_bytes(saved)
+        self.engine.data.mkdir()
+        (self.engine.data / "active.json").write_text("null")
+        with self.assertRaisesRegex(theme.ThemeError, "state object"): self.engine.check("plague-tale")
+
+    def test_snapshot_corruption_blocks_rollback_before_stop(self):
+        self.engine.apply("plague-tale")
+        dest, record = self.engine.read_transaction(self.engine.pointer())
+        name = next(iter(record["before"]))
+        (dest / "before" / name).write_bytes(b"corrupted")
+        self.runtime.events.clear()
+        with self.assertRaisesRegex(theme.ThemeError, "Snapshot integrity"): self.engine.rollback()
+        self.assertNotIn("stop", self.runtime.events)
+
+    def test_state_commit_failure_restores_files_and_active_marker(self):
+        atomic = theme.atomic
+        failed = False
+        def fail_once(path, *args, **kwargs):
+            nonlocal failed
+            if path == self.engine.data / "active.json" and not failed:
+                failed = True; raise OSError("fixture disk full")
+            return atomic(path, *args, **kwargs)
+        with patch.object(theme, "atomic", side_effect=fail_once):
+            with self.assertRaisesRegex(theme.ThemeError, "previous state restored"):
+                self.engine.apply("plague-tale")
+        self.assertIsNone(self.engine.optional("active.json"))
+        self.assertIsNone(self.engine.optional("pending.json"))
+
+    def interrupt(self, committed=False):
+        atomic = theme.atomic
+        def crash(path, data, *args, **kwargs):
+            atomic(path, data, *args, **kwargs)
+            if (committed and path.name == "manifest.json" and b'"status": "committed"' in data
+                    or not committed and path == self.engine.style / "wallpaper.png"):
+                raise KeyboardInterrupt("simulated process interruption")
+        with patch.object(theme, "atomic", side_effect=crash):
+            with self.assertRaises(KeyboardInterrupt): self.engine.apply("plague-tale")
+
+    def test_interrupted_apply_recovers_original_and_clears_pending(self):
+        self.interrupt()
+        self.assertIsNotNone(self.engine.optional("pending.json"))
+        with self.assertRaisesRegex(theme.ThemeError, "Interrupted"): self.engine.check("plague-tale")
+        self.engine.recover()
+        self.assertIsNone(self.engine.optional("pending.json"))
+        self.assertIsNone(self.engine.optional("active.json"))
+
+    def test_committed_interruption_only_finishes_journal(self):
+        self.interrupt(True)
+        active = self.engine.optional("active.json")
+        self.runtime.events.clear(); self.engine.recover()
+        self.assertEqual(self.engine.optional("active.json"), active)
+        self.assertIsNone(self.engine.optional("pending.json"))
+        self.assertEqual(self.runtime.events, [])
+
+    def test_manual_edit_after_interruption_is_preserved(self):
+        self.interrupt()
+        file = self.engine.style / "wallpaper.png"; file.write_bytes(b"my changed image")
+        with self.assertRaisesRegex(theme.ThemeError, "edited after interruption"): self.engine.recover()
+        self.assertEqual(file.read_bytes(), b"my changed image")
+
+    def test_failed_automatic_recovery_retains_journal_for_retry(self):
+        self.runtime.fail["start"] = 2
+        with self.assertRaisesRegex(theme.ThemeError, "Recovery incomplete"): self.engine.apply("plague-tale")
+        self.assertIsNotNone(self.engine.optional("pending.json"))
+        self.engine.recover()
+        self.assertIsNone(self.engine.optional("pending.json"))
+
+    def test_concurrent_updater_lock_blocks_mutation(self):
+        with (self.engine.state / "update.lock").open("a") as lock:
+            theme.fcntl.flock(lock, theme.fcntl.LOCK_EX | theme.fcntl.LOCK_NB)
+            before = self.state()
+            with self.assertRaisesRegex(theme.ThemeError, "Another update"): self.engine.apply("plague-tale")
+            self.assertEqual(before, self.state())
+
+    def test_native_wallpaper_adapter_preserves_monitor_fit(self):
+        native = theme.Native(self.engine); native.wallpaper_fits = {"eDP-1": "contain", "": "tile"}
+        calls = []
+        def run(args):
+            calls.append(args)
+            output = "eDP-1: /old.png\nDP-2: /old.png\n" if args[-1] == "listactive" else ""
+            return subprocess.CompletedProcess(args, 0, output, "")
+        with patch.object(native, "run", side_effect=run): native.reload()
+        commands = [c[-1] for c in calls if "wallpaper" in c]
+        self.assertEqual(commands, ["eDP-1," + str(self.engine.style / "wallpaper.png") + ",contain",
+                                    "DP-2," + str(self.engine.style / "wallpaper.png") + ",tile"])
+
+    def test_cli_list_and_status_need_no_native_session(self):
+        for action in ("list", "status"):
+            env = dict(os.environ); env["HOME"] = str(self.base)
+            result = subprocess.run([sys.executable, str(ROOT / "theme_core.py"), action],
+                                    capture_output=True, text=True, env=env)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            value = json.loads(result.stdout)
+            self.assertEqual(value[0]["id"], "plague-tale") if action == "list" else self.assertIsNone(value["active"])
+
+
+if __name__ == "__main__":
+    unittest.main()

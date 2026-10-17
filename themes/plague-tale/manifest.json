@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "id": "plague-tale",
+  "name": "Plague Tale",
+  "version": "1.0.0",
+  "shellAbi": "mct-shell-2.6",
+  "preview": {
+    "source": "preview.png",
+    "gitBlob": "685a63cfb8a997865927ddef3857ba66c88cedfe"
+  },
+  "surfaces": [
+    "bar",
+    "launcher",
+    "switcher",
+    "controls",
+    "notifications",
+    "media",
+    "hardware",
+    "osd",
+    "power",
+    "settings",
+    "lock",
+    "terminal",
+    "sddm",
+    "dolphin",
+    "spotify"
+  ],
+  "files": [
+    {
+      "source": "files/hypr/appearance.lua",
+      "target": "hypr/appearance.lua",
+      "gitBlob": "2f14a8fe088bec271a36c8e339e0642c73406875"
+    },
+    {
+      "source": "files/style/hyprlock/cover.png",
+      "target": "style/hyprlock/cover.png",
+      "gitBlob": "21c8524b006b2ac599aaa5e4f49f4c35de00b6ff"
+    },
+    {
+      "source": "files/style/hyprlock/media.conf",
+      "target": "style/hyprlock/media.conf",
+      "gitBlob": "0484b670971092bb00a9bc0b4ca7f96a25b19bb2"
+    },
+    {
+      "source": "files/style/hyprlock/next.png",
+      "target": "style/hyprlock/next.png",
+      "gitBlob": "7d2f73542e4e78b039d118ae47a9be8f6fd83ed9"
+    },
+    {
+      "source": "files/style/hyprlock/pause.png",
+      "target": "style/hyprlock/pause.png",
+      "gitBlob": "4cd2fc15ffbd6586b68095928afb43ee3532e44d"
+    },
+    {
+      "source": "files/style/hyprlock/play.png",
+      "target": "style/hyprlock/play.png",
+      "gitBlob": "4be4d443bd2be9d8a332823fc6d651d65971474f"
+    },
+    {
+      "source": "files/style/hyprlock/previous.png",
+      "target": "style/hyprlock/previous.png",
+      "gitBlob": "b61b9564190f6f7c8466cc36a571c1c55703569e"
+    },
+    {
+      "source": "files/style/kitty/theme.conf",
+      "target": "style/kitty/theme.conf",
+      "gitBlob": "9ed02c922bfebeb685f1832c82ca048cc8d39784"
+    },
+    {
+      "source": "files/style/shell/assets/bl.svg",
+      "target": "style/shell/assets/bl.svg",
+      "gitBlob": "daedf51d5549a55bfa87143bf8937b1dd5deb802"
+    },
+    {
+      "source": "files/style/shell/assets/br.svg",
+      "target": "style/shell/assets/br.svg",
+      "gitBlob": "82b838236e9319196bfa83e61346a5d451dc073f"
+    },
+    {
+      "source": "files/style/shell/assets/tl.svg",
+      "target": "style/shell/assets/tl.svg",
+      "gitBlob": "b4ae2c8757a4f6e259edb733e572f99e827bcb99"
+    },
+    {
+      "source": "files/style/shell/assets/tr.svg",
+      "target": "style/shell/assets/tr.svg",
+      "gitBlob": "a90c0f981ad581a649fd5471bdb3b841e6bb4c7b"
+    },
+    {
+      "source": "files/style/shell/assets/wallpaper.png",
+      "target": "style/shell/assets/wallpaper.png",
+      "gitBlob": "86a682e768ba308e6fb73cf2ad8afe99c2bfca95"
+    },
+    {
+      "source": "files/style/shell/ui/ActionButton.qml",
+      "target": "style/shell/ui/ActionButton.qml",
+      "gitBlob": "89d94cf257a66e6bc0ff405d8bd878a582462418"
+    },
+    {
+      "source": "files/style/shell/ui/Bar.qml",
+      "target": "style/shell/ui/Bar.qml",
+      "gitBlob": "2b2d8776d4176adce653b317271da7ce1b9ac0e7"
+    },
+    {
+      "source": "files/style/shell/ui/Controls.qml",
+      "target": "style/shell/ui/Controls.qml",
+      "gitBlob": "2fc540a9aeee26a27b48dae216b6586bea512cd1"
+    },
+    {
+      "source": "files/style/shell/ui/Feedback.qml",
+      "target": "style/shell/ui/Feedback.qml",
+      "gitBlob": "e878fdb3e23df314699634d60ce7062ab1c807ba"
+    },
+    {
+      "source": "files/style/shell/ui/Glyph.qml",
+      "target": "style/shell/ui/Glyph.qml",
+      "gitBlob": "1d7d9bdd0fd565a14cd95866fd733634099dff32"
+    },
+    {
+      "source": "files/style/shell/ui/Hardware.qml",
+      "target": "style/shell/ui/Hardware.qml",
+      "gitBlob": "c4d77452f1d2b02da23e31058ecfa8ba5a6bae0a"
+    },
+    {
+      "source": "files/style/shell/ui/HintBubble.qml",
+      "target": "style/shell/ui/HintBubble.qml",
+      "gitBlob": "6e6610d4a982e856a0bcafec0fef177e363e6aea"
+    },
+    {
+      "source": "files/style/shell/ui/Launcher.qml",
+      "target": "style/shell/ui/Launcher.qml",
+      "gitBlob": "d90df6ebd3bba155a79e6e824efe24e5ab7264e5"
+    },
+    {
+      "source": "files/style/shell/ui/LevelControl.qml",
+      "target": "style/shell/ui/LevelControl.qml",
+      "gitBlob": "d5f7893aef745a0c877ad575d5da72017b38fd2c"
+    },
+    {
+      "source": "files/style/shell/ui/Media.qml",
+      "target": "style/shell/ui/Media.qml",
+      "gitBlob": "afb269bf697bf3722060eb135843005337a85cbe"
+    },
+    {
+      "source": "files/style/shell/ui/NotificationActions.qml",
+      "target": "style/shell/ui/NotificationActions.qml",
+      "gitBlob": "117d6e852917d6ec9ba848379cf9b5faae803ae1"
+    },
+    {
+      "source": "files/style/shell/ui/Notifications.qml",
+      "target": "style/shell/ui/Notifications.qml",
+      "gitBlob": "bc909054f8e39d3caf2c3066d037e69c046b575d"
+    },
+    {
+      "source": "files/style/shell/ui/OrnamentFrame.qml",
+      "target": "style/shell/ui/OrnamentFrame.qml",
+      "gitBlob": "7e40c9edd20b05151668e2ea6209f97bb66f72bb"
+    },
+    {
+      "source": "files/style/shell/ui/Overlay.qml",
+      "target": "style/shell/ui/Overlay.qml",
+      "gitBlob": "01c067d407a80d4bc0c2b8fd4d5de30ed4f4abd0"
+    },
+    {
+      "source": "files/style/shell/ui/PanelHeader.qml",
+      "target": "style/shell/ui/PanelHeader.qml",
+      "gitBlob": "6377843359ee524b57b8b060ffa0dba529f1ccaf"
+    },
+    {
+      "source": "files/style/shell/ui/Power.qml",
+      "target": "style/shell/ui/Power.qml",
+      "gitBlob": "b90a23666ea55d8666c113ae1ddbbd58fbe7f0cb"
+    },
+    {
+      "source": "files/style/shell/ui/PreferenceChoice.qml",
+      "target": "style/shell/ui/PreferenceChoice.qml",
+      "gitBlob": "87c3bef53b92228c18a917dfcedc75d7fa213ec1"
+    },
+    {
+      "source": "files/style/shell/ui/PreferenceSlider.qml",
+      "target": "style/shell/ui/PreferenceSlider.qml",
+      "gitBlob": "dadb02681dbfaa911ae7122e4df7ef7f6fae412d"
+    },
+    {
+      "source": "files/style/shell/ui/Settings.qml",
+      "target": "style/shell/ui/Settings.qml",
+      "gitBlob": "cc0a774a6f106d98e19c29c5de939caffbc80da0"
+    },
+    {
+      "source": "files/style/shell/ui/SurfaceLayout.qml",
+      "target": "style/shell/ui/SurfaceLayout.qml",
+      "gitBlob": "22d8a42a726bcc3ef9e00f0c0c95a8f24580cb91"
+    },
+    {
+      "source": "files/style/shell/ui/Theme.qml",
+      "target": "style/shell/ui/Theme.qml",
+      "gitBlob": "31fdcafe34adc3b2673e863b649fc773c37fc82d"
+    },
+    {
+      "source": "files/style/shell/ui/Toast.qml",
+      "target": "style/shell/ui/Toast.qml",
+      "gitBlob": "1ad78efee0c6e701d9dc9f4a09ef978c83d9c746"
+    },
+    {
+      "source": "files/style/shell/ui/ToastStack.qml",
+      "target": "style/shell/ui/ToastStack.qml",
+      "gitBlob": "6879be6977c041886badafdc67634ee7c3a738b2"
+    },
+    {
+      "source": "files/style/shell/ui/WindowSwitcher.qml",
+      "target": "style/shell/ui/WindowSwitcher.qml",
+      "gitBlob": "045b9f3c6639a9f7ba7083af647b859aad8e0d0c"
+    },
+    {
+      "source": "files/style/wallpaper.png",
+      "target": "style/wallpaper.png",
+      "gitBlob": "86a682e768ba308e6fb73cf2ad8afe99c2bfca95"
+    }
+  ],
+  "adapters": {
+    "sddm": "separate-installer",
+    "dolphin": "separate-installer",
+    "spotify": "separate-installer"
+  }
+}
