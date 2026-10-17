@@ -5,7 +5,7 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.6.1 geliştirme sürümü. Alt+Tab, hesaplamalı launcher ve terminal/Dolphin açılışı onaylandı; 2.5.1 normal kullanımında sorun bildirilmedi. 2.6.0 bar ipucu tıklama engeli düzeltildi; hedef oturum kontrolü bekliyor. Ayarların native kalıcılık kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+**Durum:** 2.6.2 geliştirme sürümü. Alt+Tab, hesaplamalı launcher, terminal/Dolphin açılışı ve bar ipucu düzeltmesinin normal kullanımı onaylandı. Son cilada SDDM varlık/yerleşimi ve lock medya hata durumları düzeltildi. Ayarların native kalıcılık ve geniş oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
 M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
@@ -21,10 +21,30 @@ M3 ortak/görsel denetimi başladı; tema değiştirici M4 sonrasında.
 | [Görsel yüzey haritası](docs/THEME_SURFACES.md) | Shell'in ortak sunumu ve ayrı lock/SDDM/uygulama adaptörleri |
 | [Yayın kontrolü](docs/RELEASE_CHECKLIST.md) | İlk tema ne zaman bitmiş sayılır? |
 | [Vitreus / Caelestia](docs/INSPIRATION.md) | Referanslar, incelenen sürümler ve alınacak fikirler |
+| [Tema geçiş araştırması](docs/THEME_SWITCHING_RESEARCH.md) | HyDE, ML4W, Caelestia, Noctalia ve Vitreus; yöntemler ve öneriler |
 | [Doğrulama sınırları](docs/VALIDATION.md) | Gerçekten çalıştırılan ile hedef oturum kontrolü farkı |
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.6.2 — Son cila ve yayın öncesi denetim
+
+SDDM'nin kesilmiş PNG'si sağlam proje kopyasıyla onarıldı; giriş kartı küçük
+ekranda saatle çakışmaz, klavye odağı kaydırılan işlemi görünür tutar. Oturum
+listesi boşsa giriş pasiftir. Parola hata/yeniden deneme ve güç iptali Qt fixture'ıyla
+kontrol edildi; gerçek kimlik doğrulama ayrıca gerekir. Hyprlock medya yardımcısı
+bozuk/tipsiz önbellekte toparlanır, yanlış türleri oynatma durumu saymaz.
+
+CP437 kurulum/variant/restore, SDDM dosya rollback'i ve mevcut shell kontrolleri
+geçti. [Kanıt ve kalan canlı kabul](docs/VALIDATION.md#262--son-cila-ve-kabul-sınırı).
+Tema menüsünün yeri kullanıcı kararını bekliyor; arayüz eklenmedi.
+
+Shell güncellemesi `bash update.sh --check && bash update.sh` ile uygulanır.
+SDDM ayrı kurucudur: `bash sddm/preview.sh` yalnız preview açar. Önceden kurulu
+SDDM temasını yenilemek için `sudo bash sddm/restore.sh`, ardından
+`sudo bash sddm/install.sh --check && sudo bash sddm/install.sh` kullanılır.
+Aktif oturum/servis yeniden başlatılmaz. Terminal madalyonu bağımsız ektir;
+görseli değişmedi, yeniden kurulması gerekmez.
 
 ## 2.6.1 — Bar ipucu tıklamayı engellemez
 

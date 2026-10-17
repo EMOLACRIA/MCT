@@ -1,6 +1,6 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.6.1 geliştirme sürümü**.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.6.2 geliştirme sürümü**.
 Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 kalıcılık kabulü bekliyor; M3 ortak shell sunumu uygulandı / kabul bekliyor**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
@@ -16,6 +16,40 @@ Alt+Tab ve hesaplamalı launcher normal kullanımı kullanıcı tarafından onay
 Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; terminal/Dolphin açılışı onaylandı,
 yeniden başlatmada kalıcılık kabulü bekliyor.
 Tema değiştirici **yoktur**.
+Menünün yeri kullanıcı kararını bekler; Preferences konumu kabul edilmedi.
+
+## 2.6.2 — Son cila ve kontroller
+
+17 Ekim: kullanıcı 2.6.1 normal kullanımını onayladı; PR #9 beklenen head
+`136f43a29e56617597b77e78abbad4abda3abdc4` ile main'e alındı
+(merge `bc40e3782753f9f51ee786bb6e2c5dcf7c779f40`).
+
+SDDM wallpaper dosyasının kesilmiş olduğu Qt image decode ile bulundu; sağlam
+ana PNG'nin birebir öneki olduğu denetlenip tam kopyayla onarıldı. Küçük ekran
+saat/kart çakışması, kaydırma ve klavye görünürlüğü düzeltildi. Boş oturum listesi
+girişe izin vermez. Hyprlock medya cache'i bozuk JSON/türlerde toparlanır.
+Kesilmiş power preview'ı ve SDDM preview'ı güncel fixture'lardan render edildi.
+Yeni işlev, tema seçici veya global kısayol yok. [ADR-0011](docs/decisions/0011-release-polish.md).
+
+2026-10-17: 5 Qt greeter, 4 SDDM dosya install/restore/rollback ve 6 CP437
+medallion testi geçti. Mevcut 12 shell UI, 10 ayarlar, 11 Alt+Tab, 7 calculator,
+4 watcher Qt testleri; OSD/ikon, network import, gerçek Qt palet, 17 PNG decode;
+37 QML derlemesi ve 122 QuickShell 0.3.1 binding kontrolü geçti. Watcher fixture'ı
+ilk geniş koşuda Preferences.js yolu eksikliğiyle başarısız oldu; fixture'a logic
+bağlantısı eklendi ve dört test yeniden geçti. Bu bir native bildirim hatası değildi.
+
+12 file-manager, 10 süreç keşfi, 10 Spotify, 15 tercih, 6 binding stdlib testi;
+uygulama kurucu/helper fixture'ları ve üç Node kontrolü de geçti. Hyprlock alanları
+0.9.6 kaynağıyla karşılaştırıldı. 40 Python parse, 26 Bash syntax, yerel Markdown
+dosya bağlantıları ve diff whitespace kontrolü geçti. Komutlar/sınırlar
+[VALIDATION](docs/VALIDATION.md#262--son-cila-ve-kabul-sınırı) içinde.
+
+Kod ve kontrollü test cilası tamamlandı; **M4 kapanmadı**. Native kalıcılık,
+PAM/login/lock, fiziksel cihaz/çoklu ekran ve tam kullanıcı restore kabulü açık.
+Lisans seçimi/varlık haklarının yayın kapsamı da açık karardır. Kullanıcının
+istediği [tema geçiş araştırması](docs/THEME_SWITCHING_RESEARCH.md) bu kontrollerin
+ardından tamamlandı: HyDE/ML4W/Caelestia/Noctalia/Vitreus birincil kaynakları,
+gözlem/çıkarım ve runtime sınırları belgeli. Menü yeri kararlaştırılmadı.
 
 ## Son kullanıcı geri bildirimi ve açık işler
 

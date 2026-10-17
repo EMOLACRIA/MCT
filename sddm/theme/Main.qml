@@ -11,9 +11,20 @@ Rectangle {
     property string failure: ""
     property string powerAction: ""
     property date now: new Date()
+    readonly property bool compact: height < 700
+
+    function reveal(item) {
+        if (!item.activeFocus) return;
+        let ancestor = item.parent;
+        while (ancestor && ancestor !== form) ancestor = ancestor.parent;
+        if (!ancestor) return;
+        const top = item.mapToItem(form, 0, 0).y;
+        formScroll.contentY = Math.max(0, Math.min(formScroll.contentHeight - formScroll.height,
+            Math.max(top + item.height - formScroll.height, Math.min(top, formScroll.contentY))));
+    }
 
     function login() {
-        if (busy || username.text.trim() === "" || sessions.currentIndex < 0)
+        if (busy || username.text.trim() === "" || sessions.currentIndex < 0 || sessions.currentIndex >= sessions.count)
             return;
         failure = "";
         busy = true;
@@ -36,17 +47,19 @@ Rectangle {
         onTriggered: root.now = new Date()
     }
     Column {
+        id: clock
+        objectName: "loginClock"
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.rightMargin: parent.width * 0.065
-        anchors.topMargin: parent.height * 0.06
-        spacing: 8
+        anchors.topMargin: root.compact ? 16 : parent.height * 0.06
+        spacing: root.compact ? 4 : 8
         Text {
             anchors.right: parent.right
             text: Qt.formatDateTime(root.now, "HH:mm")
             color: "#e5dcc6"
             font.family: "serif"
-            font.pixelSize: 42
+            font.pixelSize: root.compact ? 32 : 42
         }
         Text {
             anchors.right: parent.right
@@ -57,6 +70,7 @@ Rectangle {
     }
 
     component Field: TextField {
+        onActiveFocusChanged: root.reveal(this)
         implicitHeight: 42
         color: "#d8d3c5"
         placeholderTextColor: "#888b7d"
@@ -73,6 +87,7 @@ Rectangle {
     }
     component ActionButton: Button {
         id: actionButton
+        onActiveFocusChanged: root.reveal(this)
         implicitHeight: 40
         font.pixelSize: 13
         contentItem: Text {
@@ -91,11 +106,13 @@ Rectangle {
 
     Rectangle {
         id: card
+        objectName: "loginCard"
         width: Math.min(380, parent.width - 48)
-        height: form.implicitHeight + 64
+        readonly property int inset: root.compact ? 24 : 32
+        height: Math.min(form.implicitHeight + inset * 2, root.height - clock.y - clock.height - 40)
         anchors.right: parent.right
         anchors.rightMargin: Math.max(24, parent.width * 0.065)
-        anchors.verticalCenter: parent.verticalCenter
+        y: Math.max(clock.y + clock.height + 16, (root.height - height) / 2)
         color: "#ee191a18"
         border.width: 1
         border.color: "#77715e"
@@ -103,124 +120,136 @@ Rectangle {
         Image { anchors.right: parent.right; anchors.top: parent.top; width: 20; height: 20; source: "tr.svg" }
         Image { anchors.left: parent.left; anchors.bottom: parent.bottom; width: 20; height: 20; source: "bl.svg" }
         Image { anchors.right: parent.right; anchors.bottom: parent.bottom; width: 20; height: 20; source: "br.svg" }
-        ColumnLayout {
-            id: form
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.margins: 32
-            spacing: 12
-            Text {
-                text: "Welcome back"
-                color: "#e5dcc6"
-                font.family: "serif"
-                font.pixelSize: 26
-                Layout.bottomMargin: 8
-            }
-            Field {
-                id: username
-                objectName: "username"
-                Layout.fillWidth: true
-                placeholderText: "Username"
-                text: userModel.lastUser
-                enabled: !root.busy
-                onAccepted: password.forceActiveFocus()
-                Accessible.name: "Username"
-            }
-            Field {
-                id: password
-                objectName: "password"
-                Layout.fillWidth: true
-                placeholderText: "Password"
-                echoMode: TextInput.Password
-                enabled: !root.busy
-                onAccepted: root.login()
-                Accessible.name: "Password"
-            }
-            ComboBox {
-                id: sessions
-                objectName: "sessions"
-                Layout.fillWidth: true
-                implicitHeight: 40
-                model: sessionModel
-                textRole: "name"
-                currentIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
-                enabled: !root.busy
-                Accessible.name: "Session"
-                contentItem: Text {
-                    text: sessions.displayText
-                    color: "#aaa89b"
-                    font.pixelSize: 12
-                    verticalAlignment: Text.AlignVCenter
-                    leftPadding: 12
-                    rightPadding: 28
-                    elide: Text.ElideRight
-                }
-                indicator: Text {
-                    x: sessions.width - 24
-                    y: (sessions.height - height) / 2
-                    text: "⌄"
-                    color: "#b5a37c"
-                }
-                background: Rectangle {
-                    color: "#252620"
-                    border.color: sessions.activeFocus ? "#b5a37c" : "#55564c"
-                }
-                delegate: ItemDelegate {
-                    width: sessions.width
-                    highlighted: sessions.highlightedIndex === index
-                    contentItem: Text { text: model.name; color: "#d8d3c5"; font.pixelSize: 12 }
-                    background: Rectangle { color: parent.highlighted ? "#35342c" : "#191a18" }
-                }
-                popup: Popup {
-                    y: sessions.height + 4
-                    width: sessions.width
-                    implicitHeight: Math.min(contentItem.implicitHeight + 8, 240)
-                    padding: 4
-                    contentItem: ListView {
-                        clip: true
-                        implicitHeight: contentHeight
-                        model: sessions.popup.visible ? sessions.delegateModel : null
-                        currentIndex: sessions.highlightedIndex
-                        ScrollIndicator.vertical: ScrollIndicator { }
-                    }
-                    background: Rectangle { color: "#191a18"; border.color: "#77715e" }
-                }
-            }
-            ActionButton {
-                objectName: "signIn"
-                Layout.fillWidth: true
-                text: root.busy ? "Signing in…" : "Sign in"
-                enabled: !root.busy && username.text.trim().length > 0 && sessions.count > 0
-                onClicked: root.login()
-            }
-            Text {
-                visible: root.failure.length > 0
-                text: root.failure
-                color: "#ce9582"
-                font.pixelSize: 12
-                wrapMode: Text.WordWrap
-                Layout.fillWidth: true
-            }
-            Rectangle { Layout.fillWidth: true; height: 1; color: "#45473e"; Layout.topMargin: 8 }
-            RowLayout {
-                Layout.fillWidth: true
+        Flickable {
+            id: formScroll
+            objectName: "loginScroll"
+            anchors.fill: parent
+            anchors.margins: card.inset
+            clip: true
+            contentWidth: width
+            contentHeight: form.implicitHeight
+            boundsBehavior: Flickable.StopAtBounds
+            interactive: contentHeight > height
+            ScrollIndicator.vertical: ScrollIndicator { }
+            ColumnLayout {
+                id: form
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
                 spacing: 12
-                ActionButton {
-                    objectName: "restart"
+                Text {
+                    text: "Welcome back"
+                    color: "#e5dcc6"
+                    font.family: "serif"
+                    font.pixelSize: 26
+                    Layout.bottomMargin: 8
+                }
+                Field {
+                    id: username
+                    objectName: "username"
                     Layout.fillWidth: true
-                    text: "Restart"
-                    visible: sddm.canReboot
+                    placeholderText: "Username"
+                    text: userModel.lastUser
                     enabled: !root.busy
-                    onClicked: { root.powerAction = "restart"; confirm.open(); }
+                    onAccepted: password.forceActiveFocus()
+                    Accessible.name: "Username"
+                }
+                Field {
+                    id: password
+                    objectName: "password"
+                    Layout.fillWidth: true
+                    placeholderText: "Password"
+                    echoMode: TextInput.Password
+                    enabled: !root.busy
+                    onAccepted: root.login()
+                    Accessible.name: "Password"
+                }
+                ComboBox {
+                    id: sessions
+                    objectName: "sessions"
+                    Layout.fillWidth: true
+                    implicitHeight: 40
+                    model: sessionModel
+                    textRole: "name"
+                    currentIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
+                    enabled: !root.busy && count > 0
+                    onActiveFocusChanged: root.reveal(this)
+                    Accessible.name: "Session"
+                    contentItem: Text {
+                        text: sessions.count > 0 ? sessions.displayText : "No sessions available"
+                        color: "#aaa89b"
+                        font.pixelSize: 12
+                        verticalAlignment: Text.AlignVCenter
+                        leftPadding: 12
+                        rightPadding: 28
+                        elide: Text.ElideRight
+                    }
+                    indicator: Text {
+                        x: sessions.width - 24
+                        y: (sessions.height - height) / 2
+                        text: "⌄"
+                        color: "#b5a37c"
+                    }
+                    background: Rectangle {
+                        color: "#252620"
+                        border.color: sessions.activeFocus ? "#b5a37c" : "#55564c"
+                    }
+                    delegate: ItemDelegate {
+                        width: sessions.width
+                        highlighted: sessions.highlightedIndex === index
+                        contentItem: Text { text: model.name; color: "#d8d3c5"; font.pixelSize: 12 }
+                        background: Rectangle { color: parent.highlighted ? "#35342c" : "#191a18" }
+                    }
+                    popup: Popup {
+                        y: sessions.height + 4
+                        width: sessions.width
+                        implicitHeight: Math.min(contentItem.implicitHeight + 8, 240)
+                        padding: 4
+                        contentItem: ListView {
+                            clip: true
+                            implicitHeight: contentHeight
+                            model: sessions.popup.visible ? sessions.delegateModel : null
+                            currentIndex: sessions.highlightedIndex
+                            ScrollIndicator.vertical: ScrollIndicator { }
+                        }
+                        background: Rectangle { color: "#191a18"; border.color: "#77715e" }
+                    }
                 }
                 ActionButton {
-                    objectName: "powerOff"
+                    objectName: "signIn"
                     Layout.fillWidth: true
-                    text: "Power off"
-                    visible: sddm.canPowerOff
-                    enabled: !root.busy
-                    onClicked: { root.powerAction = "poweroff"; confirm.open(); }
+                    text: root.busy ? "Signing in…" : "Sign in"
+                    enabled: !root.busy && username.text.trim().length > 0 && sessions.count > 0
+                    onClicked: root.login()
+                }
+                Text {
+                    visible: root.failure.length > 0
+                    text: root.failure
+                    color: "#ce9582"
+                    font.pixelSize: 12
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
+                Rectangle { Layout.fillWidth: true; height: 1; color: "#45473e"; Layout.topMargin: 8 }
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 12
+                    ActionButton {
+                        objectName: "restart"
+                        Layout.fillWidth: true
+                        text: "Restart"
+                        visible: sddm.canReboot
+                        enabled: !root.busy
+                        onClicked: { root.powerAction = "restart"; confirm.open(); }
+                    }
+                    ActionButton {
+                        objectName: "powerOff"
+                        Layout.fillWidth: true
+                        text: "Power off"
+                        visible: sddm.canPowerOff
+                        enabled: !root.busy
+                        onClicked: { root.powerAction = "poweroff"; confirm.open(); }
+                    }
                 }
             }
         }

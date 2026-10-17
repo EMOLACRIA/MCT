@@ -37,6 +37,7 @@ class WatcherTests(unittest.TestCase):
         WARNINGS.clear()
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         folder=Path(self.tmp.name);(folder/'ui').symlink_to(ROOT/'payload/style/shell/ui',target_is_directory=True)
+        (folder/'logic').symlink_to(ROOT/'payload/style/shell/logic',target_is_directory=True)
         self.engine=QQmlEngine();self.component=QQmlComponent(self.engine)
         self.component.setData(b'''
 import QtQuick

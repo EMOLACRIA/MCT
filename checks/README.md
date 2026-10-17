@@ -1,3 +1,28 @@
+## Son cila (2.6.2)
+
+```bash
+python3 checks/test_sddm_install.py
+python3 checks/test_terminal_medallion.py
+python3 checks/test_sddm_ui.py
+python3 checks/test_shell_assets.py
+MCT_HYPRLOCK_SOURCE=/path/to/hyprlock-0.9.6/ConfigManager.cpp python3 checks/test_revision_helpers.py
+```
+
+İlk iki komut stdlib ile 4 SDDM dosya transaction ve 6 medallion kontrolü yapar;
+bütün yollar geçici köke yönlendirilir, gerçek installer/servis/oturum çalışmaz.
+Greeter'in 5 Qt testi sahte SDDM modelleriyle parola hata/yeniden deneme/success
+temizliği, çift login engeli, boş kullanıcı/oturum, güç Esc, küçük ekran
+saat/kart ve klavye kaydırma kontrolüdür. PAM/gerçek giriş değildir.
+`MCT_GREETER_PREVIEW_DIR=/tmp/greeter-review` isteğe bağlı render alır.
+
+Qt testleri PySide6 ve gerekirse `MCT_QT_TEST_PATH` ister. Asset kontrolü artık
+kendi checkout'unu kullanır; Theme URL'lerini ve repo PNG'lerinin tam decode'unu
+denetler. Helper testi kendi payload'ını bulur; sensör/IPC süreçleri mock'tur,
+Hyprlock property kontrolü için belirtilen 0.9.6 kaynak dosyası ayrıca gerekir.
+Notification watcher fixture'ı Theme'in dolaylı Preferences.js import'unu içerir.
+Bu düzenleme kalan `test_shell_fresh.py`, `test_shell_update.py`,
+`test_osd_routing.py` eski fixture/binary bağımlılıklarını ortadan kaldırmaz.
+
 ## Ortak sunum / yerleşim (2.6.1)
 
 ```bash

@@ -134,10 +134,15 @@ boş durumlar, uygulama başlatma ve güvenilir restore kontrol edilir.
 Güncel görüntüler, kullanılan sürümler, sınırlamalar ve kurulum adımları kaydedilir.
 Kullanıcı ilk temanın bitmiş görünümünü ve kullanımını onaylar.
 
-**M4 kapanmadan M5 ve M6 başlamaz.** Paket numarası 2.2.2 olması bu kapının
+**M4 kapanmadan M5 ve M6 başlamaz.** Paket numarası tek başına bu kapının
 kapanmış olduğu anlamına gelmez.
 
 ## M5 — Tema değiştirici
+
+**Menünün konumu açık:** kullanıcı düşünüp seçecek. Preferences yerleşimi
+kararlaştırılmadı. 17 Ekim talebiyle M4 cila kontrollerinden sonra
+[tema değiştirme yöntemleri araştırıldı](docs/THEME_SWITCHING_RESEARCH.md);
+bu, M5 arayüzünün başlaması değildir.
 
 M4 sonrasında: önizleme kartları, tema metadata/manifest'i, uyumluluk ve zorunlu
 yüzey kontrolü, uygulama/geri alma, tercihleri koruma, gerekli restart bildirimleri.

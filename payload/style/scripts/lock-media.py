@@ -18,6 +18,11 @@ STYLE=Path.home()/'.config/desktop-style'
 CACHE=Path.home()/'.cache/desktop-style/lock-media'
 EMPTY={'title':'','artist':'Start music before locking','art':'','playing':False}
 
+def clean_metadata(data):
+    if not isinstance(data,dict):return dict(EMPTY)
+    return {**{key:data.get(key) if isinstance(data.get(key),str) else EMPTY[key]
+               for key in ('title','artist','art')},'playing':data.get('playing') is True}
+
 def ipc(method,*args):
     exe=shutil.which('quickshell') or shutil.which('qs')
     if not exe:raise RuntimeError('QuickShell is unavailable')
@@ -31,11 +36,12 @@ def metadata():
         fcntl.flock(lock,fcntl.LOCK_EX)
         path=CACHE/'metadata.json'
         try:
-            if time.time()-path.stat().st_mtime<.8:return json.loads(path.read_text())
+            if time.time()-path.stat().st_mtime<.8:
+                cached=json.loads(path.read_text())
+                if isinstance(cached,dict):return clean_metadata(cached)
         except (OSError,ValueError):pass
         try:
-            data=json.loads(ipc('mediaInfo'))
-            if not isinstance(data,dict):data=EMPTY
+            data=clean_metadata(json.loads(ipc('mediaInfo')))
         except (OSError,ValueError,RuntimeError,subprocess.TimeoutExpired):data=EMPTY
         path.write_text(json.dumps(data))
         return data

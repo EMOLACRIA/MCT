@@ -1,11 +1,12 @@
-import importlib.util,json,sys,tempfile,re
+import importlib.util,json,sys,tempfile,re,os
 from pathlib import Path
 from unittest.mock import patch
 from subprocess import CompletedProcess
 
 def load(name,path):
  spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
-base=Path('build/desktop-style/payload/style');hardware=load('hardware',base/'shell/hardware.py');media=load('lock_media',base/'scripts/lock-media.py');feedback=load('feedback',base/'scripts/feedback.py')
+root=Path(__file__).resolve().parents[1]
+base=root/'payload/style';hardware=load('hardware',base/'shell/hardware.py');media=load('lock_media',base/'scripts/lock-media.py');feedback=load('feedback',base/'scripts/feedback.py')
 with tempfile.TemporaryDirectory() as tmp:
  p=Path(tmp)
  def put(name,text):
@@ -29,6 +30,19 @@ with tempfile.TemporaryDirectory() as tmp:
  assert media.plain('<b>A & B</b>',100)=='&lt;b&gt;A &amp; B&lt;/b&gt;'
  with patch.object(media,'ipc',return_value=json.dumps({'title':'Test','artist':'Artist','art':'','playing':True})) as ipc:
   assert media.metadata()['title']=='Test';assert media.metadata()['playing'];ipc.assert_called_once()
+ for corrupt in ['[]','null','not JSON']:
+  (media.CACHE/'metadata.json').write_text(corrupt)
+  with patch.object(media,'ipc',return_value=json.dumps({'title':'Recovered','playing':False})) as ipc:
+   assert media.metadata()['title']=='Recovered';ipc.assert_called_once()
+ for source in ['cache','ipc']:
+  invalid={'title':['bad'],'artist':{},'art':42,'playing':'false'}
+  (media.CACHE/'metadata.json').unlink(missing_ok=True)
+  if source=='cache':(media.CACHE/'metadata.json').write_text(json.dumps(invalid))
+  with patch.object(media,'ipc',return_value=json.dumps(invalid)):
+   assert media.metadata()==media.EMPTY
+ (media.CACHE/'metadata.json').unlink()
+ with patch.object(media,'ipc',side_effect=RuntimeError('offline')):
+  assert media.metadata()==media.EMPTY
  local=put('cover.png','fixture')
  assert media.cover_path(local.as_uri())==local
  with patch.object(media.subprocess,'Popen') as spawn:
@@ -42,7 +56,10 @@ with tempfile.TemporaryDirectory() as tmp:
   run.assert_not_called();assert 'fixture IPC failure' in (feedback.STATE/'feedback.log').read_text()
 print('PASS: CPU/memory/temp/fan readings, GPU sleep preservation, active NVIDIA metrics, media cache/escaping/cover deduplication, OSD never falls back to notifications')
 # Check every generated Hyprlock setting against the actual 0.9.6 declaration.
-source=Path('tmp/hyprlock-0.9.6/ConfigManager.cpp').read_text()
+source_path=Path(os.environ.get('MCT_HYPRLOCK_SOURCE','/missing-hyprlock-source'))
+if source_path.is_dir():source_path=source_path/'ConfigManager.cpp'
+assert source_path.is_file(),'Set MCT_HYPRLOCK_SOURCE to the Hyprlock 0.9.6 ConfigManager.cpp file.'
+source=source_path.read_text()
 for kind,body in re.findall(r'(shape|label|image)\s*\{([^}]+)\}',(base/'hyprlock/media.conf').read_text()):
  for line in body.splitlines():
   if '=' not in line:continue

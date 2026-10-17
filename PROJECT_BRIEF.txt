@@ -31,6 +31,9 @@ DEĞİŞMEZ ÜRÜN KARARLARI
 7. Okunabilirlik süsten önce gelir. Dolphin'in normal ve seçili yazıları beyazdır.
 8. Açılan paneller kısayola tekrar basılınca kapanır; üst üste kopyalar açılmaz.
 9. Kullanıcının monitör, ölçek, GPU, VRR ve kişisel kısayol ayarları korunur.
+10. Tema menüsünün konumu açık karardır; kullanıcı düşünüp seçecek. Preferences
+    veya başka bir yüzeye yerleştirme kararı alınmadı. M4 öncesi yalnız tema
+    değiştirme yaklaşımları araştırılır; seçici arayüzü uygulanmaz.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER
 - Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.
