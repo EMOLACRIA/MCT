@@ -109,7 +109,8 @@ ortaklaştırıldı; başlık, ipucu, toast/geçmiş eylemleri paylaşılıyor. 
 [Karar](docs/decisions/0010-shared-shell-presentation.md).
 Hedef oturum kabulü, lock/SDDM/uygulama bütünlüğü ve sözleşmenin tamamı hâlâ açık.
 2.6.1: kullanıcı bar ipucunun tıklamayı engellediğini bildirdi. Gecikmeli,
-input-transparent ayrı bar popup'ı uygulandı; aynı inceleme dalında kabul bekliyor.
+input-transparent ayrı bar popup'ı uygulandı. 17 Ekim kullanıcı “Tamamdır gayer güzel”
+diyerek düzeltmenin normal kullanımını onayladı; geniş M3/M4 ve PT-012 kabulü açık.
 
 - Görsel kimlik: font, ikon, çerçeve, panel, OSD, bildirim, medya, settings,
   Alt+Tab, launcher, Hyprlock, SDDM ve uygulama eklentilerinin bütünlüğü.
