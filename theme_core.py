@@ -209,32 +209,59 @@ class Native:
             self.session.launch(["quickshell", "-p", str(self.engine.style / "shell")], "shell.log")
         self.session.wait_feedback()
 
-    def monitors(self):
+    def wallpapers(self):
         result = self.run(["hyprctl", "hyprpaper", "listactive"])
-        names = []
+        values = {}
         for line in result.stdout.splitlines():
             if not line.strip():
                 continue
-            monitor, separator, _ = line.partition(": ")
-            if not separator or not re.fullmatch(r"[A-Za-z0-9_.-]+", monitor):
+            monitor, separator, path = line.partition(": ")
+            if (not separator or not re.fullmatch(r"[A-Za-z0-9_.-]+", monitor)
+                    or not Path(path).is_absolute() or "," in path):
                 raise ThemeError("Cannot parse hyprpaper listactive output")
-            names.append(monitor)
-        if not names:
+            values[monitor] = path
+        if not values:
             raise ThemeError("No active hyprpaper wallpaper")
-        return names
+        return values
 
-    def reload(self):
-        self.run(["hyprctl", "reload"])
-        self.clean()
-        # The selected monitor, fit mode and GPU settings are not changed.
+    def monitors(self):
+        return list(self.wallpapers())
+
+    def snapshot(self):
+        return {monitor: {"path": path, "fit": self.wallpaper_fits.get(
+                    monitor, self.wallpaper_fits.get("", "cover"))}
+                for monitor, path in self.wallpapers().items()}
+
+    def cached_wallpaper(self):
         data = (self.engine.style / "wallpaper.png").read_bytes()
         cached = safe(self.engine.data, "wallpapers/" + digest(data) + ".png")
         if not cached.is_file() or cached.read_bytes() != data:
             atomic(cached, data, 0o644)
+        return cached
+
+    def reload(self):
+        self.run(["hyprctl", "reload"])
+        self.clean()
+        cached = self.cached_wallpaper()
         for monitor in self.monitors():
             fit = self.wallpaper_fits.get(monitor, self.wallpaper_fits.get("", "cover"))
-            self.run(["hyprctl", "hyprpaper", "wallpaper",
-                      monitor + "," + str(cached) + "," + fit])
+            self.run(["hyprctl", "hyprpaper", "wallpaper", monitor + "," + str(cached) + "," + fit])
+
+    def restore(self, snapshot):
+        self.run(["hyprctl", "reload"])
+        self.clean()
+        for monitor in self.monitors():
+            saved = snapshot.get(monitor)
+            if saved is None:  # A display connected after the snapshot.
+                path = self.cached_wallpaper()
+                fit = self.wallpaper_fits.get(monitor, self.wallpaper_fits.get("", "cover"))
+            else:
+                path = Path(saved["path"])
+                fit = saved["fit"]
+                if (not path.is_absolute() or not path.is_file() or "," in str(path)
+                        or fit not in ("cover", "contain", "tile", "fill")):
+                    raise ThemeError("Cannot restore saved wallpaper for " + monitor)
+            self.run(["hyprctl", "hyprpaper", "wallpaper", monitor + "," + str(path) + "," + fit])
 
 
 class Engine:
@@ -447,14 +474,14 @@ class Engine:
             else:
                 atomic(path, json_bytes(value))
 
-    def transact(self, output, remove, after_active, after_last, kind, modes=None):
+    def transact(self, output, remove, after_active, after_last, kind, modes=None, after_runtime=None):
         before_active = self.optional("active.json")
         before_last = self.pointer()
         ident = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ-") + os.urandom(4).hex()
         dest = safe(self.data, "transactions/" + ident)
         dest.mkdir(parents=True, mode=0o700)
         record = {"schema": 1, "installation": self.installation(), "kind": kind, "status": "prepared", "beforeActive": before_active,
-                  "beforeLast": before_last, "before": {}, "after": {}}
+                  "beforeLast": before_last, "beforeRuntime": self.runtime.snapshot(), "before": {}, "after": {}}
         for name in sorted(set(output) | set(remove)):
             path = self.path(name)
             if path.exists():
@@ -472,7 +499,10 @@ class Engine:
                 self.path(name).unlink(missing_ok=True)
             for name, data in output.items():
                 atomic(self.path(name), data, (modes or {}).get(name, 0o644))
-            self.runtime.reload()
+            if after_runtime is None:
+                self.runtime.reload()
+            else:
+                self.runtime.restore(after_runtime)
             self.runtime.start()
             if after_active is None:
                 (self.data / "active.json").unlink(missing_ok=True)
@@ -490,7 +520,7 @@ class Engine:
             try:
                 self.runtime.stop()
                 self.restore_record(dest, record)
-                self.runtime.reload()
+                self.runtime.restore(record["beforeRuntime"])
                 self.runtime.start()
                 (self.data / "pending.json").unlink(missing_ok=True)
                 record["status"] = "rolled-back"
@@ -554,7 +584,8 @@ class Engine:
             if check_only:
                 return pointer["transaction"]
             modes = {name: item["mode"] for name, item in record["before"].items() if item is not None}
-            return self.transact(output, remove, record["beforeActive"], record["beforeLast"], "rollback", modes)
+            return self.transact(output, remove, record["beforeActive"], record["beforeLast"], "rollback",
+                                 modes, record["beforeRuntime"])
 
     def recover(self):
         self.verify_installed()
@@ -585,7 +616,7 @@ class Engine:
             self.runtime.prepare_recovery()
             self.runtime.stop()
             self.restore_record(dest, record)
-            self.runtime.reload()
+            self.runtime.restore(record["beforeRuntime"])
             self.runtime.start()
             record["status"] = "recovered"
             atomic(dest / "manifest.json", json_bytes(record))

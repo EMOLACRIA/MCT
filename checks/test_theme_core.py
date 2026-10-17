@@ -37,6 +37,10 @@ class Runtime:
     def stop(self): self.call("stop")
     def start(self): self.call("start")
     def reload(self): self.call("reload")
+    def snapshot(self): return {"fixture": {"path": "/original.png", "fit": "contain"}}
+    def restore(self, snapshot):
+        assert snapshot == {"fixture": {"path": "/original.png", "fit": "contain"}}
+        self.call("reload")
 
 
 class CoreTests(unittest.TestCase):
@@ -327,6 +331,56 @@ class CoreTests(unittest.TestCase):
                 with self.assertRaisesRegex(theme.ThemeError, "previous MCT installation"): action()
         finally:
             marker.write_bytes(original)
+
+    def test_real_updater_rechecks_theme_guard_inside_its_lock(self):
+        sys.path.insert(0, str(ROOT))
+        import update as updater
+        self.variant(); self.engine.apply("fixture-variant")
+        before = self.state()
+        with patch.object(updater, "check", return_value="fixture binds"), \
+             patch.object(updater.m, "STATE", self.engine.state), \
+             patch.object(updater.m, "STYLE", self.engine.style), \
+             patch.object(updater.m, "HYPR", self.engine.hypr), \
+             patch.object(updater.m, "PACKAGE", self.package):
+            with self.assertRaisesRegex(RuntimeError, "would replace"):
+                updater.update()
+        self.assertEqual(before, self.state())
+
+    def test_native_stop_only_targets_this_shell(self):
+        import types
+        rows = [(101, ["quickshell", "-p", "mct"]), (102, ["quickshell", "-p", "another"]),
+                (103, ["dunst"])]
+        native = theme.Native(self.engine)
+        native.session = types.SimpleNamespace(processes=lambda: iter(rows),
+                    is_shell=lambda args: args == ["quickshell", "-p", "mct"])
+        killed = []
+        def kill(pid, sig):
+            killed.append(pid)
+            rows[:] = [(p, a) for p, a in rows if p != pid]
+        with patch.object(theme.os, "kill", side_effect=kill): native.stop()
+        self.assertEqual(killed, [101])
+        self.assertEqual([p for p, _ in rows], [102, 103])
+
+    def test_native_restore_uses_each_saved_wallpaper_and_configured_fit(self):
+        native = theme.Native(self.engine); native.wallpaper_fits = {"": "cover"}
+        old = self.base / "old photo.png"; old.write_bytes(b"fixture")
+        other = self.base / "another.png"; other.write_bytes(b"fixture 2")
+        calls = []
+        def run(args):
+            calls.append(args)
+            output = "eDP-1: /current.png\nDP-2: /current.png\n" if args[-1] == "listactive" else ""
+            return subprocess.CompletedProcess(args, 0, output, "")
+        snapshot = {"eDP-1": {"path": str(old), "fit": "contain"},
+                    "DP-2": {"path": str(other), "fit": "tile"}}
+        with patch.object(native, "run", side_effect=run): native.restore(snapshot)
+        self.assertEqual([c[-1] for c in calls if "wallpaper" in c],
+                         ["eDP-1," + str(old) + ",contain", "DP-2," + str(other) + ",tile"])
+
+    def test_theme_snapshot_records_runtime_wallpaper_state(self):
+        self.engine.apply("plague-tale")
+        _, record = self.engine.read_transaction(self.engine.pointer())
+        self.assertEqual(record["beforeRuntime"],
+                         {"fixture": {"path": "/original.png", "fit": "contain"}})
 
     def test_cli_list_and_status_need_no_native_session(self):
         for action in ("list", "status"):
