@@ -12,7 +12,7 @@ Item {
     property string feedbackKind: "volume"
     property int feedbackLevel: 0
     property bool feedbackMuted: false
-    readonly property var panels: ["launcher","power","controls","notifications","media","hardware"]
+    readonly property var panels: ["launcher","power","controls","notifications","media","hardware","settings"]
     function toggle(panel, screen) {
         if (panels.indexOf(panel) < 0) return;
         const same = activePanel === panel;

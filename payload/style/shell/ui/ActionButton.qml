@@ -20,7 +20,7 @@ AbstractButton {
         color: root.down || root.selected ? "#39392f" : root.hovered || root.activeFocus ? Theme.raised : "transparent"
         border.color: root.selected || root.activeFocus ? Theme.brass : root.hovered ? Theme.line : "transparent"
         border.width: 1
-        Behavior on color { ColorAnimation { duration: 110 } }
+        Behavior on color { ColorAnimation { duration:Theme.duration(110) } }
     }
     contentItem: Item {
         implicitWidth: content.implicitWidth
@@ -41,7 +41,7 @@ AbstractButton {
             Text {
                 visible: root.text !== ""; text: root.text; textFormat: Text.PlainText
                 color: root.destructive ? Theme.danger : Theme.ink
-                font.family: Theme.bodyFont; font.pixelSize: 13
+                font.family: Theme.bodyFont; font.pixelSize:Theme.fontSize(13)
                 Layout.fillWidth: true; Layout.minimumWidth: 0
                 Layout.alignment: Qt.AlignVCenter; elide: Text.ElideRight
             }

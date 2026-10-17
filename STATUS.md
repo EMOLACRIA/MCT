@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.4.0 geliştirme sürümü**.
-Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 — launcher hesaplama kabulü bekliyor**. Plague Tale tamamlanmış değildir.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.5.0 geliştirme sürümü**.
+Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 — ortak ayarlar kabulü bekliyor**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -10,9 +10,9 @@ QuickShell bar; launcher; güç menüsü; kontrol paneli; bildirim geçmişi/toa
 MPRIS medya; donanım paneli; sürüklenebilir OSD; pil/şarj durumu; Hyprlock medya
 bölümü; ayrı SDDM teması; Dolphin/Spotify eklentileri; kurulum/güncelleme/restore.
 `Theme.qml` vardır fakat bütün görsel değerler henüz bu dosyada toplanmış değildir.
-Alt+Tab normal kullanımı kullanıcı tarafından onaylandı. Launcher hesaplama ve
-sonuç kopyalama uygulandı; hedef oturum kabulü bekliyor. Ayarlar ekranı ve tema
-değiştirici **yoktur**.
+Alt+Tab ve hesaplamalı launcher normal kullanımı kullanıcı tarafından onaylandı.
+Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; hedef oturum kabulü bekliyor.
+Tema değiştirici **yoktur**.
 
 ## Son kullanıcı geri bildirimi ve açık işler
 
@@ -24,7 +24,8 @@ değiştirici **yoktur**.
 | PT-004 | Kullanıcı onayı / süre tercihi uygulandı | 17 Ekim: PR #4 testleri için süre dışında sorun yok onayı geldi. Varsayılan/toast süresi 4500 ms yapıldı; 1200 ms yalnız önceki test komutuydu. Fiziksel şarj geçişi ayrıca raporlanmadı; M4 kabul listesinde korunur. |
 | PT-005 | Normal güncelleme kullanıcı onayı / geniş restore kabulü M4'te | Kullanıcı kümülatif PR #4 dalında sorun bildirmedi. 10 kontrollü süreç keşfi testi geçti. Farklı kullanıcıyla fresh install/restore canlı testi yapılmış sayılmaz. |
 | PT-010 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “alt tab çok güzel çalışıyor” diyerek PR #5 kullanımını onayladı. Main merge `915a9990a7d835cba6281b43b08af1911328355f`. Çoklu monitör çıkarma ve yakalama gibi ayrı ayrıntılar raporlanmadı; M4 listesinde kalır. |
-| PT-011 | Uygulandı / canlı kabul bekliyor | 2.4.0: paylaşılan aritmetik parser, launcher sonuç satırı, Enter/fare/Ctrl+Enter kopyalama. Node ve 7 gerçek Qt etkileşim testi geçti. Gerçek Wayland panosuna başka uygulamada yapıştırma kullanıcıda doğrulanmalı. |
+| PT-011 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “Güzel çalışıyor devam edebilirsin” diyerek PR #6 akışını onayladı. Enter seçili satırı çalıştırır; Ctrl+Enter seçimden bağımsız hesap sonucunu kopyalar. Her alt test ayrı ayrı raporlanmış sayılmaz. |
+| PT-012 | Uygulandı / canlı kabul bekliyor | 2.5.0: görünüm, bar/panel, varsayılan terminal/dosya yöneticisi, kalıcı tercih, tanılama ve yedekli reset. 15 Python + 10 Qt testi geçti; native Process/yeniden başlatma ve uygulama açma hedef cihazda denenmeli. |
 | QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23 ve shell-syntax da checkout'u kendi bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
@@ -183,10 +184,53 @@ basamak gösterilir/kopyalanır; IEEE-754 hesabı ve sınırları belgelenmişti
 33 Python kaynağı parse, 25 Bash syntax, yerel Markdown yolları ve git diff
 whitespace kontrolü geçti. 1600×1000 Qt launcher render'ı görüntülenerek incelendi. Gerçek QuickShell
 Wayland pano teslimi/başka uygulamaya yapıştırma bu ortamda çalıştırılmadı;
-[hedef kabulü](docs/VALIDATION.md#pt-011-launcher-hesaplama-kontrolü) açıktır.
+[hedef kabulü](docs/VALIDATION.md#pt-011-launcher-hesaplama-kontrolü) o incelemede açıktı.
+Sonraki normal kullanım onayı aşağıda kaydedildi.
+
+## 2.5.0 — Ortak ayarlar ve kalıcı kullanıcı tercihleri
+
+17 Ekim kullanıcı hesaplamalı launcher'ın çalışmasını onayladı. PR #6 beklenen
+baş `e8d7165cd3043f395e0eaf6b6a1068b690647b80` kontrol edilerek main'e birleştirildi;
+merge `7b5351c087dfe9975d01e29bc0413c14e30d6d9f`. PT-012 bu tabandan geliştirildi.
+
+Ses/kontrol panelindeki dişli Preferences ekranını açar; yeni global kısayol yok.
+Shell fontu %90–120, azaltılmış hareket, yüzey saydamlığı %75–100; floating bar,
+tarih/tray görünürlüğü, yan panel ortalama, OSD üst/alt konumu uygulanmıştır.
+Theme.fontSize/duration ve ortak yüzey rengi bütün ilgili shell bileşenlerine bağlıdır.
+Harici uygulama/Hyprlock/SDDM fontu bu tercihle değiştirilmez.
+
+Tercihler `$XDG_CONFIG_HOME/mct/preferences.json` içinde, tema payload'ının dışındadır.
+Python yardımcı doğrulama + geçici dosya/fsync/os.replace ile yazar; başarılı
+cevap gelmeden native görünümde yeni değer etkinleşmez. JS/Python aynı JSON şema
+bloğunu kullanır. Preview sadece bellektir. Bozuk dosya korunur; açık reset önce
+kopyasını saklar. Bozuk tercihler terminal/dosya yöneticisi kısayolunu engellemez;
+yardımcılar varsayılan uygulamalara döner, ayarlar ekranı hatayı gösterir.
+
+Super+Q ve launcher'ın terminal isteyen uygulamaları aynı terminal.py seçimine
+ulaşır (kurulu Kitty/Alacritty/Foot). Super+E seçilen FileManager desktop girdisini
+GIO ile açar; Dolphin kullanıcı/system önceliği korunur. Özel Q/E bağları update
+ile sahiplenilmez. Harici MIME ilişkileri veya uygulamaların kendi ayarları değiştirilmez.
+
+2026-10-17: `checks/test_preferences.py` **15 kontrollü Python testi**;
+`checks/test_preferences_ui.py` **10 gerçek Qt testi** (7 görünüm + 3 gerçek
+storage-helper/model alışverişi); `node checks/test_preferences_model.js` geçti.
+Atomik hata, bozuk dosya/reset yedeği, mevcut dosyanın update/rollback'te korunması,
+terminal argümanları, GIO girdisi ve özel kısayollar denetlendi. %120 fontta üst ve
+alt Preferences görünümleri 1600×1000'de incelendi; 900×600 sınırları test edildi.
+
+Önceki 7 launcher + 11 Alt+Tab Qt, OSD/ikon (yeni launcher/settings yüzeyleri dahil),
+12 update/restore + 6 Alt/Tab geçiş kontrolü ve Node backend geçti. Qt network
+import testi yeni paneli de oluşturdu. **30 QML bytecode**, **105 native binding**
+ve DesktopEntry categories/id kaynağı karşılaştırması geçti.
+
+37 Python kaynağı parse, 26 Bash syntax, yerel Markdown yolları ve git diff
+whitespace kontrolü geçti. Native QuickShell Process yaşam döngüsü, gerçek restart sonrası tercih yüklemesi,
+Wlr bar reserve/OSD konumu ve seçili terminal/dosya yöneticisi başlatması bu
+ortamda çalıştırılmadı. [Hedef kabulü](docs/VALIDATION.md#pt-012-ortak-ayarlar-kontrolü)
+açıktır; bu testler Plague Tale tamamlanma kapısını kapatmaz.
 
 ## Sonraki iş
 
-PT-011 hedef oturum kabulü; ardından PT-012 ortak ayarlar. Tema değiştirici ve
-ikinci tema M4 kapısından önce başlamaz. Adblock ölçümü, fiziksel şarj geçişi ve
-farklı kullanıcıyla fresh install/restore gibi geniş kontroller M4'te korunur.
+PT-012 hedef oturum kabulü; ardından M3 görsel/ortak sözleşme denetimi. Tema
+değiştirici ve ikinci tema M4 kapısından önce başlamaz. Adblock ölçümü, fiziksel
+şarj geçişi ve farklı kullanıcıyla fresh install/restore M4 listesinde korunur.

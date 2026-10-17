@@ -1,3 +1,19 @@
+## Ortak ayarlar (2.5.0)
+
+```bash
+python3 checks/test_preferences.py
+node checks/test_preferences_model.js
+python3 checks/test_preferences_ui.py
+```
+
+15 stdlib kontrolü: atomik dosya/0600, bozuk/eksik/sürümlü JSON, kayıt hatası,
+yedekli reset, XDG, salt okunur tanılama, terminal argümanları, GIO, stok/özel Q ve
+update/rollback'te dosyanın korunması. Node aynı şema JS doğrulamasını çalıştırır.
+10 Qt testi (PySide6, `MCT_QT_TEST_PATH`) görünüm/slider/popup/klavye/reset ve üretim
+storage-helper/model protokolünü kontrol eder. Gerçek QuickShell Process ve native
+uygulama açılışı değildir. Schema JSON bloğunu değiştirmek iki doğrulayıcıyı da
+etkiler; yeni alan testlerinde ikisini çalıştır.
+
 ## Launcher hesaplama (2.4.0)
 
 ```bash

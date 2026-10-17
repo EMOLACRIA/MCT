@@ -9,6 +9,7 @@ import "ui"
 ShellRoot {
     id:root
     LiveContext { id:services; hardwareMonitoring:shellState.activePanel==="hardware" }
+    Binding {target:Theme;property:"preferences";value:services.preferences.values}
     UiState { id:shellState;onActivePanelChanged:if(activePanel!=="")switcher.cancel() }
     WindowSwitcherState {
         id:switcher;windows:services.windows;activeWindowId:services.activeWindowId
@@ -49,8 +50,8 @@ ShellRoot {
             required property var modelData
             screen:modelData
             anchors {top:true;left:true;right:true}
-            margins {top:10;left:16;right:16}
-            implicitHeight:48; exclusiveZone:60; color:"transparent"
+            margins {top:Theme.preferences.barFloating ? 10 : 0;left:Theme.preferences.barFloating ? 16 : 0;right:Theme.preferences.barFloating ? 16 : 0}
+            implicitHeight:48; exclusiveZone:Theme.preferences.barFloating ? 60 : 48; color:"transparent"
             WlrLayershell.layer:WlrLayer.Top
             WlrLayershell.namespace:"desktop-bar"
             Bar { anchors.fill:parent; backend:services; uiState:shellState; screenToken:barWindow.modelData.name; nativeWindow:barWindow }
@@ -89,7 +90,9 @@ ShellRoot {
     }
     PanelWindow {
         visible:shellState.feedbackVisible && root.focusedScreen!==null
-        screen:root.focusedScreen; anchors.bottom:true; margins.bottom:80
+        screen:root.focusedScreen
+        anchors {top:Theme.preferences.osdPosition==="top";bottom:Theme.preferences.osdPosition!=="top"}
+        margins {top:80;bottom:80}
         implicitWidth:370; implicitHeight:100; color:"transparent"
         exclusionMode:ExclusionMode.Ignore; focusable:false
         WlrLayershell.layer:WlrLayer.Overlay

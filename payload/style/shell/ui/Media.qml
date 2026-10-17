@@ -10,7 +10,7 @@ Item {
         anchors.fill:parent; spacing:20
         RowLayout {
             Glyph { symbol:"music"; width:25; height:25 }
-            Text { text:"Now playing"; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:26; Layout.fillWidth:true }
+            Text { text:"Now playing"; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(26); Layout.fillWidth:true }
             ActionButton { symbol:"close"; width:36; height:36; padding:8; onClicked:uiState.close() }
         }
         Rectangle {
@@ -20,8 +20,8 @@ Item {
         }
         ColumnLayout {
             Layout.fillWidth:true; spacing:6
-            Text { Layout.fillWidth:true; text:backend.mediaTitle || "No active player"; textFormat:Text.PlainText; wrapMode:Text.WordWrap; maximumLineCount:2; elide:Text.ElideRight; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:22; horizontalAlignment:Text.AlignHCenter }
-            Text { Layout.fillWidth:true; text:backend.mediaArtist; textFormat:Text.PlainText; elide:Text.ElideRight; color:Theme.muted; font.pixelSize:12; horizontalAlignment:Text.AlignHCenter }
+            Text { Layout.fillWidth:true; text:backend.mediaTitle || "No active player"; textFormat:Text.PlainText; wrapMode:Text.WordWrap; maximumLineCount:2; elide:Text.ElideRight; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(22); horizontalAlignment:Text.AlignHCenter }
+            Text { Layout.fillWidth:true; text:backend.mediaArtist; textFormat:Text.PlainText; elide:Text.ElideRight; color:Theme.muted; font.pixelSize:Theme.fontSize(12); horizontalAlignment:Text.AlignHCenter }
         }
         RowLayout {
             Layout.alignment:Qt.AlignHCenter; spacing:18

@@ -134,6 +134,37 @@ Hedef oturumda update sonrası:
 Preview hesaplar fakat DemoContext yalnız test pano değerini kaydeder; sistem
 panosuna sonuç yazmaz. Gerçek clipboard yalnız kurulu QuickShell adaptöründedir.
 
+## PT-012 Ortak ayarlar kontrolü
+
+2026-10-17: `python3 checks/test_preferences.py` (15 stdlib),
+`checks/test_preferences_ui.py` (10 gerçek Qt), `node checks/test_preferences_model.js`
+geçti. 15 test geçici HOME/XDG ve kontrollü komutlar kullanır. Qt testlerinden üçü
+üretim Python storage helper'ı ile saf modelin JSON alışverişini çalıştırır;
+QuickShell Process modülünü instantiate etmez. Yeni panel/JS network import'u,
+30 QML bytecode, 105 native binding + DesktopEntry categories/id kaynağı denetlendi.
+Önceki launcher/Alt+Tab/OSD, 12 update/restore ve 6 Alt/Tab geçiş testi de geçti.
+
+Hedef oturumda `bash update.sh --check && bash update.sh` sonrasında:
+
+1. Ses/kontrol panelindeki dişliden Preferences aç; font/saydamlık/motion ayarlarını
+   değiştir. Menü/OSD/bar/Alt+Tab okunaklı kalmalı; diğer paneller de tercihi almalı.
+2. Bar floating/tarih/tray, yan panel ortalama ve OSD üst/alt seçeneklerini dene.
+   Native bar reserve ve OSD yerleşimini gerçek monitör/ölçekte kontrol et.
+3. Kapat/aç ve QuickShell'i `bash ~/.config/desktop-style/scripts/start.sh` ile yeniden
+   başlat; tercihler korunmalı. Normal update ve rollback sonrası da dosya kalmalı.
+4. Kurulu bir terminal seç; Super+Q ve Terminal=true uygulama aynı terminali açmalı.
+   Dosya yöneticisini seçip Super+E'yi kontrol et; Dolphin seçiminde temalı desktop
+   girdisi korunmalı. Özel Q/E bağı değiştirilmişse o komut korunmalıdır.
+5. Tanılamada gerçek sürüm/path görünmeli. Reset önce onay istemeli; eski dosya
+   preferences-before-reset-*.json olarak kalmalı. Preview bunu diskte yapmaz.
+
+Bozuk dosya/kayıt hatası/korumalı alanlar otomatik fixture ile kontrol edildi;
+canlı kullanıcı dosyasını sırf test için bozmak gerekmez. Gerçek Process, uygulama
+başlatma ve restart kabulü raporlanmadan PT-012 kapanmaz.
+
+17 Ekim PT-011 normal kullanım kullanıcı onayı kaydedildi. Bu, her clipboard alt
+testinin tek tek bildirildiği anlamına gelmez; önceki ortam sınırları korunur.
+
 ## Kalan eski checks kaynakları
 
 `checks/` hazırlama oturumunun test kaynaklarıdır. Bir bölümü çalışma alanında

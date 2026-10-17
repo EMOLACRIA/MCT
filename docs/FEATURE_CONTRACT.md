@@ -19,8 +19,8 @@ uygulanır. Yeni tema kabulünde her satır denetlenir.
 | Ses/parlaklık tuşları | Gerçek cihazı değiştirir, ölçülen değeri OSD'de gösterir; Dunst bildirimine dönmez. |
 | Esc | Açık shell panelini veya seçimi iptal eder. |
 
-Ek ayarlar ekranının kısayolu henüz seçilmedi. Mevcut kişisel kısayollar keyfi
-şekilde sahiplenilmez. SDDM giriş ekranı ve kilit yüzeyi farklı yaşam döngüleridir.
+Ayarlar kontrol panelindeki dişliden açılır; yeni global kısayol yoktur. Mevcut
+kişisel kısayollar keyfi şekilde sahiplenilmez. SDDM giriş ekranı ve kilit yüzeyi farklı yaşam döngüleridir.
 
 ## Her temanın karşılayacağı yüzeyler
 
@@ -63,7 +63,8 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   eval/Function, shell, dosya veya fonksiyon çağrısı çalıştırmaz. En çok 512 karakter,
   256 token ve 32 iç içe ifade. `=` öneki açık hesaplama niyetini belirtir; uygulama
   adları (ör. `1password`) arama olarak kalır. Birim dönüşümü henüz uygulanmadı.
-- 2.4.0 kaynakta uygulanmıştır; gerçek Wayland panosu için kullanıcı kabulü bekliyor.
+- 2.4.0 normal kullanım 17 Ekim kullanıcı tarafından onaylandı; her alt pano testi
+  tek tek raporlanmış sayılmaz.
 
 ## Pencere seçimi
 
@@ -75,6 +76,26 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   shell paneli açılırsa iptal edilir. Seçim pencerenin kendi çalışma alanına odaklar.
 - Önizleme isteğe bağlı tek karedir; kapalıyken yakalama yoktur. Yakalama eksikliği
   seçim/iptal işlevini değiştirmez. Mevcut kişisel Alt/Tab bağları korunur.
+
+## Ortak ayarlar
+
+- 2.5.0'da kaynakta uygulanmıştır; native oturum kabulü bekliyor. Kontrol panelinin
+  dişlisi açar, Esc kapatır; UiState içinde diğer panellerle tek örnektir.
+- Shell font ölçeği %90–120, hareketi azaltma, ana yüzey alpha %75–100. Metin alpha'sı
+  azaltılmaz. Varsayılanlar %100 yazı, hareket açık, %96 yüzeydir.
+- Floating bar, tarih ve tray görünürlüğü; yan panel ortalama; üst/alt OSD. Varsayılan
+  yerleşim korunur. Bunlar monitör çözünürlüğü/ölçeği/GPU/VRR ayarı değildir.
+- Kurulu Kitty/Alacritty/Foot seçimi Super+Q ve terminal isteyen launcher girdilerinde
+  ortaktır. Super+E seçili FileManager desktop girdisini GIO ile açar. Açıkça adıyla
+  aranan uygulama kendi girdisini açar; OS MIME varsayılanları değiştirilmez.
+- Stok Q/E bağları yönlendirilir; kullanıcıya özel farklı bağ/komut korunur.
+- Tercihler tema payload'ı dışındaki sürümlü JSON'dadır. Güncelleme, tema revizyonu
+  rollback'i ve full restore dosyayı silmez. Kaydetme başarısızsa aktif değer korunur.
+- Hatalı değerler açıklanır; bozuk dosyaya otomatik yazılmaz. Reset ikinci onay ister
+  ve eski dosyayı saklar. Varsayılan uygulama yardımcıları bozuk JSON'da varsayılana
+  döner; temel terminal/dosya yöneticisi erişimi kalır.
+- Preview yalnız bellektir. Ayarı yeniden yükleme ve salt okunur sürüm/path tanılaması
+  vardır. Harici uygulama, Hyprlock ve SDDM yazı/palet ayarları ayrı adaptörlerdir.
 
 ## Panel ve ayar davranışı
 

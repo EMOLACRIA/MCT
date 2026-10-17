@@ -1,7 +1,13 @@
 pragma Singleton
 import QtQuick
+import "../logic/Preferences.js" as Preferences
 QtObject {
-    readonly property color background: "#f5191a18"
+    property var preferences:Preferences.defaults()
+    readonly property real fontScale:preferences.fontScale
+    readonly property bool reduceMotion:preferences.reduceMotion
+    function fontSize(pixels) {return Math.max(8,Math.round(pixels*fontScale));}
+    function duration(milliseconds) {return reduceMotion ? 0 : milliseconds;}
+    readonly property color background:Qt.rgba(25/255,26/255,24/255,preferences.surfaceOpacity)
     readonly property color raised: "#282923"
     readonly property color ink: "#d8d3c5"
     readonly property color muted: "#96988c"

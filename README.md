@@ -5,8 +5,8 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.4.0 geliştirme sürümü. Alt+Tab normal kullanımı onaylandı; launcher hesaplama uygulandı, hedef oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
-Ortak ayarlar ekranı sıradaki iş; tema değiştirici M4 sonrasında.
+**Durum:** 2.5.0 geliştirme sürümü. Alt+Tab ve hesaplamalı launcher normal kullanımı onaylandı. Ortak ayarlar uygulandı; hedef oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+Sırada M3 ortak/görsel denetim; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
 
@@ -25,6 +25,22 @@ Ortak ayarlar ekranı sıradaki iş; tema değiştirici M4 sonrasında.
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
 
+## 2.5.0 — Ortak ayarlar
+
+Bardaki ses düğmesi → kontrol panelinin üstündeki **dişli** → Preferences.
+Shell yazı ölçeği, hareketi azaltma, yüzey saydamlığı, floating bar, tarih/tray,
+yan panellerin ortalanması ve OSD üst/alt konumu buradan değişir.
+Terminal (Super+Q ve terminal isteyen uygulamalar) ile dosya yöneticisi (Super+E)
+aynı kalıcı tercih kaynağını kullanır. Özel kullanıcı kısayolları korunur.
+
+Tercihler tema dosyalarından ayrı saklanır ve güncelleme/rollback'te korunur.
+Kaydetme hatası görünür; reset önce eski dosyayı saklar. Preview'de yapılanlar
+bellekte kalır. [Ayarlar rehberi](docs/SETTINGS.md) aralıkları ve sınırları açıklar.
+
+15 Python ve 10 gerçek Qt ayar testi, mevcut Alt+Tab/launcher/OSD/update kontrolleri,
+30 QML bytecode ve 105 native binding karşılaştırması geçti. Gerçek QuickShell
+restart/uygulama açma kabulü hedef cihazda bekliyor.
+
 ## 2.4.0 — Launcher içinde hesaplama
 
 Super+R'de doğrudan `(12+3)*4`, `1,5+2.25`, `200*10%` veya `2^3` yaz.
@@ -39,7 +55,7 @@ Birim dönüşümü henüz yoktur. Pano için ek paket gerekmez.
 
 Node parser kontrolleri, 7 gerçek Qt etkileşim testi, network JS import ve mevcut
 Alt+Tab/OSD/update regresyonları geçti. Native Wayland panosuna başka uygulamada
-**yapıştırma kullanıcıda doğrulanmalı**. [Doğrulama](docs/VALIDATION.md#pt-011-launcher-hesaplama-kontrolü) ·
+**yapıştırma burada denenmedi**. 17 Ekim kullanıcı normal kullanımın çalıştığını onayladı; PR #6 ana dala birleştirildi. [Doğrulama](docs/VALIDATION.md#pt-011-launcher-hesaplama-kontrolü) ·
 [ADR-0007](docs/decisions/0007-launcher-calculator.md).
 
 ```bash

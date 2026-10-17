@@ -65,7 +65,7 @@ canlı video zorunlu kabul ölçütü değildir. [Karar](docs/decisions/0006-win
 
 ### PT-011 — Launcher hesaplama
 
-**2.4.0: uygulandı / hedef oturum kabulü bekliyor.** Ortak parser, karma sonuç
+**2.4.0: 17 Ekim normal kullanım kullanıcı tarafından onaylandı.** Ortak parser, karma sonuç
 listesi ve pano adaptörü; Node, 7 gerçek Qt etkileşimi ve network JS import
 kontrolleri geçti. Yüzde `/100`, kopyalanan metin 12 anlamlı basamaktır.
 [Karar](docs/decisions/0007-launcher-calculator.md).
@@ -79,6 +79,11 @@ kontrolleri geçti. Yüzde `/100`, kopyalanan metin 12 anlamlı basamaktır.
   kabulünden ayrı karar verilir. Dosya/emoji/web araması şu an taahhüt değildir.
 
 ### PT-012 — Ortak ayarlar ekranı
+
+**2.5.0: uygulandı / hedef oturum kabulü bekliyor.** Görünüm/bar/panel ve shell
+varsayılan uygulamaları; ayrı sürümlü JSON, doğrulama, atomik kayıt, yedekli reset
+ve tanılama. 15 Python + 10 Qt testi geçti. [Rehber](docs/SETTINGS.md) ·
+[Karar](docs/decisions/0008-user-preferences.md). Henüz tema değiştirici yoktur.
 
 - Yazı ölçeği, hareketi azaltma/animasyon, saydamlık, bar ve panel tercihleri.
 - Varsayılan uygulamalar: terminal ve dosya yöneticisi dahil tek ortak tanım.

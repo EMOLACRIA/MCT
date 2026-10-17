@@ -5,6 +5,9 @@ from pathlib import Path
 import shutil
 import sys
 
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from preferences import effective as read
+
 DESKTOP_ID = 'org.kde.dolphin.desktop'
 
 
@@ -19,8 +22,13 @@ def data_directories(env):
 
 def launch_command(arguments, env=None):
     env = os.environ if env is None else env
+    desktop_id=read(env)["fileManager"]
     for directory in data_directories(env):
-        desktop = directory / 'applications' / DESKTOP_ID
+        applications=directory/'applications'
+        desktop=applications/desktop_id
+        if not desktop.is_file():
+            # Desktop IDs flatten subdirectories with '-' (the XDG desktop-entry rule).
+            desktop=next((p for p in sorted(applications.rglob('*.desktop')) if '-'.join(p.relative_to(applications).parts)==desktop_id),desktop)
         if desktop.is_file():
             gio = shutil.which('gio', path=env.get('PATH'))
             if not gio:
@@ -28,6 +36,7 @@ def launch_command(arguments, env=None):
             # Let GIO handle Exec field codes, quoting and the entry's environment.
             # Do not fall back to a plain command when a configured entry fails.
             return [gio, 'launch', str(desktop), *arguments]
+    if desktop_id!=DESKTOP_ID:raise RuntimeError('Selected file manager desktop entry was not found: '+desktop_id)
     dolphin = shutil.which('dolphin', path=env.get('PATH'))
     if not dolphin:
         raise RuntimeError('Dolphin and its desktop entry were not found.')
@@ -38,7 +47,7 @@ def main(arguments):
     try:
         command = launch_command(arguments)
         os.execvpe(command[0], command, os.environ)
-    except (OSError, RuntimeError) as exc:
+    except (OSError, RuntimeError, ValueError) as exc:
         print('File manager: ' + str(exc), file=sys.stderr)
         return 1
 

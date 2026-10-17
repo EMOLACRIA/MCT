@@ -51,7 +51,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-Length', str(len(data)))
         self.end_headers()
-        self.wfile.write(data)
+        try:self.wfile.write(data)
+        except (BrokenPipeError,ConnectionResetError):pass # Qt can cancel pending asset reads during teardown.
 
 server = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
 threading.Thread(target=server.serve_forever, daemon=True).start()
@@ -108,7 +109,10 @@ def verify_fixed(component):
             e=QQmlExpression(QQmlEngine.contextForObject(launcher),launcher,'calculation.text')
             value=e.evaluate()[0];assert not e.hasError(),e.error().toString()
             assert value=='14',value
-            print('PASS: complete qmldir, shared scene and relative Calculator.js load through network directory imports.',flush=True)
+            e=QQmlExpression(context,scene,'uiState.toggle("settings","preview")');e.evaluate()
+            assert not e.hasError(),e.error().toString()
+            assert scene.findChild(QObject,'settingsPanel') is not None
+            print('PASS: complete qmldir, scene, Calculator.js and preference panel load through network directory imports.',flush=True)
             app.quit()
         except Exception as exc:
             print('FAIL:',repr(exc),flush=True);app.exit(1)
