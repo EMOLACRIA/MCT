@@ -125,3 +125,6 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - Kullanıcı ayarı, tema varsayılanından ayrıdır. Tema değişiminde kısayollar,
   uygulama tercihleri ve erişilebilirlik tercihleri sıfırlanmaz.
 - Başarısız tema uygulaması bir önceki geçerli duruma döner. Bu gelecek M5 kabulüdür.
+- M5 tema seçimi her temanın gerçek ekran görüntüsünü önizleme kartında gösterir.
+  Bu gereksinim 17 Ekim kullanıcı onayıdır; henüz uygulanmadı. Kart dizilimi ve
+  menünün açıldığı yer kullanıcıyla ayrıca seçilir.

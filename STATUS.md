@@ -17,6 +17,12 @@ Ortak ayarlar ekranı ve kalıcı tercihler uygulandı; terminal/Dolphin açıl�
 yeniden başlatmada kalıcılık kabulü bekliyor.
 Tema değiştirici **yoktur**.
 Menünün yeri kullanıcı kararını bekler; Preferences konumu kabul edilmedi.
+17 Ekim yeni karar: kullanıcı ortak davranış + görsel paket + uygulama adaptörleri
+yaklaşımını ve gerçek ekran görüntülü tema önizleme kartlarını onayladı. Bu,
+seçicinin uygulanması veya ikinci temanın başlaması değildir. Son mesaj 2.6.2
+native giriş/kalıcılık/restore testlerinin yapıldığına dair sonuç içermiyor;
+mevcut kabul durumları korunur. Yalnız gereksinim belgeleri güncellendi;
+yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime değişmedi.
 
 ## 2.6.2 — Son cila ve kontroller
 

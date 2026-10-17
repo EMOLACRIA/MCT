@@ -29,9 +29,12 @@ harici installer çalıştırılmadı, kod/görsel kopyalanmadı.
 | Bütün dotfiles klasörünü profil olarak değiştirmek | Sınırsız fark yaratır | Komut/kısayol/özellik ve kişisel ayarların ayrışmasını önlemek zorlaşır. |
 | Ortak davranış + ayrı görsel paket + uygulama adaptörleri | Aynı işlevle çok farklı yüzeyler; mevcut sözleşmeyle uyumlu | Zorunlu yüzey doğrulaması, geçiş ve geri dönüş açıkça tasarlanmalı. |
 
-**Önerimiz üçüncü yaklaşım.** Bu, kullanıcı tarafından onaylanmış yeni bir dosya
-formatı/mimari kararı değildir. Mevcut Theme/SurfaceLayout ve ortak state'ler
-başlangıç sağlar; şu an tam tema motoru yoktur.
+**Üçüncü yaklaşım 17 Ekim kullanıcı tarafından onaylandı:** ortak davranış,
+ayrı görsel paketler ve uygulama adaptörleri. Kullanıcı ayrıca tema başına
+fotoğraflı önizleme istedi; gerçek tema ekran görüntülü kart gereksinimi kabul
+edildi. Bu onay somut dosya formatı/loader/API veya runtime değişimi seçmez.
+Mevcut Theme/SurfaceLayout ve ortak state'ler başlangıç sağlar; tam tema motoru
+ve seçici henüz yoktur.
 
 M4 sonrasında tasarımda şu sınırlar değerlendirilmeli:
 
@@ -49,8 +52,8 @@ M4 sonrasında tasarımda şu sınırlar değerlendirilmeli:
    ayrıca değerlendirilebilir; Plague Tale'in bilinçli pirinç/taş paletini her
    wallpaper değişiminde yeniden üretmek şu an bir ihtiyaç değil.
 
-Kart grid'i, carousel veya liste seçimi ile menünün **nereden açılacağı** ayrı
-kararlardır. Araştırma bunlardan birini kullanıcı adına seçmez. Sonraki adım
+Fotoğraflı kartların grid/carousel dizilimi ile menünün **nereden açılacağı** ayrı
+kararlardır ve açık kalır. Sonraki adım
 Plague Tale'in [kalan native kabulünü](VALIDATION.md#hedef-oturumda-kalan-kabul)
 tamamlamak; ardından tek mevcut paketle güvenli geçiş modelini tasarlamaktır.
 

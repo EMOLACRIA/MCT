@@ -144,7 +144,11 @@ kararlaştırılmadı. 17 Ekim talebiyle M4 cila kontrollerinden sonra
 [tema değiştirme yöntemleri araştırıldı](docs/THEME_SWITCHING_RESEARCH.md);
 bu, M5 arayüzünün başlaması değildir.
 
-M4 sonrasında: önizleme kartları, tema metadata/manifest'i, uyumluluk ve zorunlu
+17 Ekim kullanıcı onayı: ortak davranış + ayrı görsel paket + uygulama adaptörleri;
+her tema için gerçek ekran görüntülü önizleme kartı. Kartların dizilimi ve menünün
+konumu açık kalır. Bu onay M4 native testlerinin yapıldığı anlamına gelmez.
+
+M4 sonrasında: fotoğraflı önizleme kartları, tema metadata/manifest'i, uyumluluk ve zorunlu
 yüzey kontrolü, uygulama/geri alma, tercihleri koruma, gerekli restart bildirimleri.
 Önce tek mevcut Plague Tale paketiyle akış tamamlanır. Yarım tema etkinleştirilmez.
 
