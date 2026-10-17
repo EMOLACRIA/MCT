@@ -1,9 +1,18 @@
 import QtQuick
+import "ui"
 Item {
     id:root
     objectName:"demoContext"
     visible:false
     property var hardware:({cpuName:"Intel Core Ultra · Processor",cpuUsage:18.4,cpuTemp:54,memoryUsed:11.2,memoryTotal:32,memoryPercent:35,diskUsed:284,diskTotal:953,diskPercent:30,uptime:4.2,temperatures:[{name:"coretemp · Package",value:54,unit:"°C"},{name:"coretemp · Core 0",value:48,unit:"°C"},{name:"nvme · Composite",value:39,unit:"°C"}],fans:[{name:"CPU fan",value:1800,unit:"RPM"}],gpus:[{name:"NVIDIA GeForce RTX",state:"Sleeping"},{name:"Intel Graphics",state:"Active · 8% load"}],error:""})
+    property alias preferences:preferenceState
+    PreferencesState {
+        id:preferenceState;ephemeral:true
+        onWriteRequested:(action,candidate)=>accept({ok:true,action:action,values:candidate})
+    }
+    property var fileManagerChoices:[{id:"org.kde.dolphin.desktop",name:"Dolphin"},{id:"thunar.desktop",name:"Thunar"}]
+    function reloadPreferences() {}
+    function diagnosePreferences() {preferences.diagnostics="Preview · no native diagnostics run";}
     property bool previewMode:true
     property string clock:"17:55"
     property string date:"WEDNESDAY · 14 OCTOBER"

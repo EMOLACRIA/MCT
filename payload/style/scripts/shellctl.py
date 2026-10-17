@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 def toggle(panel):
-    if panel not in {'launcher','power','controls','notifications','media','hardware'}:
+    if panel not in {'launcher','power','controls','notifications','media','hardware','settings'}:
         raise RuntimeError('Unknown panel.')
     exe=shutil.which('quickshell') or shutil.which('qs')
     if not exe:
@@ -17,6 +17,6 @@ def toggle(panel):
         raise RuntimeError('Desktop shell is not ready. Run: bash ~/.config/desktop-style/scripts/start.sh')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('panel',choices=['launcher','power','controls','notifications','media','hardware']);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('panel',choices=['launcher','power','controls','notifications','media','hardware','settings']);a=p.parse_args()
     try:toggle(a.panel)
     except Exception as e:print(str(e),file=sys.stderr);sys.exit(1)

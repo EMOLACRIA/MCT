@@ -17,3 +17,7 @@ UiState 1.0 UiState.qml
 Hardware 1.0 Hardware.qml
 WindowSwitcherState 1.0 WindowSwitcherState.qml
 WindowSwitcher 1.0 WindowSwitcher.qml
+PreferencesState 1.0 PreferencesState.qml
+PreferenceSlider 1.0 PreferenceSlider.qml
+PreferenceChoice 1.0 PreferenceChoice.qml
+Settings 1.0 Settings.qml

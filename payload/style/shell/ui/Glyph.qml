@@ -18,7 +18,9 @@ Canvas {
         c.lineWidth = 1.45; c.lineCap = "round"; c.lineJoin = "round";
         function line(x,y,a,b) { c.beginPath(); c.moveTo(x,y); c.lineTo(a,b); c.stroke(); }
         function arc(x,y,r,a,b) { c.beginPath(); c.arc(x,y,r,a,b); c.stroke(); }
-        if (symbol === "calculator") {c.strokeRect(5,2,14,20);c.strokeRect(8,5,8,4);line(8,13,10,13);line(14,13,16,13);line(8,18,10,18);line(14,18,16,18);}
+        if (symbol === "chevron") {line(6,9,12,15);line(12,15,18,9);}
+        else if (symbol === "settings") {arc(12,12,4,0,Math.PI*2);for(let i=0;i<8;i++){let a=i*Math.PI/4;line(12+7*Math.cos(a),12+7*Math.sin(a),12+10*Math.cos(a),12+10*Math.sin(a));}}
+        else if (symbol === "calculator") {c.strokeRect(5,2,14,20);c.strokeRect(8,5,8,4);line(8,13,10,13);line(14,13,16,13);line(8,18,10,18);line(14,18,16,18);}
         else if (symbol === "windows") {c.strokeRect(3,7,14,13);line(7,3,21,3);line(21,3,21,16);}
         else if (symbol === "search") { arc(10,10,6,0,Math.PI*2); line(15,15,21,21); }
         else if (symbol === "power") { arc(12,13,8,-Math.PI*.32,Math.PI*1.32); line(12,2,12,12); }

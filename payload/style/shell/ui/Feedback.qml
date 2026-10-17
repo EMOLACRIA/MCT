@@ -13,8 +13,8 @@ OrnamentFrame {
         enabled:uiState.feedbackKind!=="brightness"
         onClicked:uiState.feedbackKind==="microphone" ? backend.toggleMicrophone() : backend.toggleMute()
     }
-    Text { x:64; y:19; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:20; text:uiState.feedbackKind==="brightness" ? "Brightness" : uiState.feedbackKind==="microphone" ? "Microphone" : "Volume" }
-    Text { anchors.right:parent.right; anchors.rightMargin:24; y:24; color:uiState.feedbackMuted ? Theme.danger : Theme.brass; font.pixelSize:12; text:uiState.feedbackMuted ? "MUTED" : Math.round(slider.value)+"%" }
+    Text { x:64; y:19; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(20); text:uiState.feedbackKind==="brightness" ? "Brightness" : uiState.feedbackKind==="microphone" ? "Microphone" : "Volume" }
+    Text { anchors.right:parent.right; anchors.rightMargin:24; y:24; color:uiState.feedbackMuted ? Theme.danger : Theme.brass; font.pixelSize:Theme.fontSize(12); text:uiState.feedbackMuted ? "MUTED" : Math.round(slider.value)+"%" }
     function commit() {
         const v=Math.round(slider.value);
         if(uiState.feedbackKind==="brightness")backend.setBrightness(v);
@@ -39,7 +39,7 @@ OrnamentFrame {
             x:slider.leftPadding+slider.visualPosition*(slider.availableWidth-width)
             y:slider.topPadding+slider.availableHeight/2-height/2
             width:16; height:24
-            Rectangle { anchors.centerIn:parent; width:26; height:26; radius:13; color:Theme.brass; opacity:slider.hovered || slider.pressed ? .16 : 0; Behavior on opacity {NumberAnimation {duration:110}} }
+            Rectangle { anchors.centerIn:parent; width:26; height:26; radius:13; color:Theme.brass; opacity:slider.hovered || slider.pressed ? .16 : 0; Behavior on opacity {NumberAnimation {duration:Theme.duration(110)}} }
             Rectangle { anchors.centerIn:parent; width:slider.pressed ? 12 : 8; height:slider.pressed ? 12 : 8; radius:6; color:slider.hovered || slider.pressed ? Theme.ink : Theme.brass; border.color:Theme.brass }
         }
         Accessible.name:root.uiState.feedbackKind

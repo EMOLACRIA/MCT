@@ -23,7 +23,7 @@ def js(code):
  e=QQmlExpression(ctx,root,code);value=e.evaluate();assert not e.hasError(),e.error().toString();return value[0]
 def point(slider,fraction):
  return slider.mapToScene(QPointF(8+(slider.width()-16)*fraction,slider.height()/2)).toPoint()
-for panel in ['', 'media','controls','power','hardware']:
+for panel in ['', 'media','controls','power','hardware','launcher','settings']:
  js('stateUnderTest.close()')
  if panel:js('stateUnderTest.toggle("'+panel+'","preview")')
  QTest.qWait(50)

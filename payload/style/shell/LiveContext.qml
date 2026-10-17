@@ -11,6 +11,11 @@ import "ui"
 
 Scope {
     id:root
+    PreferencesStore {id:preferenceStore}
+    property alias preferences:preferenceStore.state
+    function reloadPreferences() {preferenceStore.run("read",null);}
+    function diagnosePreferences() {preferenceStore.run("diagnose",null);}
+    readonly property var fileManagerChoices:DesktopEntries.applications.values.filter(e=>e.categories.indexOf("FileManager")>=0 || e.id.replace(/\.desktop$/,"")==="org.kde.dolphin").map(e=>({id:e.id.endsWith(".desktop") ? e.id : e.id+".desktop",name:e.name}))
     property bool hardwareMonitoring:false
     property var hardware:({})
     onHardwareMonitoringChanged:if(hardwareMonitoring && !hardwareProcess.running)hardwareProcess.running=true
@@ -135,7 +140,7 @@ Scope {
     function copyText(text) {Quickshell.clipboardText=text;}
     function launchApplication(id) {
         const entry=DesktopEntries.byId(id);if(!entry)return;
-        if(entry.runInTerminal)Quickshell.execDetached({command:["kitty","--"].concat(Array.from(entry.command)),workingDirectory:entry.workingDirectory || Quickshell.env("HOME")});
+        if(entry.runInTerminal)Quickshell.execDetached(["python3",Quickshell.shellPath("../scripts/terminal.py"),"--cwd",entry.workingDirectory || Quickshell.env("HOME"),"--"].concat(Array.from(entry.command)));
         else entry.execute();
     }
     function trayClick(index,button,window,x,y) {

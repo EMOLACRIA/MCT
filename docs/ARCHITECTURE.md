@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.4.0
+## Mevcut 2.5.0
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -40,6 +40,18 @@ hazır hesap sonucunu ilk satıra ekler. Eylem `backend.copyText` üzerinden gid
 LiveContext QuickShell 0.3.1'in Qt panosuna bağlı writable `clipboardText` alanını,
 DemoContext yalnız test değeri kullanır. Yeni clipboard paketi/süreç veya global
 kısayol eklenmez. [ADR-0007](decisions/0007-launcher-calculator.md).
+
+`logic/Preferences.js` tek şema/default kaynağıdır. İşaretli strict JSON bloğunu
+Python `scripts/preferences.py` da okur; JS ve Python doğrulayıcıları aynı kuralları
+uygular. `PreferencesState` saf Qt durum/istek/cevap modeli; `PreferencesStore`
+native Process adaptörü; `ui/Settings` görünümüdür. DemoContext ayrı bellek modeli
+kullanır. Native değerler başarılı atomik kayıt cevabından sonra etkinleşir.
+
+Tercihler `$XDG_CONFIG_HOME/mct/preferences.json` içindedir; varsayılan config kökü
+`~/.config`. Dosya payload/snapshot dışında kalır. Terminal ve dosya yöneticisi
+script'leri aynı dosyayı okur; stok Q/E bağları ortak yardımcıya yönelir. Theme
+fontSize/duration/surface alpha'yı ve bar/panel konumunu bu modelden alır. Yeni
+tema motoru veya global kısayol eklenmez. [ADR-0008](decisions/0008-user-preferences.md).
 
 ## Hedef ayrım
 

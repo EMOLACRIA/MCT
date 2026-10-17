@@ -1,6 +1,6 @@
 # ADR-0007 — Launcher aritmetiği ve sonuç kopyalama
 
-Tarih: 2026-10-17. Durum: uygulandı; hedef oturum kabulü bekliyor.
+Tarih: 2026-10-17. Durum: normal kullanım kullanıcı tarafından onaylandı.
 
 ## Karar
 
@@ -49,3 +49,7 @@ header/uygulama karşılaştırması ve Node adaptör testi geçti. 25 QML bytec
 Native QuickShell Wayland panosundan başka uygulamaya yapıştırma bu ortamda
 doğrulanmadı. Qt fixture'ı ve UI'daki “Copied” metni bunun kanıtı değildir.
 Kullanıcı kabulü `../VALIDATION.md` içindedir.
+
+17 Ekim kullanıcı “Güzel çalışıyor devam edebilirsin” diyerek normal kullanımı
+onayladı. PR #6 ana dala birleştirildi. Her klavye/pano alt testi ayrıca raporlanmış
+sayılmaz; hazırlanma ortamında native Wayland panosu çalıştırılmadığı kaydı korunur.

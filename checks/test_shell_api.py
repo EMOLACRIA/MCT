@@ -116,3 +116,8 @@ clipboard_impl=(src/'core/qmlglobal.cpp').read_text()
 assert 'void QuickshellGlobal::setClipboardText(const QString& text)' in clipboard_impl and '->setText(text)' in clipboard_impl
 assert 'Quickshell.clipboardText=text' in (shell/'LiveContext.qml').read_text()
 print('PASS: writable QuickShell clipboardText routes to Qt clipboard; native Wayland focus remains a target-session check')
+
+entries=(src/'core/desktopentry.hpp').read_text()
+assert 'Q_PROPERTY(QVector<QString> categories' in entries
+assert 'Q_PROPERTY(QString id' in entries
+print('PASS: native DesktopEntry categories/id declarations used by file-manager choices')

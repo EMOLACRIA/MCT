@@ -35,6 +35,14 @@ def patch_file_manager(text):
     return re.sub(pattern, lambda match: match[1] + 'styleCommand("file-manager.sh")' + match[3], text)
 
 
+def patch_terminal(text):
+    standard='hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))'
+    if sum(line.strip()==standard for line in text.splitlines())!=1:return text
+    pattern=r'(?m)^(local terminal\s*=\s*)"kitty"(\s*(?:--[^\n]*)?)$'
+    if len(re.findall(pattern,text))!=1:return text
+    return re.sub(pattern,lambda match:match[1]+'styleCommand("terminal.sh")'+match[2],text)
+
+
 def patch_switcher_bindings(text):
     block=(m.PACKAGE/'switcher-bindings.lua').read_text().strip()
     pattern=r'-- desktop-style window switcher begin\n.*?-- desktop-style window switcher end'
@@ -69,7 +77,7 @@ def patch_bindings(text):
     if not any('styleCommand("'+name+'")' in lines[index] for name in ['applications.sh','hardware.sh']):
         raise RuntimeError('Custom Super+T binding needs adaptation. Nothing changed.')
     lines[index]=lines[index].replace('styleCommand("applications.sh")','styleCommand("hardware.sh")')
-    return patch_switcher_bindings(patch_file_manager(''.join(lines)))
+    return patch_switcher_bindings(patch_terminal(patch_file_manager(''.join(lines))))
 
 def lock_config(text):
     block='# desktop-style media begin\nsource = '+str(m.STYLE/'hyprlock/media.conf')+'\n# desktop-style media end'

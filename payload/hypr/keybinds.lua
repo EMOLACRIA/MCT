@@ -4,7 +4,7 @@ local styleScripts = os.getenv("HOME") .. "/.config/desktop-style/scripts/"
 local function styleCommand(name)
     return "bash \"" .. styleScripts .. name .. "\""
 end
-local terminal = "kitty"
+local terminal = styleCommand("terminal.sh")
 local fileManager = styleCommand("file-manager.sh")
 
 -- desktop-style window switcher begin

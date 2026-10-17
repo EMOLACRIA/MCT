@@ -23,7 +23,7 @@ OrnamentFrame {
                 Accessible.name:"Workspace " + modelData.id
                 background: Rectangle { color:workspaceButton.chosen ? "#35362d" : workspaceButton.hovered ? Theme.raised : "transparent"; border.color:workspaceButton.chosen ? Theme.line : "transparent" }
                 contentItem: Item {
-                    Text { anchors.centerIn:parent; anchors.verticalCenterOffset:-2; text:workspaceButton.modelData.id; color:workspaceButton.chosen ? Theme.ink : workspaceButton.modelData.count ? Theme.brass : Theme.muted; font.pixelSize:12 }
+                    Text { anchors.centerIn:parent; anchors.verticalCenterOffset:-2; text:workspaceButton.modelData.id; color:workspaceButton.chosen ? Theme.ink : workspaceButton.modelData.count ? Theme.brass : Theme.muted; font.pixelSize:Theme.fontSize(12)}
                     Rectangle { anchors.bottom:parent.bottom; anchors.bottomMargin:2; anchors.horizontalCenter:parent.horizontalCenter; width:workspaceButton.chosen ? 14 : 3; height:workspaceButton.chosen ? 2 : 3; radius:1; visible:workspaceButton.chosen || workspaceButton.modelData.count > 0; color:Theme.brass }
                 }
                 onClicked:backend.activateWorkspace(modelData.id)
@@ -33,13 +33,13 @@ OrnamentFrame {
     }
     Column {
         anchors.centerIn:parent; spacing:1
-        Text { anchors.horizontalCenter:parent.horizontalCenter; text:backend.clock; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:22 }
-        Text { anchors.horizontalCenter:parent.horizontalCenter; text:root.width<1100 ? backend.date.split("·").slice(-1).join("·").trim() : backend.date; color:Theme.brass; font.pixelSize:9; font.letterSpacing:1.2 }
+        Text { anchors.horizontalCenter:parent.horizontalCenter; text:backend.clock; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(22)}
+        Text { objectName:"barDate";anchors.horizontalCenter:parent.horizontalCenter; visible:Theme.preferences.barShowDate; text:root.width<1100 ? backend.date.split("·").slice(-1).join("·").trim() : backend.date; color:Theme.brass; font.pixelSize:Theme.fontSize(9); font.letterSpacing:1.2 }
     }
     Row {
         anchors.right:parent.right; anchors.rightMargin:14; anchors.verticalCenter:parent.verticalCenter; spacing:5
         Repeater {
-            model:backend.trayItems
+            model:Theme.preferences.barShowTray ? backend.trayItems : []
             delegate: Item {
                 id: trayIcon
                 required property var modelData

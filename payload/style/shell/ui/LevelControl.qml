@@ -10,8 +10,8 @@ ColumnLayout {
     signal commit(int percent)
     RowLayout {
         Glyph { symbol:root.symbol }
-        Text { text:root.label; color:Theme.ink; font.pixelSize:13; Layout.fillWidth:true }
-        Text { text:root.available ? Math.round(slider.value)+"%" : "Unavailable"; color:Theme.brass; font.pixelSize:12 }
+        Text { text:root.label; color:Theme.ink; font.pixelSize:Theme.fontSize(13); Layout.fillWidth:true }
+        Text { text:root.available ? Math.round(slider.value)+"%" : "Unavailable"; color:Theme.brass; font.pixelSize:Theme.fontSize(12)}
     }
     Slider {
         id:slider; Layout.fillWidth:true; from:0; to:100; stepSize:1

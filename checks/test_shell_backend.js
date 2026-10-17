@@ -77,4 +77,7 @@ const beforeInvalid=events.length;
 for(const id of ['0xdead','0xabc"})','bad',null])root.activateWindow(id);
 assert.strictEqual(events.length,beforeInvalid);
 root.windows=[];root.activateWindow('0xabc');assert.strictEqual(events.length,beforeInvalid);
-console.log('PASS: window activation/capture/refresh routing; notification millisecond/default/persistent timeouts, update deduplication, unread count, timer cleanup, archive/DND/actions/transient filtering, tray routing and Lua dispatch.');
+const terminalEntry={runInTerminal:true,workingDirectory:'/a folder',command:['printf','literal;no-shell']};
+DesktopEntries.byId=id=>id==='cli' ? terminalEntry : null;
+root.launchApplication('cli');assert.deepStrictEqual(events.pop(),['python3','../scripts/terminal.py','--cwd','/a folder','--','printf','literal;no-shell']);
+console.log('PASS: shared terminal application routing; window activation/capture/refresh routing; notification millisecond/default/persistent timeouts, update deduplication, unread count, timer cleanup, archive/DND/actions/transient filtering, tray routing and Lua dispatch.');
