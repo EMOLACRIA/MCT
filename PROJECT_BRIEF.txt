@@ -1,0 +1,74 @@
+PROJE HEDEFİ — PLAGUE TALE ÖNCE, ORTAK MASAÜSTÜ SONRA
+Karar tarihi: 2026-10-17 (Europe/Riga)
+Sahip: Emirhan / EMOLACRIA
+Çalışma adı: desktop-style. Nihai ürün adı henüz seçilmedi.
+
+BU DOSYANIN AMACI
+Yeni bir sohbet, model veya katkıcı projenin niyetini tahmin etmek zorunda
+kalmasın. Bu dosya ürün kapsamının kaynağıdır. Teknik gerçekler kaynak kodundan,
+ilerleme STATUS.md'den, yapılacaklar ROADMAP.md'den kontrol edilir.
+Bu belgeler hata ihtimalini azaltır; modelin hatasız olmasını garanti etmez.
+
+ANA HEDEF
+HyprCADE'den daha bütünlüklü, günlük kullanımda güvenilir, güçlü biçimde stilize
+bir Hyprland masaüstü geliştirmek. Önce A Plague Tale görsel kimliğini taşıyan
+tek tema tamamen bitirilecek. Ardından aynı işlevleri ve kullanım alışkanlıklarını
+koruyan, görsel açıdan birbirinden çok farklı tema paketleri hazırlanacak.
+
+DEĞİŞMEZ ÜRÜN KARARLARI
+1. A Plague Tale mevcut ilk temanın kesin seçilmiş referansıdır.
+2. Masaüstü panellerinde oyun adı, tema adı veya ürün logosu marka gibi
+   görünmeyecek. Gelecekte tema seçicinin seçenekleri adlandırması normaldir.
+3. Yeni temalar yalnızca palet değişimiyle sınırlı olmayacak. Çerçeve, şekil,
+   tipografi, ikon, malzeme hissi ve animasyon dili farklılaşabilir.
+4. Kısayollar, eylemler, hesaplama anlamı ve klavye gezinmesi temayla değişmez.
+   Her temada aynı özelliğin bulunması ortak özellik sözleşmesiyle denetlenir.
+5. Önce mevcut tema tamamlanır. İkinci tema veya tema değiştirici arayüzü,
+   Plague Tale tamamlanma kapısından önce geliştirilmeye başlanmaz.
+6. Ortak davranış ve görsel katman ayrımı ilk tema içinde kurulabilir; bu,
+   yeni bir tema geliştirmek anlamına gelmez.
+7. Okunabilirlik süsten önce gelir. Dolphin'in normal ve seçili yazıları beyazdır.
+8. Açılan paneller kısayola tekrar basılınca kapanır; üst üste kopyalar açılmaz.
+9. Kullanıcının monitör, ölçek, GPU, VRR ve kişisel kısayol ayarları korunur.
+
+KABUL EDİLEN YAKIN ÖZELLİKLER
+- Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.
+  Uygulama/başlık ve hangi çalışma alanında bulunduğu açıkça görünür.
+  Canlı önizleme desteklenirse eklenir; yokluğu pencere seçimini engellemez.
+- Launcher: uygulama aramaya ek olarak hesaplama; sonuç kopyalama.
+  Birim dönüşümü yararlı bir sonraki adım; kapsamı ayrıca doğrulanır.
+- Ortak ayarlar ekranı: font ölçeği, animasyon, saydamlık, bar/panel tercihleri,
+  varsayılan uygulamalar ve tanılama. Kullanıcı tercihleri güncellemede korunur.
+- Mevcut bütün bileşenlerin Plague Tale görsel dilinde tamamlanması ve gerçek
+  kullanıcının oturumunda kontrol edilmesi.
+
+ŞİMDİLİK KAPSAM DIŞI
+- Pano geçmişi ve yeni ekran yakalama/kayıt paneli: kullanıcı şu an istemiyor.
+  Mevcut ekran görüntüsü kısayolunu korumak farklı bir konudur.
+- Oyun kütüphanesi paneli: ertelendi, kabul edilmiş zorunlu özellik değil.
+- Yeni yapay zekâ sohbeti, hava durumu, not/takvim gibi ek paneller: onaylanmadı.
+- Vitreus veya Caelestia kurmak, onların installer'larını çalıştırmak,
+  mevcut masaüstünün runtime'ını değiştirmek: istenmedi.
+- Yeni dağıtımlar ve geniş sürüm desteği: ilk sürümün tamamlanma şartı değil.
+
+REFERANSLAR
+Vitreus: https://github.com/natepayn3/Vitreus
+Caelestia: https://github.com/caelestia-dots/shell
+Bu ikisi kullanıcının özellikle beğendiği referanslardır. İnceleme notları ve
+runtime/lisans farkları docs/INSPIRATION.md içindedir. Beğenilmesi bütün
+özelliklerinin bizim kapsamımıza kabul edildiği anlamına gelmez.
+
+HEDEF ORTAM (KULLANICININ PAYLAŞTIĞI SON VERİLER)
+CachyOS / Arch, Hyprland 0.56.2 Lua, QuickShell 0.3.1, Hyprlock 0.9.6.
+eDP-1: 2560x1600, 240 Hz, ölçek 1.6. Mantıksal çalışma alanı yaklaşık 1600x1000.
+Spotify: 1:1.2.96.518-2, yerel paket ve adblock başlatıcısı.
+Dolphin: 26.08.2-1.1. Qt6ct/Breeze ikon eklentisi ayrı uygulanır.
+Bunlar evrensel destek veya güncel paket sorgusu değildir; yeni log geldiğinde
+STATUS.md ile birlikte güncellenir.
+
+BİTTİ DEMEK İÇİN
+ROADMAP.md aşamaları ve docs/RELEASE_CHECKLIST.md koşulları karşılanmalı.
+Sadece önizlemenin güzel görünmesi, dosya testlerinin geçmesi veya özellik
+kodunun bulunması yeterli değil. Canlı oturum kontrolleri ve kullanıcının
+son görsel onayı kaydedilir. Açık Spotify/Dolphin sorunları kapanmadan ilk
+Plague Tale teması tamamlandı olarak işaretlenmez.

@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.log
+*.qslog
+*.zip
+*.tar.gz
+.env
+.env.*
+!.env.example
+.local-state/
+backups/
+revisions/

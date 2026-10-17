@@ -1,0 +1,9 @@
+{
+  "appearance.lua": "eced078c9bd6ad7fa3b27e4e9b62055b3347b7d7f6d2aeb378147853d91cd197",
+  "autostart.lua": "b7a52c8091e6aa12d6f2d933d9fba4fe514d3365c3ed9cfaf293e7a1d0a223cf",
+  "keybinds.lua": "ac9a1640956aefa8c51f57681467a3f718098fe0b7d47c895241b39510ac9638",
+  "misc.lua": "acd3e230ca73ecd032cfc0413c9b2c4f94ad44d2fce67278b4f772e1dacff9e6",
+  "hyprpaper.conf": "9badb3bea2b112dfb256a2fee10649c6e30b230cdf3c03a56d28d0e917a60b5e",
+  "hyprlock.conf": "64183be74ea137467de11b0c319f314e807098a3e814d53000ca9720d36314e8",
+  "hyprland.lua": "57498744d9b97049f7592c0c6ed252277cfb233a4554531b419a4e5c7fe3862a"
+}

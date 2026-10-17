@@ -1,0 +1,16 @@
+singleton Theme 1.0 Theme.qml
+ActionButton 1.0 ActionButton.qml
+Bar 1.0 Bar.qml
+Controls 1.0 Controls.qml
+Feedback 1.0 Feedback.qml
+Glyph 1.0 Glyph.qml
+Launcher 1.0 Launcher.qml
+LevelControl 1.0 LevelControl.qml
+Media 1.0 Media.qml
+Notifications 1.0 Notifications.qml
+OrnamentFrame 1.0 OrnamentFrame.qml
+Overlay 1.0 Overlay.qml
+Power 1.0 Power.qml
+Toast 1.0 Toast.qml
+UiState 1.0 UiState.qml
+Hardware 1.0 Hardware.qml

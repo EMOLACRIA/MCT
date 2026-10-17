@@ -1,0 +1,33 @@
+[global]
+    monitor = 0
+    follow = mouse
+    width = 340
+    origin = top-right
+    offset = 20x64
+    notification_limit = 4
+    font = sans-serif 10
+    padding = 14
+    horizontal_padding = 16
+    frame_width = 1
+    frame_color = "#9b8967"
+    separator_color = frame
+    corner_radius = 0
+    transparency = 0
+    format = "<b>%s</b>\n%b"
+    icon_position = off
+    show_age_threshold = 60
+    markup = full
+    word_wrap = yes
+[urgency_low]
+    background = "#191a18"
+    foreground = "#aaa89b"
+    timeout = 4
+[urgency_normal]
+    background = "#191a18"
+    foreground = "#d8d3c5"
+    timeout = 6
+[urgency_critical]
+    background = "#23211c"
+    foreground = "#e3dccb"
+    frame_color = "#b47866"
+    timeout = 0

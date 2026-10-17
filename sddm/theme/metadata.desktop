@@ -1,0 +1,11 @@
+[SddmGreeterTheme]
+Name=Desktop
+Description=Dark stone and brass login screen
+Author=Local
+Version=1.3
+Type=sddm-theme
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=desktop-style
+Theme-API=2.0
+QtVersion=6

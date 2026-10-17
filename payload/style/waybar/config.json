@@ -1,0 +1,82 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 36,
+  "margin-top": 10,
+  "margin-left": 16,
+  "margin-right": 16,
+  "spacing": 0,
+  "modules-left": [
+    "custom/menu",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "clock",
+    "custom/date"
+  ],
+  "modules-right": [
+    "tray",
+    "pulseaudio",
+    "network",
+    "battery",
+    "custom/power"
+  ],
+  "custom/menu": {
+    "format": " ",
+    "tooltip-format": "Applications \u00b7 Super+R",
+    "on-click": "bash '@STYLE@/scripts/launcher.sh'"
+  },
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "persistent-workspaces": {
+      "*": 10
+    },
+    "all-outputs": false,
+    "on-click": "activate",
+    "sort-by-number": true
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "tooltip-format": "{:%A, %d %B %Y}"
+  },
+  "custom/date": {
+    "exec": "date '+%d %b'",
+    "interval": 60,
+    "tooltip": false
+  },
+  "pulseaudio": {
+    "format": "\u266a {volume}%",
+    "format-muted": "\u266a \u2014",
+    "on-click": "bash '@STYLE@/scripts/feedback.sh' volume mute",
+    "on-scroll-up": "bash '@STYLE@/scripts/feedback.sh' volume up 2",
+    "on-scroll-down": "bash '@STYLE@/scripts/feedback.sh' volume down 2",
+    "tooltip-format": "{desc}"
+  },
+  "network": {
+    "format-wifi": "\u2301",
+    "format-ethernet": "\u2194",
+    "format-disconnected": "\u00d7",
+    "tooltip-format-wifi": "{essid} \u00b7 {signalStrength}%",
+    "tooltip-format-ethernet": "{ifname}",
+    "tooltip-format-disconnected": "Offline",
+    "on-click": "nm-connection-editor"
+  },
+  "battery": {
+    "format": "\u25b0 {capacity}%",
+    "format-charging": "+ {capacity}%",
+    "states": {
+      "warning": 25,
+      "critical": 10
+    },
+    "tooltip-format": "{timeTo} \u00b7 {capacity}%"
+  },
+  "tray": {
+    "spacing": 10,
+    "icon-size": 14
+  },
+  "custom/power": {
+    "format": " ",
+    "tooltip-format": "Session",
+    "on-click": "bash '@STYLE@/scripts/power.sh'"
+  }
+}

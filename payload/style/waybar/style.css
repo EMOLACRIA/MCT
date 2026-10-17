@@ -1,0 +1,25 @@
+* { font-family: sans-serif; font-size: 12px; min-height: 0; border: none; border-radius: 0; }
+window#waybar { background-color: #191a18; color: #d8d3c5; border: 1px solid #55564c;
+background-image: url("../assets/tl.svg"), url("../assets/tr.svg"), url("../assets/bl.svg"), url("../assets/br.svg");
+background-position: left top, right top, left bottom, right bottom;
+background-repeat: no-repeat; background-size: 15px 15px; }
+.modules-left { margin-left: 14px; }
+.modules-right { margin-right: 14px; }
+#workspaces { margin: 0 6px; }
+#workspaces button { color: #d8d3c5; background: transparent; min-width: 22px; padding: 0 4px; margin: 3px 1px; box-shadow: none; text-shadow: none; font-family: monospace; font-size: 12px; border-bottom: 2px solid #777668; }
+#workspaces button.empty { color: #777a70; border-bottom-color: transparent; }
+#workspaces button.active { color: #eee4cf; background: #34332b; border-bottom-color: #b5a37c; }
+#workspaces button.urgent { color: #ce9582; border-bottom-color: #ce9582; }
+#workspaces button:hover { background: #35342c; color: #d8d3c5; }
+#clock { font-family: serif; font-size: 20px; padding: 0 12px; }
+#custom-date { color: #aaa89b; padding: 0 10px; border-left: 1px solid #55564c; font-size: 10px; }
+#custom-menu { min-width: 36px; padding: 0; border-right: 1px solid #55564c; font-size: 0px; background-image: url("../assets/search.svg"); background-position: center; background-repeat: no-repeat; background-size: 16px 16px; }
+#pulseaudio, #network, #battery, #tray, #custom-power { padding: 0 10px; }
+#pulseaudio { border-left: 1px solid #55564c; }
+#battery.charging { color: #b9bea0; }
+#battery.warning { color: #d3bf93; }
+#battery.critical { color: #ce9582; }
+#network.disconnected, #pulseaudio.muted { color: #888b7d; }
+#custom-power { min-width: 36px; padding: 0; font-size: 0px; background-image: url("../assets/power.svg"); background-position: center; background-repeat: no-repeat; background-size: 16px 16px; }
+tooltip { background: #191a18; border: 1px solid #9b8967; }
+tooltip label { color: #d8d3c5; padding: 6px; }
