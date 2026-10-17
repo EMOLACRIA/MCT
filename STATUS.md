@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.3.0 geliştirme sürümü**.
-Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 — Alt+Tab kabulü bekliyor**. Plague Tale tamamlanmış değildir.
+Son inceleme: **2026-10-17**. Kaynak taban: **2.4.0 geliştirme sürümü**.
+Aşama: **M0 tamamlandı; M1 normal kullanım onaylandı; M2 — launcher hesaplama kabulü bekliyor**. Plague Tale tamamlanmış değildir.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -10,8 +10,9 @@ QuickShell bar; launcher; güç menüsü; kontrol paneli; bildirim geçmişi/toa
 MPRIS medya; donanım paneli; sürüklenebilir OSD; pil/şarj durumu; Hyprlock medya
 bölümü; ayrı SDDM teması; Dolphin/Spotify eklentileri; kurulum/güncelleme/restore.
 `Theme.qml` vardır fakat bütün görsel değerler henüz bu dosyada toplanmış değildir.
-Alt+Tab seçici kaynakta uygulanmıştır; canlı kabulü bekler. Ayarlar ekranı,
-launcher hesaplama ve tema değiştirici **yoktur**.
+Alt+Tab normal kullanımı kullanıcı tarafından onaylandı. Launcher hesaplama ve
+sonuç kopyalama uygulandı; hedef oturum kabulü bekliyor. Ayarlar ekranı ve tema
+değiştirici **yoktur**.
 
 ## Son kullanıcı geri bildirimi ve açık işler
 
@@ -22,7 +23,8 @@ launcher hesaplama ve tema değiştirici **yoktur**.
 | PT-003 | Kullanıcı onayı | 17 Ekim: kullanıcı PR #4'ün Dolphin/OSD/Steam kontrolleri sonrasında bildirim süresi dışında sorun olmadığını onayladı. Önceki gerçek Qt aktif/pasif metin ve kontrast kontrolü de geçti. |
 | PT-004 | Kullanıcı onayı / süre tercihi uygulandı | 17 Ekim: PR #4 testleri için süre dışında sorun yok onayı geldi. Varsayılan/toast süresi 4500 ms yapıldı; 1200 ms yalnız önceki test komutuydu. Fiziksel şarj geçişi ayrıca raporlanmadı; M4 kabul listesinde korunur. |
 | PT-005 | Normal güncelleme kullanıcı onayı / geniş restore kabulü M4'te | Kullanıcı kümülatif PR #4 dalında sorun bildirmedi. 10 kontrollü süreç keşfi testi geçti. Farklı kullanıcıyla fresh install/restore canlı testi yapılmış sayılmaz. |
-| PT-010 | Uygulandı / canlı kabul bekliyor | 2.3.0: MRU model, bütün alanlar, klavye/fare, tek kare yakalama ve kısayol geçişi. 11 Qt + 6 stdlib testi geçti; gerçek odak/Alt bırakma/çoklu monitör/yakalama hedef cihazda denenmeli. |
+| PT-010 | Normal kullanım kullanıcı onayı | 17 Ekim: kullanıcı “alt tab çok güzel çalışıyor” diyerek PR #5 kullanımını onayladı. Main merge `915a9990a7d835cba6281b43b08af1911328355f`. Çoklu monitör çıkarma ve yakalama gibi ayrı ayrıntılar raporlanmadı; M4 listesinde kalır. |
+| PT-011 | Uygulandı / canlı kabul bekliyor | 2.4.0: paylaşılan aritmetik parser, launcher sonuç satırı, Enter/fare/Ctrl+Enter kopyalama. Node ve 7 gerçek Qt etkileşim testi geçti. Gerçek Wayland panosuna başka uygulamada yapıştırma kullanıcıda doğrulanmalı. |
 | QA-001 | Kısmen açık | Dört stdlib uygulama/süreç kontrolü ve Node backend kontrolü bağımsız checkout'ta çalışır. Qt watcher, shell-revisions, app-revision23 ve shell-syntax da checkout'u kendi bulur; Qt/Node/derleyici bağımlılıkları açıkça gerekir. Diğer eski fixture bağımlılıkları ve genel CI hâlâ açık. |
 | ASSET-001 | Entegrasyon / canlı doğrulama bekliyor | Kullanıcı `terminal-medallion/` kaynaklarını ilk MCT commit'ine ekledi; README, kurucu ve CP437/UTF-8 çizimler doğrulandı. Ana temayla son kurulum/görünüm kabulü henüz yapılmadı. |
 
@@ -149,12 +151,42 @@ test edildi. OSD/ikon regresyon kontrolü tekrar geçti. 32 Python kaynağı par
 
 Bu kontroller native Hyprland katman odağı, global kısayol, monitör çıkarma veya
 pencere yakalama çalıştırmaz. Bunlar [hedef kabul listesinde](docs/VALIDATION.md#pt-010-alttab-kontrolü)
-açıktır; özellik tamamlandı/canlı onaylandı sayılmaz.
+o inceleme sırasında açıktı; sonraki normal kullanım onayı aşağıda kaydedildi.
+
+## 2.4.0 — Launcher hesaplama
+
+17 Ekim 2026: kullanıcı Alt+Tab için “çok güzel çalışıyor” dedi; PR #5 beklenen
+baş `84f71dd0d594a6334277790d8204c9309e269c9b` kontrol edilerek main'e birleştirildi.
+Normal kullanım kabulü PT-010'u kapatır; raporlanmayan çoklu ekran çıkarma ve
+native yakalama ayrıntıları geniş M4 test listesinde korunur.
+
+`logic/Calculator.js` ortak aritmetik modelidir; uygulama araması her zaman aynı
+filtreyi kullanır. Sonuç ilk satırdır; Enter/fare kopyalar, Ctrl+Enter seçimden
+bağımsız sonucu kopyalar. Launcher açık ve ifade yerinde kalır; Ctrl+C normal
+metin seçimini kopyalar. Eksik/hatalı ifade satır içi mesajdır; komut çalıştırılmaz.
+Yüzde daima `/100`; örneğin `200+10%=200.1`, `200*10%=20`. Ondalık nokta/virgül,
+parantez, unary işaret, `^` ve bilimsel sayı gösterimi desteklenir. 12 anlamlı
+basamak gösterilir/kopyalanır; IEEE-754 hesabı ve sınırları belgelenmiştir.
+
+2026-10-17 doğrulama:
+
+- `node checks/test_calculator.js`: aritmetik/öncelik, yüzde, eksik/hata, uygulama
+  sorguları, uzunluk/derinlik sınırı ve 300 bozuk girdi örneği geçti.
+- `checks/test_launcher_calculator.py`: **7 gerçek Qt testi**; Enter/fare/Ctrl+Enter,
+  Ctrl+C, karma sonuç gezinmesi, uygulama açma, Esc ve 900×600 sınırları geçti.
+- `checks/test_shell_imports.py`: manifest + göreli JS import'u Qt network URL ile
+  yüklendi; hesap sonucu 14 olarak okundu. Test bağımsız checkout'a taşındı.
+- Node backend clipboard adaptörü; QuickShell v0.3.1 header/uygulamasına karşı
+  writable clipboardText kontrolü; 99 native binding ve 25 QML bytecode geçti.
+- Mevcut 11 Alt+Tab Qt testi, OSD/ikon kontrolü ve 12 update/restore fixture'i geçti.
+
+33 Python kaynağı parse, 25 Bash syntax, yerel Markdown yolları ve git diff
+whitespace kontrolü geçti. 1600×1000 Qt launcher render'ı görüntülenerek incelendi. Gerçek QuickShell
+Wayland pano teslimi/başka uygulamaya yapıştırma bu ortamda çalıştırılmadı;
+[hedef kabulü](docs/VALIDATION.md#pt-011-launcher-hesaplama-kontrolü) açıktır.
 
 ## Sonraki iş
 
-PT-001 ve mevcut Spotify çalışma durumu kullanıcı tarafından onaylandı.
-Sürüm aralığına dayalı Spotify engeli yok. PR #2–4'ün normal kullanım akışı
-onaylandı; M2 Alt+Tab hedef oturum kabulü sırada. Adblock ölçümü, fiziksel şarj geçişi ve farklı
-kullanıcıyla fresh install/restore gibi geniş kontroller M4 listesinde korunur.
-Alt+Tab uygulandı; kabul sonrasında hesaplama ve ayarlar gelir. ROADMAP sırası korunuyor.
+PT-011 hedef oturum kabulü; ardından PT-012 ortak ayarlar. Tema değiştirici ve
+ikinci tema M4 kapısından önce başlamaz. Adblock ölçümü, fiziksel şarj geçişi ve
+farklı kullanıcıyla fresh install/restore gibi geniş kontroller M4'te korunur.

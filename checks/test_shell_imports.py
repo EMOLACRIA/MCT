@@ -13,12 +13,12 @@ from urllib.parse import unquote
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 os.environ['QT_QUICK_BACKEND'] = 'software'
-sys.path.insert(0, str(Path('build/qs-qt-check').resolve()))
-from PySide6.QtCore import QUrl, QTimer
+if os.environ.get('MCT_QT_TEST_PATH'):sys.path.insert(0,os.environ['MCT_QT_TEST_PATH'])
+from PySide6.QtCore import QObject, QUrl, QTimer
 from PySide6.QtGui import QGuiApplication
-from PySide6.QtQml import QQmlComponent, QQmlEngine
+from PySide6.QtQml import QQmlComponent, QQmlEngine, QQmlExpression
 
-style = Path('build/desktop-style/payload/style').resolve()
+style = Path(__file__).resolve().parents[1] / 'payload/style'
 shell = style / 'shell'
 old_manifest = 'singleton Theme 1.0 Theme.qml\n'
 registered = {line.split()[-1] for line in (shell / 'ui/qmldir').read_text().splitlines() if line.strip()}
@@ -99,8 +99,20 @@ def verify_fixed(component):
     scene = component.create()
     assert scene is not None, '\n'.join(e.toString() for e in component.errors())
     objects.append(scene)
-    print('PASS: complete qmldir loads and instantiates the shared scene using network directory imports.', flush=True)
-    app.quit()
+    def verify_calculator():
+        try:
+            context=QQmlEngine.contextForObject(scene)
+            e=QQmlExpression(context,scene,'uiState.toggle("launcher","preview");uiState.search="2+3*4"')
+            e.evaluate();assert not e.hasError(),e.error().toString()
+            launcher=scene.findChild(QObject,'launcher');assert launcher is not None
+            e=QQmlExpression(QQmlEngine.contextForObject(launcher),launcher,'calculation.text')
+            value=e.evaluate()[0];assert not e.hasError(),e.error().toString()
+            assert value=='14',value
+            print('PASS: complete qmldir, shared scene and relative Calculator.js load through network directory imports.',flush=True)
+            app.quit()
+        except Exception as exc:
+            print('FAIL:',repr(exc),flush=True);app.exit(1)
+    QTimer.singleShot(0,verify_calculator)
 
 QTimer.singleShot(0, lambda: load('old', verify_old))
 QTimer.singleShot(15000, lambda: app.exit(2))

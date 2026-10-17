@@ -109,3 +109,10 @@ for entry in ['shell.qml','preview.qml','validate.qml']:
 upower=(src/'services/upower/device.hpp').read_text()
 assert 'Charging = 1' in upower and 'FullyCharged = 4' in upower
 print('PASS: native tray menu QApplication requirement and battery state enum names')
+
+clipboard=(src/'core/qmlglobal.hpp').read_text()
+assert 'Q_PROPERTY(QString clipboardText READ clipboardText WRITE setClipboardText NOTIFY clipboardTextChanged)' in clipboard
+clipboard_impl=(src/'core/qmlglobal.cpp').read_text()
+assert 'void QuickshellGlobal::setClipboardText(const QString& text)' in clipboard_impl and '->setText(text)' in clipboard_impl
+assert 'Quickshell.clipboardText=text' in (shell/'LiveContext.qml').read_text()
+print('PASS: writable QuickShell clipboardText routes to Qt clipboard; native Wayland focus remains a target-session check')

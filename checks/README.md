@@ -1,3 +1,21 @@
+## Launcher hesaplama (2.4.0)
+
+```bash
+node checks/test_calculator.js
+python3 checks/test_launcher_calculator.py
+python3 checks/test_shell_imports.py
+```
+
+İlk kontrol yalnız Node.js; aritmetik, uygulama sorguları, bozuk/eksik girdi,
+512 karakter/256 token/32 derinlik sınırları ve 300 bozuk ifade denetimi yapar.
+7 etkileşim testi gerçek PySide6 ile Enter/fare/Ctrl+Enter, normal Ctrl+C,
+karma app/sonuç gezinmesi ve yerleşimi denetler. DemoContext clipboard değeri
+fixture'dır; gerçek Wayland panosu değildir. `MCT_QT_TEST_PATH` desteklenir.
+Import kontrolü kendi checkout'unu bulur, yerel HTTP sunucusunda Qt network
+import yoluyla tam manifest ve göreli Calculator.js yüklemesini çalıştırır.
+Native clipboard alanı ayrıca `test_shell_api.py` ve backend fixture'ında kontrol
+edilir; hedef oturumda başka uygulamaya yapıştırma yine gerekir.
+
 ## Alt+Tab kontrolleri (2.3.0)
 
 ```bash

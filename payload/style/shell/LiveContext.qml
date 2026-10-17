@@ -132,6 +132,7 @@ Scope {
         if(id<1 || id>10)return;
         Hyprland.dispatch(Hyprland.usingLua ? "hl.dsp.focus({workspace="+id+"})" : "workspace "+id);
     }
+    function copyText(text) {Quickshell.clipboardText=text;}
     function launchApplication(id) {
         const entry=DesktopEntries.byId(id);if(!entry)return;
         if(entry.runInTerminal)Quickshell.execDetached({command:["kitty","--"].concat(Array.from(entry.command)),workingDirectory:entry.workingDirectory || Quickshell.env("HOME")});

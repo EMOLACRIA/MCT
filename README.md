@@ -5,8 +5,8 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.3.0 geliştirme sürümü. M1 normal kullanım onaylandı; M2 Alt+Tab uygulandı, hedef oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
-Launcher hesaplama ve ortak ayarlar ekranı sıradaki işler; tema değiştirici M4 sonrasında.
+**Durum:** 2.4.0 geliştirme sürümü. Alt+Tab normal kullanımı onaylandı; launcher hesaplama uygulandı, hedef oturum kabulü bekliyor. Plague Tale henüz tamamlanmadı.
+Ortak ayarlar ekranı sıradaki iş; tema değiştirici M4 sonrasında.
 
 ## Projeyi okumaya buradan başla
 
@@ -24,6 +24,28 @@ Launcher hesaplama ve ortak ayarlar ekranı sıradaki işler; tema değiştirici
 | [Kurulum ve sürüm geçmişi](docs/INSTALLATION.md) | Mevcut paketin ayrıntılı kullanımı |
 | [GitHub'a yükleme](docs/GITHUB_PUSH.md) | ZIP içeriğini kaynak repo olarak yükleme |
 | [Uygulama eklentileri](apps/README.md) | Dolphin ve Spotify kurulumu / geri alma |
+
+## 2.4.0 — Launcher içinde hesaplama
+
+Super+R'de doğrudan `(12+3)*4`, `1,5+2.25`, `200*10%` veya `2^3` yaz.
+Sonuç ilk satırda görünür; eşleşen uygulamalar listede kalır. ↑/↓ ile seç,
+Enter ile seçili sonucu kopyala veya uygulamayı aç. **Ctrl+Enter** doğrudan sonucu
+kopyalar; Copy düğmesi de kullanılabilir. İfade ve menü açık kalır. Ctrl+C normal
+metin kopyalamadır. Eksik/hatalı ifadeler satır içinde açıklanır.
+
+`%` daima 100'e böler: `200+10% = 200.1`; yüzde oranını bulmak için `200*10% = 20`.
+Ondalık nokta/virgül kabul edilir; sonuç noktalı ve en fazla 12 anlamlı basamaktır.
+Birim dönüşümü henüz yoktur. Pano için ek paket gerekmez.
+
+Node parser kontrolleri, 7 gerçek Qt etkileşim testi, network JS import ve mevcut
+Alt+Tab/OSD/update regresyonları geçti. Native Wayland panosuna başka uygulamada
+**yapıştırma kullanıcıda doğrulanmalı**. [Doğrulama](docs/VALIDATION.md#pt-011-launcher-hesaplama-kontrolü) ·
+[ADR-0007](docs/decisions/0007-launcher-calculator.md).
+
+```bash
+bash preview.sh
+bash update.sh --check && bash update.sh
+```
 
 ## 2.3.0 — Çalışma alanları arasında Alt+Tab
 
@@ -43,8 +65,8 @@ bash update.sh --check && bash update.sh
 ```
 
 Preview örnek pencereler kullanır. 11 gerçek Qt durum/klavye/yerleşim testi,
-6 kısayol geçiş testi, backend ve QML kaynak kontrolleri geçti. Native Alt bırakma,
-alana geçiş, ekran çıkarma ve yakalama hedef cihazda ayrıca denenmeli.
+6 kısayol geçiş testi, backend ve QML kaynak kontrolleri geçti. 17 Ekim kullanıcı normal Alt+Tab kullanımını onayladı; PR #5 ana dala birleştirildi.
+Ekran çıkarma/yakalama ayrıntıları geniş M4 listesinde kalır.
 [Doğrulama](docs/VALIDATION.md#pt-010-alttab-kontrolü) ·
 [ADR-0006](docs/decisions/0006-window-switcher.md).
 

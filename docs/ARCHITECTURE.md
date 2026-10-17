@@ -1,6 +1,6 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.3.0
+## Mevcut 2.4.0
 
 `manage.py` ilk kurulum/restore; `update.py` revizyonlu güncelleme/rollback;
 `payload/hypr/` Lua, hyprpaper ve hyprlock ayarları; `payload/style/scripts/`
@@ -33,6 +33,13 @@ Preview aynı model/görünümü DemoContext ile kullanır, global kayıt oluşt
 Tek kare yakalama bileşeni sadece seçici açıkken yaşar. Varsayılan kısayol bloğu
 `switcher-bindings.lua` içinde; update özel bağları korur, ilk restore yedeğine
 dokunmaz. [ADR-0006](decisions/0006-window-switcher.md).
+
+`shell/logic/Calculator.js` görünüm/servis bağımsız, sınırlandırılmış recursive
+descent aritmetik parser'ıdır. Launcher mevcut uygulama filtresine dokunmadan
+hazır hesap sonucunu ilk satıra ekler. Eylem `backend.copyText` üzerinden gider;
+LiveContext QuickShell 0.3.1'in Qt panosuna bağlı writable `clipboardText` alanını,
+DemoContext yalnız test değeri kullanır. Yeni clipboard paketi/süreç veya global
+kısayol eklenmez. [ADR-0007](decisions/0007-launcher-calculator.md).
 
 ## Hedef ayrım
 
