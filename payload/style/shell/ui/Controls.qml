@@ -8,25 +8,23 @@ Item {
     function activate() { root.forceActiveFocus(); }
     ColumnLayout {
         anchors.fill:parent; spacing:18
-        RowLayout {
-            Glyph { symbol:"audio"; width:25; height:25 }
-            Text { text:"Controls"; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(26); Layout.fillWidth:true }
-            ActionButton { objectName:"openSettings";symbol:"settings";width:36;height:36;padding:8;onClicked:uiState.toggle("settings",uiState.screenName);ToolTip.visible:hovered;ToolTip.text:"Desktop preferences" }
-            ActionButton { symbol:"close"; width:36; height:36; padding:8; onClicked:uiState.close() }
+        PanelHeader {
+            title:"Controls";symbol:"audio";onClosed:uiState.close()
+            extraAction:Component {ActionButton {objectName:"openSettings";symbol:"settings";padding:8;onClicked:uiState.toggle("settings",uiState.screenName);hint:"Desktop preferences"}}
         }
         Flickable {
             Layout.fillWidth:true; Layout.fillHeight:true; clip:true; contentHeight:details.implicitHeight; boundsBehavior:Flickable.StopAtBounds
             ScrollBar.vertical:ScrollBar {}
             ColumnLayout {
                 id:details; width:parent.width; spacing:18
-                Text { text:"Sound"; color:Theme.brass; font.pixelSize:Theme.fontSize(11); font.letterSpacing:1.2 }
+                Text { font.family:Theme.bodyFont; text:"Sound"; color:Theme.brass; font.pixelSize:Theme.fontSize(11); font.letterSpacing:1.2 }
                 LevelControl { Layout.fillWidth:true; label:"Volume"; symbol:backend.muted ? "mute" : "audio"; level:backend.volume; available:backend.audioAvailable; onCommit:percent=>backend.setVolume(percent) }
                 RowLayout {
                     Layout.fillWidth:true; spacing:8
                     ActionButton { Layout.fillWidth:true; text:backend.muted ? "Unmute sound" : "Mute sound"; symbol:backend.muted ? "mute" : "audio"; enabled:backend.audioAvailable; selected:backend.muted; onClicked:backend.toggleMute() }
                     ActionButton { Layout.fillWidth:true; text:backend.microphoneMuted ? "Enable mic" : "Mute mic"; symbol:"mic"; enabled:backend.microphoneAvailable; selected:backend.microphoneMuted; onClicked:backend.toggleMicrophone() }
                 }
-                Text { text:"Output device"; color:Theme.muted; font.pixelSize:Theme.fontSize(11)}
+                Text { font.family:Theme.bodyFont; text:"Output device"; color:Theme.muted; font.pixelSize:Theme.fontSize(11)}
                 Repeater {
                     model:backend.audioDevices
                     delegate: ActionButton {
@@ -42,16 +40,16 @@ Item {
                     Glyph { symbol:"battery"; level:backend.battery; charging:backend.batteryCharging; ink:backend.battery>=0 && backend.battery<=15 && !backend.batteryCharging ? Theme.danger : Theme.brass }
                     ColumnLayout {
                         Layout.fillWidth:true; spacing:5
-                        Text { text:backend.batteryText; color:Theme.ink; font.pixelSize:Theme.fontSize(13)}
-                        Text { text:backend.powerText; color:Theme.muted; font.pixelSize:Theme.fontSize(11)}
+                        Text { font.family:Theme.bodyFont; text:backend.batteryText; color:Theme.ink; font.pixelSize:Theme.fontSize(13)}
+                        Text { font.family:Theme.bodyFont; text:backend.powerText; color:Theme.muted; font.pixelSize:Theme.fontSize(11)}
                     }
                 }
                 RowLayout {
                     Glyph { symbol:"network" }
-                    Text { Layout.fillWidth:true; text:backend.network; textFormat:Text.PlainText; wrapMode:Text.WordWrap; color:Theme.ink; font.pixelSize:Theme.fontSize(12)}
+                    Text { font.family:Theme.bodyFont; Layout.fillWidth:true; text:backend.network; textFormat:Text.PlainText; wrapMode:Text.WordWrap; color:Theme.ink; font.pixelSize:Theme.fontSize(12)}
                     ActionButton { text:"Settings"; enabled:backend.networkSettingsAvailable; onClicked:backend.openNetworkSettings() }
                 }
-                Text { Layout.fillWidth:true; visible:backend.lastError!==""; text:backend.lastError; textFormat:Text.PlainText; wrapMode:Text.WordWrap; color:Theme.danger; font.pixelSize:Theme.fontSize(11)}
+                Text { font.family:Theme.bodyFont; Layout.fillWidth:true; visible:backend.lastError!==""; text:backend.lastError; textFormat:Text.PlainText; wrapMode:Text.WordWrap; color:Theme.danger; font.pixelSize:Theme.fontSize(11)}
             }
         }
     }

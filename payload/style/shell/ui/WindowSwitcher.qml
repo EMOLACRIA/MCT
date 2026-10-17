@@ -27,20 +27,20 @@ FocusScope {
         else if(event.key===Qt.Key_Escape) {controller.cancel();event.accepted=true;}
     }
     Keys.onReleased:event=> {if(event.key===Qt.Key_Alt && !event.isAutoRepeat) {controller.commit();event.accepted=true;}}
-    Rectangle {anchors.fill:parent;color:"#880c0d0b"}
+    Rectangle {anchors.fill:parent;color:Theme.switcherScrim}
     MouseArea {anchors.fill:parent;onClicked:controller.cancel()}
     OrnamentFrame {
         id:frame;objectName:"windowSwitcherFrame"
         anchors.centerIn:parent
-        width:Math.max(200,Math.min(parent.width-40,960))
-        height:Math.max(180,Math.min(parent.height-80,590))
+        width:Math.max(SurfaceLayout.switcherMinimumWidth,Math.min(parent.width-SurfaceLayout.switcherWidthMargin,SurfaceLayout.switcherWidth))
+        height:Math.max(SurfaceLayout.switcherMinimumHeight,Math.min(parent.height-SurfaceLayout.switcherHeightMargin,SurfaceLayout.switcherHeight))
         MouseArea {anchors.fill:parent}
         ColumnLayout {
-            anchors.fill:parent;anchors.margins:24;spacing:16
+            anchors.fill:parent;anchors.margins:SurfaceLayout.panelPadding;spacing:16
             RowLayout {
                 Glyph {symbol:"windows";width:24;height:24}
                 Text {text:"Windows";font.family:Theme.displayFont;font.pixelSize:Theme.fontSize(27);color:Theme.ink;Layout.fillWidth:true}
-                Text {text:controller.entries.length+" open";color:Theme.brass;font.pixelSize:Theme.fontSize(11)}
+                Text { font.family:Theme.bodyFont;text:controller.entries.length+" open";color:Theme.brass;font.pixelSize:Theme.fontSize(11)}
             }
             RowLayout {
                 Layout.fillWidth:true;Layout.fillHeight:true;spacing:22
@@ -58,9 +58,9 @@ FocusScope {
                         Glyph {x:15;anchors.verticalCenter:parent.verticalCenter;symbol:"windows";visible:icon.status!==Image.Ready}
                         Column {
                             x:52;y:12;width:parent.width-64;spacing:4
-                            Text {width:parent.width;text:row.modelData.appName;textFormat:Text.PlainText;elide:Text.ElideRight;color:Theme.ink;font.pixelSize:Theme.fontSize(13)}
-                            Text {width:parent.width;text:row.modelData.title;textFormat:Text.PlainText;elide:Text.ElideRight;color:Theme.muted;font.pixelSize:Theme.fontSize(11)}
-                            Text {width:parent.width;text:"Workspace "+row.modelData.workspaceLabel+(row.modelData.monitor ? " · "+row.modelData.monitor : "");textFormat:Text.PlainText;elide:Text.ElideRight;color:Theme.brass;font.pixelSize:Theme.fontSize(10)}
+                            Text { font.family:Theme.bodyFont;width:parent.width;text:row.modelData.appName;textFormat:Text.PlainText;elide:Text.ElideRight;color:Theme.ink;font.pixelSize:Theme.fontSize(13)}
+                            Text { font.family:Theme.bodyFont;width:parent.width;text:row.modelData.title;textFormat:Text.PlainText;elide:Text.ElideRight;color:Theme.muted;font.pixelSize:Theme.fontSize(11)}
+                            Text { font.family:Theme.bodyFont;width:parent.width;text:"Workspace "+row.modelData.workspaceLabel+(row.modelData.monitor ? " · "+row.modelData.monitor : "");textFormat:Text.PlainText;elide:Text.ElideRight;color:Theme.brass;font.pixelSize:Theme.fontSize(10)}
                         }
                         MouseArea {anchors.fill:parent;onClicked:{controller.choose(row.modelData.id);controller.commit();}}
                     }
@@ -72,15 +72,15 @@ FocusScope {
                         Column {
                             anchors.centerIn:parent;spacing:14;visible:!capture.item || !capture.item.hasContent
                             Glyph {anchors.horizontalCenter:parent.horizontalCenter;width:48;height:48;symbol:"windows"}
-                            Text {anchors.horizontalCenter:parent.horizontalCenter;text:controller.selected ? controller.selected.appName : "";textFormat:Text.PlainText;color:Theme.muted;font.pixelSize:Theme.fontSize(13)}
+                            Text { font.family:Theme.bodyFont;anchors.horizontalCenter:parent.horizontalCenter;text:controller.selected ? controller.selected.appName : "";textFormat:Text.PlainText;color:Theme.muted;font.pixelSize:Theme.fontSize(13)}
                         }
                         Loader {id:capture;anchors.fill:parent;anchors.margins:10;active:root.visible && root.previewComponent!==null;sourceComponent:root.previewComponent}
                     }
                     Text {Layout.fillWidth:true;text:controller.selected ? controller.selected.title : "";textFormat:Text.PlainText;wrapMode:Text.WordWrap;maximumLineCount:2;elide:Text.ElideRight;color:Theme.ink;font.family:Theme.displayFont;font.pixelSize:Theme.fontSize(21)}
-                    Text {Layout.fillWidth:true;text:controller.selected ? "Workspace "+controller.selected.workspaceLabel+(controller.selected.monitor ? " · "+controller.selected.monitor : "") : "";textFormat:Text.PlainText;color:Theme.brass;font.pixelSize:Theme.fontSize(11)}
+                    Text { font.family:Theme.bodyFont;Layout.fillWidth:true;text:controller.selected ? "Workspace "+controller.selected.workspaceLabel+(controller.selected.monitor ? " · "+controller.selected.monitor : "") : "";textFormat:Text.PlainText;color:Theme.brass;font.pixelSize:Theme.fontSize(11)}
                 }
             }
-            Text {Layout.fillWidth:true;text:frame.width<600 ? "Tab / Shift+Tab · Select\nRelease Alt / Enter · Open     Esc · Cancel" : "Tab / Shift+Tab · Select      Release Alt / Enter · Open      Esc · Cancel";wrapMode:Text.WordWrap;color:Theme.brass;font.pixelSize:Theme.fontSize(10)}
+            Text { font.family:Theme.bodyFont;Layout.fillWidth:true;text:frame.width<600 ? "Tab / Shift+Tab · Select\nRelease Alt / Enter · Open     Esc · Cancel" : "Tab / Shift+Tab · Select      Release Alt / Enter · Open      Esc · Cancel";wrapMode:Text.WordWrap;color:Theme.brass;font.pixelSize:Theme.fontSize(10)}
         }
     }
 }

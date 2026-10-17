@@ -106,6 +106,9 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   aynı nesne güncellemeleri ve zaman birimi adaptör tarafından ele alınır.
 
 - Paneller tek örnek: aynı kısayol kapatır, başka panel önceki paneli değiştirir.
+- Yedi panelin ortak başlığı kendi kapatma/ek eylemini bağlar; Settings ↔ Controls
+  geçişi korunur. Preview aynı başlık, toast yığını ve dış yüzey ölçülerini kullanır;
+  native servis/oturum eylemi başlatmaz. Uzun ipuçları koyu yüzeyde sarılır.
 - Uzun medya/oturum içeriği sıkıştırılmaz; kullanılabilir yükseklik yetmiyorsa
   kaydırılır, klavye seçimi görünür tutulur. Uzun oynatıcı/eylem adları paneli
   genişletmez; tam ad hover'da okunabilir. Güç işlemlerinin onay koşulu değişmez.

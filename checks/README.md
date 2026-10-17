@@ -1,15 +1,19 @@
-## Yerleşim / uzun içerik (2.5.1)
+## Ortak sunum / yerleşim (2.6.0)
 
 ```bash
 python3 checks/test_shell_ui.py
 ```
 
-7 gerçek Qt testi. PySide6 gerekir; ayrı kurulum için `MCT_QT_TEST_PATH` kullanılır.
+9 gerçek Qt testi. PySide6 gerekir; ayrı kurulum için `MCT_QT_TEST_PATH` kullanılır.
 Artık eski build/desktop-style ağacına bağlı değildir; checkout'u kendi bulur.
-`MCT_UI_PREVIEW_DIR=/tmp/mct-review` isteğe bağlı dört PNG üretir; varsayılan test
+`MCT_UI_PREVIEW_DIR=/tmp/mct-review` isteğe bağlı beş PNG üretir; varsayılan test
 repo içine görsel yazmaz. 7 panel, %90/%120 font, 1600×1000/900×600/640×480 sınırları;
 bar 900/1132/1200/1600 genişlik, 0/1/12/40 tray; son simge sağ tık, medya/oturum
 klavye görünürlüğü, güç onayı, uzun eylem ve boş veri kontrol edilir.
+2.6.0 ayrıca yedi ortak başlığın kapatması, Controls ↔ Settings ve preview toast'ın
+eylem/kapatma/panel açıkken gizlenmesini kontrol eder. Ortak `qmldir`, asset URL'leri
+ve komponentler network import testinden de geçer; Theme dışı literal shell paleti
+bu kontrolde reddedilir. Saydam kompozisyon ve SVG varlık verileri ayrı tutulur.
 Native Wayland/tray/power komutu çalışmaz. 900 altındaki kalabalık tray tam erişimi
 bu kabulün kapsamı değildir. `test_preferences_ui.py` ortak Qt harness'ını kullanır.
 

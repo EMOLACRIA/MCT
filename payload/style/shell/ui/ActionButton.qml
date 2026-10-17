@@ -4,6 +4,7 @@ import QtQuick.Layouts
 AbstractButton {
     id: root
     property string symbol: ""
+    property string hint: ""
     property real iconLevel: 100
     property bool iconCharging: false
     property color iconColor: destructive ? Theme.danger : Theme.brass
@@ -16,11 +17,12 @@ AbstractButton {
     activeFocusOnTab: true
     Accessible.name: text || symbol
     opacity: enabled ? 1 : .38
+    SurfaceHint {visible:root.visible && root.hovered && text!=="";text:root.hint}
     background: Rectangle {
-        color: root.down || root.selected ? "#39392f" : root.hovered || root.activeFocus ? Theme.raised : "transparent"
+        color: root.down || root.selected ? Theme.selectedSurface : root.hovered || root.activeFocus ? Theme.raised : "transparent"
         border.color: root.selected || root.activeFocus ? Theme.brass : root.hovered ? Theme.line : "transparent"
         border.width: 1
-        Behavior on color { ColorAnimation { duration:Theme.duration(110) } }
+        Behavior on color { ColorAnimation { duration:Theme.duration(Theme.quickMotion) } }
     }
     contentItem: Item {
         implicitWidth: content.implicitWidth

@@ -165,6 +165,39 @@ başlatma ve restart kabulü raporlanmadan PT-012 kapanmaz.
 17 Ekim PT-011 normal kullanım kullanıcı onayı kaydedildi. Bu, her clipboard alt
 testinin tek tek bildirildiği anlamına gelmez; önceki ortam sınırları korunur.
 
+## M3 ortak shell sunumu (2.6.0)
+
+17 Ekim: kullanıcı “Şuan bi sıkıntı yok gibi. Devam edelim” diyerek 2.5.1 normal
+kullanımında sorun bildirmedi. PR #8 merge `3c8b1e0215be52fbf465ee696f4a98e0ca7e1456`.
+Bu, bütün native tray/ölçek/kalıcılık alt testlerinin ayrı ayrı raporu değildir.
+
+2026-10-17: `MCT_QT_TEST_PATH=... python3 checks/test_shell_ui.py` — **9 test geçti**.
+Önceki 7 yerleşim testine yedi ortak başlığın close eylemi, Controls ↔ Settings,
+paylaşılan preview toast eylemi/kapatma/panel açıkken gizlenmesi eklendi.
+1600×1000 ve dar alan örnekleri; sarılan koyu ipuçları/uzun toast butonu görsel
+olarak incelendi. Qt 6.10.2 software/offscreen kullanıldı; gerçek D-Bus yoktur.
+
+Aynı tarihte: `test_preferences_ui.py` (10), `test_launcher_calculator.py` (7),
+`test_window_switcher.py` (11), `test_shell_revisions.py` (ikon/OSD etkileşimi),
+`test_shell_imports.py` (yeni qmldir ve network import, palet sınırı),
+`test_shell_syntax.py` (**35 QML**), `test_shell_api.py` (**105 native binding**,
+QuickShell 0.3.1 kaynak) geçti. Hazırlama kontrolü native Qt/Wayland popup kabulü
+değildir. Yeni bir QuickShell API'si veya ayar şeması eklenmedi.
+
+Hedef oturumda yeni dalı uygulayınca:
+
+1. R/M/T/B ve medya/kontrol/ayar panellerinde başlık/kapatmayı dene; dişliyle
+   Preferences, oradan Controls dönüşü çalışmalı. Kısayollar aynı kalmalı.
+2. Uzun başlık/eylem taşıyan normal bir bildirime bak; toast ve geçmişte butonlar
+   sığmalı. Hover ipucu koyu ve okunaklı, uzun metin sarılmış olmalı.
+3. Bar/OSD konum ve reserve alanının önceki gibi kaldığını kontrol et. Yeni font
+   aile bağları aynı varsayılanı kullanır; %90/%120 metin hâlâ okunmalı.
+4. Önceki PT-012 restart/kalıcılık kabulü ayrıca açıktır. Native lock/SDDM gerçek
+   login ve çoklu ekran geniş kabulü bu shell düzenlemesiyle kapanmaz.
+
+Preview yeni ToastStack'i kullanır fakat sistem bildirimi almaz/göndermez. Kod
+haritası [THEME_SURFACES](THEME_SURFACES.md); yeni tema/tema seçici yoktur.
+
 ## M3 ilk yerleşim denetimi (2.5.1)
 
 17 Ekim: kullanıcı terminal ve Dolphin açılışını onayladı. PR #7 merge

@@ -22,11 +22,7 @@ Item {
     Keys.onEnterPressed:if(!uiState.confirmation)choose(actions[selectedIndex].code)
     ColumnLayout {
         anchors.fill:parent; spacing:18
-        RowLayout {
-            Glyph { symbol:"power"; width:25; height:25 }
-            Text { text:uiState.confirmation ? "Confirm" : "Session"; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(26); Layout.fillWidth:true }
-            ActionButton { symbol:"close"; width:36; height:36; padding:8; onClicked:uiState.close() }
-        }
+        PanelHeader {title:uiState.confirmation ? "Confirm" : "Session";symbol:"power";onClosed:uiState.close()}
         Flickable {
             id:powerScroll; objectName:"powerScroll"
             visible:uiState.confirmation===""; Layout.fillWidth:true; Layout.fillHeight:true; clip:true
@@ -55,8 +51,8 @@ Item {
                             Glyph { symbol:powerButton.modelData.symbol; width:24; height:24 }
                             ColumnLayout {
                                 Layout.fillWidth:true; spacing:4
-                                Text { Layout.fillWidth:true; text:powerButton.modelData.name; elide:Text.ElideRight; color:Theme.ink; font.pixelSize:Theme.fontSize(15)}
-                                Text { Layout.fillWidth:true; text:powerButton.modelData.detail; elide:Text.ElideRight; color:Theme.muted; font.pixelSize:Theme.fontSize(11)}
+                                Text { font.family:Theme.bodyFont; Layout.fillWidth:true; text:powerButton.modelData.name; elide:Text.ElideRight; color:Theme.ink; font.pixelSize:Theme.fontSize(15)}
+                                Text { font.family:Theme.bodyFont; Layout.fillWidth:true; text:powerButton.modelData.detail; elide:Text.ElideRight; color:Theme.muted; font.pixelSize:Theme.fontSize(11)}
                             }
                         }
                         onClicked:root.choose(modelData.code)
@@ -67,7 +63,7 @@ Item {
         ColumnLayout {
             visible:uiState.confirmation!==""; Layout.fillWidth:true; Layout.fillHeight:true; spacing:18
             Text { Layout.fillWidth:true; wrapMode:Text.WordWrap; text:uiState.confirmation==="logout" ? "Log out of this session?" : uiState.confirmation==="restart" ? "Restart the computer?" : "Power off the computer?"; color:Theme.ink; font.family:Theme.displayFont; font.pixelSize:Theme.fontSize(23)}
-            Text { text:"Save your work before continuing."; color:Theme.muted; font.pixelSize:Theme.fontSize(12)}
+            Text { font.family:Theme.bodyFont; text:"Save your work before continuing."; color:Theme.muted; font.pixelSize:Theme.fontSize(12)}
             Item { Layout.fillHeight:true }
             RowLayout {
                 Layout.alignment:Qt.AlignRight; spacing:12
@@ -75,6 +71,6 @@ Item {
                 ActionButton { objectName:"confirmPower"; symbol:"power"; text:"Confirm"; destructive:true; onClicked:root.confirm() }
             }
         }
-        Text { text:"Esc Close"; color:Theme.brass; font.pixelSize:Theme.fontSize(10)}
+        Text { font.family:Theme.bodyFont; text:"Esc Close"; color:Theme.brass; font.pixelSize:Theme.fontSize(10)}
     }
 }

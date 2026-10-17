@@ -1,4 +1,9 @@
 singleton Theme 1.0 Theme.qml
+singleton SurfaceLayout 1.0 SurfaceLayout.qml
+PanelHeader 1.0 PanelHeader.qml
+ToastStack 1.0 ToastStack.qml
+NotificationActions 1.0 NotificationActions.qml
+SurfaceHint 1.0 SurfaceHint.qml
 ActionButton 1.0 ActionButton.qml
 Bar 1.0 Bar.qml
 Controls 1.0 Controls.qml

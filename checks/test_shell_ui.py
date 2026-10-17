@@ -128,5 +128,32 @@ class ResponsiveUiTests(unittest.TestCase):
             self.assertFalse(self.view.grabWindow().isNull())
         self.assertEqual(self.item('notificationHistory').property('count'),0)
 
+    def test_shared_headers_close_each_panel_and_keep_extra_actions(self):
+        for panel in ['launcher','power','controls','notifications','media','hardware','settings']:
+            self.open(panel)
+            self.assertTrue(self.item('panelHeader').property('title'))
+            self.fixture.click('closePanel')
+            self.assertEqual(self.js('uiState.activePanel'),'')
+        self.open('controls');self.fixture.click('openSettings')
+        self.assertEqual(self.js('uiState.activePanel'),'settings')
+        self.fixture.click('returnToControls')
+        self.assertEqual(self.js('uiState.activePanel'),'controls')
+
+    def test_preview_toast_uses_shared_actions_and_hides_behind_panels(self):
+        self.fixture.change('fontScale',1.2);self.view.resize(900,600)
+        self.js('backend.toasts='+json.dumps([dict(key='toast-fixture',app='Files',title='Transfer complete',body='Ready to open.',
+            actions=[dict(id='open-toast',text='Open the destination in the file manager with a very long name')])]))
+        qt.QTest.qWait(30)
+        stack=self.item('toastStack');button=self.item('notificationAction-open-toast')
+        self.assert_inside(stack,self.root);self.assert_inside(button,stack)
+        self.fixture.click('notificationAction-open-toast')
+        self.assertEqual(self.js('backend.lastAction'),'Preview · Notification toast-fixture · open-toast')
+        self.capture('toast-shared-actions')
+        self.open('notifications')
+        self.assertFalse(stack.property('visible'))
+        self.fixture.click('closePanel');qt.QTest.qWait(20)
+        self.fixture.click('dismissToast-toast-fixture')
+        self.assertFalse(stack.property('visible'))
+
 
 if __name__=='__main__':unittest.main()
