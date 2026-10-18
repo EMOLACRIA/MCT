@@ -52,6 +52,8 @@ jobs:
         env:
           MCT_QT_TEST_PATH: ${{ runner.temp }}/mct-qt
         run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libopengl0 libgl1 libxkbcommon0
           python3 -m pip install --target "$MCT_QT_TEST_PATH" PySide6-Essentials==6.10.2
           python3 checks/test_deltarune.py
       - name: Source syntax

@@ -388,7 +388,7 @@ Gerçek installer, servis devralma, güç veya kullanıcı oturumu çalıştır�
   kaynaklarıyla eşleşti. Yeni pencerenin screen.width alanı ayrıca
   `src/core/qmlscreen.hpp` Q_PROPERTY(width) ile denetlendi.
 - `checks/test_shell_imports.py`: tam qmldir ve network import geçti.
-- **45** Python parse, **27** Bash syntax, **88** yerel Markdown dosya bağlantısı;
+- **45** Python parse, **27** Bash syntax, **90** yerel Markdown dosya bağlantısı;
   `git diff --check` geçti. Paket load blob/PNG bütünlüğünü doğruladı.
 
 `checks/render_theme.py` her yüzeyi ayrı taze Qt sürecinde render eder; bu,
