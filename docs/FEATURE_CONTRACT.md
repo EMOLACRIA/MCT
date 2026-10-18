@@ -148,3 +148,15 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - SDDM, Dolphin ve Spotify ayrı kuruculardır; çekirdek bunları yeniden kurmaz.
   Lock medya ve Kitty include'unu yönetmek, parola akışını veya her terminalin
   paletini yeniden kurmak anlamına gelmez. Yeni CLI'nin native kabulü ayrı testtir.
+
+## Deltarune — 18 Ekim 2026
+
+- Aynı Super+R/M/T/B/Q/E/L ve Alt+Tab eylemleri, toggle ve hesaplama anlamı sürer.
+- Ek parti durum şeridi SYSTEM → mevcut donanım, AUDIO/POWER → mevcut kontrol
+  panelini açar. Yeni global kısayol veya iş komutu tanımlamaz.
+- Sıcaklık yoksa TEMP —, ses aygıtı yoksa OFFLINE, pil yoksa AC; sahte değer yoktur.
+  Sessiz/şarj durumu metinle de anlaşılır. Şerit üç hücreyi dar genişlikte de korur.
+- Tema font/renk/kenar/yerleşim sağlar; preferences/kısayollar/bildirim durumu
+  ortak kalır. Kullanıcının merkez panel tercihi varsayılan sol yerleşimin önündedir.
+- Native alt şerit Top katmanında 80 mantıksal piksel ayırır; kullanıcı ekran
+  çözünürlüğü/ölçeği/VRR veya GPU ayarı yeniden yazılmaz.

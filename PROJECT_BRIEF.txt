@@ -1,5 +1,5 @@
 PROJE HEDEFİ — PLAGUE TALE ÖNCE, ORTAK MASAÜSTÜ SONRA
-Karar tarihi: 2026-10-17 (Europe/Riga)
+Karar tarihi: 2026-10-18 (Europe/Riga)
 Sahip: Emirhan / EMOLACRIA
 Depo/çalışma adı: MCT (https://github.com/EMOLACRIA/MCT).
 Kurulum dizini: desktop-style. Nihai ürün markası ayrıca seçilebilir.
@@ -39,12 +39,15 @@ DEĞİŞMEZ ÜRÜN KARARLARI
     görüntülü önizleme kartları bulunacak. Kartların dizilimi ve menünün açıldığı
     yer açık. 2.7.0 paket şeması/CLI çekirdeği docs/THEME_PACKAGES.md içindedir.
 
-SON KAPANIŞ / SIRADAKİ İŞ (2026-10-17)
+SON KAPANIŞ / SIRADAKİ İŞ (2026-10-18)
 Kullanıcı son canlı kontrol maddesinin tamamlandığını, gün boyu full kullandığını
 ve güzel çalıştığını açıkça onayladı. Bu, Plague Tale ürün/kullanım kapanışıdır;
 ayrı ayrı ölçülmüş tüm donanım logları veya genel yayın lisansı onayı değildir.
-Geçiş çekirdeği 2.7.0'da uygulandı ve izole CI'da doğrulandı. İkinci oyunun
-seçimi bu işten sonra kullanıcıyla konuşulacak; henüz seçilmiş ikinci oyun yok.
+Geçiş çekirdeği 2.7.0'da uygulandı ve izole CI'da doğrulandı.
+18 Ekim: kullanıcı ikinci tema olarak Deltarune geliştirmesini başlattı.
+Kullanıcının sağladığı Deltarune.webp arka plan olacak. Siyah/camgöbeği piksel
+çerçeveler, karakter portreleri ve parti durum şeridi son referansın temelidir.
+Kısayollar ve ortak özellikler korunur. Tema menüsünün yeri hâlâ seçilmedi.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER
 - Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.

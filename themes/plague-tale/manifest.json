@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "plague-tale",
   "name": "Plague Tale",
-  "version": "1.0.0",
-  "shellAbi": "mct-shell-2.6",
+  "version": "1.0.1",
+  "shellAbi": "mct-shell-2.8",
   "preview": {
     "source": "preview.png",
     "gitBlob": "685a63cfb8a997865927ddef3857ba66c88cedfe"
@@ -167,6 +167,11 @@
       "gitBlob": "6377843359ee524b57b8b060ffa0dba529f1ccaf"
     },
     {
+      "source": "files/style/shell/ui/PartyStrip.qml",
+      "target": "style/shell/ui/PartyStrip.qml",
+      "gitBlob": "c3c5004a87045bafdb52f44a0126dc3dafc4d2af"
+    },
+    {
       "source": "files/style/shell/ui/Power.qml",
       "target": "style/shell/ui/Power.qml",
       "gitBlob": "b90a23666ea55d8666c113ae1ddbbd58fbe7f0cb"
@@ -194,7 +199,7 @@
     {
       "source": "files/style/shell/ui/Theme.qml",
       "target": "style/shell/ui/Theme.qml",
-      "gitBlob": "31fdcafe34adc3b2673e863b649fc773c37fc82d"
+      "gitBlob": "fea72bae9bc02f85a8702b4ddc7821222bb8cd24"
     },
     {
       "source": "files/style/shell/ui/Toast.qml",

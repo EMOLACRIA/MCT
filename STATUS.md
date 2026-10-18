@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.7.0 geliştirme sürümü**.
-Aşama: **Plague Tale ürün/kullanım kapanışı kullanıcı tarafından onaylandı; M5 paket/geçiş çekirdeği uygulandı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
+Son inceleme: **2026-10-18**. Kaynak taban: **2.8.0 — ilk Deltarune denemesi**.
+Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -21,6 +21,34 @@ yaklaşımını ve gerçek ekran görüntülü tema önizleme kartlarını onayl
 seçicinin uygulanması veya ikinci temanın başlaması değildir. O mesaj native giriş/kalıcılık/restore sonucunu içermiyordu;
 aşağıdaki daha yeni kullanıcı onayı bu bekleme durumunun yerine geçer. Yalnız gereksinim belgeleri güncellendi;
 yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime değişmedi.
+
+## 2.8.0 — Deltarune ilk deneme
+
+18 Ekim Europe/Riga: kullanıcı araştırılmış konsepti ve kendi sağladığı
+`Deltarune.webp` arka planına uyarlamayı gördükten sonra “Hadi başlayalım” dedi.
+Bu, ikinci temanın geliştirilmesi için açık onaydır; son tasarım/kullanım kabulü
+henüz değildir. [Rehber](docs/DELTARUNE.md) · [ADR-0013](docs/decisions/0013-deltarune-first-trial.md).
+
+Siyah/camgöbeği kesik köşeler, paket içi Departure Mono fontu, gerçek oyun menü
+portreleri, solda launcher/yan paneller, kompakt medya, kare slider ucu, Kitty
+paleti ve lock medya renkleri eklendi. Bütün shell yüzeyleri aynı backend/state'i
+kullanır. Üç bölümlü alt şerit mevcut sensör/ses/pil verilerini gösterir; unavailable,
+mute ve charging durumları ayrı. Şerit her monitörde 80 mantıksal piksel ayırır.
+2 saniyelik mevcut sensör okuyucu bu temada şerit için açık kalır; uyuyan GPU'yu
+okumama koruması değişmedi. Plague Tale'de şerit kapalı, eski donanım izleme
+sadece panel açıkken çalışır.
+
+Paket ABI'si `mct-shell-2.8`: ortak shell isteğe bağlı PartyStrip pencere/view'ını
+barındırır. Plague Tale uyumlu boş view/default false ile güncellendi; görünümü
+aynı. Komutla apply/rollback ve kullanıcı tercihleri korunur. Menü konumu seçilmedi.
+`bash preview.sh deltarune` kurmadan geçici DemoContext açar; canlı IPC/ayar/installer
+çalıştırmaz. Paket preview PNG'si yapay zekâ referansı değil, gerçek Qt render'ıdır.
+
+Doğrulama ve kalan sınırlar [VALIDATION](docs/VALIDATION.md#280--deltarune-ilk-deneme)
+içinde. Gerçek Wayland, kullanıcı GPU/sensör, fontun 1.6 ölçek sonucu ve yeni tema
+geçişi hedef oturumda denenmeyi bekliyor. SDDM, Dolphin, Spotify ve terminal
+madalyonunun Deltarune görsel uyarlaması sonraki revizyonda; mevcut ayrı adaptörler
+automatik değiştirilmez. Lock parola/saat alanı da bu paketin kapsamına alınmadı.
 
 ## 2.7.0 — Kullanıcı kapanışı ve tema paket çekirdeği
 

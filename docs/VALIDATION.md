@@ -362,3 +362,46 @@ whitespace JavaScript ile kontrol edilir; runtime testi tekrar çalıştırılm�
 gibi gösterilmez. Yeni CLI'nin ilk native kabul komutları
 [THEME_PACKAGES](THEME_PACKAGES.md) içindedir. Paket mevcut render'ı kullanır;
 menü/ikinci tema yoktur. Adaptör otomasyonu sınırı ve update guard belgelenmiştir.
+
+
+## 2.8.0 — Deltarune ilk deneme
+
+2026-10-18: yerel Python 3, Node ve PySide6/Qt **6.10.2**; bütün UI testleri
+`QT_QPA_PLATFORM=offscreen`, `QT_QUICK_BACKEND=software`. Qt bağımlılığı ayrı
+hazırlama dizinindeydi; aşağıdaki Qt komutlarında `MCT_QT_TEST_PATH` kullanıldı.
+Gerçek installer, servis devralma, güç veya kullanıcı oturumu çalıştırılmadı.
+
+- `python3 checks/test_theme_core.py`: **29** geçici dosya/fake runtime testi.
+  Yeni Deltarune → Plague Tale → iki rollback; tema özel font/portrelerin kaldırılıp
+  geri gelmesi ve ilk backup/tercihlerin korunması dahil.
+- `python3 checks/test_deltarune.py`: aynı mevcut sözleşme staged pakette **42**
+  gerçek Qt testi: 10 ayar, 12 shell UI, 7 calculator, 11 Alt+Tab, 2 yeni parti.
+  İlk ilave parti testinde QObject.findChild görsel delegate'i bulamadı; fixture
+  mevcut visual_child yordamına geçirildi, tekrar koşuda 42 test geçti.
+- Baseline `checks/test_preferences_ui.py`: **10**; `checks/test_shell_ui.py`:
+  **12** geçti. Plague Tale'de opsiyonel alt şerit kapalıdır.
+- `checks/test_preferences.py`: **15**, `checks/test_file_manager.py`: **12**;
+  `node checks/test_shell_backend.js`: mevcut eylem/bildirim/tray kontrolü geçti.
+- `checks/test_shell_syntax.py`: ortak **38** QML bytecode; geçici Deltarune
+  kökündeki **38** QML ayrıca qmlcachegen ile derlendi.
+- `checks/test_shell_api.py`: **132** native property/handler QuickShell **0.3.1**
+  kaynaklarıyla eşleşti. Yeni pencerenin screen.width alanı ayrıca
+  `src/core/qmlscreen.hpp` Q_PROPERTY(width) ile denetlendi.
+- `checks/test_shell_imports.py`: tam qmldir ve network import geçti.
+- **45** Python parse, **27** Bash syntax, **88** yerel Markdown dosya bağlantısı;
+  `git diff --check` geçti. Paket load blob/PNG bütünlüğünü doğruladı.
+
+`checks/render_theme.py` her yüzeyi ayrı taze Qt sürecinde render eder; bu,
+çok sayıda test penceresi sonrasında software renderer'ın eksik dirty-region
+karelerini yayın önizlemesi olarak kaydetmeyi önler. Preview PNG ile üç ilave
+render 1600×1000 DemoContext'ten üretildi. Bu gerçek kullanıcı sensör verisi değil.
+
+```bash
+python3 checks/render_theme.py deltarune /tmp/deltarune-preview.png --panel launcher
+```
+
+Native Wayland/Steam tray sağ tık, her monitörde alt şerit reserve/odak,
+1.6 ölçek font/ikon görünümü, fiziksel şarj/sensör, hyprpaper ve tema check/apply/
+rollback hedef kullanıcı kabulünü bekler. Kullanıcının Plague Tale gün boyu
+kullanım onayı bu yeni tema için uydurulmuş bir kabul kaydı sayılmaz.
+Dış uygulama/SDDM/lock-auth/terminal madalyonu Deltarune uyarlamaları bu pakette yok.

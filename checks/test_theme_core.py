@@ -117,6 +117,20 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(before, self.state())
         self.assertEqual(self.runtime.events, ["preflight", "validate"])
 
+    def test_deltarune_apply_switch_back_and_rollback_restore_theme_only_assets(self):
+        self.engine.apply("deltarune")
+        portrait = self.engine.style / "shell/assets/kris.png"
+        font = self.engine.style / "shell/assets/departure-mono.otf"
+        self.assertTrue(portrait.is_file()); self.assertTrue(font.is_file())
+        first = self.engine.optional("active.json")
+        self.engine.apply("plague-tale")
+        self.assertFalse(portrait.exists()); self.assertFalse(font.exists())
+        self.engine.rollback()
+        self.assertTrue(portrait.is_file()); self.assertTrue(font.is_file())
+        self.assertEqual(self.engine.optional("active.json"), first)
+        self.engine.rollback()
+        self.assertFalse(portrait.exists()); self.assertFalse(font.exists())
+
     def test_apply_variant_and_chained_rollback_preserve_original_backup(self):
         self.engine.apply("plague-tale")
         first = self.engine.pointer()
@@ -389,7 +403,10 @@ class CoreTests(unittest.TestCase):
                                     capture_output=True, text=True, env=env)
             self.assertEqual(result.returncode, 0, result.stderr)
             value = json.loads(result.stdout)
-            self.assertEqual(value[0]["id"], "plague-tale") if action == "list" else self.assertIsNone(value["active"])
+            if action == "list":
+                self.assertEqual({row["id"] for row in value}, {"plague-tale", "deltarune"})
+            else:
+                self.assertIsNone(value["active"])
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
-# Tema paket çekirdeği — 2.7.0
+# Tema paket çekirdeği — 2.8.0
 
-İlk paket `plague-tale`. Görsel menü yoktur; önizleme PNG'si paket metadata'sında
-hazırdır. Kullanıcı menünün konumunu daha sonra belirleyecek. İkinci oyun seçilmedi.
+Paketler `plague-tale` ve ilk deneme `deltarune`. Görsel menü yoktur; önizleme PNG'si paket metadata'sında
+hazırdır. Kullanıcı menünün konumunu daha sonra belirleyecek. [Deltarune deneme rehberi](DELTARUNE.md).
 
 ## Kullanım
 
@@ -28,7 +28,7 @@ geçmişine yazmaz. İlk install/restore yedeği korunur.
 
 ## Paket ve sınır
 
-`themes/plague-tale/manifest.json` şema 1, id/name/version, `mct-shell-2.6` ABI,
+`themes/plague-tale/manifest.json` şema 1, id/name/version, `mct-shell-2.8` ABI,
 preview, zorunlu yüzey beyanları, dosya envanteri ve ayrı uygulama adaptörlerini
 tanımlar. 38 görsel kaynak `files/` altında; preview gerçek mevcut Qt masaüstü
 render'ının PNG'sidir. Kaynaklar git blob kimlikleriyle ve PNG yapısı/CRC ile
@@ -52,6 +52,18 @@ tek tıkla bütün uygulama adaptörlerini otomatik uygulamış sayılmaz.
 Lock medya paketi, parola/auth yapılandırmasının yeniden yazılması değildir.
 Terminal kapsamı mevcut Kitty include'udur; diğer terminal paletleri aynı
 işlemde otomatik yeniden stillenmez.
+
+## Kurulumsuz tema önizlemesi
+
+```bash
+bash preview.sh deltarune
+```
+
+`theme_preview.py` repo payload'ını ve doğrulanmış paket kaynaklarını geçici köke
+birleştirir; DemoContext penceresi kapandığında temizler. Kurulu tema dosyası,
+canlı shell, IPC, tercihler ve ilk yedek değişmez. Paket ABI 2.8 isteğe bağlı
+PartyStrip view'ı ve native alt pencereyi içerir. Plague Tale'de kapalıdır.
+Departure Mono fontu ve OFL metni yalnız belirli izinli asset yollarına taşınır.
 
 ## İşlem ve geri dönüş
 

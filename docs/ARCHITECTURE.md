@@ -131,3 +131,11 @@ UI bir hesabı, cihazı veya bağımlılığı icat etmez; eksik yetenek göster
 Vitreus'un güncel pleamar runtime'ına göç kararı yoktur. Caelestia'nın güncel
 QuickShell-git ihtiyacı, bizim 0.3.1 paketimize doğrudan kod taşınabileceğini
 kanıtlamaz. Mevcut runtime değişikliği ayrı gerekçeli teknik karardır.
+
+## 2.8 opsiyonel sunum yüzeyi
+
+Ortak shell/preview her iki pakette aynı `PartyStrip` arayüzünü yaratır.
+`Theme.partyStripEnabled` Plague Tale'de false; Deltarune'da true. Native pencere
+ve sensör izleme yetkisi ortak shell'e aittir; paket yalnız verileri çizer ve
+mevcut uiState.toggle eylemlerine bağlanır. Bu yeni view/default sözleşmesi ABI'yi
+mct-shell-2.8 yapar. [ADR-0013](decisions/0013-deltarune-first-trial.md).

@@ -21,11 +21,11 @@ import time
 import zlib
 
 ROOT = Path(__file__).resolve().parent
-ABI = "mct-shell-2.6"
+ABI = "mct-shell-2.8"
 VIEWS = frozenset(("ActionButton Bar Controls Feedback Glyph Hardware HintBubble Launcher "
     "LevelControl Media NotificationActions Notifications OrnamentFrame Overlay PanelHeader "
     "Power PreferenceChoice PreferenceSlider Settings SurfaceLayout Theme Toast ToastStack "
-    "WindowSwitcher").split())
+    "WindowSwitcher PartyStrip").split())
 SHARED = ("shell/shell.qml", "shell/LiveContext.qml", "shell/validate.qml",
           "shell/ui/UiState.qml", "shell/ui/PreferencesState.qml",
           "shell/ui/WindowSwitcherState.qml", "shell/ui/NotificationWatcher.qml")
@@ -84,7 +84,9 @@ def allowed(name):
     if str(p.parent) == "style/shell/ui" and p.suffix == ".qml" and p.stem in VIEWS:
         return True
     return (str(p.parent) in ("style/shell/assets", "style/hyprlock")
-            and bool(re.fullmatch(r"[A-Za-z0-9_-]+\.(png|svg)", p.name)))
+            and bool(re.fullmatch(r"[A-Za-z0-9_-]+\.(png|svg)", p.name))) or (
+                str(p.parent) == "style/shell/assets" and p.name in (
+                    "departure-mono.otf", "departure-mono-license.txt"))
 
 
 def png(data):
