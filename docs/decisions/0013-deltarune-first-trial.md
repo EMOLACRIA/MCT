@@ -36,3 +36,13 @@ lock parola/saat ve terminal madalyonu adaptasyonları takip eden revizyonda.
 sözleşmesi staged Deltarune'da yeniden koşuldu; ek testler yeni şerit veri ve
 panel bağlantısını, dosya testi tema özel font/portrelerin dönüşünü denetler.
 Offscreen test native Wayland kabulü değildir. [Kullanım](../DELTARUNE.md).
+
+
+## 18 Ekim 14:50 — Kullanıcı revizyonu
+
+Kullanıcı canlı temayı görüp alt parti şeridini kaldırdı, kontrol menüsünü sağda
+istedi ve daha yüksek boyutlu images_upscaled.jpeg sağladı. Deltarune 0.1.1'de
+flag false/view boş; alt reserve ve sürekli sensör okuma yok. Arama yerinde
+korunur. Wallpaper tam 2048×1151 dönüştürülür. Ortak opsiyonel sözleşme/ABI aynı;
+aktif paket üstüne check/apply ile güncellenir. Önceki şerit kararı güncel ürün
+zorunluluğu değildir. Bu revizyonun native görsel kabulü beklenir.

@@ -1,6 +1,6 @@
 # Güncel durum
 
-Son inceleme: **2026-10-18**. Kaynak taban: **2.8.0 — ilk Deltarune denemesi**.
+Son inceleme: **2026-10-18**. Kaynak taban: **2.8.0 / Deltarune 0.1.1**.
 Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
@@ -22,7 +22,29 @@ seçicinin uygulanması veya ikinci temanın başlaması değildir. O mesaj nati
 aşağıdaki daha yeni kullanıcı onayı bu bekleme durumunun yerine geçer. Yalnız gereksinim belgeleri güncellendi;
 yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime değişmedi.
 
-## 2.8.0 — Deltarune ilk deneme
+## Deltarune 0.1.1 — ilk kullanıcı revizyonu
+
+18 Ekim 14:50 Europe/Riga: kullanıcı canlı Deltarune masaüstü ekran görüntüsü
+paylaştı ve üç revizyon istedi. Bu, paketin hedef oturumda açıldığını gösterir;
+bütün işlevlerin veya yeni düzenin son kabulü değildir.
+
+- Kontrol menüsü sağda; arama önceki sol konumunda. Mevcut merkez panel tercihi
+  açıkça değiştirilmez; açıksa merkez önceliği korunur.
+- Alttaki parti şeridi ve onun 80 piksel exclusive zone'u kaldırıldı. Ortak
+  opsiyonel pencere sözleşmesi yerinde; Deltarune view'ı boş ve flag false.
+  Sürekli sensör izleme de kapanır, yalnız Super+T donanım paneli açıkken sürer.
+- Wallpaper, shell ve lock medya fallback'ı kullanıcının **images_upscaled.jpeg**
+  dosyasından 2048×1151 PNG'ye dönüştürüldü. JPEG'in çözümlenen pikselleriyle
+  eşitlik denetlendi; resize veya ikinci üretim yapılmadı. Kaynak JPEG saklandı.
+  Görüntü cache'i içeriğe bağlı yeni yoldan yenilenir.
+
+Ortak shell/ABI değişmedi; aktif Deltarune üstüne `git pull --ff-only`, sonra
+`theme.sh check/apply deltarune` yeterli. Source update/restore gerekmez.
+42 Qt + 31 core test geçti; yeni iki Qt kontrolü sağ/sol konum, merkez tercih,
+şeridin yokluğu ve wallpaper/font yüklemesini doğrular. Yeni native revizyonun
+kullanıcı kontrolü bekleniyor. [Rehber](docs/DELTARUNE.md).
+
+## 2.8.0 — Deltarune ilk deneme (önceki kayıt)
 
 18 Ekim 14:38 kullanıcı logu: kaynak update/check ve QML kontrolü başarılı;
 `theme.sh check deltarune` aşırı dar QuickShell sürüm koşulunda durdu. Tema apply

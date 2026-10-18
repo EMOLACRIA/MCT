@@ -181,11 +181,12 @@ bir sonraki temanın bunlardan biri olacağı kararlaştırılmadı.
 ## M6 — Deltarune ilk deneme — uygulandı / kullanıcı kabulü bekliyor
 
 18 Ekim kullanıcı ikinci temanın geliştirilmesini başlattı. Seçilen wallpaper,
-siyah/camgöbeği piksel dil, üç karakter portreleri ve gerçek değerli parti şeridi
-ilk pakette var. Ortak launcher/hesaplama/Alt+Tab/tray/OSD/ayar sözleşmesi korunur.
+siyah/camgöbeği piksel dil ve karakter portreleri ilk pakette var. 18 Ekim ilk
+revizyonda kullanıcı parti şeridini kaldırdı; kontrol menüsü sağa taşındı ve
+yeni images_upscaled.jpeg wallpaper kullanıldı. Ortak launcher/hesaplama/Alt+Tab/tray/OSD/ayar sözleşmesi korunur.
 
 1. Kullanıcı gerçek oturumda paketi deneyip görsel ve kullanım revizyonlarını verir.
-2. Bu sonuçla panel ölçüleri, şerit ve fontun 1.6 ölçekteki görünümü cilalanır.
+2. Bu sonuçla panel ölçüleri ve fontun 1.6 ölçekteki görünümü cilalanır.
 3. Lock parola/saat sunumu, SDDM, Dolphin/Spotify ve terminal madalyonu için ayrı
    görsel adaptasyon tamamlanır. Mevcut uygulama kurulumu sessizce değiştirilmez.
 4. Tema seçicinin yerini kullanıcı belirler; gerçek Qt önizlemesi metadata'da hazır.

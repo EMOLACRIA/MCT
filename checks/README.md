@@ -194,7 +194,7 @@ python3 checks/render_theme.py deltarune /tmp/deltarune-preview.png --panel medi
 ```
 
 İkinci komut PySide6 gerektirir ve mevcut etkileşim testlerini geçici Deltarune
-köküne yönlendirir: 42 Qt testi. Yeni şerit testleri unavailable/0°C/mute/şarj,
-font yükleme ve mevcut panel toggle bağlantısını denetler. Render komutu her yüzey
+köküne yönlendirir: 42 Qt testi. 0.1.1 revizyon kontrolleri sağ kontrol/sol arama ve merkez tercihi,
+alt şeridin yokluğu, font ve wallpaper decode piksel eşitliğini denetler. Render komutu her yüzey
 için taze süreçte gerçek QML ekran görüntüsü üretir; native Quickshell çalıştırmaz.
-MCT_QT_TEST_PATH desteklenir. Core suite 29 stdlib/fake-runtime testidir.
+MCT_QT_TEST_PATH desteklenir. Core suite sürüm gate kontrolleriyle 31 stdlib/fake-runtime testidir.

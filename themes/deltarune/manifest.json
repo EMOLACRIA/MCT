@@ -2,11 +2,11 @@
   "schema": 1,
   "id": "deltarune",
   "name": "Deltarune",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "shellAbi": "mct-shell-2.8",
   "preview": {
     "source": "preview.png",
-    "gitBlob": "b4f74894868fc6b559161e007f8e812db67caa55"
+    "gitBlob": "c0beb311614d4deb0738e9bf80b3e998d53de4f3"
   },
   "surfaces": [
     "bar",
@@ -34,7 +34,7 @@
     {
       "source": "files/style/hyprlock/cover.png",
       "target": "style/hyprlock/cover.png",
-      "gitBlob": "2ada405c6b8030e73ab7547f1a834053fd7a086d"
+      "gitBlob": "41b0e1397fed57ae8b782d6cc06e9d107153e148"
     },
     {
       "source": "files/style/hyprlock/media.conf",
@@ -114,7 +114,7 @@
     {
       "source": "files/style/shell/assets/wallpaper.png",
       "target": "style/shell/assets/wallpaper.png",
-      "gitBlob": "2ada405c6b8030e73ab7547f1a834053fd7a086d"
+      "gitBlob": "41b0e1397fed57ae8b782d6cc06e9d107153e148"
     },
     {
       "source": "files/style/shell/ui/ActionButton.qml",
@@ -184,7 +184,7 @@
     {
       "source": "files/style/shell/ui/Overlay.qml",
       "target": "style/shell/ui/Overlay.qml",
-      "gitBlob": "7c3c448829252f7a51fe4ef83997b84b96cdedde"
+      "gitBlob": "2435c889c5cc4940b3b5b9715b984c97c1479139"
     },
     {
       "source": "files/style/shell/ui/PanelHeader.qml",
@@ -194,7 +194,7 @@
     {
       "source": "files/style/shell/ui/PartyStrip.qml",
       "target": "style/shell/ui/PartyStrip.qml",
-      "gitBlob": "088f8465a55305fd5c19ae3b2d40e0d76d0264c6"
+      "gitBlob": "c3c5004a87045bafdb52f44a0126dc3dafc4d2af"
     },
     {
       "source": "files/style/shell/ui/Power.qml",
@@ -224,7 +224,7 @@
     {
       "source": "files/style/shell/ui/Theme.qml",
       "target": "style/shell/ui/Theme.qml",
-      "gitBlob": "b52590688838d41cb9a5e53fe699d20171d05ce1"
+      "gitBlob": "bc81920de8e2813f4451fdb074ec948c8da1888a"
     },
     {
       "source": "files/style/shell/ui/Toast.qml",
@@ -244,7 +244,7 @@
     {
       "source": "files/style/wallpaper.png",
       "target": "style/wallpaper.png",
-      "gitBlob": "2ada405c6b8030e73ab7547f1a834053fd7a086d"
+      "gitBlob": "41b0e1397fed57ae8b782d6cc06e9d107153e148"
     }
   ],
   "adapters": {

@@ -1,4 +1,4 @@
-"""Run the existing interaction contract against a staged skin, plus its optional strip.
+"""Run the existing interaction contract against a staged skin, plus the current panel/wallpaper revisions.
 
 Qt offscreen only. Does not install, run QuickShell, or contact the user's session.
 """
@@ -14,33 +14,37 @@ import theme_preview
 import test_preferences_ui as qt
 
 
-class PartyStripTests(qt.PreferenceUiTests):
-    def setUp(self):
-        super().setUp()
-        self.js('uiState.close()')
+class DeltaruneRevisionTests(qt.PreferenceUiTests):
+    def test_controls_right_launcher_left_and_center_preference_preserved(self):
+        self.change('reduceMotion', True)
+        self.change('centerPanels', False)
+        for width,height in [(1600,1000),(900,600),(640,480)]:
+            self.view.resize(width,height)
+            for panel in ['launcher','controls']:
+                self.js('uiState.close();uiState.toggle("'+panel+'","preview")')
+                qt.QTest.qWait(20)
+                frame=qt.visual_child(self.root,'activePanelFrame')
+                expected=width-frame.width()-16 if panel=='controls' else 16
+                self.assertAlmostEqual(frame.x(),expected)
+                self.assertGreaterEqual(frame.x(),0)
+                self.assertLessEqual(frame.x()+frame.width(),width)
+        self.change('centerPanels', True)
+        qt.QTest.qWait(20)
+        self.assertAlmostEqual(frame.x(),(self.view.width()-frame.width())/2)
 
-    def test_live_values_missing_sensors_mute_and_charging(self):
-        self.js('backend.hardware={};backend.audioAvailable=false;backend.battery=-1')
-        qt.QTest.qWait(10)
-        for index, value in enumerate(['TEMP —', 'OFFLINE', 'AC']):
-            self.assertEqual(qt.visual_child(self.root, 'partyValue-'+str(index)).property('text'), value)
-        self.js('backend.hardware={cpuTemp:0,cpuUsage:0};backend.audioAvailable=true;backend.muted=true;backend.battery=42;backend.batteryCharging=true')
-        qt.QTest.qWait(10)
-        for index, value in enumerate(['0°C', 'MUTED', '42% +']):
-            self.assertEqual(qt.visual_child(self.root, 'partyValue-'+str(index)).property('text'), value)
-        self.js('backend.hardware={cpuTemp:null};backend.batteryCharging=false;backend.muted=false;backend.volume=73')
-        qt.QTest.qWait(10)
-        for index, value in enumerate(['TEMP —', '73%', '42%']):
-            self.assertEqual(qt.visual_child(self.root, 'partyValue-'+str(index)).property('text'), value)
-
-    def test_party_buttons_toggle_existing_panels_and_font_loads(self):
-        self.click('partyCell-0'); self.assertEqual(self.js('uiState.activePanel'), 'hardware')
-        self.js('uiState.close()')
-        self.click('partyCell-1'); self.assertEqual(self.js('uiState.activePanel'), 'controls')
-        panel=self.root.findChild(qt.QObject,'activePanelFrame')
-        self.assertEqual(qt.evaluate(panel,'Theme.loadedFont.status'),1)
-        self.assertIn('Departure',qt.evaluate(panel,'Theme.bodyFont'))
-
+    def test_bottom_strip_removed_font_and_wallpaper_preserved(self):
+        from PySide6.QtGui import QImage
+        self.js('uiState.close();uiState.toggle("launcher","preview")')
+        qt.QTest.qWait(30)
+        self.assertIsNone(qt.visual_child(self.root,'partyStrip'))
+        frame=qt.visual_child(self.root,'activePanelFrame')
+        self.assertFalse(qt.evaluate(frame,'Theme.partyStripEnabled'))
+        self.assertEqual(qt.evaluate(frame,'Theme.loadedFont.status'),1)
+        self.assertIn('Departure',qt.evaluate(frame,'Theme.bodyFont'))
+        source=QImage(str(ROOT/'themes/deltarune/wallpaper-source.jpeg'))
+        wallpaper=QImage(str(qt.ROOT/'payload/style/wallpaper.png'))
+        self.assertEqual((wallpaper.width(),wallpaper.height()),(2048,1151))
+        self.assertEqual(source.convertToFormat(QImage.Format_RGBA8888),wallpaper.convertToFormat(QImage.Format_RGBA8888))
 
 
 def main():
@@ -59,9 +63,9 @@ def main():
             result=unittest.TextTestRunner(verbosity=1).run(suite);passed=passed and result.wasSuccessful()
         qt.qInstallMessageHandler(lambda kind,context,message:qt.WARNINGS.append(message))
         # Load only new checks; inherited settings cases have already run above.
-        suite=unittest.TestSuite(PartyStripTests(name) for name in [
-            'test_live_values_missing_sensors_mute_and_charging',
-            'test_party_buttons_toggle_existing_panels_and_font_loads'])
+        suite=unittest.TestSuite(DeltaruneRevisionTests(name) for name in [
+            'test_controls_right_launcher_left_and_center_preference_preserved',
+            'test_bottom_strip_removed_font_and_wallpaper_preserved'])
         result=unittest.TextTestRunner(verbosity=1).run(suite);passed=passed and result.wasSuccessful()
     return 0 if passed else 1
 

@@ -51,3 +51,13 @@ kaynak eşitliğini doğrular; bu kayıt yeni lisans veya üçüncü taraf hak d
   PNG düğmeler paket yanındaki SVG kaynaklarının Qt render'larıdır.
 - `themes/deltarune/preview.png` ve `previews/deltarune/` gerçek Qt DemoContext
   render'larıdır; konsept üretim görseli ürün ekran görüntüsü diye kullanılmadı.
+
+
+### Deltarune 0.1.1 wallpaper değişimi
+
+18 Ekim: kullanıcı ilk wallpaper kalitesini yetersiz bulup **images_upscaled.jpeg**
+sağladı. Tam 2048×1151 kaynak `themes/deltarune/wallpaper-source.jpeg` içinde
+birebir saklandı. SHA256: `bd8a46c7f008a18b45081c8f7506727ab4a803550399e029a3b56a789af0d3e3`.
+Üç runtime PNG kopyası Qt ile format dönüştürüldü; decode edilmiş RGBA pikselleri
+kaynağa eşit. Ek upscale, yeniden çizim veya yeniden JPEG sıkıştırması yapılmadı.
+Preview PNG'leri yeni wallpaper ve şeritsiz düzenle yeniden Qt'den render edildi.

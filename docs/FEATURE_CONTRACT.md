@@ -152,14 +152,13 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 ## Deltarune — 18 Ekim 2026
 
 - Aynı Super+R/M/T/B/Q/E/L ve Alt+Tab eylemleri, toggle ve hesaplama anlamı sürer.
-- Ek parti durum şeridi SYSTEM → mevcut donanım, AUDIO/POWER → mevcut kontrol
-  panelini açar. Yeni global kısayol veya iş komutu tanımlamaz.
-- Sıcaklık yoksa TEMP —, ses aygıtı yoksa OFFLINE, pil yoksa AC; sahte değer yoktur.
-  Sessiz/şarj durumu metinle de anlaşılır. Şerit üç hücreyi dar genişlikte de korur.
+- 18 Ekim kullanıcı revizyonu: alt parti şeridi yoktur ve altta alan ayırmaz.
+  Donanım/ses/pil özellikleri Super+T ve mevcut üst bar/kontrol menüsünde korunur.
+- Kontrol menüsü sağda, arama önceki sol konumundadır. Merkez panel kullanıcı
+  tercihi açıksa önceliği korunur; kayıtlı tercih dosyası değiştirilmez.
+- Wallpaper yeni kullanıcı JPEG'inin tam 2048×1151 boyutlu kayıpsız PNG kopyasıdır.
 - Tema font/renk/kenar/yerleşim sağlar; preferences/kısayollar/bildirim durumu
-  ortak kalır. Kullanıcının merkez panel tercihi varsayılan sol yerleşimin önündedir.
-- Native alt şerit Top katmanında 80 mantıksal piksel ayırır; kullanıcı ekran
-  çözünürlüğü/ölçeği/VRR veya GPU ayarı yeniden yazılmaz.
+  ortak kalır. Kullanıcının çözünürlük/ölçek/VRR/GPU ayarı yeniden yazılmaz.
 
 - 18 Ekim sürüm gate düzeltmesi: kurucu ve tema geçişi aynı minimum QuickShell
   0.3.1 kuralını kullanır. Kaynak referans sürümü tam eşitlik kilidi değildir;

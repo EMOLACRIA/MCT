@@ -1,4 +1,4 @@
-# Deltarune — ilk kullanım denemesi (2.8.0)
+# Deltarune — kullanım denemesi (paket 0.1.1)
 
 18 Ekim 2026: kullanıcının seçtiği arka plan ve onayladığı son referans temel
 alındı. Bu, son kabul edilmiş ikinci tema değil; kullanıp revize edilecek sürüm.
@@ -47,12 +47,11 @@ bash theme.sh check plague-tale && bash theme.sh apply plague-tale
 
 ## Bu denemede neler var?
 
-- Seçilen görselin piksel eşitliği korunmuş PNG kopyası; yeniden çizim yok.
+- Kullanıcının yeni images_upscaled.jpeg görseli; 2048×1151 tam boyutlu PNG.
 - Siyah/camgöbeği kesik köşeler, Departure Mono fontu, gerçek oyun menü portreleri.
 - Mevcut bütün shell menüleri, Alt+Tab, bildirimler, ayarlar ve sürüklenebilir OSD.
-- Solda launcher/yan paneller. Merkez panel tercihin açıksa öncelik ona aittir.
-- Alt şerit: CPU sıcaklığı/yük, ses/mute, pil/şarj. SYSTEM donanımı, AUDIO/POWER
-  kontrol panelini açar. Ekran başına 80 mantıksal piksel alan ayırır.
+- Arama önceki sol konumunda; kontrol menüsü sağda. Merkez panel tercihin
+  açıksa öncelik ona aittir. Alt parti şeridi ve ayırdığı alan kaldırıldı.
 - Kitty renkleri ve Hyprlock medya renk/düğmeleri. Terminal başlangıcı değiştirilmez.
 
 Super+R tekrar basınca kapanır. Super+M oturum menüsü, Super+T donanım,
@@ -62,12 +61,12 @@ Bu ilk paket SDDM, Dolphin, Spotify veya terminal madalyonuna Deltarune adaptör
 kurmaz. Hyprlock parola/saat sunumu da önceki ortak kurulumdadır. Bu alanlar
 ikinci temanın sonraki revizyonları; bunların tamamlandığı iddia edilmez.
 
-Sensör okuma bu temada iki saniyede bir devam eder; mevcut uyuyan GPU koruması
-korunur. Sensör/pil/aygıt yoksa uydurma değer yerine TEMP — / AC / OFFLINE görünür.
+Donanım sensörleri yalnız Super+T paneli açıkken iki saniyede bir okunur;
+mevcut uyuyan GPU koruması korunur. Veriler üst bardan veya ilgili panelden izlenir.
 
 ## Önizlemeler ve sınır
 
-[Medya](../previews/deltarune/media.png) · [OSD](../previews/deltarune/osd.png) ·
+[Kontrol menüsü](../previews/deltarune/controls.png) · [Medya](../previews/deltarune/media.png) · [OSD](../previews/deltarune/osd.png) ·
 [Alt+Tab](../previews/deltarune/switcher.png). Bunlar Qt 6.10.2 DemoContext
 render'larıdır; gerçek Wayland, Steam, PAM, Spotify veya fiziksel sensör kabulü
 değildir. Fotoğraflı tema kartı için gerçek render metadata'ya kaydedildi;
@@ -87,3 +86,14 @@ bash theme.sh check deltarune && bash theme.sh apply deltarune
 Başarılı source update'i tekrarlamak veya restore çalıştırmak gerekmez. Gerçek
 sürüm okunamazsa hata artık elde edilen çıktıyı da gösterir. Kullanıcının bu
 logdaki kesin QuickShell sürümü bilinmiyor; yeni sürümde native kabul bekliyor.
+
+
+### Aktif Deltarune'u 0.1.1'e güncellemek
+
+```bash
+git pull --ff-only
+bash theme.sh check deltarune && bash theme.sh apply deltarune
+```
+
+Aynı ABI korunur; source update veya restore gerekmez. Wallpaper içerik hash'li
+cache yolundan değişir. Önceki görünüme normal theme rollback ile dönülebilir.

@@ -45,8 +45,10 @@ ve güzel çalıştığını açıkça onayladı. Bu, Plague Tale ürün/kullan�
 ayrı ayrı ölçülmüş tüm donanım logları veya genel yayın lisansı onayı değildir.
 Geçiş çekirdeği 2.7.0'da uygulandı ve izole CI'da doğrulandı.
 18 Ekim: kullanıcı ikinci tema olarak Deltarune geliştirmesini başlattı.
-Kullanıcının sağladığı Deltarune.webp arka plan olacak. Siyah/camgöbeği piksel
-çerçeveler, karakter portreleri ve parti durum şeridi son referansın temelidir.
+İlk Deltarune.webp yerine 18 Ekim revizyonunda kullanıcının gönderdiği
+images_upscaled.jpeg (2048×1151) kullanılır. Siyah/camgöbeği piksel çerçeveler
+ve karakter portreleri korunur. Kullanıcı alt parti şeridini kaldırdı; kontrol
+menüsü sağda, arama önceki sol konumunda açılır.
 Kısayollar ve ortak özellikler korunur. Tema menüsünün yeri hâlâ seçilmedi.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER

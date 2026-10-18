@@ -417,3 +417,17 @@ kontrollü preflight üzerinden denetler. İlk fixture stderr varyantında Hyprl
 çıktısını da stderr'e taşıdı; yalnız QuickShell çıktısı değişecek şekilde
 fixture düzeltildi ve suite yeniden geçti. Native Quickshell çalıştırılmadı;
 kullanıcının asıl sürümü verilmedi, aday tema check/apply kabulü hâlâ bekleniyor.
+
+
+### 18 Ekim — Deltarune 0.1.1 düzen ve wallpaper
+
+`python3 checks/test_theme_core.py`: 31 geçti. `python3 checks/test_deltarune.py`:
+42 geçti (10 ayar, 12 UI, 7 calculator, 11 Alt+Tab, 2 revizyon).
+Önceki şerit testlerinin yerine 1600/900/640 genişlikte kontrol sağ/arama sol,
+merkez tercih, görünür alt şeridin yokluğu, font ve 2048×1151 PNG'nin repo JPEG'iyle
+decode piksel eşitliği denetlendi. Source ABI değişmedi; mevcut native opsiyonel
+pencere/izleme koşulu flag false ile kapanır. Native ekran reserve/konum sonucu
+bu revizyon için kullanıcı kabulünü bekliyor.
+
+Launcher ve controls/media/osd/switcher Qt önizlemeleri taze süreçlerde yenilendi.
+Native Hyprland oturumu ve fiziksel wallpaper IPC burada çalıştırılmadı.

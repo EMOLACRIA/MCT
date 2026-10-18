@@ -13,7 +13,7 @@ FocusScope {
         readonly property bool centered:SurfaceLayout.panelCentered(uiState.activePanel,Theme.preferences.centerPanels)
         width:SurfaceLayout.panelWidth(uiState.activePanel,root.width)
         height:SurfaceLayout.panelHeight(uiState.activePanel,root.height,uiState.confirmation,Theme.fontScale)
-        x:centered ? (root.width-width)/2 : SurfaceLayout.panelSideMargin
+        x:centered ? (root.width-width)/2 : uiState.activePanel==="controls" ? root.width-width-SurfaceLayout.panelSideMargin : SurfaceLayout.panelSideMargin
         y:centered ? (root.height-height)/2 : SurfaceLayout.panelTop
         MouseArea { anchors.fill:parent }
         Loader {
