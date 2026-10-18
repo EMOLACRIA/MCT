@@ -21,7 +21,7 @@ import time
 import zlib
 
 ROOT = Path(__file__).resolve().parent
-ABI = "mct-shell-2.8"
+ABI = "mct-shell-2.9"
 VIEWS = frozenset(("ActionButton Bar Controls Feedback Glyph Hardware HintBubble Launcher "
     "LevelControl Media NotificationActions Notifications OrnamentFrame Overlay PanelHeader "
     "Power PreferenceChoice PreferenceSlider Settings SurfaceLayout Theme Toast ToastStack "
@@ -78,7 +78,7 @@ def safe(root, relative):
 def allowed(name):
     if name == "hypr/appearance.lua":
         return True
-    if name in ("style/wallpaper.png", "style/kitty/theme.conf", "style/hyprlock/media.conf"):
+    if name in ("style/wallpaper.png", "style/kitty/theme.conf", "style/hyprlock/media.conf", "style/hyprlock/layout.conf"):
         return True
     p = PurePosixPath(name)
     if str(p.parent) == "style/shell/ui" and p.suffix == ".qml" and p.stem in VIEWS:
@@ -335,12 +335,12 @@ class Engine:
                 raise ThemeError("Package integrity mismatch: " + target)
             if file.suffix == ".png":
                 png(data)
-            if target == "style/hyprlock/media.conf":
+            if target in ("style/hyprlock/media.conf", "style/hyprlock/layout.conf"):
                 data = data.replace(b"@STYLE@", str(self.style).encode())
             total += len(data)
             output[target] = data
         required = {"hypr/appearance.lua", "style/wallpaper.png", "style/kitty/theme.conf",
-                    "style/hyprlock/media.conf", "style/shell/ui/Theme.qml",
+                    "style/hyprlock/media.conf", "style/hyprlock/layout.conf", "style/shell/ui/Theme.qml",
                     "style/shell/ui/SurfaceLayout.qml"}
         if not required <= output.keys() or total > 64 * 1024 * 1024:
             raise ThemeError("Incomplete or oversized theme package")
@@ -368,9 +368,13 @@ class Engine:
             safe(p.parent, p.name)
         if not (self.state / "current-backup").is_file():
             raise ThemeError("Install MCT first; the original restore point is required.")
+        lock_config = safe(self.hypr, "hyprlock.conf")
+        expected_source = re.compile(r"\s*source\s*=\s*"+re.escape(str(self.style / "hyprlock/layout.conf"))+r"\s*(?:#.*)?")
+        if not lock_config.is_file() or not any(expected_source.fullmatch(line) for line in lock_config.read_text().splitlines()):
+            raise ThemeError("Hyprlock layout source is missing; update MCT or adapt your custom hyprlock.conf before applying a full theme.")
         shared = set(SHARED)
         for source in (self.root / "payload/style/shell").rglob("*"):
-            if source.is_file():
+            if source.is_file() and "__pycache__" not in source.parts and source.suffix not in (".pyc", ".pyo"):
                 relative = str(source.relative_to(self.root / "payload/style"))
                 if not allowed("style/" + relative):
                     shared.add(relative)

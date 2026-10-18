@@ -182,8 +182,9 @@ bir sonraki temanın bunlardan biri olacağı kararlaştırılmadı.
 
 18 Ekim tamamlama denetiminde açık eksikler bulundu:
 [bulgular ve kapanış koşulları](docs/DELTARUNE_AUDIT.md). Tema seçiciye geçiş
-koşulu henüz karşılanmadı. Öncelik Loader uyarısını ayrıştırma ve ortak davranış
-ayrımı; sonra aşağıdaki harici yüzey adaptasyonlarıdır.
+koşulu henüz karşılanmadı. 2.9.0'da Loader yaşam döngüsü/ortak davranış ayrımı ve harici görsel adaptörler
+uygulandı; offscreen/mock kontrolleri geçti. Yeni native görünüm/işlev kabulü
+beklenir. [Deneme adımları](docs/UPGRADE_2_9.md).
 
 18 Ekim kullanıcı ikinci temanın geliştirilmesini başlattı. Seçilen wallpaper,
 siyah/camgöbeği piksel dil ve karakter portreleri ilk pakette var. 18 Ekim ilk

@@ -1,6 +1,24 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.7.0
+`payload/style/shell/behavior/` Launcher, Power, Feedback ve WindowSwitcher
+controller'larını ayrıca sunar. Bunlar görsel geometri içermez; tamamen yeni
+bir sunum bu controller'ları kullanabilir. `surfaces/` onların ortak varsayılan
+çizimidir. Mevcut iki skin bu çizimi property/delegate ile özelleştirir.
+
+## Mevcut 2.9.0
+
+`payload/style/shell/surfaces/` 17 ortak etkileşim/sunum şablonu ve PanelSlot'u
+barındırır. Paket `ui/` wrapper'ları yalnız görsel property/delegate seçer;
+komut/input/onay tekrar etmez. Native servis/state/IPC önceki ortak yerde kalır.
+Şablon varsayılan çizim de içerir; çok farklı tasarım için sunum delegate'i
+verilir. Bu güvenilir QML kaynak modeli, sandbox değildir.
+
+Hyprlock general/auth ana dosyadadır; tema layout ve media görsellerini taşır.
+Dış adaptörler `adapter_assets.py` ile aynı kurucunun farklı kaynaklarını seçer.
+SDDM tek login controller'ı ve ayrı LoginSkin'i kullanır. Tam sınırlar ve yaşam
+döngüsü [ADR-0014](decisions/0014-shared-interaction-templates.md) içindedir.
+
+## Önceki 2.7.0
 
 Yeni CLI çekirdeği [THEME_PACKAGES](THEME_PACKAGES.md) ve
 [ADR-0012](decisions/0012-theme-package-core.md) içindedir. Paket, görsel QML/varlık

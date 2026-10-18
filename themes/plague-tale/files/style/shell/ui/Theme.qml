@@ -6,6 +6,7 @@ QtObject {
     readonly property bool partyStripEnabled:false
     readonly property real fontScale:preferences.fontScale
     readonly property bool reduceMotion:preferences.reduceMotion
+    function applicationSymbol(name) {return "tree";}
     function fontSize(pixels) {return Math.max(8,Math.round(pixels*fontScale));}
     function duration(milliseconds) {return reduceMotion ? 0 : milliseconds;}
     readonly property color background:Qt.rgba(25/255,26/255,24/255,preferences.surfaceOpacity)

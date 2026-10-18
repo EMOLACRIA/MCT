@@ -1,5 +1,43 @@
 # Doğrulama sınırları
 
+## 2.9.0 — Ortak davranış ve Deltarune adaptörleri (18 Ekim 2026)
+
+Temiz geliştirme dalında son seri: **183 unittest vakası / 16 komut, tamamı geçti**.
+PySide6 Essentials 6.10.2 offscreen/software; geçici HOME/dizinler, mock servisler.
+
+| Komut (`checks/` altında) | Sonuç |
+|---|---|
+| test_theme_core.py | 33; ortak şablon tamper ve özel lock config koruması dahil |
+| test_preferences.py / test_file_manager.py | 15 / 12 |
+| test_theme_adapters.py / test_lock_layout.py | 5 / 3 |
+| test_spotify_install.py / test_terminal_medallion.py / test_sddm_install.py | 10 / 6 / 4 |
+| test_deltarune.py | 42; settings/tray/launcher/Alt+Tab ve paket revizyonu |
+| test_shared_surfaces.py | 2; iki skin kaynak kopya koruması, 12 tur × 4 panel ve tek instance/onay temizliği |
+| test_osd_themes.py | 1; iki ayrı Qt sürecinde gerçek mouse drag/hover/ikon sözleşmesi |
+| test_greeter_themes.py | 10; iki skin'de aynı 5 giriş/boş model/yeniden deneme/power Esc testi |
+| test_preferences_ui.py / test_shell_ui.py / test_launcher_calculator.py / test_window_switcher.py | Plague Tale 10 / 12 / 7 / 11 |
+
+Qt komutları `MCT_QT_TEST_PATH` ile bu ortama yönlendirildi. `test_shell_imports.py`
+ortak behavior/surfaces qmldir ve Calculator.js'i HTTP import yolunda yükledi.
+`test_shell_syntax.py` **60 QML** bytecode derlemesi geçti (MCT_QMLCACHEGEN).
+`test_shell_api.py` **132 native binding** için v0.3.1 kaynak sözleşmesini geçti
+(MCT_QS_SOURCE). İki lock layout'unda **76 property binding** Hyprlock 0.9.6
+ConfigManager.cpp beyanlarıyla eşleşti. `test_revision_helpers.py`, Node backend
+ve preferences şeması kontrolleri de geçti. Python/Bash syntax ve belge linkleri
+kontrol edildi. Genişletilen GitHub workflow aynı 183 vakayı çalıştıracak şekilde
+kaynakla kaydedildi; yerel sonuç CI sonucu yerine sunulmaz.
+
+Eski Loader bulgusu yaşam döngüsüyle giderildi: yalnız async/deferred denemeleri
+uyarıyı bitirmedi; nihai lazy/kalıcı PanelSlot sonrasında önceki 12 tekrar ve iki
+skin'in tekrarlı etkileşim testi geçti. Ara refactor sırasında OSD drag kontrolünde
+bir başarısızlık da görüldü; nihai controller ve her skin için taze süreçli OSD
+kontrolüyle son seride geçti. Eski başarısız kayıtlar final yeşil seriye karıştırılmaz.
+
+Gerçek Wayland input/focus, PAM, sonraki SDDM girişi, çalışan Spotify/adblock ve
+Dolphin, fiziksel sensör veya native kaynak upgrade burada çalıştırılmadı.
+[Deneme ve geri dönüş sırası](UPGRADE_2_9.md). Fotoğraflı seçici henüz uygulanmadı.
+
+
 ## Bu checkout'ta çalıştırılabilen statik kontroller
 
 Python dosyaları çalıştırılmadan `ast.parse` ile okunabilir; Bash dosyaları

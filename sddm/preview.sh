@@ -22,4 +22,7 @@ else
     echo 'This greeter does not advertise a supported test option. Run sddm-greeter-qt6 --help.' >&2
     exit 1
 fi
-exec "$greeter" "$preview_option" --theme "$package_path/theme"
+preview_folder=$(mktemp -d -t mct-greeter-preview-XXXXXXXX)
+trap 'rm -rf -- "$preview_folder"' EXIT
+python3 "$package_path/prepare.py" "$@" "$preview_folder/theme"
+"$greeter" "$preview_option" --theme "$preview_folder/theme"

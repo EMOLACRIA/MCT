@@ -13,6 +13,11 @@ import sys
 import tempfile
 
 PACKAGE = Path(__file__).resolve().parent
+sys.path.insert(0,str(PACKAGE.parent))
+import adapter_assets
+THEME_SOURCE=None
+
+def theme_source():return THEME_SOURCE or PACKAGE/'theme'
 CONFIG = Path('/etc/sddm.conf')
 THEMES = Path('/usr/share/sddm/themes')
 THEME = THEMES/'desktop-style'
@@ -67,8 +72,8 @@ def check():
         result = subprocess.run(['ldd',exe],capture_output=True,text=True,timeout=5)
         if result.returncode or 'libQt6' not in result.stdout:
             raise RuntimeError('This theme requires a Qt6 SDDM greeter.')
-    for name in ['Main.qml','metadata.desktop','wallpaper.png','tl.svg','tr.svg','bl.svg','br.svg']:
-        if not (PACKAGE/'theme'/name).is_file():
+    for name in ['Main.qml','LoginSkin.qml','metadata.desktop','wallpaper.png','tl.svg','tr.svg','bl.svg','br.svg']:
+        if not (theme_source()/name).is_file():
             raise RuntimeError('Missing theme file: '+name)
     if (STATE/'current-backup').exists():
         raise RuntimeError('SDDM theme is already installed. Restore it before reinstalling.')
@@ -117,7 +122,7 @@ def install(check_only=False):
             THEMES.mkdir(parents=True,exist_ok=True,mode=0o755)
             with tempfile.TemporaryDirectory(prefix='.desktop-style-',dir=THEMES) as td:
                 stage = Path(td)/'theme'
-                shutil.copytree(PACKAGE/'theme',stage)
+                shutil.copytree(theme_source(),stage)
                 stage.chmod(0o755)
                 for file in stage.rglob('*'):
                     file.chmod(0o755 if file.is_dir() else 0o644)
@@ -150,9 +155,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('action',choices=['install','restore'])
     parser.add_argument('--check',action='store_true')
+    parser.add_argument('--theme',choices=adapter_assets.THEMES,default='plague-tale')
     args = parser.parse_args()
     try:
-        if args.action == 'install': install(args.check)
+        if args.action == 'install':
+            with tempfile.TemporaryDirectory(prefix='mct-greeter-source-') as folder:
+                THEME_SOURCE=adapter_assets.stage_greeter(args.theme,Path(folder)/'theme')
+                install(args.check)
         else: restore()
     except Exception as exc:
         print('Stopped: '+str(exc),file=sys.stderr)

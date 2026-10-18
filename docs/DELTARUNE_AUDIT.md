@@ -1,5 +1,11 @@
 # Deltarune tamamlama denetimi
 
+**Sonraki uygulama:** 2.9.0'da ortak controller/şablonlar, PanelSlot ve dış
+Deltarune adaptörleri eklendi. Aşağıdaki bulgular bu düzeltmeden önceki kayıttır.
+[Yeni karar ve sınırlar](decisions/0014-shared-interaction-templates.md),
+[güvenli yükseltme](UPGRADE_2_9.md). Yeni native son kabulü hâlâ açıktır.
+
+
 18 Ekim 2026 · Kaynak 2.8.0 / paket 0.1.1.
 İncelenen uzak commit: `7ae39b6086270d28df847c4e14831b1195d061c3`.
 Yerel eşdeğer kaynak ağacı: `65c6d0e3c26f59a962f4940920568e0a13b4ad9a`.

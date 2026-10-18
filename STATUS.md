@@ -1,8 +1,34 @@
 # Güncel durum
 
-Son inceleme: **2026-10-18**. Kaynak taban: **2.8.0 / Deltarune 0.1.1**.
+Son inceleme: **2026-10-18**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
 Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 2.9.0 — Ortak etkileşim ve Deltarune tamamlama
+
+18 Ekim kullanıcı denetim bulgularını kapatmayı başlattı. `shell/surfaces/`
+17 işlevli şablon ve ortak PanelSlot içerir; iki temanın ui view'ları görsel
+property/delegate sağlayan wrapper'lardır. Menülerde komut, input veya onay
+mantığının ikinci kopyası yok. Palet/font/çerçeve/yerleşim ayrılığı korunur.
+Ortak kaynak düzeltmesi iki temaya da gider; yeni görsel tema salt paletle sınırlanmaz.
+
+Panel ilk kullanımda yüklenip yeniden kullanılır. Eski Loader uyarısını üreten
+12 tekrar geçti; iki temada 12 tur/4 panel yeniden boyutlandırma, tek instance ve
+onay temizliği kontrolü de geçti. Aynı ayarlar/launcher/Alt+Tab sözleşmeleri her
+iki temada çalıştırıldı. Sensör izlemesi panel kapalıyken hâlâ durur.
+
+Hyprlock'un görsel layout'u source fragment oldu; stok eski görünüm güvenli
+şekilde taşınır, özel config korunur ve tam tema check uyarlama ister. Deltarune
+saat/parola/medya sunumu, Dolphin beyaz metinli palet/ikonları, Spotify CSS/paleti,
+CP437 fountain süsü ve SDDM skin'i var. SDDM login controller'ı ortaktır. Harici
+kurucular aynı first-backup/restore ve adblock başlatıcı korumasını kullanır;
+shell apply bunları sessizce yeniden kurmaz.
+
+ABI `mct-shell-2.9`. Eski aktif tema **eski kaynakla** geri alınmadan dal değiştirilmez.
+[Yükseltme](docs/UPGRADE_2_9.md) · [Karar](docs/decisions/0014-shared-interaction-templates.md).
+Yerel offscreen/mock doğrulama [VALIDATION](docs/VALIDATION.md) içinde. Gerçek yeni
+lock/PAM/giriş, Spotify/Dolphin ve Wayland son kabulü açık. Fotoğraflı tema menüsü
+bu işte eklenmedi; konumu hâlâ kullanıcı kararıdır. Önceki denetim aşağıda tarihsel kayıttır.
 
 ## Kaynakta bulunanlar
 

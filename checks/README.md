@@ -1,3 +1,19 @@
+## Ortak davranış ve iki tema — 2.9.0
+
+`theme-core.yml` 183 unittest vakası çalıştırır: 33 core, 15 preferences, 12
+file-manager, 5 theme-adapter, 3 lock layout, 10 Spotify, 6 terminal, 4 SDDM
+filesystem; 42 Deltarune, 2 shared-surface, 1 iki-skin OSD sürükleme, 10 iki-skin
+SDDM; Plague Tale'de 10 settings, 12 shell, 7 calculator, 11 switcher. Qt için
+MCT_QT_TEST_PATH desteklenir. Eski tüm checks dosyalarının CI'a taşındığı iddia edilmez.
+
+Yeni komutlar: `python3 checks/test_shared_surfaces.py`,
+`python3 checks/test_osd_themes.py`, `python3 checks/test_theme_adapters.py`,
+`python3 checks/test_lock_layout.py`, `python3 checks/test_greeter_themes.py`.
+Hepsi geçici sahne/dizin/mock kullanır; installer, gerçek giriş veya cihaz
+kısayolu çalıştırmaz. Ortak controller şablonları iki skin'e aynı davranışı verir;
+cache testi eski uyarıyı gizlemez, Qt log'unda hiçbir uyarı kabul etmez.
+Ayrıntılı sonuç/sınır: [VALIDATION](../docs/VALIDATION.md).
+
 ## Son cila (2.6.2)
 
 ```bash

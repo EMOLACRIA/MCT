@@ -50,6 +50,10 @@ images_upscaled.jpeg (2048×1151) kullanılır. Siyah/camgöbeği piksel çerçe
 ve karakter portreleri korunur. Kullanıcı alt parti şeridini kaldırdı; kontrol
 menüsü sağda, arama önceki sol konumunda açılır.
 Kısayollar ve ortak özellikler korunur. Tema menüsünün yeri hâlâ seçilmedi.
+18 Ekim 2.9.0: kullanıcı eksiklerin kapatılmasını başlattı. Ortak etkileşim
+şablonları, cache edilen panel yaşam döngüsü ve Deltarune lock/SDDM/uygulama/
+terminal adaptörleri uygulandı; yeni native kabulü bekliyor. UPGRADE_2_9.md
+eski aktif temayı eski kaynakla geri almayı ve ayrı kurucuların sınırını açıklar.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER
 - Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.

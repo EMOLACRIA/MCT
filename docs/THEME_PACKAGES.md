@@ -1,4 +1,16 @@
-# Tema paket çekirdeği — 2.8.0
+# Tema paket çekirdeği — 2.9.0
+
+ABI `mct-shell-2.9`; Deltarune 0.2.0 ve Plague Tale 2.9.0.
+[2.8'den güvenli yükseltme ve ayrı adaptör komutları](UPGRADE_2_9.md).
+İşlevler ortak `shell/surfaces/` içinde; paket ui dosyaları görsel wrapper'dır.
+Lock `layout.conf` artık izinli/zorunlu tema hedefidir. Kaynaklanan general/auth
+ana config ortak kalır. Dış adaptörler iki tema için hazır ama ayrı kuruculardır.
+Fotoğraflı menü yoktur, konumu seçilmedi.
+
+Aşağıdaki 2.8 açıklaması işlem/geri dönüşün tarihsel temelidir; bu üst bölümün
+ABI/layout/ortak etkileşim sınırı onun yerini alır.
+
+## Önceki 2.8.0
 
 Paketler `plague-tale` ve ilk deneme `deltarune`. Görsel menü yoktur; önizleme PNG'si paket metadata'sında
 hazırdır. Kullanıcı menünün konumunu daha sonra belirleyecek. [Deltarune deneme rehberi](DELTARUNE.md).

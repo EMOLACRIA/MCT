@@ -121,8 +121,9 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   gösterir; sağ tık/orta tık/tekerlek uygulamanın kendi eylemi olarak korunur.
   Yerleşim kontrol kapsamı ve çok dar ekran sınırı `VALIDATION.md` içindedir.
 - Odaklı ekran, mantıksal koordinatlar ve ekran sınırına sığma ortak davranıştır.
-- Tema paketinde iş komutu veya yeni global kısayol tanımlanmaz. Bu hedef mimaridir;
-  mevcut dosyaların henüz bu kurala tamamen taşındığı varsayılmaz.
+- Tema paketinde iş komutu veya yeni global kısayol tanımlanmaz. 2.9.0'da
+  iki paketin işlevli ui wrapper'ları ortak surfaces şablonlarını kullanır;
+  kaynak testi view'lara olay/komut kopyalanmasını reddeder.
 - Kullanıcı ayarı, tema varsayılanından ayrıdır. Tema değişiminde kısayollar,
   uygulama tercihleri ve erişilebilirlik tercihleri sıfırlanmaz.
 - Başarısız tema uygulaması bir önceki geçerli duruma döner. Bu gelecek M5 kabulüdür.
@@ -163,3 +164,15 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - 18 Ekim sürüm gate düzeltmesi: kurucu ve tema geçişi aynı minimum QuickShell
   0.3.1 kuralını kullanır. Kaynak referans sürümü tam eşitlik kilidi değildir;
   aday QML native kontrolden geçmeden hiçbir tema dosyası uygulanmaz.
+
+## 2.9.0 tamamlama sınırı
+
+İki tema aynı 17 etkileşim şablonunu kullanır. Panel başına tek lazy instance,
+close/reopen'da temiz güç/reset onayı, eski panelin focus timer'ını durdurma
+sözleşmeye dahildir. Ortak davranış düzeltmesi kaynak update ile iki temaya
+birden gider. Farklı görünüm property/delegate/çerçeve/font/layout ile sağlanır.
+
+Hyprlock parola/saat layout'u da paket işlemindedir; auth/general ortak kalır.
+Deltarune dış adaptörleri hazırdır, ayrı --theme kurulumu ister. SDDM sudo altında
+aktif masaüstü kullanıcısını tahmin etmez. Shell apply, Spotify/Dolphin/SDDM veya
+terminal süsünü otomatik yeniden kurmuş gibi raporlamaz. Yeni native kabul açık.

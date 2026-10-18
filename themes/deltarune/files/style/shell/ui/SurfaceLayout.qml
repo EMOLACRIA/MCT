@@ -22,6 +22,7 @@ QtObject {
         hardware:{width:650,height:660,centered:true},
         settings:{width:720,height:740,centered:true}
     })
+    function panelSide(name) {return name==="controls" ? "right" : "left";}
     function panelSpec(name) {return panels[name] || panels.media;}
     function panelCentered(name,centerSidePanels) {return centerSidePanels || panelSpec(name).centered;}
     function panelWidth(name,availableWidth) {
