@@ -1,8 +1,28 @@
 # Güncel durum
 
-Son inceleme: **2026-10-18**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
-Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
+Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
+Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; fotoğraflı seçici uygulandı / yeni arayüz native denemesi bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 19 Ekim — Deltarune onayı ve fotoğraflı tema seçici
+
+00:24 Europe/Riga kullanıcı: “Aynen dolphin de değişti. Devam edebiliriz.”
+Önceki komutlar/diğer uyarlamalar çalışıyor beyanıyla birlikte son bilinen
+Dolphin görsel sorunu kapanmıştır. Deltarune mevcut görünüm/kullanım onayı
+alındı; her PAM/sensör/harici ekran alt testi ayrıca ölçülmüş sayılmaz.
+Plague Tale'in önceki onayı korunur. Aşağıdaki bekleyen kabul kayıtları tarihsel.
+
+`bash theme.sh menu` ayrı QuickShell penceresinde gerçek paket fotoğraflarını,
+aktif sürümü, büyütülmüş resmi, kontrol/uygula ve onaylı önceki temaya dönüşü sunar.
+Yerleşim/bar düğmesi/global kısayol seçilmedi. Pencere ana shell'in dosyalarını
+ithal etmez ve durdurulan shell süreci değildir; görsel işlem mevcut core'un
+snapshot/kilit/journal/geri dönüşünü kullanır. Sadece katalog açmak kurulum yapmaz.
+Dolphin/Spotify/SDDM/terminal süsü ayrı kurucular olarak görünür biçimde açıklanır.
+
+Seçici repo aracıdır: kurulu 2.9.0 üstüne git pull yeterli; update.sh/tema rollback
+ve adaptörlerin tekrar kurulması gerekmez. [Kullanım](docs/THEME_PICKER.md).
+Hazırlama kontrolü ve native sınırı [VALIDATION](docs/VALIDATION.md) içinde.
+Yeni seçicinin hedef Wayland oturumunda denenmesi beklenir.
 
 ## 18 Ekim — 2.9 kullanıcı denemesi / Dolphin ikon düzeltmesi
 

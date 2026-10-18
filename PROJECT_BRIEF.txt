@@ -39,7 +39,7 @@ DEĞİŞMEZ ÜRÜN KARARLARI
     görüntülü önizleme kartları bulunacak. Kartların dizilimi ve menünün açıldığı
     yer açık. 2.7.0 paket şeması/CLI çekirdeği docs/THEME_PACKAGES.md içindedir.
 
-SON KAPANIŞ / SIRADAKİ İŞ (2026-10-18)
+SON KAPANIŞ / SIRADAKİ İŞ (2026-10-19)
 Kullanıcı son canlı kontrol maddesinin tamamlandığını, gün boyu full kullandığını
 ve güzel çalıştığını açıkça onayladı. Bu, Plague Tale ürün/kullanım kapanışıdır;
 ayrı ayrı ölçülmüş tüm donanım logları veya genel yayın lisansı onayı değildir.
@@ -54,6 +54,12 @@ Kısayollar ve ortak özellikler korunur. Tema menüsünün yeri hâlâ seçilme
 şablonları, cache edilen panel yaşam döngüsü ve Deltarune lock/SDDM/uygulama/
 terminal adaptörleri uygulandı; yeni native kabulü bekliyor. UPGRADE_2_9.md
 eski aktif temayı eski kaynakla geri almayı ve ayrı kurucuların sınırını açıklar.
+
+19 Ekim 00:24 Europe/Riga: kullanıcı son Dolphin görünümünü de onayladı ve
+ilerlemeyi istedi. Önceki çalışan komutlar/diğer uyarlamalar beyanıyla Deltarune
+mevcut görünüm/kullanım kapanışı kabul edildi. Ayrı PAM/sensör ölçümleri uydurulmaz.
+Fotoğraflı seçici repo komutu (theme.sh menu) olarak uygulanır; bar/ayar konumu
+ve yeni global kısayol kararı hâlâ yoktur. Yeni seçicinin canlı denemesi ayrıdır.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER
 - Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.

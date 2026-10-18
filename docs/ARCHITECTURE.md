@@ -5,6 +5,19 @@ controller'larını ayrıca sunar. Bunlar görsel geometri içermez; tamamen yen
 bir sunum bu controller'ları kullanabilir. `surfaces/` onların ortak varsayılan
 çizimidir. Mevcut iki skin bu çizimi property/delegate ile özelleştirir.
 
+## 19 Ekim — bağımsız fotoğraflı seçici
+
+`theme_picker.py` katalog/JSON taşıma katmanıdır; değişiklikleri yalnız mevcut
+`theme_core.Engine` yapar. `theme-picker/PickerState.qml` seçim/check/onay modelidir;
+PickerView/Card/Button saf Qt sunumudur; shell.qml küçük QuickShell Process ve
+FloatingWindow adaptörüdür. Paket preview PNG'si doğrulanmış mutlak file URI'sidir.
+
+Seçici payload/skin/ABI dışında repo aracıdır. Ana MCT shell'i yeniden başlarken
+kendi penceresi kalır; yeni kurulu dosya veya global kısayol gerekmez. Normal pencere
+kapama işlem sırasında görünümü gizler, helper bittikten sonra çıkar; zorla process
+kill halinde mevcut core journal/recover geçerlidir. Ayrıntı
+[ADR-0015](decisions/0015-photo-theme-picker.md).
+
 ## Mevcut 2.9.0
 
 `payload/style/shell/surfaces/` 17 ortak etkileşim/sunum şablonu ve PanelSlot'u

@@ -486,3 +486,30 @@ Dolphin sonucu henüz alınmadı.
 - `git diff --check`: geçti.
 
 Ortak shell/ABI değişmedi; 2.9 yükseltmesi tekrarlanmaz.
+
+## 2026-10-19 — Fotoğraflı seçici / kullanıcı kabulü
+
+19 Ekim 00:24 Europe/Riga kullanıcı Dolphin'in de değiştiğini onaylayıp devam
+istedi. Önceki diğer uyarlamalar/komutlar çalışıyor beyanıyla Deltarune mevcut
+kullanım/görünüm kabulü kaydedildi. Ayrı PAM/sensör alt testleri yapıldığı iddia
+edilmez. Son Dolphin kaynak düzeltmesinin push/PR CI koşuları
+[39141160782](https://github.com/EMOLACRIA/MCT/actions/runs/39141160782) ve
+[39141164701](https://github.com/EMOLACRIA/MCT/actions/runs/39141164701) başarılı.
+
+Yeni repo seçicisi için hazırlama ortamında:
+
+| Komut | Sonuç / kapsam |
+|---|---|
+| `python3 checks/test_theme_core.py` | 33 geçti; mevcut core/transaction korumaları. |
+| `python3 checks/test_theme_picker.py` | 4 geçti; readonly katalog/bozuk paket, check/apply/noop/rollback, failed start recovery ve manuel dosya koruması, bağımsız başlatma. Fake native runtime. |
+| `MCT_QT_TEST_PATH=.../build/qs-qt-check python3 checks/test_theme_picker_ui.py` | 5 geçti; gerçek Qt fotoğraf yükleme/seçim, check ömrü/hata, ikinci geri dönüş onayı, Esc, 1080×760/640×480/480×400 düğme sınırları, kaydırma, pending/bozuk/boş katalog. Helper istekleri yakalanır, uygulanmaz. |
+| `MCT_QMLCACHEGEN=.../qmlcachegen python3 checks/test_shell_syntax.py` | Payload + seçicinin 65 QML dosyası bytecode'a derlendi; eski iki syntax hatası negatif kontrolle yakalandı. |
+| `MCT_QS_SOURCE=.../quickshell-0.3.1 python3 checks/test_shell_api.py` | 152 native property/handler kaynağa uyuyor; seçici FloatingWindow/Process dahil. Gerçek QS instance testi değildir. |
+| `python3 -m py_compile theme_picker.py checks/test_theme_picker.py checks/test_theme_picker_ui.py`; `bash -n theme.sh`; `git diff --check` | Geçti. |
+
+Qt render'ları normal ve küçük boyutta görsel incelendi. İlk koşuda 760 px
+pencerede işlem düğmelerinin kısmen dışarıda kaldığı bulundu; sabit footer'a
+alındı ve fare/input/bounds kontrolleri yeniden geçti. Native Process stdout/
+close sıralaması, ana shell restart'ı sırasında pencerenin kalması ve gerçek
+Wayland tema apply/rollback yeni arayüzle cihazda henüz çalıştırılmadı.
+SDDM/uygulama/PAM işlemi yapılmadı. ABI/kurulu shell dosyaları değişmedi.

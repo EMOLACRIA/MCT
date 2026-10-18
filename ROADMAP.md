@@ -146,6 +146,13 @@ kapanmış olduğu anlamına gelmez.
 
 ## M5 — Tema değiştirici
 
+**19 Ekim: fotoğraflı ilk arayüz uygulandı.** `bash theme.sh menu` ayrı repo
+penceresidir; kartlar, büyük resim, aktif tema, kontrol→uygula, iki aşamalı geri
+dönüş vardır. Yeni bar/ayar yeri veya global kısayol atanmadı. Mevcut core işlem
+korumaları kullanılır. Harici uygulama/SDDM adaptörleri ayrı kalır ve arayüzde
+belirtilir. Yeni arayüzün native kullanıcı denemesi beklenir.
+[Rehber](docs/THEME_PICKER.md). Aşağıdaki önceki M5 kayıtları tarihsel temeldir.
+
 **2.7.0: CLI paket çekirdeği uygulandı.** Manifest + gerçek fotoğraf + 38 görsel
 kaynak; doğrulama/uygulama/rollback/recover, tercih koruma, güncelleme çakışma
 koruması. 28 çekirdek ve 27 mevcut izole test geçti. [Rehber](docs/THEME_PACKAGES.md).
@@ -178,7 +185,12 @@ bir sonraki temanın bunlardan biri olacağı kararlaştırılmadı.
 - Oyun kütüphanesi: ertelendi, yol haritası için engel değil.
 - AI sohbeti, takvim/hava durumu, masaüstü notları: talep edilmedi.
 
-## M6 — Deltarune ilk deneme — uygulandı / kullanıcı kabulü bekliyor
+## M6 — Deltarune mevcut görünüm/kullanım onaylı
+
+19 Ekim 00:24 Europe/Riga: kullanıcı Dolphin'in de değiştiğini onaylayıp devam
+istedi. Önceki diğer uyarlamalar/komutlar çalışıyor beyanıyla son bilinen sorun
+kapandı; yeni tema seçicisine geçildi. Tek tek PAM/sensör alt testleri icat edilmez.
+Aşağıdaki 18 Ekim denetim ve revizyon beklemeleri tarihsel kayıttır.
 
 18 Ekim tamamlama denetiminde açık eksikler bulundu:
 [bulgular ve kapanış koşulları](docs/DELTARUNE_AUDIT.md). Tema seçiciye geçiş

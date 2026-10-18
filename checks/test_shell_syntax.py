@@ -13,7 +13,7 @@ package=Path(__file__).resolve().parents[1]
 shell=package/'payload/style/shell'
 compiler=Path(os.environ.get('MCT_QMLCACHEGEN') or shutil.which('qmlcachegen') or '/missing-qmlcachegen')
 assert compiler.is_file(), 'Qt qmlcachegen is required; set MCT_QMLCACHEGEN to its executable path.'
-files=sorted(shell.rglob('*.qml'))
+files=sorted(shell.rglob('*.qml')) + sorted((package/'theme-picker').glob('*.qml'))
 assert shell/'shell.qml' in files and shell/'LiveContext.qml' in files
 
 with tempfile.TemporaryDirectory(prefix='desktop-qml-syntax-') as out:

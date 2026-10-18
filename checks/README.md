@@ -214,3 +214,17 @@ köküne yönlendirir: 42 Qt testi. 0.1.1 revizyon kontrolleri sağ kontrol/sol 
 alt şeridin yokluğu, font ve wallpaper decode piksel eşitliğini denetler. Render komutu her yüzey
 için taze süreçte gerçek QML ekran görüntüsü üretir; native Quickshell çalıştırmaz.
 MCT_QT_TEST_PATH desteklenir. Core suite sürüm gate kontrolleriyle 31 stdlib/fake-runtime testidir.
+
+## Fotoğraflı seçici — 19 Ekim
+
+```bash
+python3 checks/test_theme_picker.py
+python3 checks/test_theme_picker_ui.py
+```
+
+4 stdlib/fake-runtime + 5 gerçek Qt input/render testi. Qt komutu önceki suite'ler
+gibi PySide6-Essentials / MCT_QT_TEST_PATH kullanır. Check/apply/noop/restore,
+başarısız start'ta core recovery, kullanıcı düzenlemesi, bozuk preview, readonly
+katalog; seçim/check ömrü, aktif fotoğraflar, iki aşamalı geri dönüş, Esc ve dar
+pencere denetlenir. Native Wayland/Process çalıştırmaz. Source syntax kontrolü
+artık bağımsız seçicinin beş QML dosyasını da bytecode'a derler.

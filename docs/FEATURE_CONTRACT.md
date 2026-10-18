@@ -128,8 +128,9 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   uygulama tercihleri ve erişilebilirlik tercihleri sıfırlanmaz.
 - Başarısız tema uygulaması bir önceki geçerli duruma döner. Bu gelecek M5 kabulüdür.
 - M5 tema seçimi her temanın gerçek ekran görüntüsünü önizleme kartında gösterir.
-  Bu gereksinim 17 Ekim kullanıcı onayıdır; henüz uygulanmadı. Kart dizilimi ve
-  menünün açıldığı yer kullanıcıyla ayrıca seçilir.
+  19 Ekim ilk seçici `theme.sh menu` ile ayrı pencerede uygulanmıştır; iki kart,
+  büyük görüntü, aktif sürüm, uyumluluk kontrolü ve uygulama/geri dönüş sunar.
+  Kalıcı menü yeri/global kısayol atanmaz; kullanıcıyla ayrıca seçilir.
 
 ## Tema çekirdeği — 2.7.0 uygulanmış sınır
 
@@ -176,3 +177,17 @@ Hyprlock parola/saat layout'u da paket işlemindedir; auth/general ortak kalır.
 Deltarune dış adaptörleri hazırdır, ayrı --theme kurulumu ister. SDDM sudo altında
 aktif masaüstü kullanıcısını tahmin etmez. Shell apply, Spotify/Dolphin/SDDM veya
 terminal süsünü otomatik yeniden kurmuş gibi raporlamaz. Yeni native kabul açık.
+
+## Fotoğraflı seçici — 19 Ekim ilk arayüz
+
+- Açılış/katalog/resmi büyütmek salt okunurdur; gerçek paket PNG'si kullanılır.
+- Geçersiz paket açık hata ile pasif kalır, diğer sağlam kartları gizlemez.
+- Başka seçim/yenileme/hata eski check onayını kaldırır. İşlem sırasında ikinci
+  eylem başlatılmaz. Core apply kendi kontrollerini kilit içinde tekrar yapar.
+- Previous theme ikinci onay ister; Esc iptal eder. Bu, source update veya ilk
+  desktop restore değildir. Hata core'un gerçek mesajını ve yenilenmiş aktif
+  durumu gösterir; başarı gibi sunulmaz. Pending journal varken işlem engellenir.
+- Dar pencerede kartlar kayar, işlem düğmeleri sabit alanda kalır. Sol/sağ seçimi,
+  Tab/Enter/Space düğmeleri, Esc büyük resmi/geri dönüş onayını/pencereyi kapatır.
+- Masaüstü/lock/Kitty değişir. Dolphin/Spotify/SDDM/terminal süsü ayrı kuruculardır;
+  arayüz bunların otomatik geçtiğini iddia etmez. Tercihler/kısayollar korunur.
