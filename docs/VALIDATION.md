@@ -469,3 +469,20 @@ bu revizyon için kullanıcı kabulünü bekliyor.
 
 Launcher ve controls/media/osd/switcher Qt önizlemeleri taze süreçlerde yenilendi.
 Native Hyprland oturumu ve fiziksel wallpaper IPC burada çalıştırılmadı.
+
+## 2026-10-18 — Dolphin native geri bildirimi sonrası görsel düzeltme
+
+Kullanıcı: rehber komutları çalışıyor, Dolphin dışındaki uyarlamalar değişmiş.
+Fotoğrafta mavi/siyah palet + beyaz yazı, eski pirinç klasör ikonları görüldü.
+Kaynakta 14 Deltarune SVG'si önceki paketle aynıydı; düzeltildi. Canlı yeni
+Dolphin sonucu henüz alınmadı.
+
+- `python3 checks/test_theme_adapters.py`: 5 test geçti; tema başına kurulan
+  ikon dosyaları, farklılık, ilk yedek, orijinal kullanıcı ikonuna restore dahil.
+- `MCT_QT_TEST_PATH=.../build/qs-qt-check python3 checks/test_app_revision23.py`:
+  üç regresyon grubu geçti; gerçek Qt palette/kontrast, launcher göçü ve restore.
+- Qt 6.10.2 QSvgRenderer: klasör/home/documents/download/music/pictures 16 ve
+  80 px offscreen çizildi ve görsel incelendi. Bu, native Dolphin testi değildir.
+- `git diff --check`: geçti.
+
+Ortak shell/ABI değişmedi; 2.9 yükseltmesi tekrarlanmaz.

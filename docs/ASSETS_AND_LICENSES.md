@@ -72,3 +72,7 @@ mevcut proje kaynaklarından uyarlanır; harici tema kodu alınmadı. LoginSkin
 sunum verisidir; Main.qml ortak giriş kodudur. previews/deltarune/login.png ve
 previews/greeters/ görselleri gerçek Qt sahneleri, sahte SDDM modelleridir; PAM
 girişi veya gerçek kullanıcı oturumu ekran görüntüsü diye sunulmaz.
+
+18 Ekim Dolphin düzeltmesi: Deltarune klasör/yer SVG'lerinin 14'ü projedeki
+mevcut çizimlerden camgöbeği basamaklı dış hatlara düzenlendi. Yeni harici ikon
+paketi alınmadı; Breeze uygulama/eylem ikon mirası korundu.

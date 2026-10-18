@@ -199,3 +199,8 @@ yeni images_upscaled.jpeg wallpaper kullanıldı. Ortak launcher/hesaplama/Alt+T
 
 Plague Tale'in son kullanım onayı tekrar istenmez. Deltarune ilk denemesi henüz
 ikinci temanın bütün adaptörleriyle tamamlandığı anlamına gelmez.
+
+18 Ekim 2.9 denemesi: kullanıcı komutları ve Dolphin dışındaki uyarlamaları
+çalışır bildirdi. Dolphin fotoğrafı eski klasör renklerini gösterdi; kaynakta
+aynı SVG'lerin taşındığı doğrulandı ve cyan basamaklı ikonlar düzeltildi.
+Yeni Dolphin görünümünün cihazdaki onayı açık; tema seçicisi henüz başlamadı.

@@ -40,6 +40,9 @@ class ThemeAdapterTests(unittest.TestCase):
             stack.enter_context(patch.dict(os.environ,{'XDG_DATA_DIRS':str(root/'system')}))
             original='[UiSettings]\nColorScheme=Original\n[Other]\nKeep=true\n'
             (app.CONFIG/'dolphinrc').write_text(original)
+            original_icon=app.DATA/'icons/DesktopStyle/scalable/places/folder.svg'
+            original_icon.parent.mkdir(parents=True)
+            original_icon.write_text('<svg><!-- original user icon --></svg>')
             first=None
             for theme in ('plague-tale','deltarune','plague-tale'):
                 with patch.object(app,'SELECTED_THEME',theme):app.dolphin()
@@ -50,10 +53,17 @@ class ThemeAdapterTests(unittest.TestCase):
                 palette=configparser.ConfigParser();palette.read(app.DATA/'color-schemes/DesktopStyle.colors')
                 for section in ('Colors:View','Colors:Selection','Colors:Window'):
                     self.assertEqual(palette[section]['ForegroundNormal'],'255,255,255')
+                source=assets.source(theme,'dolphin')
+                for path in (source/'icons').rglob('*'):
+                    if path.is_file():
+                        self.assertEqual((app.DATA/'icons/DesktopStyle'/path.relative_to(source/'icons')).read_bytes(),path.read_bytes())
+                if theme=='deltarune':
+                    self.assertNotEqual(original_icon.read_bytes(),(assets.source('plague-tale','dolphin')/'icons/scalable/places/folder.svg').read_bytes())
                 self.assertIn('QT_QPA_PLATFORMTHEME=qt6ct',(app.DATA/'applications/org.kde.dolphin.desktop').read_text())
             app.dolphin(restore=True)
             self.assertIn('ColorScheme=Original',(app.CONFIG/'dolphinrc').read_text())
             self.assertIn('Keep=true',(app.CONFIG/'dolphinrc').read_text())
+            self.assertEqual(original_icon.read_text(),'<svg><!-- original user icon --></svg>')
 
     def test_spotify_switch_preserves_adblock_private_client_and_first_backup(self):
         fixture=spotify.SpotifyTests();fixture.setUp()

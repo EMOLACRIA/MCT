@@ -96,3 +96,17 @@ geri al, `bash rollback-update.sh` çalıştır ve eski kaynak dalına dön. Ful
 
 Fotoğraflı seçicinin konumu bu sürümde belirlenmedi ve yeni kısayol atanmadı.
 Bu kaynaklar hazırlama ortamında test edildi; cihazdaki son görsel onayı bekler.
+
+## 2.9 kurulmuşsa — Dolphin klasör düzeltmesi
+
+İlk 0.2.0 adaptöründeki klasör SVG'leri yanlışlıkla eski pirinç renginde kalmıştı.
+Düzeltme yalnız Dolphin görselleridir. Bütün Dolphin pencerelerini kapatıp:
+
+```bash
+cd ~/newfolder/desktop-style
+git pull --ff-only
+bash apps/install.sh dolphin --theme deltarune --check && bash apps/install.sh dolphin --theme deltarune
+```
+
+Sonra Super+E veya launcher'dan yeniden aç. Beyaz yazılar ve ilk uygulama yedeği
+korunur. Source update, shell tema apply/rollback veya SDDM kurulumu tekrarlanmaz.

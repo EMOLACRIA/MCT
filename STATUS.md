@@ -4,6 +4,23 @@ Son inceleme: **2026-10-18**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
 Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
+## 18 Ekim — 2.9 kullanıcı denemesi / Dolphin ikon düzeltmesi
+
+Kullanıcı yükseltme rehberindeki komutların çalıştığını ve Dolphin dışındaki
+uyarlamaların değiştiğini bildirdi. Bu, yeni kullanım geri bildirimidir; ayrı
+ölçülmüş bütün PAM/donanım senaryolarının testi sayılmaz. Paylaşılan Dolphin
+fotoğrafında koyu mavi zemin/beyaz yazılar uygulanmış, klasörler eski pirinç
+rengindedir. Kaynakta Deltarune SVG klasörlerinin Plague Tale ile birebir aynı
+olduğu doğrulandı; önceki adaptör tamamlama iddiasının bu kısmı hatalıydı.
+
+14 klasör/yer SVG'si camgöbeği basamaklı biçime uyarlandı. Header/Complementary
+zeminindeki kalan eski zeytin tonları giderildi. Ortak kurucu, beyaz yazılar,
+başlatma yolları ve ilk yedek değişmedi. Var olan adaptör testi iki temada kurulan
+ikonların kaynakla eşitliğini, farklılığını ve kullanıcının orijinal ikonunun
+restore edilmesini de denetler. Qt render'ında 16/80 px örnekler incelendi.
+Hedef cihazda yeni Dolphin görünümü onayı bekleniyor. Bu düzeltme için kaynak
+update/tema rollback gerekmez; yalnız Dolphin adaptörü tekrar uygulanır.
+
 ## 2.9.0 — Ortak etkileşim ve Deltarune tamamlama
 
 18 Ekim kullanıcı denetim bulgularını kapatmayı başlattı. `shell/surfaces/`

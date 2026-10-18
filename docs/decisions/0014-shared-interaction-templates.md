@@ -61,3 +61,10 @@ tema menüsünün yeri veya yeni kısayolu bu kararla seçilmedi.
 
 Doğrulama ve yükseltme: [VALIDATION](../VALIDATION.md),
 [2.9 rehberi](../UPGRADE_2_9.md). Native Wayland/PAM/gerçek uygulama kabulü açık.
+
+### 18 Ekim — Dolphin kaynak düzeltmesi
+
+Kullanıcı fotoğrafında palet uygulanmış fakat klasörler pirinç rengindeydi.
+Deltarune ikonlarının eski SVG'lerle birebir aynı olduğu bulundu; ayrı basamaklı
+cyan sunum ve kalan header/complementary zeminleri düzeltildi. Adaptör/restore
+mimarisi değişmedi; aynı kurucu yeniden uygulanır. Yeni cihaz görünümü beklenir.
