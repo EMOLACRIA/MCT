@@ -180,6 +180,11 @@ bir sonraki temanın bunlardan biri olacağı kararlaştırılmadı.
 
 ## M6 — Deltarune ilk deneme — uygulandı / kullanıcı kabulü bekliyor
 
+18 Ekim tamamlama denetiminde açık eksikler bulundu:
+[bulgular ve kapanış koşulları](docs/DELTARUNE_AUDIT.md). Tema seçiciye geçiş
+koşulu henüz karşılanmadı. Öncelik Loader uyarısını ayrıştırma ve ortak davranış
+ayrımı; sonra aşağıdaki harici yüzey adaptasyonlarıdır.
+
 18 Ekim kullanıcı ikinci temanın geliştirilmesini başlattı. Seçilen wallpaper,
 siyah/camgöbeği piksel dil ve karakter portreleri ilk pakette var. 18 Ekim ilk
 revizyonda kullanıcı parti şeridini kaldırdı; kontrol menüsü sağa taşındı ve

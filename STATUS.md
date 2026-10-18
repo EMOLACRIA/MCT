@@ -22,6 +22,21 @@ seçicinin uygulanması veya ikinci temanın başlaması değildir. O mesaj nati
 aşağıdaki daha yeni kullanıcı onayı bu bekleme durumunun yerine geçer. Yalnız gereksinim belgeleri güncellendi;
 yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime değişmedi.
 
+## 18 Ekim — Deltarune tamamlama denetimi
+
+Kullanıcı eksik kontrolü, sorun yoksa tema değiştirme aşamasına geçilmesini
+istedi. [Denetim](docs/DELTARUNE_AUDIT.md) sonucu kapı henüz kapanmadı: hızlı
+panel/resize testinde tekrarlanabilir Loader uyarısı, view'larda çoğaltılmış
+etkileşim mantığı, lock parola/saat ve SDDM/Dolphin/Spotify/terminal süsü görsel
+eksikleri var. Fotoğraflı seçici bu işte başlatılmadı; menü yeri açık kalır.
+
+31 core, 15 preferences, 12 file-manager ve mevcut iki tema Qt/OSD/syntax/API
+kontrolleri çalıştırıldı. Deltarune 42'lik suite ilk koşuda 1 Loader uyarısı
+nedeniyle başarısız, ikinci koşuda geçti; pozisyon testinin 12 tekrarından 9'u
+aynı uyarıyla başarısız. Bu nedenle “tüm kontroller yeşil” veya native hata
+kanıtı olarak sunulmaz. Runtime/installer değiştirilmedi. Ayrıntılı komutlar,
+sınırlar ve kapanış koşulları denetim dosyasındadır.
+
 ## Deltarune 0.1.1 — ilk kullanıcı revizyonu
 
 18 Ekim 14:50 Europe/Riga: kullanıcı canlı Deltarune masaüstü ekran görüntüsü
