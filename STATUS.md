@@ -24,6 +24,17 @@ yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime deği
 
 ## 2.8.0 — Deltarune ilk deneme
 
+18 Ekim 14:38 kullanıcı logu: kaynak update/check ve QML kontrolü başarılı;
+`theme.sh check deltarune` aşırı dar QuickShell sürüm koşulunda durdu. Tema apply
+çalışmadı; Deltarune görünümü henüz kullanıcı tarafından görülüp onaylanmış değil.
+Güncelleyicinin >=0.3.1 kuralı ile yalnız tam 0.3.1 isteyen theme-core kontrolü
+çelişiyordu. Core da aynı minimum semver kuralına taşındı; v öneki ve stderr
+çıktısı kabul edilir, eski/okunamayan sürüm hatası gerçek çıktıyı gösterir.
+Kullanıcının kesin güncel QuickShell sürümü bu logda bulunmuyor; tahmin edilmedi.
+Aday QML compile ve otomatik rollback korunur. Fix yalnız repo CLI/test/belgelerdir;
+başarılı source update'i tekrar çalıştırmak gerekmez.
+
+
 18 Ekim Europe/Riga: kullanıcı araştırılmış konsepti ve kendi sağladığı
 `Deltarune.webp` arka planına uyarlamayı gördükten sonra “Hadi başlayalım” dedi.
 Bu, ikinci temanın geliştirilmesi için açık onaydır; son tasarım/kullanım kabulü

@@ -154,8 +154,10 @@ class Native:
         if "0.56.2" not in result.stdout:
             raise ThemeError("Hyprland 0.56.2 is required.")
         result = self.run(["quickshell", "--version"])
-        if not re.search(r"\b0\.3\.1\b", result.stdout + result.stderr):
-            raise ThemeError("This theme ABI was checked with QuickShell 0.3.1.")
+        match = re.search(r"(\d+)\.(\d+)\.(\d+)", result.stdout + result.stderr)
+        if not match or tuple(map(int, match.groups())) < (0, 3, 1):
+            reported = (result.stdout + result.stderr).strip() or "<empty output>"
+            raise ThemeError("QuickShell 0.3.1 or newer is required; reported: " + reported)
         config = (self.engine.hypr / "hyprpaper.conf").read_text()
         if re.search(r"(?m)^\s*source\s*=", config):
             raise ThemeError("Sourced hyprpaper configuration needs adapter adaptation.")

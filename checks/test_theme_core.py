@@ -313,6 +313,39 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(commands, ["eDP-1," + str(cached) + ",contain", "DP-2," + str(cached) + ",tile"])
         self.assertEqual(cached.read_bytes(), (self.engine.style / "wallpaper.png").read_bytes())
 
+    def test_native_preflight_accepts_same_quickshell_versions_as_updater(self):
+        for version in ("Quickshell 0.3.1 (revision abc, distributed by Arch)",
+                        "Quickshell v0.3.1", "Quickshell 0.3.2", "Quickshell 0.3.10", "Quickshell 0.4.0"):
+            for stderr in (False, True):
+                with self.subTest(version=version, stderr=stderr):
+                    native = theme.Native(self.engine)
+                    def run(args):
+                        output = version if args[0] == "quickshell" else "Hyprland 0.56.2"
+                        return subprocess.CompletedProcess(args, 0,
+                            "" if stderr and args[0] == "quickshell" else output,
+                            output if stderr and args[0] == "quickshell" else "")
+                    with patch.object(theme.os, "geteuid", return_value=1000), \
+                         patch.dict(theme.os.environ, {"HYPRLAND_INSTANCE_SIGNATURE": "fixture"}), \
+                         patch.object(theme.shutil, "which", return_value="/fixture/bin"), \
+                         patch.object(native, "run", side_effect=run), \
+                         patch.object(native, "monitors", return_value=["eDP-1"]), \
+                         patch.object(theme, "load_module", return_value=object()):
+                        native.prepare_recovery()
+
+    def test_native_preflight_rejects_old_or_unknown_version_with_actual_output(self):
+        for version in ("Quickshell 0.3.0", "Quickshell 0.2.1", "unrecognized version", ""):
+            native = theme.Native(self.engine)
+            def run(args):
+                return subprocess.CompletedProcess(args, 0,
+                    version if args[0] == "quickshell" else "Hyprland 0.56.2", "")
+            with patch.object(theme.os, "geteuid", return_value=1000), \
+                 patch.dict(theme.os.environ, {"HYPRLAND_INSTANCE_SIGNATURE": "fixture"}), \
+                 patch.object(theme.shutil, "which", return_value="/fixture/bin"), \
+                 patch.object(native, "run", side_effect=run):
+                with self.assertRaisesRegex(theme.ThemeError, "0.3.1 or newer") as error:
+                    native.prepare_recovery()
+                self.assertIn(version or "<empty output>", str(error.exception))
+
     def test_reapply_same_package_does_not_restart_or_add_snapshot(self):
         self.engine.apply("plague-tale")
         before = self.state(); self.runtime.events.clear()

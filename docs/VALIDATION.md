@@ -405,3 +405,15 @@ Native Wayland/Steam tray sağ tık, her monitörde alt şerit reserve/odak,
 rollback hedef kullanıcı kabulünü bekler. Kullanıcının Plague Tale gün boyu
 kullanım onayı bu yeni tema için uydurulmuş bir kabul kaydı sayılmaz.
 Dış uygulama/SDDM/lock-auth/terminal madalyonu Deltarune uyarlamaları bu pakette yok.
+
+
+### 18 Ekim — QuickShell sürüm gate regresyonu
+
+Kullanıcının source update'i başarılı, tema check'i tam 0.3.1 regex'inde durdu.
+Native kontrol güncelleyicinin minimum >=0.3.1 semver kuralına taşındı.
+`python3 checks/test_theme_core.py`: **31 test geçti**; yeni iki test v önekli,
+revision ekli, stdout/stderr, 0.3.1/0.3.2/0.3.10/0.4.0 ve eski/bozuk/boş çıktıyı
+kontrollü preflight üzerinden denetler. İlk fixture stderr varyantında Hyprland
+çıktısını da stderr'e taşıdı; yalnız QuickShell çıktısı değişecek şekilde
+fixture düzeltildi ve suite yeniden geçti. Native Quickshell çalıştırılmadı;
+kullanıcının asıl sürümü verilmedi, aday tema check/apply kabulü hâlâ bekleniyor.

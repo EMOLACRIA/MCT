@@ -160,3 +160,7 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   ortak kalır. Kullanıcının merkez panel tercihi varsayılan sol yerleşimin önündedir.
 - Native alt şerit Top katmanında 80 mantıksal piksel ayırır; kullanıcı ekran
   çözünürlüğü/ölçeği/VRR veya GPU ayarı yeniden yazılmaz.
+
+- 18 Ekim sürüm gate düzeltmesi: kurucu ve tema geçişi aynı minimum QuickShell
+  0.3.1 kuralını kullanır. Kaynak referans sürümü tam eşitlik kilidi değildir;
+  aday QML native kontrolden geçmeden hiçbir tema dosyası uygulanmaz.

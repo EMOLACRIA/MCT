@@ -17,7 +17,7 @@ bash theme.sh rollback
 ```
 
 list/status Hyprland oturumu istemez. check/apply/rollback hedef Hyprland 0.56.2,
-QuickShell 0.3.1, çalışan MCT shell/notification sahipliği ve hyprpaper IPC ister.
+QuickShell >=0.3.1, çalışan MCT shell/notification sahipliği ve hyprpaper IPC ister.
 İlk kurulum için eski install.sh/update.sh akışı geçerlidir; theme.sh kurucu değildir.
 
 İlk apply mevcut Plague Tale'i kayıtlı paket haline getirir; görünümün değişmemesi
@@ -127,3 +127,9 @@ python3 checks/test_file_manager.py
 Yeni çekirdeğin ilk native kabulü check → apply → status → rollback --check →
 rollback akışıdır. Eski Plague Tale günlük kullanım onayı, bu yeni komutların
 cihazda çalıştırıldığına dair bir test kaydı değildir.
+
+
+18 Ekim sürüm kontrolü düzeltmesi: API kaynak referansı QuickShell 0.3.1'dir;
+bu bilgi başka sürümün otomatik reddi değildir. Native gate güncelleyiciyle aynı
+>=0.3.1 kuralını kullanır, stdout/stderr ve v önekini okur. Yeni sürümde aday QML
+kontrolü yine geçmek zorundadır; genel sürüm uyumu garanti edilmiş sayılmaz.

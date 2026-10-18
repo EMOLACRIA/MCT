@@ -72,3 +72,18 @@ korunur. Sensör/pil/aygıt yoksa uydurma değer yerine TEMP — / AC / OFFLINE 
 render'larıdır; gerçek Wayland, Steam, PAM, Spotify veya fiziksel sensör kabulü
 değildir. Fotoğraflı tema kartı için gerçek render metadata'ya kaydedildi;
 tema menüsünün yeri hâlâ kullanıcı kararını bekliyor.
+
+
+### Update başarılı, sürüm gate hatası aldıysan
+
+18 Ekim düzeltmesi theme-core'un güncelleyiciden farklı olan tam 0.3.1 kilidini
+aynı minimum >=0.3.1 kuralıyla değiştirir. `feature/deltarune` dalında:
+
+```bash
+git pull --ff-only
+bash theme.sh check deltarune && bash theme.sh apply deltarune
+```
+
+Başarılı source update'i tekrarlamak veya restore çalıştırmak gerekmez. Gerçek
+sürüm okunamazsa hata artık elde edilen çıktıyı da gösterir. Kullanıcının bu
+logdaki kesin QuickShell sürümü bilinmiyor; yeni sürümde native kabul bekliyor.
