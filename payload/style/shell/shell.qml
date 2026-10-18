@@ -8,7 +8,7 @@ import "ui"
 
 ShellRoot {
     id:root
-    LiveContext { id:services; hardwareMonitoring:shellState.activePanel==="hardware" }
+    LiveContext { id:services; hardwareMonitoring:shellState.activePanel==="hardware" || Theme.partyStripEnabled }
     Binding {target:Theme;property:"preferences";value:services.preferences.values}
     UiState { id:shellState;onActivePanelChanged:if(activePanel!=="")switcher.cancel() }
     WindowSwitcherState {
@@ -58,6 +58,23 @@ ShellRoot {
         }
     }
     Component {id:nativeHint;HintPopup {}}
+    Variants {
+        model:Theme.partyStripEnabled ? Quickshell.screens : []
+        PanelWindow {
+            id:partyWindow
+            required property var modelData
+            screen:modelData
+            anchors {bottom:true}
+            margins {bottom:8}
+            implicitWidth:Math.min(660,Math.max(250,modelData.width-32))
+            implicitHeight:64
+            exclusiveZone:80
+            color:"transparent"
+            WlrLayershell.layer:WlrLayer.Top
+            WlrLayershell.namespace:"desktop-party"
+            PartyStrip {anchors.fill:parent;backend:services;uiState:shellState;screenToken:partyWindow.modelData.name}
+        }
+    }
     PanelWindow {
         visible:switcher.active && root.switcherScreen!==null
         screen:root.switcherScreen;anchors {top:true;bottom:true;left:true;right:true}

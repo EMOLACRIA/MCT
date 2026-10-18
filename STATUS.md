@@ -1,7 +1,7 @@
 # Güncel durum
 
-Son inceleme: **2026-10-17**. Kaynak taban: **2.7.0 geliştirme sürümü**.
-Aşama: **Plague Tale ürün/kullanım kapanışı kullanıcı tarafından onaylandı; M5 paket/geçiş çekirdeği uygulandı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
+Son inceleme: **2026-10-18**. Kaynak taban: **2.8.0 / Deltarune 0.1.1**.
+Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
 ## Kaynakta bulunanlar
@@ -21,6 +21,82 @@ yaklaşımını ve gerçek ekran görüntülü tema önizleme kartlarını onayl
 seçicinin uygulanması veya ikinci temanın başlaması değildir. O mesaj native giriş/kalıcılık/restore sonucunu içermiyordu;
 aşağıdaki daha yeni kullanıcı onayı bu bekleme durumunun yerine geçer. Yalnız gereksinim belgeleri güncellendi;
 yerel Markdown dosya bağlantıları ve `git diff --check` geçti, runtime değişmedi.
+
+## 18 Ekim — Deltarune tamamlama denetimi
+
+Kullanıcı eksik kontrolü, sorun yoksa tema değiştirme aşamasına geçilmesini
+istedi. [Denetim](docs/DELTARUNE_AUDIT.md) sonucu kapı henüz kapanmadı: hızlı
+panel/resize testinde tekrarlanabilir Loader uyarısı, view'larda çoğaltılmış
+etkileşim mantığı, lock parola/saat ve SDDM/Dolphin/Spotify/terminal süsü görsel
+eksikleri var. Fotoğraflı seçici bu işte başlatılmadı; menü yeri açık kalır.
+
+31 core, 15 preferences, 12 file-manager ve mevcut iki tema Qt/OSD/syntax/API
+kontrolleri çalıştırıldı. Deltarune 42'lik suite ilk koşuda 1 Loader uyarısı
+nedeniyle başarısız, ikinci koşuda geçti; pozisyon testinin 12 tekrarından 9'u
+aynı uyarıyla başarısız. Bu nedenle “tüm kontroller yeşil” veya native hata
+kanıtı olarak sunulmaz. Runtime/installer değiştirilmedi. Ayrıntılı komutlar,
+sınırlar ve kapanış koşulları denetim dosyasındadır.
+
+## Deltarune 0.1.1 — ilk kullanıcı revizyonu
+
+18 Ekim 14:50 Europe/Riga: kullanıcı canlı Deltarune masaüstü ekran görüntüsü
+paylaştı ve üç revizyon istedi. Bu, paketin hedef oturumda açıldığını gösterir;
+bütün işlevlerin veya yeni düzenin son kabulü değildir.
+
+- Kontrol menüsü sağda; arama önceki sol konumunda. Mevcut merkez panel tercihi
+  açıkça değiştirilmez; açıksa merkez önceliği korunur.
+- Alttaki parti şeridi ve onun 80 piksel exclusive zone'u kaldırıldı. Ortak
+  opsiyonel pencere sözleşmesi yerinde; Deltarune view'ı boş ve flag false.
+  Sürekli sensör izleme de kapanır, yalnız Super+T donanım paneli açıkken sürer.
+- Wallpaper, shell ve lock medya fallback'ı kullanıcının **images_upscaled.jpeg**
+  dosyasından 2048×1151 PNG'ye dönüştürüldü. JPEG'in çözümlenen pikselleriyle
+  eşitlik denetlendi; resize veya ikinci üretim yapılmadı. Kaynak JPEG saklandı.
+  Görüntü cache'i içeriğe bağlı yeni yoldan yenilenir.
+
+Ortak shell/ABI değişmedi; aktif Deltarune üstüne `git pull --ff-only`, sonra
+`theme.sh check/apply deltarune` yeterli. Source update/restore gerekmez.
+42 Qt + 31 core test geçti; yeni iki Qt kontrolü sağ/sol konum, merkez tercih,
+şeridin yokluğu ve wallpaper/font yüklemesini doğrular. Yeni native revizyonun
+kullanıcı kontrolü bekleniyor. [Rehber](docs/DELTARUNE.md).
+
+## 2.8.0 — Deltarune ilk deneme (önceki kayıt)
+
+18 Ekim 14:38 kullanıcı logu: kaynak update/check ve QML kontrolü başarılı;
+`theme.sh check deltarune` aşırı dar QuickShell sürüm koşulunda durdu. Tema apply
+çalışmadı; Deltarune görünümü henüz kullanıcı tarafından görülüp onaylanmış değil.
+Güncelleyicinin >=0.3.1 kuralı ile yalnız tam 0.3.1 isteyen theme-core kontrolü
+çelişiyordu. Core da aynı minimum semver kuralına taşındı; v öneki ve stderr
+çıktısı kabul edilir, eski/okunamayan sürüm hatası gerçek çıktıyı gösterir.
+Kullanıcının kesin güncel QuickShell sürümü bu logda bulunmuyor; tahmin edilmedi.
+Aday QML compile ve otomatik rollback korunur. Fix yalnız repo CLI/test/belgelerdir;
+başarılı source update'i tekrar çalıştırmak gerekmez.
+
+
+18 Ekim Europe/Riga: kullanıcı araştırılmış konsepti ve kendi sağladığı
+`Deltarune.webp` arka planına uyarlamayı gördükten sonra “Hadi başlayalım” dedi.
+Bu, ikinci temanın geliştirilmesi için açık onaydır; son tasarım/kullanım kabulü
+henüz değildir. [Rehber](docs/DELTARUNE.md) · [ADR-0013](docs/decisions/0013-deltarune-first-trial.md).
+
+Siyah/camgöbeği kesik köşeler, paket içi Departure Mono fontu, gerçek oyun menü
+portreleri, solda launcher/yan paneller, kompakt medya, kare slider ucu, Kitty
+paleti ve lock medya renkleri eklendi. Bütün shell yüzeyleri aynı backend/state'i
+kullanır. Üç bölümlü alt şerit mevcut sensör/ses/pil verilerini gösterir; unavailable,
+mute ve charging durumları ayrı. Şerit her monitörde 80 mantıksal piksel ayırır.
+2 saniyelik mevcut sensör okuyucu bu temada şerit için açık kalır; uyuyan GPU'yu
+okumama koruması değişmedi. Plague Tale'de şerit kapalı, eski donanım izleme
+sadece panel açıkken çalışır.
+
+Paket ABI'si `mct-shell-2.8`: ortak shell isteğe bağlı PartyStrip pencere/view'ını
+barındırır. Plague Tale uyumlu boş view/default false ile güncellendi; görünümü
+aynı. Komutla apply/rollback ve kullanıcı tercihleri korunur. Menü konumu seçilmedi.
+`bash preview.sh deltarune` kurmadan geçici DemoContext açar; canlı IPC/ayar/installer
+çalıştırmaz. Paket preview PNG'si yapay zekâ referansı değil, gerçek Qt render'ıdır.
+
+Doğrulama ve kalan sınırlar [VALIDATION](docs/VALIDATION.md#280--deltarune-ilk-deneme)
+içinde. Gerçek Wayland, kullanıcı GPU/sensör, fontun 1.6 ölçek sonucu ve yeni tema
+geçişi hedef oturumda denenmeyi bekliyor. SDDM, Dolphin, Spotify ve terminal
+madalyonunun Deltarune görsel uyarlaması sonraki revizyonda; mevcut ayrı adaptörler
+automatik değiştirilmez. Lock parola/saat alanı da bu paketin kapsamına alınmadı.
 
 ## 2.7.0 — Kullanıcı kapanışı ve tema paket çekirdeği
 

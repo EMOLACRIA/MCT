@@ -1,6 +1,6 @@
 # Yol haritası
 
-Karar tarihi: **17 Ekim 2026**. Ürün kapsamı: [PROJECT_BRIEF.txt](PROJECT_BRIEF.txt).
+Karar tarihi: **18 Ekim 2026**. Ürün kapsamı: [PROJECT_BRIEF.txt](PROJECT_BRIEF.txt).
 Durumlar: **planlandı**, **uygulandı / doğrulama bekliyor**, **doğrulandı**, **ertelendi**.
 Tarihler taahhüt edilmedi; bir aşama kendi çıkış koşulları karşılanınca kapanır.
 
@@ -177,3 +177,24 @@ bir sonraki temanın bunlardan biri olacağı kararlaştırılmadı.
 - Pano geçmişi ve yeni ekran yakalama paneli: şu an kapsam dışı.
 - Oyun kütüphanesi: ertelendi, yol haritası için engel değil.
 - AI sohbeti, takvim/hava durumu, masaüstü notları: talep edilmedi.
+
+## M6 — Deltarune ilk deneme — uygulandı / kullanıcı kabulü bekliyor
+
+18 Ekim tamamlama denetiminde açık eksikler bulundu:
+[bulgular ve kapanış koşulları](docs/DELTARUNE_AUDIT.md). Tema seçiciye geçiş
+koşulu henüz karşılanmadı. Öncelik Loader uyarısını ayrıştırma ve ortak davranış
+ayrımı; sonra aşağıdaki harici yüzey adaptasyonlarıdır.
+
+18 Ekim kullanıcı ikinci temanın geliştirilmesini başlattı. Seçilen wallpaper,
+siyah/camgöbeği piksel dil ve karakter portreleri ilk pakette var. 18 Ekim ilk
+revizyonda kullanıcı parti şeridini kaldırdı; kontrol menüsü sağa taşındı ve
+yeni images_upscaled.jpeg wallpaper kullanıldı. Ortak launcher/hesaplama/Alt+Tab/tray/OSD/ayar sözleşmesi korunur.
+
+1. Kullanıcı gerçek oturumda paketi deneyip görsel ve kullanım revizyonlarını verir.
+2. Bu sonuçla panel ölçüleri ve fontun 1.6 ölçekteki görünümü cilalanır.
+3. Lock parola/saat sunumu, SDDM, Dolphin/Spotify ve terminal madalyonu için ayrı
+   görsel adaptasyon tamamlanır. Mevcut uygulama kurulumu sessizce değiştirilmez.
+4. Tema seçicinin yerini kullanıcı belirler; gerçek Qt önizlemesi metadata'da hazır.
+
+Plague Tale'in son kullanım onayı tekrar istenmez. Deltarune ilk denemesi henüz
+ikinci temanın bütün adaptörleriyle tamamlandığı anlamına gelmez.

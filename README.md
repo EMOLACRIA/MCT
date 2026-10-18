@@ -261,3 +261,11 @@ Katkı düzeni [CONTRIBUTING.md](CONTRIBUTING.md); kararların gerekçesi
 [ADR-0001](docs/decisions/0001-plague-tale-first.md); görsel/kod kökenleri
 [varlık kaydında](docs/ASSETS_AND_LICENSES.md). Vitreus ve Caelestia bu görevde
 kopyalanmadı veya kurulmadı. Yeni açık kaynak lisansı henüz seçilmedi.
+
+
+## Deltarune ilk denemesi — 2.8.0
+
+İkinci tema paketi hazır: [kullanım ve sınırlar](docs/DELTARUNE.md).
+`bash preview.sh deltarune` kurmadan açar; canlı geçiş `theme.sh check/apply`
+üzerinden yapılır. [Gerçek Qt önizlemesi](themes/deltarune/preview.png).
+Görsel tema seçicinin yeri henüz kararlaştırılmadı.

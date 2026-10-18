@@ -183,3 +183,18 @@ komut argümanları ve yalnız MCT process seçimi. Fixture varyantı tmp altın
 GitHub workflow `theme-core.yml` bu suite'i ve 15 preferences / 12 file-manager
 testini, Python/Bash syntax'ı çalıştırır. Başka eski checks dosyalarının hepsinin
 CI'a taşındığı iddia edilmez. Native komutlar mock'tur; PAM/gerçek desktop yoktur.
+
+
+## Deltarune paketi (2.8.0)
+
+```bash
+python3 checks/test_theme_core.py
+python3 checks/test_deltarune.py
+python3 checks/render_theme.py deltarune /tmp/deltarune-preview.png --panel media
+```
+
+İkinci komut PySide6 gerektirir ve mevcut etkileşim testlerini geçici Deltarune
+köküne yönlendirir: 42 Qt testi. 0.1.1 revizyon kontrolleri sağ kontrol/sol arama ve merkez tercihi,
+alt şeridin yokluğu, font ve wallpaper decode piksel eşitliğini denetler. Render komutu her yüzey
+için taze süreçte gerçek QML ekran görüntüsü üretir; native Quickshell çalıştırmaz.
+MCT_QT_TEST_PATH desteklenir. Core suite sürüm gate kontrolleriyle 31 stdlib/fake-runtime testidir.

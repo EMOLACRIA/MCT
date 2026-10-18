@@ -27,3 +27,37 @@ Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.
 `themes/plague-tale/preview.png`, mevcut `previews/desktop.png` dosyasının birebir
 kopyasıdır. Yeni dış görsel/font/kod alınmadı. Manifest git blob kimlikleriyle
 kaynak eşitliğini doğrular; bu kayıt yeni lisans veya üçüncü taraf hak devri değildir.
+
+
+## Deltarune — 18 Ekim 2026
+
+- `themes/deltarune/files/style/wallpaper.png` ve shell kopyası kullanıcının
+  sağladığı **Deltarune.webp** görselinin Qt ile kayıpsız PNG format dönüşümüdür;
+  piksel eşitliği denetlendi. Çizim yeniden üretilmedi, resize/repaint yapılmadı.
+  Cover fallback aynı görseldir. Toby Fox/oyunun üçüncü taraf hakları korunur;
+  kullanıcı dosyasının sağlanması yeniden lisanslama değildir.
+- Battle menu portreleri, 18 Ekim doğrudan değişmeden indirildi:
+  [Kris](https://deltarune.wiki/w/File:Kris_face_battlemenu.png),
+  [Susie](https://deltarune.wiki/w/File:Susie_face_battlemenu.png),
+  [Ralsei](https://deltarune.wiki/w/File:Ralsei_face_battlemenu.png).
+  Dosyalar `https://deltarune.wiki/images/NAME_face_battlemenu.png` adreslerinden.
+  Bunlar oyun sprite'larıdır; wiki metin lisansı görseller için varsayılmadı.
+  Oyun görsellerinin hak sahibi Toby Fox ve ilgili katkıcılardır.
+- Departure Mono 1.500, Helena Zhang; **SIL OFL 1.1**. Kaynak
+  [rektdeckard/departure-mono](https://github.com/rektdeckard/departure-mono/tree/75152a3f1e6dacdd248a6c397c97dbf27e33eea0/public/assets),
+  font blob `e0b2502131fcb7befea378d6648d380c2591b3a5`. Değiştirilmedi.
+  `FONT-LICENSE.txt` ve kurulan `assets/departure-mono-license.txt` tam font lisansıdır.
+- Yeni kesik köşe/ikon çizimleri ve lock medya SVG düğmeleri bu işte kodla çizildi;
+  PNG düğmeler paket yanındaki SVG kaynaklarının Qt render'larıdır.
+- `themes/deltarune/preview.png` ve `previews/deltarune/` gerçek Qt DemoContext
+  render'larıdır; konsept üretim görseli ürün ekran görüntüsü diye kullanılmadı.
+
+
+### Deltarune 0.1.1 wallpaper değişimi
+
+18 Ekim: kullanıcı ilk wallpaper kalitesini yetersiz bulup **images_upscaled.jpeg**
+sağladı. Tam 2048×1151 kaynak `themes/deltarune/wallpaper-source.jpeg` içinde
+birebir saklandı. SHA256: `bd8a46c7f008a18b45081c8f7506727ab4a803550399e029a3b56a789af0d3e3`.
+Üç runtime PNG kopyası Qt ile format dönüştürüldü; decode edilmiş RGBA pikselleri
+kaynağa eşit. Ek upscale, yeniden çizim veya yeniden JPEG sıkıştırması yapılmadı.
+Preview PNG'leri yeni wallpaper ve şeritsiz düzenle yeniden Qt'den render edildi.

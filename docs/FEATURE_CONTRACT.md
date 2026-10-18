@@ -148,3 +148,18 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - SDDM, Dolphin ve Spotify ayrı kuruculardır; çekirdek bunları yeniden kurmaz.
   Lock medya ve Kitty include'unu yönetmek, parola akışını veya her terminalin
   paletini yeniden kurmak anlamına gelmez. Yeni CLI'nin native kabulü ayrı testtir.
+
+## Deltarune — 18 Ekim 2026
+
+- Aynı Super+R/M/T/B/Q/E/L ve Alt+Tab eylemleri, toggle ve hesaplama anlamı sürer.
+- 18 Ekim kullanıcı revizyonu: alt parti şeridi yoktur ve altta alan ayırmaz.
+  Donanım/ses/pil özellikleri Super+T ve mevcut üst bar/kontrol menüsünde korunur.
+- Kontrol menüsü sağda, arama önceki sol konumundadır. Merkez panel kullanıcı
+  tercihi açıksa önceliği korunur; kayıtlı tercih dosyası değiştirilmez.
+- Wallpaper yeni kullanıcı JPEG'inin tam 2048×1151 boyutlu kayıpsız PNG kopyasıdır.
+- Tema font/renk/kenar/yerleşim sağlar; preferences/kısayollar/bildirim durumu
+  ortak kalır. Kullanıcının çözünürlük/ölçek/VRR/GPU ayarı yeniden yazılmaz.
+
+- 18 Ekim sürüm gate düzeltmesi: kurucu ve tema geçişi aynı minimum QuickShell
+  0.3.1 kuralını kullanır. Kaynak referans sürümü tam eşitlik kilidi değildir;
+  aday QML native kontrolden geçmeden hiçbir tema dosyası uygulanmaz.

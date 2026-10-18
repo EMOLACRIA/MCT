@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "id": "deltarune",
+  "name": "Deltarune",
+  "version": "0.1.1",
+  "shellAbi": "mct-shell-2.8",
+  "preview": {
+    "source": "preview.png",
+    "gitBlob": "c0beb311614d4deb0738e9bf80b3e998d53de4f3"
+  },
+  "surfaces": [
+    "bar",
+    "launcher",
+    "switcher",
+    "controls",
+    "notifications",
+    "media",
+    "hardware",
+    "osd",
+    "power",
+    "settings",
+    "lock",
+    "terminal",
+    "sddm",
+    "dolphin",
+    "spotify"
+  ],
+  "files": [
+    {
+      "source": "files/hypr/appearance.lua",
+      "target": "hypr/appearance.lua",
+      "gitBlob": "0ace375190ba804bc7c620cd296d1173bdc34c7e"
+    },
+    {
+      "source": "files/style/hyprlock/cover.png",
+      "target": "style/hyprlock/cover.png",
+      "gitBlob": "41b0e1397fed57ae8b782d6cc06e9d107153e148"
+    },
+    {
+      "source": "files/style/hyprlock/media.conf",
+      "target": "style/hyprlock/media.conf",
+      "gitBlob": "0766b069695388e2ac3ab3931a3362f1cf93c41a"
+    },
+    {
+      "source": "files/style/hyprlock/next.png",
+      "target": "style/hyprlock/next.png",
+      "gitBlob": "75c2c8450c2a37a4fad90e6bce11bb62c4f2d30e"
+    },
+    {
+      "source": "files/style/hyprlock/pause.png",
+      "target": "style/hyprlock/pause.png",
+      "gitBlob": "14932d894b2b485e76c10621adc28dd757801976"
+    },
+    {
+      "source": "files/style/hyprlock/play.png",
+      "target": "style/hyprlock/play.png",
+      "gitBlob": "dae4715143e2d071af46a24b851c7ae465e2be89"
+    },
+    {
+      "source": "files/style/hyprlock/previous.png",
+      "target": "style/hyprlock/previous.png",
+      "gitBlob": "e102509396a2a875c7ff6fee646e442e224d51a6"
+    },
+    {
+      "source": "files/style/kitty/theme.conf",
+      "target": "style/kitty/theme.conf",
+      "gitBlob": "65f11adf80dff918ed06b1b55bbd2f734daa6c69"
+    },
+    {
+      "source": "files/style/shell/assets/bl.svg",
+      "target": "style/shell/assets/bl.svg",
+      "gitBlob": "daedf51d5549a55bfa87143bf8937b1dd5deb802"
+    },
+    {
+      "source": "files/style/shell/assets/br.svg",
+      "target": "style/shell/assets/br.svg",
+      "gitBlob": "82b838236e9319196bfa83e61346a5d451dc073f"
+    },
+    {
+      "source": "files/style/shell/assets/departure-mono-license.txt",
+      "target": "style/shell/assets/departure-mono-license.txt",
+      "gitBlob": "de52476183807bbfc04e8ae7bced1dc9cbcbfd2f"
+    },
+    {
+      "source": "files/style/shell/assets/departure-mono.otf",
+      "target": "style/shell/assets/departure-mono.otf",
+      "gitBlob": "e0b2502131fcb7befea378d6648d380c2591b3a5"
+    },
+    {
+      "source": "files/style/shell/assets/kris.png",
+      "target": "style/shell/assets/kris.png",
+      "gitBlob": "631b169ece6d125faf0449684e4f99f216957dfa"
+    },
+    {
+      "source": "files/style/shell/assets/ralsei.png",
+      "target": "style/shell/assets/ralsei.png",
+      "gitBlob": "e319bc5bb4b05b356a7cda4cbb72530215b47a98"
+    },
+    {
+      "source": "files/style/shell/assets/susie.png",
+      "target": "style/shell/assets/susie.png",
+      "gitBlob": "d2338e78f19ca078c90f6acf1544a806d59ddd5f"
+    },
+    {
+      "source": "files/style/shell/assets/tl.svg",
+      "target": "style/shell/assets/tl.svg",
+      "gitBlob": "b4ae2c8757a4f6e259edb733e572f99e827bcb99"
+    },
+    {
+      "source": "files/style/shell/assets/tr.svg",
+      "target": "style/shell/assets/tr.svg",
+      "gitBlob": "a90c0f981ad581a649fd5471bdb3b841e6bb4c7b"
+    },
+    {
+      "source": "files/style/shell/assets/wallpaper.png",
+      "target": "style/shell/assets/wallpaper.png",
+      "gitBlob": "41b0e1397fed57ae8b782d6cc06e9d107153e148"
+    },
+    {
+      "source": "files/style/shell/ui/ActionButton.qml",
+      "target": "style/shell/ui/ActionButton.qml",
+      "gitBlob": "89d94cf257a66e6bc0ff405d8bd878a582462418"
+    },
+    {
+      "source": "files/style/shell/ui/Bar.qml",
+      "target": "style/shell/ui/Bar.qml",
+      "gitBlob": "cd33d83c30263dc329599ed7444267382532d01c"
+    },
+    {
+      "source": "files/style/shell/ui/Controls.qml",
+      "target": "style/shell/ui/Controls.qml",
+      "gitBlob": "2fc540a9aeee26a27b48dae216b6586bea512cd1"
+    },
+    {
+      "source": "files/style/shell/ui/Feedback.qml",
+      "target": "style/shell/ui/Feedback.qml",
+      "gitBlob": "06c7819aa85f7dfe318c9a6825c9759500bfcedd"
+    },
+    {
+      "source": "files/style/shell/ui/Glyph.qml",
+      "target": "style/shell/ui/Glyph.qml",
+      "gitBlob": "509ce6f70e70db2f6eb2ea10bd995ead1f3c76f5"
+    },
+    {
+      "source": "files/style/shell/ui/Hardware.qml",
+      "target": "style/shell/ui/Hardware.qml",
+      "gitBlob": "c4d77452f1d2b02da23e31058ecfa8ba5a6bae0a"
+    },
+    {
+      "source": "files/style/shell/ui/HintBubble.qml",
+      "target": "style/shell/ui/HintBubble.qml",
+      "gitBlob": "6e6610d4a982e856a0bcafec0fef177e363e6aea"
+    },
+    {
+      "source": "files/style/shell/ui/Launcher.qml",
+      "target": "style/shell/ui/Launcher.qml",
+      "gitBlob": "f8adaf4c68dd1f6f2383ae973117ff853e11000d"
+    },
+    {
+      "source": "files/style/shell/ui/LevelControl.qml",
+      "target": "style/shell/ui/LevelControl.qml",
+      "gitBlob": "59fd98dbc5a793c955c79368324b72b73d701b53"
+    },
+    {
+      "source": "files/style/shell/ui/Media.qml",
+      "target": "style/shell/ui/Media.qml",
+      "gitBlob": "b7c21ae26dda00acf9426d6fb7de7af3f9307bf1"
+    },
+    {
+      "source": "files/style/shell/ui/NotificationActions.qml",
+      "target": "style/shell/ui/NotificationActions.qml",
+      "gitBlob": "117d6e852917d6ec9ba848379cf9b5faae803ae1"
+    },
+    {
+      "source": "files/style/shell/ui/Notifications.qml",
+      "target": "style/shell/ui/Notifications.qml",
+      "gitBlob": "bc909054f8e39d3caf2c3066d037e69c046b575d"
+    },
+    {
+      "source": "files/style/shell/ui/OrnamentFrame.qml",
+      "target": "style/shell/ui/OrnamentFrame.qml",
+      "gitBlob": "a10e8b031b188494e32219c9f9aedb8f75a1c898"
+    },
+    {
+      "source": "files/style/shell/ui/Overlay.qml",
+      "target": "style/shell/ui/Overlay.qml",
+      "gitBlob": "2435c889c5cc4940b3b5b9715b984c97c1479139"
+    },
+    {
+      "source": "files/style/shell/ui/PanelHeader.qml",
+      "target": "style/shell/ui/PanelHeader.qml",
+      "gitBlob": "837320bb0b7ea24995b0ff864819235cef3e8ec3"
+    },
+    {
+      "source": "files/style/shell/ui/PartyStrip.qml",
+      "target": "style/shell/ui/PartyStrip.qml",
+      "gitBlob": "c3c5004a87045bafdb52f44a0126dc3dafc4d2af"
+    },
+    {
+      "source": "files/style/shell/ui/Power.qml",
+      "target": "style/shell/ui/Power.qml",
+      "gitBlob": "b90a23666ea55d8666c113ae1ddbbd58fbe7f0cb"
+    },
+    {
+      "source": "files/style/shell/ui/PreferenceChoice.qml",
+      "target": "style/shell/ui/PreferenceChoice.qml",
+      "gitBlob": "87c3bef53b92228c18a917dfcedc75d7fa213ec1"
+    },
+    {
+      "source": "files/style/shell/ui/PreferenceSlider.qml",
+      "target": "style/shell/ui/PreferenceSlider.qml",
+      "gitBlob": "dadb02681dbfaa911ae7122e4df7ef7f6fae412d"
+    },
+    {
+      "source": "files/style/shell/ui/Settings.qml",
+      "target": "style/shell/ui/Settings.qml",
+      "gitBlob": "cc0a774a6f106d98e19c29c5de939caffbc80da0"
+    },
+    {
+      "source": "files/style/shell/ui/SurfaceLayout.qml",
+      "target": "style/shell/ui/SurfaceLayout.qml",
+      "gitBlob": "89abfc5c62a71325dd90ebddb6b4ea6e39ce27fc"
+    },
+    {
+      "source": "files/style/shell/ui/Theme.qml",
+      "target": "style/shell/ui/Theme.qml",
+      "gitBlob": "bc81920de8e2813f4451fdb074ec948c8da1888a"
+    },
+    {
+      "source": "files/style/shell/ui/Toast.qml",
+      "target": "style/shell/ui/Toast.qml",
+      "gitBlob": "1ad78efee0c6e701d9dc9f4a09ef978c83d9c746"
+    },
+    {
+      "source": "files/style/shell/ui/ToastStack.qml",
+      "target": "style/shell/ui/ToastStack.qml",
+      "gitBlob": "6879be6977c041886badafdc67634ee7c3a738b2"
+    },
+    {
+      "source": "files/style/shell/ui/WindowSwitcher.qml",
+      "target": "style/shell/ui/WindowSwitcher.qml",
+      "gitBlob": "045b9f3c6639a9f7ba7083af647b859aad8e0d0c"
+    },
+    {
+      "source": "files/style/wallpaper.png",
+      "target": "style/wallpaper.png",
+      "gitBlob": "41b0e1397fed57ae8b782d6cc06e9d107153e148"
+    }
+  ],
+  "adapters": {
+    "sddm": "separate-installer",
+    "dolphin": "separate-installer",
+    "spotify": "separate-installer"
+  }
+}

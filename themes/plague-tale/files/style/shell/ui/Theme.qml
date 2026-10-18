@@ -3,6 +3,7 @@ import QtQuick
 import "../logic/Preferences.js" as Preferences
 QtObject {
     property var preferences:Preferences.defaults()
+    readonly property bool partyStripEnabled:false
     readonly property real fontScale:preferences.fontScale
     readonly property bool reduceMotion:preferences.reduceMotion
     function fontSize(pixels) {return Math.max(8,Math.round(pixels*fontScale));}

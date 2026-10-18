@@ -2,10 +2,14 @@ name: Theme core checks
 
 on:
   push:
-    branches: [feature/theme-core]
+    branches: [feature/theme-core, feature/deltarune]
     paths:
       - theme_core.py
       - checks/test_theme_core.py
+      - checks/test_deltarune.py
+      - theme_preview.py
+      - preview.sh
+      - payload/style/shell/**
       - .github/workflows/theme-core.yml
       - update.py
       - themes/**
@@ -13,6 +17,10 @@ on:
     paths:
       - theme_core.py
       - checks/test_theme_core.py
+      - checks/test_deltarune.py
+      - theme_preview.py
+      - preview.sh
+      - payload/style/shell/**
       - .github/workflows/theme-core.yml
       - update.py
       - themes/**
@@ -23,7 +31,7 @@ permissions:
 jobs:
   portable:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Fetch exact revision
         env:
@@ -40,7 +48,15 @@ jobs:
       - name: Theme core checks
         run: |
           python3 checks/test_theme_core.py
+      - name: Deltarune shared interaction contract
+        env:
+          MCT_QT_TEST_PATH: ${{ runner.temp }}/mct-qt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libopengl0 libgl1 libxkbcommon0
+          python3 -m pip install --target "$MCT_QT_TEST_PATH" PySide6-Essentials==6.10.2
+          python3 checks/test_deltarune.py
       - name: Source syntax
         run: |
-          python3 -m py_compile theme_core.py update.py checks/test_theme_core.py
-          bash -n theme.sh
+          python3 -m py_compile theme_core.py theme_preview.py update.py checks/test_theme_core.py checks/test_deltarune.py
+          bash -n theme.sh preview.sh
