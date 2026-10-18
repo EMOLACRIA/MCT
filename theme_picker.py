@@ -22,10 +22,18 @@ def catalog(engine):
             manifest, _ = engine.load(folder.name)
             row.update(name=manifest['name'], version=manifest['version'], valid=True,
                        preview=theme_core.safe(folder, manifest['preview']['source']).as_uri())
+            if folder.name == 'deltarune':
+                row['fontSource'] = theme_core.safe(folder, 'files/style/shell/assets/departure-mono.otf').as_uri()
         except (theme_core.ThemeError, OSError, ValueError) as exc:
             row['error'] = str(exc)
         rows.append(row)
-    result = dict(themes=rows, active=None, canRollback=False, pending=False, stateError='')
+    preferences = theme_core.load_module(ROOT / 'payload/style/scripts/preferences.py')
+    try:
+        values = preferences.read()
+    except (OSError, ValueError):
+        values = preferences.defaults()
+    result = dict(themes=rows, active=None, canRollback=False, pending=False, stateError='',
+                  reduceMotion=values['reduceMotion'], fontScale=values['fontScale'])
     try:
         active = engine.optional('active.json')
         if active is not None:
@@ -74,10 +82,19 @@ def dispatch(engine, action, theme=None):
 def menu():
     quickshell = shutil.which('quickshell')
     if not quickshell:
-        print('Stopped: QuickShell is required to open the theme picker.', file=sys.stderr)
+        print('Stopped: QuickShell is required to open the theme rail.', file=sys.stderr)
         return 1
+    path = str(ROOT / 'theme-picker/shell.qml')
     try:
-        return subprocess.call([quickshell, '--no-duplicate', '-p', str(ROOT / 'theme-picker/shell.qml')])
+        # Warm overlay: toggle the same layer immediately, without another app window.
+        result = subprocess.run([quickshell, 'ipc', '-p', path, 'call', 'themes', 'toggle'],
+                                capture_output=True, text=True, timeout=3)
+        if result.returncode == 0:
+            return 0
+        return subprocess.call([quickshell, '--daemonize', '--no-duplicate', '-p', path])
+    except (OSError, subprocess.SubprocessError) as exc:
+        print('Stopped: ' + str(exc), file=sys.stderr)
+        return 1
     except KeyboardInterrupt:
         return 130
 

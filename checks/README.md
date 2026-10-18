@@ -228,3 +228,10 @@ başarısız start'ta core recovery, kullanıcı düzenlemesi, bozuk preview, re
 katalog; seçim/check ömrü, aktif fotoğraflar, iki aşamalı geri dönüş, Esc ve dar
 pencere denetlenir. Native Wayland/Process çalıştırmaz. Source syntax kontrolü
 artık bağımsız seçicinin beş QML dosyasını da bytecode'a derler.
+
+19 Ekim 01:07 rail revizyonu: ilk picker input testleri hover/tek click/Enter,
+animasyon/reduce-motion, orta çizgi ve yatay sığma için güncellendi (5 Qt).
+`python3 checks/test_theme_bindings.py` 5 geçici config/live-bind fixture testi
+ekler: boşluk kontrolü, Super+G/keycode çakışması, idempotence/orijinal yedek,
+kullanıcı düzenlemesi, reload rollback ve unbind'da sonradan eklenen bağın kalması.
+Native kurulum veya gerçek kısayol tetiklemez. 4 bridge/core testi de korunur.

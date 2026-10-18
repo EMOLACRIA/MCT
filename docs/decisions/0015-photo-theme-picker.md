@@ -1,4 +1,7 @@
-# ADR-0015 — Menü konumundan bağımsız fotoğraflı seçici
+# ADR-0015 — İlk fotoğraflı seçici (tarihsel)
+
+19 Ekim 01:07 kullanıcı revizyonuyla sunum/entry kararı ADR-0016 ile değişti.
+Aşağıdaki FloatingWindow ve açık konum notları önceki denemedir.
 
 19 Ekim 2026 · Uygulandı / yeni arayüz native denemesi bekliyor.
 

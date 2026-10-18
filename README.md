@@ -9,7 +9,8 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 korunur. İki tema ortak etkileşim şablonlarını kullanır; Deltarune lock, SDDM,
 Dolphin, Spotify ve karakter terminal uyarlamaları eklendi; kullanıcı mevcut
 Deltarune görünümünü de onayladı. Fotoğraflı seçici `bash theme.sh menu` ile
-ayrı pencerede denenebilir. Bar/ayar menüsündeki kalıcı konumu hâlâ açık.
+masaüstü üzerinde yatay tema çizgisi olarak denenebilir. Hover önizleme,
+tek seçimle kontrollü geçiş; `bash theme.sh bind` boşsa Super+G ekler.
 [Seçici kullanımı ve kapsamı](docs/THEME_PICKER.md).
 
 **2.8'den geçiş:** dal değiştirmeden önce eski aktif tema geçişlerini eski

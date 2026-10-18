@@ -4,6 +4,30 @@ Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
 Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; fotoğraflı seçici uygulandı / yeni arayüz native denemesi bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
 
+## 19 Ekim 01:07 — Tema çizgisi ve koşullu Super+G
+
+Kullanıcı önceki ayrı uygulama/grid ve check→apply akışını rahat/stilize bulmadı.
+Yeni talep: ortada çizgi, sıralı temalar, hover ile genişleyen fotoğraf, tek seçimle
+arka planda kontrol/apply; Super+G yalnız boşsa. Bu yeni talep önceki açık konum
+kararının yerini alır. Eski arayüzün beğenildiği veya son kabulü olduğu söylenmez.
+
+`theme.sh menu` artık normal pencere değil, odaklı ekranda keyboard-exclusive
+Wayland overlay açar. Warm katman `themes.toggle` IPC ile anında toggle edilir;
+ana masaüstü shell restart'ında worker'ın kesilmemesi için ayrı QS yaşam döngüsü
+korunur. UI'da FloatingWindow veya görünür ikinci uygulama yoktur. Başarılı geçiş
+650 ms sonra kapanır; Esc/dışarı tıklama/Super+G gizler, devam eden işlemi kesmez.
+Fotoğraf büyümesi hover'dır; click/Enter mevcut Engine.apply içindeki zorunlu
+kontrolleri bir kez yapar, ikinci check düğmesi yoktur. Hata gerçek aktif temayı
+korur ve panelde kalır. Kullanıcının fontScale/reduceMotion tercihleri okunur.
+
+`theme.sh bind --check` canlı `hyprctl -j binds`, temiz config ve yeni overlay QML
+compile kontrolü yapar. `theme.sh bind` ortak kilit altında tekrar kontrol eder,
+yalnız sahipli Super+G bloğunu ekler ve reload sonucunu doğrular. Dolu/dinamik
+keycode/bozuk JSON veya kişisel block değişikliği korunur. İlk masaüstü yedeği
+oynamaz; ayrı binding yedeği tutulur. `theme.sh unbind` yalnız aynı bloğu kaldırır.
+Yeni root/ABI/source update gerekmez. [Kullanım](docs/THEME_PICKER.md).
+Native yeni layer/focus/Super+G sonucu kullanıcı cihazında hâlâ denenmelidir.
+
 ## 19 Ekim — Deltarune onayı ve fotoğraflı tema seçici
 
 00:24 Europe/Riga kullanıcı: “Aynen dolphin de değişti. Devam edebiliriz.”

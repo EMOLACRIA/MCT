@@ -513,3 +513,42 @@ alındı ve fare/input/bounds kontrolleri yeniden geçti. Native Process stdout/
 close sıralaması, ana shell restart'ı sırasında pencerenin kalması ve gerçek
 Wayland tema apply/rollback yeni arayüzle cihazda henüz çalıştırılmadı.
 SDDM/uygulama/PAM işlemi yapılmadı. ABI/kurulu shell dosyaları değişmedi.
+
+## 2026-10-19 01:07 talebi — Wayland tema çizgisi
+
+Kullanıcı ilk seçiciyi yeterince stilize/rahat bulmadı; normal uygulama ve iki
+adımlı geçişi değiştirmeyi istedi. Kabul edilen tasarım: orta yatay çizgi, hover
+fotoğrafı, tek seçim/apply, canlı boşsa Super+G. İlk seçici kabul edilmiş sayılmaz.
+
+Hazırlama ortamı kontrolleri:
+
+- `python3 checks/test_theme_picker.py`: 4 geçti; katalog/bozuk paket, core
+  check/apply/noop/rollback/recovery, warm IPC toggle ve yalnız yoksa daemon
+  başlatma. Gerçek session process seçicisi overlay'i masaüstü shell'i saymıyor.
+- `python3 checks/test_theme_bindings.py`: 5 geçti; geçici config ve fake canlı
+  binds. Readonly check, dolu G/keycode/okunamayan veri, idempotent kurulum/ilk
+  binding yedeği, özel blok koruması, reload hatası geri dönüşü, unbind sonrasındaki
+  yeni kullanıcı bağlarının kalması. Hiç gerçek compositor değişmedi.
+- `MCT_QT_TEST_PATH=.../build/qs-qt-check python3 checks/test_theme_picker_ui.py`:
+  5 geçti; hover seçimi apply değil, click/Enter tek apply, busy duplicate red,
+  hata/aktif kayıt, restore onayı, Esc, 1600×1000/900×600/640×480/480×400 ve
+  %90/%120 yazıda orta çizgi/fotoğraf sınırları; animasyon ve reduceMotion.
+  Asenkron image testinde sabit bekleme yerine gerçek Ready durumuna sınırlı
+  beklenir. D→PT font değişimindeki boş URL uyarısı font kaynağını koruyarak giderildi.
+- `MCT_QMLCACHEGEN=.../qmlcachegen python3 checks/test_shell_syntax.py`: 65 QML
+  geçti. Kullanılmayan PickerButton kalktı; native-only validate.qml eklendi.
+- `MCT_QS_SOURCE=.../quickshell-0.3.1 python3 checks/test_shell_api.py`: 159
+  native property/handler kaynağa uyuyor. Layer/IPC tipi gerçek compositor testi değil.
+- Python compile, `bash -n theme.sh` ve `git diff --check` geçti.
+
+Qt render'ında demo backdrop ile çizgi/hover sunumu incelendi; canlı ekran
+fotoğrafı değildir. Yeni PanelWindow/IPC toggle, exclusive odak, Super+G'nin
+boşluğu ve Lua reload'u hedef oturumda binder tarafından kontrol edilmeli.
+Burada kullanıcının klavyesine bağ eklenmedi; yeni native kabul bekler.
+Ortak payload/ABI değişmedi ve ana restore yedeği değiştirilmedi.
+
+Binding adapter'ı yayımlanmadan önce 0.56.2 `hlBind` birincil kaynağı ayrıca
+okundu: Lua `__lua` + değişken registry ref üretir. İlk taslaktaki `exec`/command
+JSON varsayımı bu nedenle kaldırıldı. Yeni fixture gerçek Lua biçimini ve ref
+42→84 değişimini denetler; 5 test tekrar geçti. Native canlı reload sonucu
+hâlâ kullanıcı oturumundaki bind kurucusuna aittir.

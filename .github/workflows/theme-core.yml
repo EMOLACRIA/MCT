@@ -9,6 +9,8 @@ on:
       - checks/test_deltarune.py
       - theme_preview.py
       - theme_picker.py
+      - theme_bindings.py
+      - checks/test_theme_bindings.py
       - theme-picker/**
       - theme.sh
       - checks/test_theme_picker*.py
@@ -36,6 +38,8 @@ on:
       - checks/test_deltarune.py
       - theme_preview.py
       - theme_picker.py
+      - theme_bindings.py
+      - checks/test_theme_bindings.py
       - theme-picker/**
       - theme.sh
       - checks/test_theme_picker*.py
@@ -81,6 +85,7 @@ jobs:
         run: |
           python3 checks/test_theme_core.py
           python3 checks/test_theme_picker.py
+          python3 checks/test_theme_bindings.py
           python3 checks/test_theme_adapters.py
           python3 checks/test_lock_layout.py
           python3 checks/test_spotify_install.py
@@ -106,5 +111,5 @@ jobs:
           MCT_QMLCACHEGEN="$MCT_QT_TEST_PATH/PySide6/Qt/libexec/qmlcachegen" python3 checks/test_shell_syntax.py
       - name: Source syntax
         run: |
-          python3 -m py_compile theme_core.py theme_picker.py theme_preview.py adapter_assets.py update.py apps/manage.py sddm/manage.py sddm/prepare.py terminal-medallion/terminal.py checks/test_theme_core.py checks/test_deltarune.py checks/test_shared_surfaces.py checks/test_osd_themes.py checks/test_theme_adapters.py checks/test_greeter_themes.py checks/test_lock_layout.py
+          python3 -m py_compile theme_core.py theme_picker.py theme_bindings.py theme_preview.py adapter_assets.py update.py apps/manage.py sddm/manage.py sddm/prepare.py terminal-medallion/terminal.py checks/test_theme_core.py checks/test_deltarune.py checks/test_shared_surfaces.py checks/test_osd_themes.py checks/test_theme_adapters.py checks/test_greeter_themes.py checks/test_lock_layout.py
           bash -n theme.sh preview.sh

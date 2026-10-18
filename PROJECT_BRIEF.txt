@@ -31,9 +31,10 @@ DEĞİŞMEZ ÜRÜN KARARLARI
 7. Okunabilirlik süsten önce gelir. Dolphin'in normal ve seçili yazıları beyazdır.
 8. Açılan paneller kısayola tekrar basılınca kapanır; üst üste kopyalar açılmaz.
 9. Kullanıcının monitör, ölçek, GPU, VRR ve kişisel kısayol ayarları korunur.
-10. Tema menüsünün konumu açık karardır; kullanıcı düşünüp seçecek. Preferences
-    veya başka bir yüzeye yerleştirme kararı alınmadı. M4 öncesi yalnız tema
-    değiştirme yaklaşımları araştırılır; seçici arayüzü uygulanmaz.
+10. 19 Ekim 01:07: tema seçimi masaüstü üstünde ortadaki yatay çizgi boyunca
+    sıralanır; hover genişleyip küçük gerçek fotoğraf gösterir. Seçmek tek adımda
+    arka plan kontrolü ve apply başlatır. Super+G yalnız canlı bağlarda boşsa
+    eklenir; dolu kısayol değiştirilmez. Önceki konum-açık kararı bu taleple değişti.
 11. 17 Ekim: kullanıcı ortak davranış + ayrı görsel paket + uygulama adaptörleri
     yaklaşımını onayladı. Tema seçiminde her temayı temsil eden gerçek ekran
     görüntülü önizleme kartları bulunacak. Kartların dizilimi ve menünün açıldığı
@@ -106,3 +107,8 @@ Sadece önizlemenin güzel görünmesi, dosya testlerinin geçmesi veya özellik
 kodunun bulunması yeterli değil. Canlı oturum kontrolleri ve kullanıcının
 son görsel onayı kaydedilir. Açık Spotify/Dolphin sorunları kapanmadan ilk
 Plague Tale teması tamamlandı olarak işaretlenmez.
+
+19 Ekim 01:07 revizyonu: ayrı uygulama/grid ve check→apply UI kullanıcı tarafından
+rahat/stilize bulunmadı. Kalıcı Wayland rail overlay, hover ve tek seçim uygulanır.
+Repo aracı ana shell restart'ından bağımsız kalır, normal uygulama penceresi açmaz.
+Ayrı uygulama/SDDM adaptör sınırı aynı kalır; her yüzey otomatik değişiyor denmez.

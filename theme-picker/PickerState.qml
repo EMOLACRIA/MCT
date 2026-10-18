@@ -14,6 +14,10 @@ QtObject {
     property bool failed: false
     property string action: ""
     property bool rollbackArmed: false
+    property bool reduceMotion: false
+    property real fontScale: 1
+    property string monoFontSource: ""
+    signal applied()
     readonly property var selected: {
         for (let i = 0; i < themes.length; ++i)
             if (themes[i].id === selectedId) return themes[i];
@@ -23,7 +27,7 @@ QtObject {
     readonly property bool isActive: selected !== null && activeTheme !== null
                                     && selected.id === activeTheme.id && selected.version === activeTheme.version
     readonly property bool canCheck: !blocked && selected !== null && selected.valid && !isActive
-    readonly property bool canApply: canCheck && checkedId === selectedId
+    readonly property bool canApply: canCheck
     signal requested(string action, string theme)
 
     function choose(id) {
@@ -36,6 +40,11 @@ QtObject {
         for (let i = 0; i < themes.length; ++i) if (themes[i].id === selectedId) index = i;
         choose(themes[(index + delta + themes.length) % themes.length].id);
     }
+    function activate(id) {
+        if (blocked) return;
+        choose(id);
+        if (canApply) run("apply");
+    }
     function run(next) {
         if (busy) return;
         if (next === "check" && !canCheck) return;
@@ -45,8 +54,8 @@ QtObject {
             if (!rollbackArmed) {rollbackArmed = true; return;}
         }
         rollbackArmed = false; busy = true; action = next; failed = false;
-        message = next === "catalog" ? "Loading themes…" : next === "check" ? "Checking compatibility…"
-                    : next === "apply" ? "Switching desktop…" : "Restoring previous desktop…";
+        message = next === "catalog" ? "" : next === "check" ? "Checking compatibility…"
+                    : next === "apply" ? "Checking & switching…" : "Restoring previous desktop…";
         if (next === "check" || next === "catalog") checkedId = "";
         requested(next, next === "apply" || next === "check" ? selectedId : "");
     }
@@ -57,10 +66,14 @@ QtObject {
         }
         if (reply.catalog) {
             themes = reply.catalog.themes || [];
+            for (let i = 0; i < themes.length; ++i)
+                if (themes[i].id === "deltarune" && themes[i].fontSource) monoFontSource = themes[i].fontSource;
             activeTheme = reply.catalog.active || null;
             canRollback = !!reply.catalog.canRollback;
             pending = !!reply.catalog.pending;
             stateError = reply.catalog.stateError || "";
+            reduceMotion = !!reply.catalog.reduceMotion;
+            fontScale = reply.catalog.fontScale || 1;
             ready = true;
             let found = false;
             for (let i = 0; i < themes.length; ++i) if (themes[i].id === selectedId) found = true;
@@ -68,7 +81,10 @@ QtObject {
                                     ? activeTheme.id : themes.length ? themes[0].id : "";
         }
         checkedId = reply.ok && action === "check" ? selectedId : "";
-        message = reply.message || ""; failed = !reply.ok; busy = false; action = "";
+        const switched = reply.ok && (action === "apply" || action === "rollback");
+        message = switched ? "Ready." : reply.message || "";
+        failed = !reply.ok; busy = false; action = "";
+        if (switched) applied();
     }
     function fail(text) {
         busy = false; failed = true; message = text; checkedId = ""; action = ""; rollbackArmed = false;

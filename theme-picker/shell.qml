@@ -2,15 +2,43 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
+import Quickshell.Hyprland
 ShellRoot {
     id: root
+    property bool opened: true
+    property string screenName: ""
     property string response: ""
     property string errors: ""
-    PickerState { id: model; onRequested: (action, theme) => root.run(action, theme) }
+    readonly property var focusedScreen: Quickshell.screens.find(s => s.name === (Hyprland.focusedMonitor ? Hyprland.focusedMonitor.name : "")) || Quickshell.screens[0] || null
+    readonly property var selectedScreen: Quickshell.screens.find(s => s.name === screenName) || focusedScreen
+    PickerState {
+        id: model
+        onRequested: (action, theme) => root.run(action, theme)
+        onApplied: closeAfterSwitch.restart()
+    }
+    function toggle() {
+        closeAfterSwitch.stop();
+        opened = !opened;
+        if (opened) {
+            screenName = focusedScreen ? focusedScreen.name : "";
+            closeDesktopPanel.running = true;
+            if (!model.busy) model.run("catalog");
+        }
+    }
     function run(action, theme) {
         response = ""; errors = "";
         worker.command = ["python3", Quickshell.shellPath("../theme_picker.py"), action].concat(theme ? [theme] : []);
         worker.running = true;
+    }
+    IpcHandler {
+        target: "themes"
+        function toggle(): void {root.toggle();}
+        function ping(): string {return "ready";}
+    }
+    Process {
+        id: closeDesktopPanel
+        command: ["quickshell", "ipc", "-p", Quickshell.env("HOME") + "/.config/desktop-style/shell", "call", "desktop", "close"]
     }
     Process {
         id: worker
@@ -23,17 +51,24 @@ ShellRoot {
         id: completion; interval: 0
         onTriggered: {
             try { model.accept(JSON.parse(root.response)); }
-            catch (e) { model.fail(root.errors || "The theme helper stopped without a response. Refresh to check the desktop state."); }
-            if (!window.visible) Qt.quit();
+            catch (e) { model.fail(root.errors || "The theme helper stopped. Reopen to read the current desktop state."); }
         }
     }
-    FloatingWindow {
+    Timer { id: closeAfterSwitch; interval: 650; onTriggered: root.opened = false }
+    PanelWindow {
         id: window
-        title: "Themes"; visible: true
-        implicitWidth: 1080; implicitHeight: 760
-        minimumSize: Qt.size(480, 400)
-        onVisibleChanged: if (!visible && !model.busy) Qt.quit()
-        PickerView { anchors.fill: parent; state: model; onCloseRequested: window.visible = false }
+        visible: root.opened && root.selectedScreen !== null
+        screen: root.selectedScreen
+        anchors { top: true; bottom: true; left: true; right: true }
+        color: "transparent"; exclusionMode: ExclusionMode.Ignore
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+        WlrLayershell.namespace: "desktop-theme-rail"
+        PickerView { anchors.fill: parent; state: model; onCloseRequested: root.opened = false }
     }
-    Component.onCompleted: model.run("catalog")
+    Component.onCompleted: {
+        screenName = focusedScreen ? focusedScreen.name : "";
+        closeDesktopPanel.running = true;
+        model.run("catalog");
+    }
 }

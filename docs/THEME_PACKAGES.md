@@ -5,8 +5,9 @@ ABI `mct-shell-2.9`; Deltarune 0.2.0 ve Plague Tale 2.9.0.
 İşlevler ortak `shell/surfaces/` içinde; paket ui dosyaları görsel wrapper'dır.
 Lock `layout.conf` artık izinli/zorunlu tema hedefidir. Kaynaklanan general/auth
 ana config ortak kalır. Dış adaptörler iki tema için hazır ama ayrı kuruculardır.
-19 Ekim: `bash theme.sh menu` fotoğraflı ayrı seçici penceresini açar.
-[Arayüz/kapsam](THEME_PICKER.md). Bar/ayar menüsünde konumu seçilmedi;
+19 Ekim 01:07 revizyonu: `bash theme.sh menu` fotoğraflı Wayland tema çizgisini
+açar; hover + tek seçimle arka plan kontrollü apply. `theme.sh bind` canlı boşsa
+Super+G ekler. [Arayüz/kapsam](THEME_PICKER.md).
 aşağıdaki eski “görsel menü yok” kayıtları önceki sürümlere aittir.
 
 Aşağıdaki 2.8 açıklaması işlem/geri dönüşün tarihsel temelidir; bu üst bölümün

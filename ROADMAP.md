@@ -146,6 +146,13 @@ kapanmış olduğu anlamına gelmez.
 
 ## M5 — Tema değiştirici
 
+**19 Ekim 01:07 revizyonu uygulandı / native denemesi bekliyor.** Kullanıcı
+önceki arayüzü yeterince stilize/rahat bulmadı. Ortada yatay çizgi, hover ile
+fotoğrafı genişleyen temalar ve tek seçimle arka plan kontrollü geçiş geldi.
+Ayrı app penceresi kalktı, sıcak Wayland katmanı IPC ile toggle olur. Super+G
+canlı boşluk kontrolüyle ayrı bind kurucusunda eklenir; doluysa korunur.
+Menü yeri artık açık karar değildir; eski kayıtlar aşağıda tarihseldir.
+
 **19 Ekim: fotoğraflı ilk arayüz uygulandı.** `bash theme.sh menu` ayrı repo
 penceresidir; kartlar, büyük resim, aktif tema, kontrol→uygula, iki aşamalı geri
 dönüş vardır. Yeni bar/ayar yeri veya global kısayol atanmadı. Mevcut core işlem

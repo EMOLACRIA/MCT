@@ -5,7 +5,16 @@ controller'larını ayrıca sunar. Bunlar görsel geometri içermez; tamamen yen
 bir sunum bu controller'ları kullanabilir. `surfaces/` onların ortak varsayılan
 çizimidir. Mevcut iki skin bu çizimi property/delegate ile özelleştirir.
 
-## 19 Ekim — bağımsız fotoğraflı seçici
+## 19 Ekim 01:07 — kalıcı Wayland tema çizgisi
+
+Aşağıdaki ilk FloatingWindow tasarımı kullanıcı revizyonuyla değişti.
+`theme-picker/shell.qml` artık PanelWindow/WlrLayer.Overlay ve exclusive klavye
+odağı kullanır. `themes.toggle` IPC pencere yaratmadan aç/kapatır. Qt saf state ve
+sunum, core Engine ve ana masaüstü process sınırı korunur. `theme_bindings.py`
+kurulu keybinds.lua'ya yalnız canlı boşsa sahipli Super+G bloğunu ekler.
+[ADR-0016](decisions/0016-theme-rail.md). ABI/kurulu shell dosyaları değişmez.
+
+## 19 Ekim — ilk fotoğraflı seçici (tarihsel)
 
 `theme_picker.py` katalog/JSON taşıma katmanıdır; değişiklikleri yalnız mevcut
 `theme_core.Engine` yapar. `theme-picker/PickerState.qml` seçim/check/onay modelidir;

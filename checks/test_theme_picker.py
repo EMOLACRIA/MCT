@@ -73,13 +73,19 @@ class PickerTests(unittest.TestCase):
         self.assertEqual(edited.read_text(), '# user edit\n')
         self.assertFalse(picker.dispatch(self.engine, 'check', '../bad')['ok'])
 
-    def test_menu_uses_independent_single_instance_without_installing(self):
-        with patch.object(picker.shutil, 'which', return_value='/fixture/quickshell'), patch.object(picker.subprocess, 'call', return_value=0) as launch:
+    def test_menu_toggles_warm_overlay_and_only_launches_when_absent(self):
+        with patch.object(picker.shutil, 'which', return_value='/fixture/quickshell'), patch.object(picker.subprocess, 'run') as ipc, patch.object(picker.subprocess, 'call', return_value=0) as launch:
+            ipc.return_value.returncode = 0
             self.assertEqual(picker.menu(), 0)
-            self.assertEqual(launch.call_args.args[0], ['/fixture/quickshell', '--no-duplicate', '-p', str(picker.ROOT/'theme-picker/shell.qml')])
+            launch.assert_not_called()
+            self.assertEqual(ipc.call_args.args[0][-3:], ['call','themes','toggle'])
+            ipc.return_value.returncode = 1
+            self.assertEqual(picker.menu(), 0)
+            expected = ['/fixture/quickshell', '--daemonize', '--no-duplicate', '-p', str(picker.ROOT/'theme-picker/shell.qml')]
+            self.assertEqual(launch.call_args.args[0], expected)
             session = core.theme.load_module(picker.ROOT/'payload/style/scripts/session.py')
-            self.assertFalse(session.is_shell(launch.call_args.args[0]))
-            self.assertTrue(session.is_shell(['/fixture/quickshell', '-p', session.SHELL]))
+            self.assertFalse(session.is_shell(expected))
+            self.assertTrue(session.is_shell(['/fixture/quickshell','-p',session.SHELL]))
         self.assertEqual(self.fixture.runtime.events, [])
 
 

@@ -14,6 +14,7 @@ uygulanır. Yeni tema kabulünde her satır denetlenir.
 | Super+M | Beş seçenekli oturum menüsü; arama alanı yok. Tekrar basınca kapanır. |
 | Super+B | Bildirim geçmişi ve DND; tema değiştirme kısayolu olarak yeniden kullanılmaz. |
 | Super+T | Donanım paneli; launcher açmaz. |
+| Super+G | 19 Ekim: canlı bağ boşsa tema çizgisini aç/kapat. Dolu kişisel bağ değiştirilmez; ayrı koşullu kurulum gerekir. |
 | Super+L | Güvenli kilit; medya alanı mevcut seçili oynatıcıya bağlı. |
 | Alt+Tab / Alt+Shift+Tab | Tüm çalışma alanlarından ileri/geri pencere seçimi; alan numarası görünür. **2.3.0 normal kullanım kullanıcı onayı.** |
 | Ses/parlaklık tuşları | Gerçek cihazı değiştirir, ölçülen değeri OSD'de gösterir; Dunst bildirimine dönmez. |
@@ -191,3 +192,16 @@ terminal süsünü otomatik yeniden kurmuş gibi raporlamaz. Yeni native kabul a
   Tab/Enter/Space düğmeleri, Esc büyük resmi/geri dönüş onayını/pencereyi kapatır.
 - Masaüstü/lock/Kitty değişir. Dolphin/Spotify/SDDM/terminal süsü ayrı kuruculardır;
   arayüz bunların otomatik geçtiğini iddia etmez. Tercihler/kısayollar korunur.
+
+## 19 Ekim 01:07 seçici revizyonu
+
+Önceki ayrı pencere/check düğmeli arayüzün yerini yatay, ekranın orta çizgisindeki
+Wayland rail alır. Hover yalnız fotoğrafı/boyutu değiştirir; click veya Enter aynı
+Engine.apply'dan kontrollü tek işlem başlatır. Bozuk paket, pending journal,
+config/ABI/elle dosya değişikliği korumaları atlanmaz. İşlem sırasında ikinci
+apply/hover seçimi yoktur. Başarı kısa geri bildirimle gizlenir; hata kalır.
+Esc/dışarı tıklama/Super+G gizlemek helper'ı öldürmez. Normal uygulama penceresi
+ve ayrı manuel check adımı yoktur. Sol/sağ/Tab gezinir, Enter/Space seçer.
+Önceki tema restore'un ikinci onayı korunur. FontScale/reduceMotion okunur.
+Super+G canlı listedeki modmask/key/keycode ve sahipli blokla kontrol edilir;
+bulunmayan/bozuk veri “boş” kabul edilmez. Kişisel kısayol üzerine yazılmaz.
