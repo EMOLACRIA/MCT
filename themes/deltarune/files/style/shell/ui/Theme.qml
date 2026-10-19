@@ -9,27 +9,27 @@ QtObject {
     function applicationSymbol(name) {return /kitty|terminal|alacritty/i.test(name) ? "terminal" : /dolphin|files/i.test(name) ? "folder" : /browser|firefox|zen/i.test(name) ? "browser" : /music|spotify/i.test(name) ? "music" : "windows";}
     function fontSize(pixels) {return Math.max(9,Math.round(pixels*fontScale));}
     function duration(milliseconds) {return reduceMotion ? 0 : milliseconds;}
-    readonly property color background:Qt.rgba(0,0.012,0.025,preferences.surfaceOpacity)
-    readonly property color raised:"#062945"
-    readonly property color ink:"#eefaff"
-    readonly property color muted:"#99bacc"
-    readonly property color brass:"#00d9ef"
-    readonly property color line:"#195a78"
-    readonly property color danger:"#ff839e"
-    readonly property color selectedSurface:"#093e61"
-    readonly property color activeWorkspaceSurface:"#062945"
-    readonly property color inputSurface:"#01080e"
-    readonly property color panelScrim:"#18000000"
-    readonly property color switcherScrim:"#b000060d"
-    readonly property color previewStatusSurface:"#ed000810"
-    readonly property color partyPink:"#ed70df"
+    readonly property color background:Qt.rgba(0.024,0.024,0.075,preferences.surfaceOpacity)
+    readonly property color raised:"#211b36"
+    readonly property color ink:"#e9ddff"
+    readonly property color muted:"#aaa1c4"
+    readonly property color brass:"#f32baf"
+    readonly property color line:"#69518c"
+    readonly property color danger:"#ff88ad"
+    readonly property color selectedSurface:"#362342"
+    readonly property color activeWorkspaceSurface:"#362342"
+    readonly property color inputSurface:"#050511"
+    readonly property color panelScrim:"#10040310"
+    readonly property color switcherScrim:"#b0060613"
+    readonly property color previewStatusSurface:"#ed060613"
+    readonly property color partyPink:"#f32baf"
     readonly property color partyGreen:"#71e7a5"
     readonly property FontLoader loadedFont:FontLoader {source:Qt.resolvedUrl("../assets/departure-mono.otf")}
     readonly property string displayFont:loadedFont.status===FontLoader.Ready ? loadedFont.name : "monospace"
     readonly property string bodyFont:displayFont
-    readonly property int quickMotion:70
-    readonly property int panelEnterMotion:90
-    readonly property int ornamentSize:14
+    readonly property int quickMotion:110
+    readonly property int panelEnterMotion:140
+    readonly property int ornamentSize:30
     readonly property url wallpaper:Qt.resolvedUrl("../assets/wallpaper.png")
     readonly property url kris:Qt.resolvedUrl("../assets/kris.png")
     readonly property url susie:Qt.resolvedUrl("../assets/susie.png")

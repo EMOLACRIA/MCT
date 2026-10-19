@@ -32,7 +32,8 @@ class PickerUiTests(unittest.TestCase):
         self.page.closeRequested.connect(lambda:self.closed.append(True))
         engine=theme_picker.theme_core.Engine(style=self.folder/'style',state=self.folder/'state',hypr=self.folder/'hypr')
         self.catalog=theme_picker.catalog(engine)
-        self.catalog.update(active=dict(id='deltarune',version='0.2.0'),canRollback=True,reduceMotion=True,fontScale=1)
+        version=next(entry['version'] for entry in self.catalog['themes'] if entry['id']=='deltarune')
+        self.catalog.update(active=dict(id='deltarune',version=version),canRollback=True,reduceMotion=True,fontScale=1)
         self.js('model.run("catalog")'); self.reply('catalog',catalog=self.catalog)
         qt.evaluate(self.page,'forceActiveFocus()'); qt.QTest.qWait(160)
 
@@ -80,6 +81,16 @@ class PickerUiTests(unittest.TestCase):
         self.assertEqual(self.requests[-1],('apply','plague-tale'))
         self.reply('apply',theme='deltarune')
         self.assertTrue(self.js('model.failed'));self.assertFalse(self.js('model.busy'))
+
+    def test_same_theme_new_version_can_be_applied_without_switching_away(self):
+        self.js('model.run("catalog")')
+        self.reply('catalog',catalog=dict(self.catalog,active=dict(id='deltarune',version='0.2.0')))
+        self.assertEqual(self.js('model.selectedId'),'deltarune')
+        self.assertTrue(self.js('model.canApply'))
+        self.click('selectTheme-deltarune')
+        self.assertEqual(self.requests[-1],('apply','deltarune'))
+        self.reply('apply',theme='deltarune',catalog=self.catalog)
+        self.assertTrue(self.js('model.isActive'));self.assertFalse(self.js('model.canApply'))
 
     def test_keyboard_enter_switch_escape_and_restore_confirmation(self):
         qt.QTest.keyClick(self.view,qt.Qt.Key_Right)

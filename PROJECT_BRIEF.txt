@@ -1,4 +1,4 @@
-PROJE HEDEFİ — PLAGUE TALE ÖNCE, ORTAK MASAÜSTÜ SONRA
+PROJE HEDEFİ — ORTAK DAVRANIŞ, AYRI GÖRSEL DÜNYALAR
 Karar tarihi: 2026-10-18 (Europe/Riga)
 Sahip: Emirhan / EMOLACRIA
 Depo/çalışma adı: MCT (https://github.com/EMOLACRIA/MCT).
@@ -15,6 +15,17 @@ HyprCADE'den daha bütünlüklü, günlük kullanımda güvenilir, güçlü biç
 bir Hyprland masaüstü geliştirmek. Önce A Plague Tale görsel kimliğini taşıyan
 tek tema tamamen bitirilecek. Ardından aynı işlevleri ve kullanım alışkanlıklarını
 koruyan, görsel açıdan birbirinden çok farklı tema paketleri hazırlanacak.
+
+19 EKİM 21:34 — GÜNCEL ÖNCELİK
+Kullanıcı Deltarune için hazırlanan dört referansın hepsini ayrı tema olarak
+kabul etti. Önce mevcut deltarune, son ağaç/Kris referansına uyarlanır:
+indigo yüzeyler, lavanta metin, ince fuşya dal kırıkları, kompakt paneller.
+Sonra Guardian, neşeli gün batımı/maceracılar ve Snowgrave sonbahar referansları
+üç ayrı paket olur. İsimleri henüz kesinleşmedi; kısayollar ve işlevler ortaktır.
+Bu sıra eski harici adaptörleri otomatikleştirme önerisinin önüne geçti.
+Karar: docs/decisions/0016-deltarune-four-worlds.md.
+Mevcut tema seçicinin yatay konumu ve Super+G kararı kesinleşmiştir; aşağıdaki
+eski konumu-açık kayıtlar tarihsel gelişimi anlatır.
 
 DEĞİŞMEZ ÜRÜN KARARLARI
 1. A Plague Tale mevcut ilk temanın kesin seçilmiş referansıdır.

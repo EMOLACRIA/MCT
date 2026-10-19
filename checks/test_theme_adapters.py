@@ -109,7 +109,7 @@ class ThemeAdapterTests(unittest.TestCase):
             source=assets.stage_greeter('deltarune',Path(folder)/'theme')
             self.assertEqual((source/'Main.qml').read_bytes(),(ROOT/'sddm/theme/Main.qml').read_bytes())
             with patch.object(m,'THEME_SOURCE',source):m.install()
-            self.assertIn('#00d9ef',(m.THEME/'LoginSkin.qml').read_text())
+            self.assertIn('#f32baf',(m.THEME/'LoginSkin.qml').read_text())
             self.assertTrue((m.THEME/'departure-mono.otf').is_file())
             m.restore();self.assertFalse(m.CONFIG.exists())
 

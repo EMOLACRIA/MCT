@@ -145,7 +145,7 @@ def discover(explicit):
 
 def logo(args, source):
     return {'type':'file', 'source':str(source), 'position':'left',
-            'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':'#00d9ef' if getattr(args,'theme','plague-tale')=='deltarune' else '#b5a37c'}}
+            'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':'#f32baf' if getattr(args,'theme','plague-tale')=='deltarune' else '#b5a37c'}}
 
 
 def source_asset(args):

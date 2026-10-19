@@ -1,6 +1,6 @@
 [Icon Theme]
-Name=Dark Fountain
-Comment=Cyan stepped folders with inherited application and action icons
+Name=Hidden Tree
+Comment=Lavender folders with fuchsia details with inherited application and action icons
 Inherits=breeze-dark,breeze,hicolor
 FollowsColorScheme=true
 Directories=scalable/places

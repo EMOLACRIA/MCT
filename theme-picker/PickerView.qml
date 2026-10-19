@@ -6,7 +6,7 @@ FocusScope {
     signal closeRequested()
     implicitWidth: 1600; implicitHeight: 1000
     focus: true
-    readonly property color accent: state.selectedId === "deltarune" ? "#00d9ef" : "#c7b28b"
+    readonly property color accent: state.selectedId === "deltarune" ? "#f32baf" : "#c7b28b"
     readonly property real edge: width < 700 ? 20 : 64
     readonly property real photoHeight: Math.min(230, height * (height < 600 ? .24 : .28))
     readonly property real railHeight: photoHeight + 136

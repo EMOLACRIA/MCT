@@ -552,3 +552,30 @@ okundu: Lua `__lua` + değişken registry ref üretir. İlk taslaktaki `exec`/co
 JSON varsayımı bu nedenle kaldırıldı. Yeni fixture gerçek Lua biçimini ve ref
 42→84 değişimini denetler; 5 test tekrar geçti. Native canlı reload sonucu
 hâlâ kullanıcı oturumundaki bind kurucusuna aittir.
+# 19 Ekim — Deltarune 0.3.0 görsel revizyonu
+
+Yerel offscreen Qt 6.10.2, `MCT_QT_TEST_PATH=build/qs-qt-check` bağımlılık
+diziniyle 112 unittest geçti: `test_deltarune` 42, `test_theme_core` 33,
+`test_theme_adapters` 5, `test_greeter_themes` 10, `test_shared_surfaces` 2,
+`test_osd_themes` 1, `test_lock_layout` 3, `test_terminal_medallion` 6,
+`test_theme_picker` 4, `test_theme_picker_ui` 6. Komutlar `python3 checks/NAME.py`.
+
+Yeni picker yükseltme kontrolü eski aktif sürümün yeniden uygulanabilir olmasını
+ve yeni sürüm sonrası noop'u denetler. İlk koşuda eski fixture'ın sabit 0.2.0
+değeri eski sürümü gerçekten güncellenebilir gösterdiği için noop beklentisi
+başarısız oldu; fixture aktif sürümü katalogdan okuyacak şekilde düzeltildi.
+Kaynakta bu nedenle core/picker davranışı değiştirilmedi.
+
+`test_shell_syntax.py`: **116 QML** bytecode derlemesi geçti; kontrol artık
+paketlerin görsel QML skin'lerini de kapsar. `test_shell_imports.py` network Qt
+imports ve palet ayrımını doğruladı. İki Engine.load manifest/bütünlük kontrolü,
+değişen Python parse, Bash syntax, yerel belge linkleri ve diff whitespace geçti.
+Wallpaper decode piksel eşitliği mevcut Deltarune testinde korunur (1200×675).
+
+Gerçek QML launcher/medya/controls/OSD/switcher render'ları ve sahte SDDM
+1600/900/640 render'ları üretildi; launcher/medya/controls/login görsel incelendi.
+Paket preview'sı QML launcher render'ıdır; AI konseptiyle karıştırılmaz.
+
+Installer'lar geçici dizin/mock altında test edildi. Gerçek Hyprland/QuickShell
+servis devralma, PAM/login, kullanıcı cihaz tuşları veya Spotify/Dolphin uygulaması
+bu ortamda çalıştırılmadı; yeni native görünüm/kullanım kabulü beklenir.

@@ -6,7 +6,7 @@ QtObject {
     readonly property int barTopMargin:0
     readonly property int barSideMargin:0
     readonly property int floatingBarReservedHeight:44
-    readonly property int panelPadding:22
+    readonly property int panelPadding:20
     readonly property int panelSideMargin:16
     readonly property int panelTop:70
     readonly property int panelWidthMargin:48
@@ -14,15 +14,15 @@ QtObject {
     readonly property int panelMinimumWidth:250
     readonly property int panelMinimumHeight:210
     readonly property var panels:({
-        launcher:{width:480,height:580,centered:false},
+        launcher:{width:380,height:490,centered:false},
         power:{width:550,height:465,confirmationHeight:280,centered:true},
         controls:{width:420,height:610,centered:false},
         notifications:{width:460,height:650,centered:false},
-        media:{width:460,height:380,centered:false},
+        media:{width:380,height:330,centered:false},
         hardware:{width:650,height:660,centered:true},
         settings:{width:720,height:740,centered:true}
     })
-    function panelSide(name) {return name==="controls" ? "right" : "left";}
+    function panelSide(name) {return name==="controls" || name==="media" || name==="notifications" ? "right" : "left";}
     function panelSpec(name) {return panels[name] || panels.media;}
     function panelCentered(name,centerSidePanels) {return centerSidePanels || panelSpec(name).centered;}
     function panelWidth(name,availableWidth) {

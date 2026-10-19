@@ -8,7 +8,7 @@ AbstractButton {
     property Component hintPopup:null
     property real iconLevel: 100
     property bool iconCharging: false
-    property color iconColor: destructive ? Theme.danger : Theme.brass
+    property color iconColor: destructive ? Theme.danger : selected || hovered || activeFocus ? Theme.brass : Theme.ink
     property bool selected: false
     property bool destructive: false
     implicitHeight: 42

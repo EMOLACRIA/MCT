@@ -43,7 +43,7 @@ class DeltaruneRevisionTests(qt.PreferenceUiTests):
         self.assertIn('Departure',qt.evaluate(frame,'Theme.bodyFont'))
         source=QImage(str(ROOT/'themes/deltarune/wallpaper-source.jpeg'))
         wallpaper=QImage(str(qt.ROOT/'payload/style/wallpaper.png'))
-        self.assertEqual((wallpaper.width(),wallpaper.height()),(2048,1151))
+        self.assertEqual((wallpaper.width(),wallpaper.height()),(1200,675))
         self.assertEqual(source.convertToFormat(QImage.Format_RGBA8888),wallpaper.convertToFormat(QImage.Format_RGBA8888))
 
 

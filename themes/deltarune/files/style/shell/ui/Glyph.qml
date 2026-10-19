@@ -2,7 +2,7 @@ import QtQuick
 Canvas {
     id: root
     property string symbol: "search"
-    property color ink: Theme.brass
+    property color ink: Theme.ink
     property real level: 100
     property bool charging: false
     onLevelChanged: requestPaint()

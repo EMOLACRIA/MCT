@@ -2,6 +2,25 @@
 
 Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.
 
+## 19 Ekim — Dört Deltarune referansı / yeni wallpaper
+
+- Mevcut `deltarune` 0.3.0 wallpaper kaynağı kullanıcının gönderdiği
+  `e3c07bb8f6f794ad31a025ae54440c50.jpg` (1200×675), depoda
+  `themes/deltarune/wallpaper-source.jpeg`. Shell/wallpaper/lock fallback/SDDM
+  PNG'leri aynı JPEG'in çözülmüş pikselleridir; AI repaint veya upscale yoktur.
+- `design/deltarune/` diğer üç orijinali ve dört AI referansını korur. Referanslar
+  bu konuşmada built-in imagegen ile üretilmiş görsel konseptlerdir; gerçek QML
+  ekran görüntüsü değildir. Yeni paket preview'sı gerçek Qt render'ından gelir.
+- Guardian kaynağı üstte `ART BY MANVJLL` kredi satırı taşır; orijinal dosya ve
+  konsept bu satırı korur. Diğer dosyalarda sanatçı/kaynak bilgisi sağlanmadı;
+  isim/hak sahipliği uydurulmaz. Sağlanan dosyalar açık lisanslı kabul edilmez.
+- Kullanıcının sahne/lore açıklamaları tasarım bağlamı olarak kaydedildi;
+  bağımsız resmî Chapter/rota doğrulaması yapıldığı iddia edilmez.
+- Yeni dal köşeleri, klasör konturları ve CP437 ağaç sunumu proje içinde üretildi.
+  Mevcut Departure Mono OFL bildirimi ve oyun görsellerinin hak kayıtları korunur.
+
+Aşağıdaki 18 Ekim wallpaper kayıtları önceki paket sürümlerinin kökenidir.
+
 - Ana duvar kâğıdı kullanıcı tarafından sağlanan oyun ekran görüntüsünden gelir.
   `payload/style/wallpaper.png` ve shell içindeki kopyası aynı işlevsel varlıktır;
   2.6.2 denetiminde SDDM dosyasının aynı PNG'nin kesilmiş bir öneki olduğu bulundu;

@@ -1,8 +1,36 @@
 # Güncel durum
 
-Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
+Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.3.0**.
 Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; tema çizgisi görünüm/normal kullanım kullanıcı onaylı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 19 Ekim 21:34 — Dört referans, önce indigo/fuşya ağaç teması
+
+Kullanıcı dört Deltarune referansını ayrı tema olarak kabul etti. Önce mevcut
+`deltarune` son üretilen ağaç/Kris konseptine taşındı (0.3.0): indigo yüzeyler,
+lavanta yazı/ikon, ince fuşya dal kırıkları; kompakt sol launcher, sağ medya ve
+controls. Portre başlıkları yerine sade semboller var. Ayarlar/diğer yüzeyler aynı
+Theme/OrnamentFrame üzerinden güncellendi. Plague Tale ve ortak runtime değişmedi.
+
+Wallpaper kaynağı sağlanan 1200×675 JPEG; wallpaper/shell/lock fallback/SDDM
+kopyaları kayıpsız PNG dönüşümü. Kitty, Hyprland border, Hyprlock ve ayrı
+Dolphin/Spotify/SDDM/CP437 adaptörleri yeni görsel dile uyarlandı. Dolphin normal/
+seçili metni beyaz kaldı. Bağımsız adaptörler otomatik kurulmaz, ilk yedek akışı
+değişmedi. [Deneme ve sınırlar](docs/DELTARUNE.md).
+
+Üç diğer orijinal/dört AI konsepti `design/deltarune/` içinde tasarım kaydıdır;
+Guardian, neşeli gün batımı ve Snowgrave sonbahar henüz uygulanmış tema değildir.
+`preview.png` ve güncel yüzey görüntüleri gerçek Qt render'ıdır. Yeni paket
+görünümünün hedef oturumda kullanıcı kabulü açık; önceki 0.2.0 onayı yeni görsele
+otomatik aktarılmadı. [ADR-0016](docs/decisions/0016-deltarune-four-worlds.md).
+
+19 Ekim hazırlama kontrolü: **112 unittest** geçti (42 Deltarune, 33 core,
+5 adapter, 10 greeter, 2 shared-surface, 1 iki-skin OSD, 3 lock layout,
+6 terminal, 4 picker bridge, 6 picker UI). Yeni picker vakası aynı tema 0.2.0'dan
+güncel sürüme geçişi kontrol eder; eski sabit aktif sürüm fixture'ı katalogdan
+okunur. **116 QML** bytecode derlemesi (tema skin'leri dahil), network imports,
+manifest bütünlüğü, Python/Bash syntax ve değişen belge linkleri geçti.
+Gerçek Wayland, PAM, canlı uygulama veya fiziksel cihaz ölçümü yapılmadı.
 
 ## 19 Ekim 13:22 — Tema çizgisi kullanıcı onayı
 

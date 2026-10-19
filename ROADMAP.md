@@ -1,3 +1,21 @@
+# 19 Ekim 21:34 — Yeni öncelik: dört Deltarune görsel dünyası
+
+Kullanıcı dört konsepti de ayrı tema olarak istedi. Önce mevcut `deltarune`
+son ağaç/Kris referansına taşınır (0.3.0); kalan üç paket sonra geliştirilir.
+
+1. **Şimdi:** indigo/lavanta/fuşya ağaç görünümü; shell, lock, Kitty ve bağımsız
+   uygulama adaptörleri, gerçek Qt önizlemeleri ve ortak davranış regresyonu.
+   Kaynak uygulandı; yeni cihaz/görünüm kabulü beklenir.
+2. **Sonra:** Guardian, neşeli gün batımı ve Snowgrave sonbahar için üç ayrı
+   tam görsel paket. Kesin paket adları ve aralarındaki uygulama sırası açık.
+   Boş/yarım tema seçiciye eklenmez.
+3. Harici adaptörleri otomatik geçişe bağlama, yayın/lisans ve geniş donanım
+   matrisi önceki durumlarıyla kalır. Bu işte tamamlanmış sayılmaz.
+
+[Karar](docs/decisions/0016-deltarune-four-worlds.md) ·
+[Tasarım kaynakları](design/deltarune/README.md) · [Deneme](docs/DELTARUNE.md).
+Aşağıdaki önceki aşamalar tarihsel temeldir; yeni kullanıcı önceliği üstündür.
+
 # Yol haritası
 
 Karar tarihi: **18 Ekim 2026**. Ürün kapsamı: [PROJECT_BRIEF.txt](PROJECT_BRIEF.txt).

@@ -1,4 +1,14 @@
-# Güncel kalanlar — 19 Ekim 2026 13:22 Europe/Riga
+# Güncel kalanlar — 19 Ekim 2026 21:34 Europe/Riga
+
+## Güncel öncelik — dört Deltarune teması
+
+Kullanıcı dört görsel referansın tamamını ayrı tema olarak kabul etti. Önce
+mevcut `deltarune` son indigo/fuşya ağaç/Kris görünümüne taşınır: 0.3.0 kaynakta
+uygulandı; yeni cihaz/görünüm kontrolü açık. Eski 0.2.0 onayı korunur, yeni
+görünüm kendiliğinden onaylanmış sayılmaz. Ardından Guardian, neşeli gün batımı
+ve Snowgrave sonbahar ayrı üç tam tema olacak. Henüz uygulanmadılar.
+[Karar ve kaynaklar](decisions/0016-deltarune-four-worlds.md).
+Bu yeni öncelik, aşağıdaki harici adaptör otomasyonu önerisinden önce gelir.
 
 Kullanıcı tema çizgisini “çok güzel olmuş güzel de çalışıyor” diyerek onayladı.
 Son paylaşılan kaynak a80d08e0fa80f3069f4e4c37fb49570b77ea568f; cihaz SHA'sı ayrıca
@@ -33,7 +43,8 @@ kullanıcı onayıdır; bütün hata/donanım senaryolarına ait ölçüm değil
 ## İsteğe bağlı / henüz taahhüt değil
 
 - Launcher'da birim dönüşümü; aritmetik hesaplama mevcut ve kabul edilmiş.
-- Daha farklı temalar; üçüncü oyun seçilmedi.
+- Deltarune dışındaki sonraki oyun; henüz seçilmedi. Üç yeni Deltarune görsel
+  paketi artık isteğe bağlı fikir değil, kabul edilmiş sonraki iştir.
 
 ## Ertelenmiş veya kapsam dışı
 

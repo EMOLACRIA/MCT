@@ -1,2 +1,2 @@
 import "../surfaces"
-LauncherSurface {rowSpacing:14;applicationRowHeight:64}
+LauncherSurface {rowSpacing:12;applicationRowHeight:52}

@@ -4,12 +4,12 @@ RowLayout {
     id:root;objectName:"panelHeader"
     required property string title
     required property string symbol
-    property int titleSize:20
+    property int titleSize:16
     property string statusText:""
     property Component extraAction:null
     signal closed()
     Layout.fillWidth:true
-    Image {source:Theme.portraitFor(root.symbol);smooth:false;fillMode:Image.PreserveAspectFit;Layout.preferredWidth:38;Layout.preferredHeight:34}
+    Glyph {symbol:root.symbol;ink:Theme.ink;Layout.preferredWidth:22;Layout.preferredHeight:22}
     Text {
         Layout.fillWidth:true;Layout.minimumWidth:0
         text:root.title;textFormat:Text.PlainText;elide:Text.ElideRight

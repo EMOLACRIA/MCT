@@ -1,24 +1,60 @@
-# Deltarune — 0.2.0 denemesi
+# Deltarune — 0.3.0 / ağaç ve Kris
 
-Ortak kaynak 2.9.0, ABI mct-shell-2.9. Güncel komutlar ve güvenli geçiş sırası:
-[2.9 yükseltme rehberi](UPGRADE_2_9.md).
+Ortak kaynak 2.9.0, ABI `mct-shell-2.9`; bu revizyon ortak ABI'yi değiştirmez.
+Önceki 0.2.0 camgöbeği fountain görünümünün yerine kullanıcının seçtiği son
+indigo/lavanta/fuşya referans uygulanır. [Dört tema kararı](decisions/0016-deltarune-four-worlds.md).
 
-![Qt launcher önizlemesi](../themes/deltarune/preview.png)
+![Gerçek Qt launcher önizlemesi](../themes/deltarune/preview.png)
 
-Siyah/camgöbeği çerçeveler, Departure Mono, karakter portreleri ve kullanıcının
-2048×1151 wallpaper'ı korunur. Kontrol sağda, arama solda; merkez panel tercihi
-öncelikli. Alt şerit yok. Super+R/M/T/B/Q/E/L, Alt+Tab ve hesaplama aynı kalır.
-Panel/eylem mantığı artık iki görünümde tek ortak kaynaktır.
+Kırık dal çizgili çerçeveler, Departure Mono, sade başlık ikonları; kompakt sol
+launcher, sağ controls/medya/bildirim geçmişi. Merkez panel tercihi öncelikli,
+alt şerit yok. Super+R/M/T/B/Q/E/L, Alt+Tab, hesaplama, tray ve sürüklenebilir
+OSD ortak kaynaktır. Super+G mevcut kabul edilmiş tema çizgisini açar.
 
-Kilit parola/saat/medya görünümü paketle değişir. Dolphin beyaz metin/ikonları,
-Spotify CSS/paleti, SDDM giriş skin'i ve CP437 fountain terminal süsü ayrı
-adaptörlerde hazır. Uygulama/terminal kurucuları --theme deltarune alır; SDDM
-ayrı sudo adımıdır. Shell apply bu kurucuları otomatik çalıştırmaz.
+## Kurulu 2.9.0 üstüne dene
 
-Kurulumsuz bakmak: `bash preview.sh deltarune` ve
-`bash sddm/preview.sh --theme deltarune`. Demo verileri/PAM'siz greeter fixture'ı
-gerçek cihaz kabulü değildir. [Giriş render'ı](../previews/deltarune/login.png).
+Aynı çalışma dalında güncel kaynakları al:
 
-[Önceki denetim](DELTARUNE_AUDIT.md) tarihsel bulguları,
-[ADR-0014](decisions/0014-shared-interaction-templates.md) uygulanan düzeltmeyi
-kaydeder. Fotoğraflı seçicinin menü konumu hâlâ açık. Yeni native görsel kabulü beklenir.
+```bash
+cd ~/newfolder/desktop-style
+git pull --ff-only
+bash theme.sh check deltarune && bash theme.sh apply deltarune
+```
+
+Bu görsel paket için `update.sh`, masaüstü restore veya önce eski temayı rollback
+etmek gerekmez. Source ortak ABI farklı diyorsa bu komut zaten durur;
+[2.9 yükseltme rehberi](UPGRADE_2_9.md) eski kaynaklar içindir, bu revizyonda
+çalışan sistemi baştan kurma adımı değildir. Mevcut ilk restore yedeği ve tercihler
+korunur. Aynı `deltarune` kimliği yeni 0.3.0 sürümünü uygular.
+
+Kurulumsuz bakmak: `bash preview.sh deltarune`.
+[Medya render'ı](../previews/deltarune/media.png). Preview altındaki bilgi etiketi
+sadece önizleme penceresindedir; native masaüstüne alt menü eklenmez.
+
+Wallpaper sağlanan orijinal 1200×675 JPEG'den piksel eşit PNG dönüşümüdür;
+resim yeniden çizilmedi, yapay olarak yüksek çözünürlük iddia edilmez. Referanstaki
+dekoratif müzik progress çizgisi bir sahte seek kontrolüne dönüştürülmedi;
+mevcut gerçek MPRIS oynat/duraklat/önceki/sonraki ve oyuncu seçimi korunur.
+
+## Ayrı uygulama uyarlamaları
+
+Shell apply wallpaper, shell, Hyprland border, Kitty ve sonraki Hyprlock'u
+uygular. Dolphin/Spotify/SDDM/CP437 ayrı kuruculardır; otomatik çalıştırılmaz.
+Dolphin/Spotify'ı kapattıktan sonra mevcut kurucuyla yeni renkleri uygula:
+
+```bash
+bash apps/install.sh dolphin --theme deltarune --check
+bash apps/install.sh dolphin --theme deltarune
+bash apps/install.sh spotify --theme deltarune --check
+bash apps/install.sh spotify --theme deltarune
+```
+
+Dolphin'in normal/seçili yazıları beyaz kalır; lavanta klasörler fuşya detay taşır.
+Spotify'ın özel istemci/adblock başlatıcısı ve ilk yedeği mevcut kurucunun
+sorumluluğundadır; tema bunları yeni bir yolla değiştirmez.
+SDDM önizlemesi: `bash sddm/preview.sh --theme deltarune`.
+Diğer mevcut komutlar [yükseltme rehberinde](UPGRADE_2_9.md); sudo SDDM adımı
+ve ayrı terminal kurucusu gerektiğinde aynı akışla kullanılır.
+
+Guardian, gün batımı ve Snowgrave sonbahar görünümleri kabul edilmiş sonraki
+üç temadır; henüz çalışır paket olmadıkları için seçicide görünmezler.
