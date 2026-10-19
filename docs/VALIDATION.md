@@ -1,3 +1,10 @@
+## 20 Ekim 2026 — Adventure 0.1.0
+
+STATUS.md başındaki komut/sonuç kaydı: 163 unittest, 168 QML bytecode derlemesi,
+network imports, wallpaper decode/hash ve manifest bütünlüğü başarılı.
+Qt offscreen/mock; canlı donanım, Wayland/PAM ve uygulama kabulü değildir.
+Yeni tema kaynakları `previews/adventure/` içinde görsel kontrol edildi.
+
 # Doğrulama sınırları
 
 ## 2.9.0 — Ortak davranış ve Deltarune adaptörleri (18 Ekim 2026)

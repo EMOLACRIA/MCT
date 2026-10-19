@@ -47,8 +47,8 @@ class DeltaruneRevisionTests(qt.PreferenceUiTests):
         original=QImage(str(ROOT/'themes'/THEME_ID/'wallpaper-source.jpeg'))
         source=QImage(str(ROOT/'themes'/THEME_ID/'files/style/wallpaper.png'))
         wallpaper=QImage(str(qt.ROOT/'payload/style/wallpaper.png'))
-        self.assertEqual((original.width(),original.height()),(1200,675))
         record=json.loads((ROOT/"themes"/THEME_ID/"restoration.json").read_text())
+        self.assertEqual([original.width(),original.height()],record["sourceDimensions"])
         self.assertEqual([wallpaper.width(),wallpaper.height()],record["outputDimensions"])
         self.assertGreaterEqual(wallpaper.width(),2560)
         self.assertGreaterEqual(wallpaper.height(),1600)
@@ -82,5 +82,5 @@ def main(theme="deltarune"):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('theme',nargs='?',default='deltarune',choices=['deltarune','deltarune-snowgrave'])
+    parser=argparse.ArgumentParser();parser.add_argument('theme',nargs='?',default='deltarune',choices=['deltarune','deltarune-snowgrave','deltarune-adventure'])
     sys.exit(main(parser.parse_args().theme))

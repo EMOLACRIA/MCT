@@ -46,7 +46,7 @@ class ThemeAdapterTests(unittest.TestCase):
             original_icon.parent.mkdir(parents=True)
             original_icon.write_text('<svg><!-- original user icon --></svg>')
             first=None
-            for theme in ('plague-tale','deltarune','deltarune-snowgrave','plague-tale'):
+            for theme in ('plague-tale','deltarune','deltarune-snowgrave','deltarune-adventure','plague-tale'):
                 with patch.object(app,'SELECTED_THEME',theme):app.dolphin()
                 record=json.loads((app.STATE/'dolphin.json').read_text())
                 first=first or record['backup'];self.assertEqual(record['backup'],first)
@@ -79,7 +79,7 @@ class ThemeAdapterTests(unittest.TestCase):
             (xpui/'colors.css').write_text(':root {'+''.join('--spice-'+k+': #'+v+';' for k,v in palette['Ash'].items())+'}')
             return 'mock apply'
         first=None
-        for theme in ('plague-tale','deltarune','deltarune-snowgrave','plague-tale'):
+        for theme in ('plague-tale','deltarune','deltarune-snowgrave','deltarune-adventure','plague-tale'):
             with patch.object(app,'SELECTED_THEME',theme),patch.object(app,'run',side_effect=apply):
                 app.spotify();app.verify_spotify_theme(app.SPOTIFY/'client')
             record=json.loads((app.STATE/'spotify.json').read_text())
@@ -93,12 +93,12 @@ class ThemeAdapterTests(unittest.TestCase):
     def test_terminal_switch_retains_modules_and_cp437_roundtrip(self):
         fixture=terminal.MedallionTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
         m=terminal.medallion;first=None
-        for theme in ('plague-tale','deltarune','deltarune-snowgrave','plague-tale'):
+        for theme in ('plague-tale','deltarune','deltarune-snowgrave','deltarune-adventure','plague-tale'):
             fixture.args.theme=theme;m.install(fixture.args)
             first=first or fixture.marker()['backup'];self.assertEqual(fixture.marker()['backup'],first)
             self.assertEqual(m.parsed(fixture.config.read_text())['modules'],m.parsed(fixture.original)['modules'])
         m.restore(fixture.args);self.assertEqual(fixture.config.read_text(),fixture.original)
-        for theme in ('deltarune','deltarune-snowgrave'):
+        for theme in ('deltarune','deltarune-snowgrave','deltarune-adventure'):
           for name in ('medallion','medallion-compact'):
             base=assets.source(theme,'terminal')
             text=(base/(name+'.txt')).read_text().replace('$1','')
@@ -108,7 +108,7 @@ class ThemeAdapterTests(unittest.TestCase):
     def test_deltarune_greeter_uses_common_login_controller_and_restores(self):
         fixture=greeter.GreeterInstallTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
         m=greeter.greeter
-        for theme,accent in [('deltarune','#f32baf'),('deltarune-snowgrave','#d8b779')]:
+        for theme,accent in [('deltarune','#f32baf'),('deltarune-snowgrave','#d8b779'),('deltarune-adventure','#ffcf77')]:
           with tempfile.TemporaryDirectory() as folder:
             source=assets.stage_greeter(theme,Path(folder)/'theme')
             self.assertEqual((source/'Main.qml').read_bytes(),(ROOT/'sddm/theme/Main.qml').read_bytes())

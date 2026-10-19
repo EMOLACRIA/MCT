@@ -130,3 +130,17 @@ girişi veya gerçek kullanıcı oturumu ekran görüntüsü diye sunulmaz.
 18 Ekim Dolphin düzeltmesi: Deltarune klasör/yer SVG'lerinin 14'ü projedeki
 mevcut çizimlerden camgöbeği basamaklı dış hatlara düzenlendi. Yeni harici ikon
 paketi alınmadı; Breeze uygulama/eylem ikon mirası korundu.
+
+
+### Adventure 0.1.0 — 20 Ekim 2026
+
+`themes/deltarune-adventure/wallpaper-source.jpeg`, kullanıcının sağladığı
+`design/deltarune/adventure-source.jpg` dosyasının birebir kopyasıdır (2048×1152).
+Chapter 5 trailer açıklaması kullanıcıdan gelir; doğrulanmış sanatçı/kaynak URL'si
+bulunmadığı için hak sahipliği veya yeniden dağıtım izni varsayılmaz. Kullanıcı
+kaynağı ve AI konsepti, açık lisanslı proje kodundan ayrı üçüncü taraf varlıklardır.
+Wallpaper, shell, lock ve SDDM PNG'leri 3200×1800 Lanczos ölçeklemedir; Real-ESRGAN
+uygulanmadı. SHA256 ve işlem bilgisi `restoration.json` içinde tutulur.
+Departure Mono/font lisansı değişmeden korundu. Çatı saçaklı panel/bar/SVG köşeleri,
+klasör dış hatları ve CP437 gün batımı çizimi bu işte proje kodundan üretildi.
+`preview.png` ve `previews/adventure/` gerçek offscreen Qt sahneleridir.

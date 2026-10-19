@@ -1,0 +1,13 @@
+[Icon Theme]
+Name=Adventure Autumn
+Comment=Warm ivory folders with autumn branch details with inherited application and action icons
+Inherits=breeze-dark,breeze,hicolor
+FollowsColorScheme=true
+Directories=scalable/places
+
+[scalable/places]
+Size=48
+Type=Scalable
+MinSize=16
+MaxSize=256
+Context=Places

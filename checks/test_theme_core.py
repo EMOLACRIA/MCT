@@ -153,7 +153,7 @@ class CoreTests(unittest.TestCase):
 
     def test_third_theme_cycle_noop_and_rollback_preserve_shared_state(self):
         states={}
-        for name in ('deltarune','plague-tale','deltarune-snowgrave'):
+        for name in ('deltarune','plague-tale','deltarune-adventure','deltarune-snowgrave'):
             self.engine.apply(name)
             states[name]=self.engine.optional('active.json')
         before=self.state();events=list(self.runtime.events)
@@ -161,6 +161,8 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(self.state(),before)
         # Mandatory validation still runs on noop; only the desktop restart is skipped.
         self.assertEqual(self.runtime.events[len(events):],['preflight','validate'])
+        self.engine.rollback()
+        self.assertEqual(self.engine.optional('active.json'),states['deltarune-adventure'])
         self.engine.rollback()
         self.assertEqual(self.engine.optional('active.json'),states['plague-tale'])
         self.engine.rollback()
@@ -472,7 +474,7 @@ class CoreTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             value = json.loads(result.stdout)
             if action == "list":
-                self.assertEqual({row["id"] for row in value}, {"plague-tale", "deltarune", "deltarune-snowgrave"})
+                self.assertEqual({row["id"] for row in value}, {"plague-tale", "deltarune", "deltarune-snowgrave", "deltarune-adventure"})
             else:
                 self.assertIsNone(value["active"])
 

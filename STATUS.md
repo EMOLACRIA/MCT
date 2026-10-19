@@ -1,3 +1,25 @@
+20 Ekim 2026 hazırlama doğrulaması — Adventure 0.1.0:
+163 unittest geçti: core 34, Adventure 42, Snowgrave regresyon 42, picker UI 6,
+picker bridge 4, adaptörler 5, dört-skin greeter 20, dört-skin OSD 1,
+lock layout 3, terminal 6. 168 QML bytecode derlemesi ve network imports geçti.
+Komutlar: checks/test_theme_core.py, test_deltarune.py deltarune-adventure ve
+ deltarune-snowgrave, test_theme_picker_ui.py, test_theme_picker.py,
+ test_theme_adapters.py, test_greeter_themes.py, test_osd_themes.py,
+ test_lock_layout.py, test_terminal_medallion.py, test_shell_syntax.py,
+ test_shell_imports.py (hepsi python3 checks/ altında).
+Qt: MCT_QT_TEST_PATH=build/qs-qt-check (workspace mutlak yolu kullanıldı).
+Manifest Engine.load, dört PNG tam decode/3200×1800/SHA256 eşitliği, orijinal
+JPEG birebir korunması, Python/Bash syntax ve git diff --check geçti.
+Launcher/media/settings offscreen render'ları görsel incelendi. Native oturum,
+PAM veya gerçek uygulamaları bu hazırlama ortamında çalıştırmadık.
+
+20 Ekim 2026 — Güncel öncelik: kullanıcı Snowgrave'i beğenip normal görünümü
+onayladı; Chapter 5 trailer/gün batımı referansı ayrı `deltarune-adventure` 0.1.0
+paketi olarak uygulandı. Mürdüm/mercan/altın ve basamaklı çatı köşeleri; ortak
+ABI/işlevler/kısayollar aynı. Yeni paketin canlı görünüm/kullanım kabulü beklenir.
+Guardian sırada, henüz uygulanmadı. Önceki Snowgrave-bekliyor kayıtları tarihseldir.
+Kullanım: docs/ADVENTURE.md; karar: docs/decisions/0018-adventure-theme.md.
+
 # Güncel durum
 
 Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.3.1 / Snowgrave 0.1.0**.

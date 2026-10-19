@@ -1,3 +1,10 @@
+20 Ekim 2026 — Güncel öncelik: kullanıcı Snowgrave'i beğenip normal görünümü
+onayladı; Chapter 5 trailer/gün batımı referansı ayrı `deltarune-adventure` 0.1.0
+paketi olarak uygulandı. Mürdüm/mercan/altın ve basamaklı çatı köşeleri; ortak
+ABI/işlevler/kısayollar aynı. Yeni paketin canlı görünüm/kullanım kabulü beklenir.
+Guardian sırada, henüz uygulanmadı. Önceki Snowgrave-bekliyor kayıtları tarihseldir.
+Kullanım: docs/ADVENTURE.md; karar: docs/decisions/0018-adventure-theme.md.
+
 PROJE HEDEFİ — ORTAK DAVRANIŞ, AYRI GÖRSEL DÜNYALAR
 Karar tarihi: 2026-10-18 (Europe/Riga)
 Sahip: Emirhan / EMOLACRIA

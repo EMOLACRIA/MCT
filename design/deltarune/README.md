@@ -1,3 +1,6 @@
+20 Ekim: Snowgrave kullanıcı onaylı; Adventure ayrı paket olarak uygulandı,
+yeni cihaz kabulü beklenir. Guardian planlıdır. Aşağıdaki ilk karar tarihseldir.
+
 # Dört onaylı görsel yön
 
 19 Ekim 2026: kullanıcı dört referansı ayrı tema yapmayı istedi. İlk uygulanan,

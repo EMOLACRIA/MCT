@@ -1,0 +1,16 @@
+{
+  "source": "wallpaper-source.jpeg",
+  "sourceDimensions": [
+    2048,
+    1152
+  ],
+  "sourceSha256": "8f354b4a6ce179ed6bd40f31d8810ccf929c981895f3426d7216133da9fc8eb1",
+  "output": "files/style/wallpaper.png",
+  "outputDimensions": [
+    3200,
+    1800
+  ],
+  "outputSha256": "92d8ba9eb8b41b72f066599ec3c54a6e1c08ff99bcdd3aee34ed94b85b2b88f5",
+  "method": "Lanczos resampling of the supplied 2048x1152 image; no neural restoration or newly recovered detail",
+  "postprocess": "RGB PNG; no sharpening, colour grading, crop or repaint"
+}

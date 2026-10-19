@@ -100,6 +100,7 @@ jobs:
           python3 -m pip install --target "$MCT_QT_TEST_PATH" PySide6-Essentials==6.10.2
           python3 checks/test_deltarune.py
           python3 checks/test_deltarune.py deltarune-snowgrave
+          python3 checks/test_deltarune.py deltarune-adventure
           python3 checks/test_theme_picker_ui.py
           python3 checks/test_shared_surfaces.py
           python3 checks/test_osd_themes.py

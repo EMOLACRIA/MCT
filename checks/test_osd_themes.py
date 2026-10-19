@@ -14,7 +14,7 @@ import theme_preview
 
 class OsdThemeTests(unittest.TestCase):
     def test_each_skin_uses_live_drag_hover_and_centered_icons(self):
-        for theme in ('plague-tale','deltarune','deltarune-snowgrave'):
+        for theme in ('plague-tale','deltarune','deltarune-snowgrave','deltarune-adventure'):
             with self.subTest(theme=theme),tempfile.TemporaryDirectory() as folder:
                 root=Path(folder)
                 theme_preview.stage(theme,root/'payload')
