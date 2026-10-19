@@ -54,7 +54,7 @@ class PickerUiTests(unittest.TestCase):
     def test_hover_expands_photo_without_switch_then_one_click_applies(self):
         self.assertEqual(self.js('model.selectedId'),'deltarune')
         self.assertFalse(self.js('model.canApply'))
-        for theme in ('deltarune','plague-tale'):
+        for theme in ('deltarune','deltarune-snowgrave','plague-tale'):
             for _ in range(100):
                 if qt.evaluate(self.item('themeImage-'+theme),'status') != 2:break
                 qt.QTest.qWait(20)
@@ -94,12 +94,12 @@ class PickerUiTests(unittest.TestCase):
 
     def test_keyboard_enter_switch_escape_and_restore_confirmation(self):
         qt.QTest.keyClick(self.view,qt.Qt.Key_Right)
-        self.assertEqual(self.js('model.selectedId'),'plague-tale')
+        self.assertEqual(self.js('model.selectedId'),'deltarune-snowgrave')
         qt.QTest.keyClick(self.view,qt.Qt.Key_Return)
-        self.assertEqual(self.requests[-1],('apply','plague-tale'))
+        self.assertEqual(self.requests[-1],('apply','deltarune-snowgrave'))
         qt.QTest.keyClick(self.view,qt.Qt.Key_Escape)
         self.assertTrue(self.closed);self.assertTrue(self.js('model.busy'))
-        self.reply('apply',ok=False,theme='plague-tale',message='fixture',catalog=self.catalog)
+        self.reply('apply',ok=False,theme='deltarune-snowgrave',message='fixture',catalog=self.catalog)
         self.click('rollbackTheme');self.assertTrue(self.js('model.rollbackArmed'))
         qt.QTest.keyClick(self.view,qt.Qt.Key_Escape);self.assertFalse(self.js('model.rollbackArmed'))
         self.click('rollbackTheme');self.click('rollbackTheme');self.assertEqual(self.requests[-1],('rollback',''))
@@ -112,7 +112,7 @@ class PickerUiTests(unittest.TestCase):
                 spine=self.item('themeSpine')
                 self.assertAlmostEqual(spine.y(),round(height*.5),delta=1)
                 self.assertGreaterEqual(spine.x(),0);self.assertLessEqual(spine.x()+spine.width(),width)
-                for theme in ('deltarune','plague-tale'):
+                for theme in ('deltarune','deltarune-snowgrave','plague-tale'):
                     self.js('model.choose('+json.dumps(theme)+')');qt.QTest.qWait(30)
                     photo=self.item('themePhoto-'+theme)
                     self.assertGreaterEqual(photo.mapToScene(photo.boundingRect().topLeft()).y(),0)

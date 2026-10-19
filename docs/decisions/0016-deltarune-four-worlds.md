@@ -40,3 +40,6 @@ Kalan üç orijinal ve dört konsept depoda tasarım kaydı olarak korunur.
 Harici uygulamaları tek seçimle otomatik kurmak bu kararın parçası değildir.
 Mevcut bağımsız adaptör kurucuları/yedekleri korunur. İlk masaüstü restore noktası,
 kişisel monitör/GPU/VRR/giriş ayarları veya Plague Tale paketi değiştirilmez.
+
+23:13 ilerleme: kullanıcı üçüncü tema için Snowgrave seçti; paket uygulaması
+[ADR-0017](0017-snowgrave-theme.md) ile kaydedildi. Guardian ve gün batımı sırada.

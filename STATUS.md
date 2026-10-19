@@ -1,8 +1,34 @@
 # Güncel durum
 
-Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.3.1**.
+Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.3.1 / Snowgrave 0.1.0**.
 Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; tema çizgisi görünüm/normal kullanım kullanıcı onaylı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 19 Ekim 23:13 — Üçüncü tema: Snowgrave 0.1.0
+
+Kullanıcı 23:11'de yeni ağaç/Kris görselini beğendiğini bildirdi; 0.3.1 cihaz SHA'sı
+ve ayrı alt testleri raporlanmadı. Ardından üçüncü tema için Snowgrave'i seçti.
+Yeni `deltarune-snowgrave` bağımsız paketi hazır: koyu umber/ivory/pas kırmızısı,
+soluk altın, yumuşak dal/yaprak köşeleri ve ayrı kemer/boynuzlu silüet CP437 süsü.
+Mevcut iki skin'in kaynakları değişmedi; işlevli surface/controller kopyalanmadı.
+
+Wallpaper resmi Real-ESRGAN genel modeliyle 4× restore edildi. Tuval dokusunu fazla
+keskinleştiren etki görsel kontrolde azaltıldı: %40 restorasyon + %60 Lanczos
+orijinal; paket 3600×2025 RGB PNG. Orijinal 1200×675 JPEG korunur. Metadata/hash
+restoration.json içinde. Bu sanatçının native yüksek çözünürlüklü kaynağı değildir.
+Hyprland/Kitty/Hyprlock, ayrı Dolphin/Spotify/SDDM/terminal kaynakları tamamlandı;
+harici kurucular hâlâ ayrıdır. Dolphin normal/seçili metni beyaz kaldı.
+
+Seçicide üçüncü fotoğraflı kart, kısa ve ayırt edilebilir “Snowgrave” adı var.
+Kart rengi/fontu artık id koşulundan değil bütünlüğü kontrol edilmiş Theme.qml
+ve varlık envanterinden gelir. Hover/tek seçim/klavye/rollback davranışı korunur.
+Ortak ABI mct-shell-2.9 değişmedi; kaynak alındıktan sonra update.sh gerekmez.
+[Deneme](docs/SNOWGRAVE.md) · [Karar](docs/decisions/0017-snowgrave-theme.md).
+
+Yerel hazırlama kontrolleri: **160 unittest**, **142 QML** bytecode derlemesi,
+network imports, paket bütünlüğü, PNG decode/hash ve kaynak syntax kontrolleri.
+Yeni Snowgrave görünümü/cihaz kabulü beklenir. Native Wayland, PAM, gerçek uygulama
+veya fiziksel cihaz ölçümü bu ortamda yapılmadı; kaynak uygulanmış gibi sunulmaz.
 
 ## 19 Ekim 22:58 — Wallpaper 4× restorasyonu
 

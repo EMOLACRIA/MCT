@@ -3,11 +3,14 @@
 Qt offscreen only. Does not install, run QuickShell, or contact the user's session.
 """
 import os
+import argparse
+import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
 
+THEME_ID="deltarune"
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import theme_preview
@@ -41,15 +44,21 @@ class DeltaruneRevisionTests(qt.PreferenceUiTests):
         self.assertFalse(qt.evaluate(frame,'Theme.partyStripEnabled'))
         self.assertEqual(qt.evaluate(frame,'Theme.loadedFont.status'),1)
         self.assertIn('Departure',qt.evaluate(frame,'Theme.bodyFont'))
-        original=QImage(str(ROOT/'themes/deltarune/wallpaper-source.jpeg'))
-        source=QImage(str(ROOT/'themes/deltarune/files/style/wallpaper.png'))
+        original=QImage(str(ROOT/'themes'/THEME_ID/'wallpaper-source.jpeg'))
+        source=QImage(str(ROOT/'themes'/THEME_ID/'files/style/wallpaper.png'))
         wallpaper=QImage(str(qt.ROOT/'payload/style/wallpaper.png'))
         self.assertEqual((original.width(),original.height()),(1200,675))
-        self.assertEqual((wallpaper.width(),wallpaper.height()),(original.width()*4,original.height()*4))
+        record=json.loads((ROOT/"themes"/THEME_ID/"restoration.json").read_text())
+        self.assertEqual([wallpaper.width(),wallpaper.height()],record["outputDimensions"])
+        self.assertGreaterEqual(wallpaper.width(),2560)
+        self.assertGreaterEqual(wallpaper.height(),1600)
+        self.assertEqual(wallpaper.width()*original.height(),wallpaper.height()*original.width())
         self.assertEqual(source.convertToFormat(QImage.Format_RGBA8888),wallpaper.convertToFormat(QImage.Format_RGBA8888))
 
 
-def main():
+def main(theme="deltarune"):
+    global THEME_ID
+    THEME_ID=theme
     # Reuse the exact shared settings, calculator, tray, power and Alt+Tab tests.
     import test_shell_ui as surfaces
     import test_launcher_calculator as launcher
@@ -57,7 +66,7 @@ def main():
     modules=[qt,surfaces,launcher,switcher]
     passed=True
     with tempfile.TemporaryDirectory(prefix='mct-deltarune-test-') as tmp:
-        theme_preview.stage('deltarune',Path(tmp)/'payload')
+        theme_preview.stage(theme,Path(tmp)/'payload')
         for module in modules:module.ROOT=Path(tmp)
         for module in modules:
             qt.qInstallMessageHandler(lambda kind,context,message,m=module: (m.WARNINGS if hasattr(m,'WARNINGS') else qt.WARNINGS).append(message))
@@ -72,4 +81,6 @@ def main():
     return 0 if passed else 1
 
 
-if __name__=='__main__':sys.exit(main())
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('theme',nargs='?',default='deltarune',choices=['deltarune','deltarune-snowgrave'])
+    sys.exit(main(parser.parse_args().theme))

@@ -2,6 +2,7 @@
 """Photo picker transport; all desktop changes remain owned by theme_core.Engine."""
 import argparse
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -19,10 +20,15 @@ def catalog(engine):
             continue
         row = dict(id=folder.name, name=folder.name, version='', preview='', valid=False, error='')
         try:
-            manifest, _ = engine.load(folder.name)
+            manifest, files = engine.load(folder.name)
             row.update(name=manifest['name'], version=manifest['version'], valid=True,
                        preview=theme_core.safe(folder, manifest['preview']['source']).as_uri())
-            if folder.name == 'deltarune':
+            # Presentation comes from the integrity-checked skin, never from its id.
+            skin=files['style/shell/ui/Theme.qml'].decode('utf-8')
+            for field,token in [('accent','brass'),('surface','inputSurface')]:
+                match=re.search(r'readonly\s+property\s+color\s+'+token+r'\s*:\s*"(#[0-9a-fA-F]{6})"',skin)
+                if match:row[field]=match.group(1)
+            if 'style/shell/assets/departure-mono.otf' in files:
                 row['fontSource'] = theme_core.safe(folder, 'files/style/shell/assets/departure-mono.otf').as_uri()
         except (theme_core.ThemeError, OSError, ValueError) as exc:
             row['error'] = str(exc)

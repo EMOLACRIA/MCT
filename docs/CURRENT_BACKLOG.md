@@ -1,4 +1,14 @@
-# Güncel kalanlar — 19 Ekim 2026 21:34 Europe/Riga
+# Güncel kalanlar — 19 Ekim 2026 23:13 Europe/Riga
+
+## 23:13 — Snowgrave üçüncü tema
+
+Kullanıcı ağaç/Kris'in yeni görselini 23:11'de beğendi; üçüncü paket olarak
+Snowgrave seçildi. `deltarune-snowgrave` 0.1.0 shell/lock/Kitty ve ayrı uygulama/
+SDDM/CP437 adaptörleriyle kaynakta hazır, ortak kontrollerden geçti. Sonraki iş
+yeni görünümün kullanıcı cihazında denenmesi; [komutlar](SNOWGRAVE.md).
+Guardian ve neşeli gün batımı hâlâ sıradadır; birbirlerine göre sıraları seçilmedi.
+Harici adaptör otomasyonu ve genel yayın borçları önceki durumlarıyla kalır.
+Aşağıdaki 21:34 kayıtları bu güncellemeden önceki sıradır.
 
 ## Güncel öncelik — dört Deltarune teması
 

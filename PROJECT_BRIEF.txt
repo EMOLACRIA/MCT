@@ -4,6 +4,12 @@ Sahip: Emirhan / EMOLACRIA
 Depo/çalışma adı: MCT (https://github.com/EMOLACRIA/MCT).
 Kurulum dizini: desktop-style. Nihai ürün markası ayrıca seçilebilir.
 
+19 EKİM 23:13 — ŞİMDİKİ İŞ
+Kullanıcı 23:11'de ağaç/Kris restorasyon görünümünü beğendiğini söyledi ve üçüncü
+tema için Snowgrave'i seçti. Ayrı deltarune-snowgrave paketi hazırlanır; mevcut
+iki tema ve ortak kullanım alışkanlığı korunur. Guardian ve neşeli gün batımı
+sonraki iki pakettir; sıraları henüz seçilmedi. Karar: docs/decisions/0017-snowgrave-theme.md.
+
 BU DOSYANIN AMACI
 Yeni bir sohbet, model veya katkıcı projenin niyetini tahmin etmek zorunda
 kalmasın. Bu dosya ürün kapsamının kaynağıdır. Teknik gerçekler kaynak kodundan,

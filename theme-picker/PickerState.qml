@@ -67,7 +67,7 @@ QtObject {
         if (reply.catalog) {
             themes = reply.catalog.themes || [];
             for (let i = 0; i < themes.length; ++i)
-                if (themes[i].id === "deltarune" && themes[i].fontSource) monoFontSource = themes[i].fontSource;
+                if (themes[i].fontSource) monoFontSource = themes[i].fontSource;
             activeTheme = reply.catalog.active || null;
             canRollback = !!reply.catalog.canRollback;
             pending = !!reply.catalog.pending;

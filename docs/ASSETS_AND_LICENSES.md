@@ -2,6 +2,25 @@
 
 Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.
 
+## 19 Ekim 23:13 — Snowgrave
+
+- `themes/deltarune-snowgrave/wallpaper-source.jpeg`, kullanıcının gönderdiği
+  df00e02feaa980aab54ad2f64e4ee86a.jpg dosyasının birebir kopyasıdır (1200×675).
+  Sanatçı/kaynak URL'si sağlanmadı; hak/lisans uydurulmaz. Snowgrave/Chapter
+  bağlamı kullanıcı açıklamasıdır, bağımsız lore doğrulaması değildir.
+- Önceki kabul edilen resmi RealESRGAN_x4plus modeliyle 4× restore edildi;
+  paket sınırı için 3600×2025'e indirildi. Son görsel kontrolde fazla vurgulanan
+  tuval örgüsü %40 restorasyon/%60 Lanczos orijinal harmanıyla azaltıldı.
+  Kaynak/model/çıktı SHA256 ve işlem ayrıntısı paket restoration.json içindedir.
+  Native yüksek çözünürlüklü orijinal iddiası yoktur.
+- AI referansı önceki `design/deltarune/snowgrave-reference.png`; yeni paket
+  preview'sı gerçek QML render'ıdır. `previews/snowgrave/` DemoContext veya sahte
+  SDDM modelleridir, kullanıcının özel hesap/bildirim/kimlik verilerini içermez.
+- Yeni dal/yaprak konturları ve CP437 kemer/silüet çizimi proje içinde üretildi.
+  Departure Mono OFL bildirimi ve mevcut Deltarune sprite/font köken kaydı
+  kopyalanan varlıklar için geçerlidir. Yeni dış kod veya font alınmadı; restorasyon
+  ortamı ve ağırlıkları depoya eklenmedi.
+
 ## 19 Ekim 22:58 — Kullanıcı onaylı 4× restorasyon
 
 - Deltarune **0.3.1** wallpaper'ı, orijinal 1200×675 JPEG'den resmi

@@ -599,3 +599,41 @@ yeni wallpaper ile yenilendi; launcher ve model crop karşılaştırması görse
 incelendi. Manifest preview hash'i gerçek yeni QML render'ına güncellendi.
 Büyütülmüş görsel sanatçının native yüksek çözünürlüklü kaynağı değildir.
 Yeni fiziksel ekran kalite kabulü ve ayrı SDDM kurulum sonucu kullanıcıda kalır.
+
+## 19 Ekim 23:13 — Snowgrave üçüncü paket
+
+Yerel hazırlama, PySide6-Essentials 6.10.2 / `MCT_QT_TEST_PATH`:
+
+- `python3 checks/test_deltarune.py deltarune-snowgrave`: **42** mevcut sözleşme
+  vakası (10 settings, 12 shell, 7 calculator, 11 switcher, 2 görsel/konum).
+- `python3 checks/test_deltarune.py`: mevcut Deltarune için aynı **42** vaka.
+- `python3 checks/test_theme_core.py`: **34**. Yeni üçlü geçiş/noop/chained rollback
+  ve korunan preferences/backup kontrolleri var. İlk yeni test mandatory
+  preflight/validate'nin noop'ta da çalıştığını dikkate almıyordu; beklenti düzeltildi,
+  core davranışı değiştirilmedi. Noop'ta dosya/masaüstü restart'ı yoktur.
+- `python3 checks/test_theme_picker.py`: **4**; üçüncü kayıt, font/renk metadata'sı,
+  geçersiz paketin izolasyonu ve mevcut işlem/recovery korumaları.
+- `python3 checks/test_theme_picker_ui.py`: **6**; üç kart, üçüncü temaya klavye
+  seçimi, dar ekran/hover/tek click/rollback. Gerçek native işlem çalışmaz.
+- `python3 checks/test_shared_surfaces.py`: **2**, üç skin'de lifecycle/tek instance.
+- `python3 checks/test_osd_themes.py`: **1**, üç skin'de gerçek Qt sürükleme/hover/ikon.
+- `python3 checks/test_greeter_themes.py`: **15**, üç skin × beş sahte SDDM vakası.
+- `python3 checks/test_theme_adapters.py`: **5**, üçlü Dolphin/Spotify/CP437
+  roundtrip, ilk yedek/adblock/normal-seçili beyaz metin ve ortak giriş controller'ı.
+- `python3 checks/test_terminal_medallion.py`: **6**; `test_lock_layout.py`: **3**.
+
+Toplam **160 unittest** geçti. `test_shell_syntax.py` ile **142 QML** bytecode
+kontrolü ve `test_shell_imports.py` HTTP import/palet kontrolü geçti. Workflow
+Snowgrave sözleşmesini ve feature/deltarune* dallarını kapsayacak şekilde güncellendi;
+yeni workflow'un GitHub'da koştuğu bu yerel kayıtla iddia edilmez.
+
+Resmi genel Real-ESRGAN 4× çıktı, güçlü tuval dokusu nedeniyle son kontrolde
+%40 restorasyon/%60 Lanczos orijinal olarak harmanlandı. Paket PNG'si 3600×2025;
+source/model/output hash ve parametreler restoration.json'da. Son görüntü değişiminde
+manifest, dört PNG decode/hash eşitliği ve iki Qt görsel/konum kontrolü tekrar
+çalıştırıldı; ortak runtime kodu değişmediği için 160 vaka gereksiz tekrarlanmadı.
+
+Gerçek QML launcher/medya/controls/OSD/switcher/power/settings/notifications ve
+sahte SDDM login render'ı üretildi. Launcher/medya görsel incelendi; görsel referans
+AI konsepti yerine gerçek QML launcher PNG'si paket preview'sıdır. Yeni görünümün
+fiziksel ekranda son kabulü, Wayland/PAM/gerçek uygulama alt testleri kullanıcıda kalır.

@@ -144,12 +144,14 @@ def discover(explicit):
 
 
 def logo(args, source):
+    accent={'plague-tale':'#b5a37c','deltarune':'#f32baf','deltarune-snowgrave':'#d8b779'}[getattr(args,'theme','plague-tale')]
     return {'type':'file', 'source':str(source), 'position':'left',
-            'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':'#f32baf' if getattr(args,'theme','plague-tale')=='deltarune' else '#b5a37c'}}
+            'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':accent}}
 
 
 def source_asset(args):
-    directory=adapter_assets.source('deltarune','terminal') if adapter_assets and getattr(args,'theme','plague-tale')=='deltarune' else PACKAGE
+    theme=getattr(args,'theme','plague-tale')
+    directory=adapter_assets.source(theme,'terminal') if adapter_assets and theme!='plague-tale' else PACKAGE
     return directory/('medallion-compact.txt' if getattr(args, 'compact', False) else 'medallion.txt')
 
 

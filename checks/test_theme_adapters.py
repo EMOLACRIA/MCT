@@ -25,6 +25,8 @@ class ThemeAdapterTests(unittest.TestCase):
             p.write_text('{"id":"deltarune"}')
             self.assertEqual(assets.selected(), 'deltarune')
             self.assertEqual(assets.selected('plague-tale'), 'plague-tale')
+            p.write_text('{"id":"deltarune-snowgrave"}')
+            self.assertEqual(assets.selected(),'deltarune-snowgrave')
             p.write_text('{"id":"unknown"}')
             with self.assertRaises(ValueError):assets.selected()
             with self.assertRaises(ValueError):assets.source('../bad','spotify')
@@ -44,7 +46,7 @@ class ThemeAdapterTests(unittest.TestCase):
             original_icon.parent.mkdir(parents=True)
             original_icon.write_text('<svg><!-- original user icon --></svg>')
             first=None
-            for theme in ('plague-tale','deltarune','plague-tale'):
+            for theme in ('plague-tale','deltarune','deltarune-snowgrave','plague-tale'):
                 with patch.object(app,'SELECTED_THEME',theme):app.dolphin()
                 record=json.loads((app.STATE/'dolphin.json').read_text())
                 first=first or record['backup'];self.assertEqual(record['backup'],first)
@@ -77,7 +79,7 @@ class ThemeAdapterTests(unittest.TestCase):
             (xpui/'colors.css').write_text(':root {'+''.join('--spice-'+k+': #'+v+';' for k,v in palette['Ash'].items())+'}')
             return 'mock apply'
         first=None
-        for theme in ('plague-tale','deltarune','plague-tale'):
+        for theme in ('plague-tale','deltarune','deltarune-snowgrave','plague-tale'):
             with patch.object(app,'SELECTED_THEME',theme),patch.object(app,'run',side_effect=apply):
                 app.spotify();app.verify_spotify_theme(app.SPOTIFY/'client')
             record=json.loads((app.STATE/'spotify.json').read_text())
@@ -91,13 +93,14 @@ class ThemeAdapterTests(unittest.TestCase):
     def test_terminal_switch_retains_modules_and_cp437_roundtrip(self):
         fixture=terminal.MedallionTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
         m=terminal.medallion;first=None
-        for theme in ('plague-tale','deltarune','plague-tale'):
+        for theme in ('plague-tale','deltarune','deltarune-snowgrave','plague-tale'):
             fixture.args.theme=theme;m.install(fixture.args)
             first=first or fixture.marker()['backup'];self.assertEqual(fixture.marker()['backup'],first)
             self.assertEqual(m.parsed(fixture.config.read_text())['modules'],m.parsed(fixture.original)['modules'])
         m.restore(fixture.args);self.assertEqual(fixture.config.read_text(),fixture.original)
-        for name in ('medallion','medallion-compact'):
-            base=assets.source('deltarune','terminal')
+        for theme in ('deltarune','deltarune-snowgrave'):
+          for name in ('medallion','medallion-compact'):
+            base=assets.source(theme,'terminal')
             text=(base/(name+'.txt')).read_text().replace('$1','')
             self.assertEqual((base/(name+'.cp437')).read_bytes().decode('cp437').replace('\r\n','\n'),text)
             self.assertNotIn('\x1b',text)
@@ -105,11 +108,12 @@ class ThemeAdapterTests(unittest.TestCase):
     def test_deltarune_greeter_uses_common_login_controller_and_restores(self):
         fixture=greeter.GreeterInstallTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
         m=greeter.greeter
-        with tempfile.TemporaryDirectory() as folder:
-            source=assets.stage_greeter('deltarune',Path(folder)/'theme')
+        for theme,accent in [('deltarune','#f32baf'),('deltarune-snowgrave','#d8b779')]:
+          with tempfile.TemporaryDirectory() as folder:
+            source=assets.stage_greeter(theme,Path(folder)/'theme')
             self.assertEqual((source/'Main.qml').read_bytes(),(ROOT/'sddm/theme/Main.qml').read_bytes())
             with patch.object(m,'THEME_SOURCE',source):m.install()
-            self.assertIn('#f32baf',(m.THEME/'LoginSkin.qml').read_text())
+            self.assertIn(accent,(m.THEME/'LoginSkin.qml').read_text())
             self.assertTrue((m.THEME/'departure-mono.otf').is_file())
             m.restore();self.assertFalse(m.CONFIG.exists())
 

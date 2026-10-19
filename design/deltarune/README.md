@@ -2,7 +2,7 @@
 
 19 Ekim 2026: kullanıcı dört referansı ayrı tema yapmayı istedi. İlk uygulanan,
 mevcut `deltarune` paketinin `hidden-tree-reference.png` yönüne taşınmasıdır.
-Guardian/adventure/snowgrave ayrı paket olarak sonraki işlerdir; bu dosya adları
+23:13: Snowgrave üçüncü paket olarak uygulandı; Guardian/adventure sonraki işlerdir; bu dosya adları
 kesin ürün adı değildir. [Karar ve kapsam](../../docs/decisions/0016-deltarune-four-worlds.md).
 
 `*-reference.png` dosyaları konuşmada üretilmiş **AI tasarım konseptleridir**;

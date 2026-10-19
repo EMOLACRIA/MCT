@@ -5,7 +5,7 @@ from pathlib import Path
 import shutil
 
 ROOT = Path(__file__).resolve().parent
-THEMES = ('plague-tale', 'deltarune')
+THEMES = ('plague-tale', 'deltarune', 'deltarune-snowgrave')
 
 
 def selected(explicit=None):

@@ -15,7 +15,7 @@ class SharedSurfaceTests(unittest.TestCase):
     def test_skin_wrappers_do_not_copy_commands_or_input_handlers(self):
         names = [p.stem.removesuffix('Surface') for p in
                  (ROOT/'payload/style/shell/surfaces').glob('*Surface.qml')]
-        for theme in ('plague-tale', 'deltarune'):
+        for theme in ('plague-tale', 'deltarune', 'deltarune-snowgrave'):
             for name in names:
                 text = (ROOT/'themes'/theme/'files/style/shell/ui'/f'{name}.qml').read_text()
                 self.assertIn(name+'Surface {', text)
@@ -26,7 +26,7 @@ class SharedSurfaceTests(unittest.TestCase):
     def test_repeated_panels_keep_one_instance_and_clear_confirmation(self):
         old_root = qt.ROOT
         self.addCleanup(setattr, qt, 'ROOT', old_root)
-        for theme in ('plague-tale', 'deltarune'):
+        for theme in ('plague-tale', 'deltarune', 'deltarune-snowgrave'):
             with self.subTest(theme=theme), tempfile.TemporaryDirectory() as folder:
                 theme_preview.stage(theme, Path(folder)/'payload')
                 qt.ROOT = Path(folder)

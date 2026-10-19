@@ -24,8 +24,12 @@ class PickerTests(unittest.TestCase):
         before = self.fixture.state()
         reply = picker.dispatch(self.engine, 'catalog')
         self.assertTrue(reply['ok'])
-        self.assertEqual({r['id'] for r in reply['catalog']['themes']}, {'plague-tale', 'deltarune'})
+        self.assertEqual({r['id'] for r in reply['catalog']['themes']}, {'plague-tale', 'deltarune', 'deltarune-snowgrave'})
         self.assertTrue(all(r['valid'] and r['preview'].startswith('file:///') for r in reply['catalog']['themes']))
+        rows={row['id']:row for row in reply['catalog']['themes']}
+        self.assertEqual(rows['deltarune-snowgrave']['accent'],'#d8b779')
+        self.assertEqual(rows['deltarune']['accent'],'#f32baf')
+        self.assertTrue(rows['deltarune-snowgrave']['fontSource'].endswith('.otf'))
         self.assertEqual(self.fixture.state(), before)
         self.assertEqual(self.fixture.runtime.events, [])
         (self.engine.root/'themes/deltarune/preview.png').write_bytes(b'broken')

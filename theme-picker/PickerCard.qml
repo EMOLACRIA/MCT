@@ -10,8 +10,8 @@ Item {
     property real expandedWidth: 420
     property real collapsedWidth: 180
     property real previewHeight: 220
-    readonly property bool pixel: entry.id === "deltarune"
-    readonly property color accent: pixel ? "#f32baf" : "#c7b28b"
+    readonly property bool pixel: !!entry.fontSource
+    readonly property color accent: entry.accent || "#c7b28b"
     readonly property string face: pixel && faceLoader.status === FontLoader.Ready ? faceLoader.name : pixel ? "monospace" : "serif"
     readonly property real axis: previewHeight + 26
     width: selected ? expandedWidth : collapsedWidth
@@ -27,7 +27,7 @@ Item {
         x: 8; y: root.axis - height - 24; width: root.width - 16
         height: root.selected ? Math.min(root.previewHeight, width / 1.6) : 0
         opacity: root.selected ? 1 : 0; clip: true
-        color: root.pixel ? "#060613" : "#181b18"
+        color: root.entry.surface || "#181b18"
         border.color: root.accent; border.width: 1
         Behavior on height { NumberAnimation { duration: root.reduceMotion ? 0 : 190; easing.type: Easing.OutCubic } }
         Behavior on opacity { NumberAnimation { duration: root.reduceMotion ? 0 : 150 } }

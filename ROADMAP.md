@@ -1,5 +1,11 @@
 # 19 Ekim 21:34 — Yeni öncelik: dört Deltarune görsel dünyası
 
+**23:13 güncellemesi:** kullanıcı üçüncü tema için Snowgrave'i seçti. Ayrı
+`deltarune-snowgrave` 0.1.0 paketi kaynakta/testte hazır; native görünüm/kullanım
+onayı beklenir. Ağaç/Kris yeni görseli 23:11'de beğenildi. Sonraki paketler
+Guardian ve neşeli gün batımı; kendi aralarındaki sıra henüz seçilmedi.
+[Snowgrave denemesi](docs/SNOWGRAVE.md). Aşağıdaki ilk sıra tarihsel kayıttır.
+
 Kullanıcı dört konsepti de ayrı tema olarak istedi. Önce mevcut `deltarune`
 son ağaç/Kris referansına taşınır (0.3.0); kalan üç paket sonra geliştirilir.
 

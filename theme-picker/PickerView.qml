@@ -6,15 +6,15 @@ FocusScope {
     signal closeRequested()
     implicitWidth: 1600; implicitHeight: 1000
     focus: true
-    readonly property color accent: state.selectedId === "deltarune" ? "#f32baf" : "#c7b28b"
+    readonly property color accent: state.selected && state.selected.accent ? state.selected.accent : "#c7b28b"
     readonly property real edge: width < 700 ? 20 : 64
     readonly property real photoHeight: Math.min(230, height * (height < 600 ? .24 : .28))
     readonly property real railHeight: photoHeight + 136
     readonly property real axisY: Math.round(height * .5)
     readonly property real expandedWidth: Math.min(430, width * .54)
     readonly property real collapsedWidth: Math.max(126, Math.min(210, width * .22))
-    readonly property bool pixelTitle: state.selectedId === "deltarune" && titleFace.status === FontLoader.Ready
-    FontLoader { id: titleFace; source: root.state.monoFontSource }
+    readonly property bool pixelTitle: !!state.selected && !!state.selected.fontSource && titleFace.status === FontLoader.Ready
+    FontLoader { id: titleFace; source: root.state.selected && root.state.selected.fontSource ? root.state.selected.fontSource : root.state.monoFontSource }
     function revealSelection() {
         for (let i = 0; i < rail.count; ++i) {
             const card = rail.itemAtIndex(i);

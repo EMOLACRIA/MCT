@@ -1,6 +1,8 @@
 # Tema paket çekirdeği — 2.9.0
 
 ABI `mct-shell-2.9`; Deltarune 0.3.1 ve Plague Tale 2.9.0.
+19 Ekim 23:13: üçüncü bağımsız paket `deltarune-snowgrave` 0.1.0 eklendi.
+[Snowgrave deneme/ayrı adaptör komutları](SNOWGRAVE.md). Ortak ABI değişmedi.
 [2.8'den güvenli yükseltme ve ayrı adaptör komutları](UPGRADE_2_9.md).
 İşlevler ortak `shell/surfaces/` içinde; paket ui dosyaları görsel wrapper'dır.
 Lock `layout.conf` artık izinli/zorunlu tema hedefidir. Kaynaklanan general/auth

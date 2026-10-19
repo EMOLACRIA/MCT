@@ -2,7 +2,7 @@ name: Theme core checks
 
 on:
   push:
-    branches: [feature/theme-core, feature/deltarune, fix/shared-theme-behavior]
+    branches: [feature/theme-core, "feature/deltarune*", fix/shared-theme-behavior]
     paths:
       - theme_core.py
       - checks/test_theme_core.py
@@ -99,6 +99,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends libegl1 libopengl0 libgl1 libxkbcommon0
           python3 -m pip install --target "$MCT_QT_TEST_PATH" PySide6-Essentials==6.10.2
           python3 checks/test_deltarune.py
+          python3 checks/test_deltarune.py deltarune-snowgrave
           python3 checks/test_theme_picker_ui.py
           python3 checks/test_shared_surfaces.py
           python3 checks/test_osd_themes.py

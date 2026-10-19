@@ -69,3 +69,9 @@ Diğer tema için `plague-tale` yerine `deltarune`. SDDM'nin ayrı root/restore
 sınırları [yükseltme rehberinde](UPGRADE_2_9.md#ayrı-yüzeyleri-dene).
 Yeni Wayland katmanı, compositor odağı ve gerçek Super+G kontrolü cihazdaki yeni
 denemedir; offscreen test başarıları bu native sonucun yerine geçmez.
+
+
+19 Ekim 23:13: Snowgrave üçüncü ayrı karttır. Kart paleti/font varlığı, id adına
+göre dallanmak yerine Engine.load ile bütünlüğü kontrol edilen Theme.qml ve font
+envanterinden okunur. Üç kart dar ekranda aynı yatay rail içinde kayar; yeni
+uygulama penceresi, kısayol veya ayrı check düğmesi eklenmedi. [Snowgrave](SNOWGRAVE.md).
