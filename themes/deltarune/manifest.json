@@ -2,11 +2,11 @@
   "schema": 1,
   "id": "deltarune",
   "name": "Deltarune",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "shellAbi": "mct-shell-2.9",
   "preview": {
     "source": "preview.png",
-    "gitBlob": "3489d3ce22a7eddfc659dd9ef5c85c86f290c61e"
+    "gitBlob": "de4019b0f461450ed03e6e7f2413de8fd79ee76a"
   },
   "surfaces": [
     "bar",
@@ -34,7 +34,7 @@
     {
       "source": "files/style/hyprlock/cover.png",
       "target": "style/hyprlock/cover.png",
-      "gitBlob": "bf69d0aec20ae815c9209fbf612a5477bf833064"
+      "gitBlob": "21564f72fab7b6c8ec308d68b5ebd01de05cbf7f"
     },
     {
       "source": "files/style/hyprlock/media.conf",
@@ -114,7 +114,7 @@
     {
       "source": "files/style/shell/assets/wallpaper.png",
       "target": "style/shell/assets/wallpaper.png",
-      "gitBlob": "bf69d0aec20ae815c9209fbf612a5477bf833064"
+      "gitBlob": "21564f72fab7b6c8ec308d68b5ebd01de05cbf7f"
     },
     {
       "source": "files/style/shell/ui/ActionButton.qml",
@@ -244,7 +244,7 @@
     {
       "source": "files/style/wallpaper.png",
       "target": "style/wallpaper.png",
-      "gitBlob": "bf69d0aec20ae815c9209fbf612a5477bf833064"
+      "gitBlob": "21564f72fab7b6c8ec308d68b5ebd01de05cbf7f"
     },
     {
       "source": "files/style/hyprlock/layout.conf",

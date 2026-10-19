@@ -579,3 +579,23 @@ Paket preview'sı QML launcher render'ıdır; AI konseptiyle karıştırılmaz.
 Installer'lar geçici dizin/mock altında test edildi. Gerçek Hyprland/QuickShell
 servis devralma, PAM/login, kullanıcı cihaz tuşları veya Spotify/Dolphin uygulaması
 bu ortamda çalıştırılmadı; yeni native görünüm/kullanım kabulü beklenir.
+
+## 19 Ekim 22:58 — Deltarune 0.3.1 / Real-ESRGAN 4×
+
+Resmi RealESRGAN_x4plus ve anime_6B modelleri aynı 256×256 Kris/ağaç bölgesinde
+CPU inference ile karşılaştırıldı; genel model seçildi. Tam kaynak 4× restore
+edildi: 4800×2700 RGB PNG, 13.314.512 byte. Model/çıktı SHA256, mimari ve tile
+parametreleri themes/deltarune/restoration.json içinde. Orijinal JPEG korunur.
+
+Bu revizyon için 2 mevcut DeltaruneRevisionTests vakası geçici theme_preview.stage
+kökünde çalıştırıldı: test_controls_right_launcher_left_and_center_preference_preserved,
+test_bottom_strip_removed_font_and_wallpaper_preserved. İkisi de geçti.
+Engine.load manifest/bütünlük, dört PNG tam decode/boyut/RGB/hash eşitliği ve
+orijinal JPEG SHA256 korunması denetlendi. Önceki 112 test/116 QML sonucu 0.3.0
+kaydıdır; ortak davranış/QML bu işte değişmediği için tamamı tekrar çalıştırılmadı.
+
+Gerçek QML launcher/medya/controls/OSD/switcher ve sahte SDDM login preview'ları
+yeni wallpaper ile yenilendi; launcher ve model crop karşılaştırması görsel
+incelendi. Manifest preview hash'i gerçek yeni QML render'ına güncellendi.
+Büyütülmüş görsel sanatçının native yüksek çözünürlüklü kaynağı değildir.
+Yeni fiziksel ekran kalite kabulü ve ayrı SDDM kurulum sonucu kullanıcıda kalır.

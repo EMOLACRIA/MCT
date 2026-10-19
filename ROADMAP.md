@@ -5,7 +5,9 @@ son ağaç/Kris referansına taşınır (0.3.0); kalan üç paket sonra gelişti
 
 1. **Şimdi:** indigo/lavanta/fuşya ağaç görünümü; shell, lock, Kitty ve bağımsız
    uygulama adaptörleri, gerçek Qt önizlemeleri ve ortak davranış regresyonu.
-   Kaynak uygulandı; yeni cihaz/görünüm kabulü beklenir.
+   22:57 kullanıcı 0.3.0 check/apply ve görünümü onayladı. Tek yeni eksik wallpaper
+   kalitesi; 22:58 onayıyla 0.3.1 Real-ESRGAN 4× restorasyonu yapılır. Yeni görüntü
+   için cihaz kalite kabulü beklenir.
 2. **Sonra:** Guardian, neşeli gün batımı ve Snowgrave sonbahar için üç ayrı
    tam görsel paket. Kesin paket adları ve aralarındaki uygulama sırası açık.
    Boş/yarım tema seçiciye eklenmez.

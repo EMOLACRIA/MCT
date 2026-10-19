@@ -1,0 +1,29 @@
+{
+  "source": "wallpaper-source.jpeg",
+  "sourceDimensions": [
+    1200,
+    675
+  ],
+  "sourceSha256": "7516b39a815c91e6103aae31e2832b20cfd16bfd950c063e5f885b3a9e521e82",
+  "output": "files/style/wallpaper.png",
+  "outputDimensions": [
+    4800,
+    2700
+  ],
+  "outputSha256": "8cebb5dfdffccdef58b43ed6ea3f07fe6d8439f57baafff85fef5ff8cd2a1800",
+  "method": "Real-ESRGAN neural super-resolution; derived restoration, not a native high-resolution original",
+  "model": "RealESRGAN_x4plus",
+  "modelUrl": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+  "modelSha256": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1",
+  "architecture": "RRDBNet, 23 RRDB blocks, 64 features, 32 growth channels, scale 4",
+  "architectureUrl": "https://github.com/XPixelGroup/BasicSR/blob/master/basicsr/archs/rrdbnet_arch.py",
+  "architectureSha256": "6aa8eb3f77e918b90eeff4ebfaf8745abe0c40eb8fcc03abbc1928693d70ab58",
+  "architectureUtilitiesSha256": "be2cec6482fba5455cc1f03ff40da84a89e27feadf886018a4fa7b97b8a1bb55",
+  "runtime": "PyTorch 2.6.0+cpu, float32, evaluation/inference mode, channels_last",
+  "tileInputPixels": 256,
+  "tileOverlapPaddingInputPixels": 32,
+  "tta": false,
+  "postprocess": "clamp 0..1, round to RGB uint8; no extra sharpening or colour grading",
+  "selection": "General/anime crop comparison: general chosen to retain more of the original brush texture",
+  "userAuthorization": "2026-10-19 22:58 Europe/Riga: try the second practical Real-ESRGAN solution"
+}

@@ -2,6 +2,22 @@
 
 Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.
 
+## 19 Ekim 22:58 — Kullanıcı onaylı 4× restorasyon
+
+- Deltarune **0.3.1** wallpaper'ı, orijinal 1200×675 JPEG'den resmi
+  [RealESRGAN_x4plus modeli](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth)
+  ve [BasicSR RRDBNet mimarisi](https://github.com/XPixelGroup/BasicSR/blob/master/basicsr/archs/rrdbnet_arch.py)
+  ile 4800×2700 RGB PNG'ye restore edildi. Kullanıcı bu yöntemi açıkça istedi.
+- Genel/anime modelleri aynı küçük bölgede karşılaştırıldı; genel model fırça
+  dokusunu daha iyi koruduğu için seçildi. Ek keskinleştirme veya renk düzenleme
+  yapılmadı. `previews/deltarune/upscale-comparison.png` gerçek sonuç örnekleridir.
+- Bu çıktı sanatçının native yüksek çözünürlüklü orijinali değildir; 0.3.0'daki
+  piksel eşit format dönüşümü iddiası bu sürüme uygulanmaz. Orijinal JPEG aynen
+  saklanır. Kaynak/model/mimari/çıktı SHA256 ve tile parametreleri
+  [restoration.json](../themes/deltarune/restoration.json) içinde.
+- Model ağırlıkları, PyTorch ortamı ve upstream mimari kodu depoya eklenmedi.
+  İşlem üçüncü taraf çizimin haklarını değiştirmez; önceki hak kaydı korunur.
+
 ## 19 Ekim — Dört Deltarune referansı / yeni wallpaper
 
 - Mevcut `deltarune` 0.3.0 wallpaper kaynağı kullanıcının gönderdiği

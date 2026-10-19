@@ -1,8 +1,34 @@
 # Güncel durum
 
-Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.3.0**.
+Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.3.1**.
 Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; tema çizgisi görünüm/normal kullanım kullanıcı onaylı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 19 Ekim 22:58 — Wallpaper 4× restorasyonu
+
+22:57 kullanıcı 0.3.0 için başarılı check/apply ve GitHub push logunu paylaştı;
+`feature/deltarune-hidden-tree`, commit `8464b3f749ebd60460783c736741c3771e48f36a`.
+“Tamam bu hazır” dedi; tek yeni eksik düşük wallpaper kalitesi. Görünümün önceki
+bekleyen kabulü bu beyanla güncellendi. 22:58'de önerilen Real-ESRGAN yolunu
+denemeyi açıkça istedi.
+
+Genel ve anime modelleri aynı Kris/ağaç bölgesinde karşılaştırıldı. Fırça dokusunu
+daha fazla koruyan resmi `RealESRGAN_x4plus` seçildi; 1200×675 → 4800×2700 RGB
+PNG üretildi. Sinir ağı restorasyonudur; sanatçının native yüksek çözünürlüklü
+orijinali veya kaynak piksellerle eşit dönüşüm değildir. Orijinal JPEG değişmedi.
+Model/source/output hash'leri ve işlem parametreleri
+`themes/deltarune/restoration.json` içinde. Wallpaper, shell, lock cover fallback
+ve ayrı SDDM kaynak görseli aynı PNG'yi kullanır; tema sürümü 0.3.1.
+Ortak runtime, kısayollar, palet ve panel düzeni değişmedi. Yeni görüntünün
+kullanıcının ekranındaki kalite kabulü beklenir; SDDM hâlâ ayrı kurucudur.
+
+19 Ekim bu revizyon için dört RGB PNG'nin tam decode/4800×2700/hash eşitliği,
+orijinal JPEG hash'inin korunması ve Engine.load manifest bütünlüğü denetlendi.
+İki mevcut Qt Deltarune revizyon testi geçti (konum/merkez tercihi, font/alt şerit
+ve kurulu wallpaper'ın yeni canonical PNG ile eşitliği). Launcher QML render'ı
+görsel incelendi; diğer yüzey preview'ları da yeni wallpaper ile yenilendi.
+Önceki 112 test/116 QML sonucu 0.3.0'a aittir; hepsi bu görsel revizyonda tekrar
+çalıştırılmış gibi sunulmaz. Native oturuma bu ortamdan kurulmadı.
 
 ## 19 Ekim 21:34 — Dört referans, önce indigo/fuşya ağaç teması
 

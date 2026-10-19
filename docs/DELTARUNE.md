@@ -1,4 +1,4 @@
-# Deltarune — 0.3.0 / ağaç ve Kris
+# Deltarune — 0.3.1 / ağaç ve Kris
 
 Ortak kaynak 2.9.0, ABI `mct-shell-2.9`; bu revizyon ortak ABI'yi değiştirmez.
 Önceki 0.2.0 camgöbeği fountain görünümünün yerine kullanıcının seçtiği son
@@ -25,14 +25,18 @@ Bu görsel paket için `update.sh`, masaüstü restore veya önce eski temayı r
 etmek gerekmez. Source ortak ABI farklı diyorsa bu komut zaten durur;
 [2.9 yükseltme rehberi](UPGRADE_2_9.md) eski kaynaklar içindir, bu revizyonda
 çalışan sistemi baştan kurma adımı değildir. Mevcut ilk restore yedeği ve tercihler
-korunur. Aynı `deltarune` kimliği yeni 0.3.0 sürümünü uygular.
+korunur. Aynı `deltarune` kimliği yeni 0.3.1 sürümünü uygular.
 
 Kurulumsuz bakmak: `bash preview.sh deltarune`.
 [Medya render'ı](../previews/deltarune/media.png). Preview altındaki bilgi etiketi
 sadece önizleme penceresindedir; native masaüstüne alt menü eklenmez.
 
-Wallpaper sağlanan orijinal 1200×675 JPEG'den piksel eşit PNG dönüşümüdür;
-resim yeniden çizilmedi, yapay olarak yüksek çözünürlük iddia edilmez. Referanstaki
+Wallpaper kullanıcının onayıyla **RealESRGAN_x4plus** üzerinden 4× büyütüldü:
+1200×675 → 4800×2700 PNG. Bu, sanatçının yüksek çözünürlüklü orijinali değil,
+sinir ağıyla restore edilmiş türevdir. Kaynak JPEG değişmeden korunur. Fırça
+dokusunu daha fazla koruduğu için iki küçük örnekten genel model seçildi.
+Kaynak/model/hash bilgisi [restoration.json](../themes/deltarune/restoration.json)
+içindedir. 0.3.0 yalnız format dönüşümü kullanıyordu. Referanstaki
 dekoratif müzik progress çizgisi bir sahte seek kontrolüne dönüştürülmedi;
 mevcut gerçek MPRIS oynat/duraklat/önceki/sonraki ve oyuncu seçimi korunur.
 

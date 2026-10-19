@@ -27,6 +27,11 @@ Karar: docs/decisions/0016-deltarune-four-worlds.md.
 Mevcut tema seçicinin yatay konumu ve Super+G kararı kesinleşmiştir; aşağıdaki
 eski konumu-açık kayıtlar tarihsel gelişimi anlatır.
 
+19 Ekim 22:57: kullanıcı yeni ağaç/Kris görünümünü uygulayıp “bu hazır” dedi ve
+feature/deltarune-hidden-tree dalını pushladı. Tek yeni eksik düşük wallpaper
+kalitesidir. 22:58 açık onayıyla kaynak korunarak Real-ESRGAN 4× restorasyonu
+denenir; bu yeni görüntünün kabulü ayrıca beklenir. Tema işlevleri değişmez.
+
 DEĞİŞMEZ ÜRÜN KARARLARI
 1. A Plague Tale mevcut ilk temanın kesin seçilmiş referansıdır.
 2. Masaüstü panellerinde oyun adı, tema adı veya ürün logosu marka gibi

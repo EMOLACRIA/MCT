@@ -41,9 +41,11 @@ class DeltaruneRevisionTests(qt.PreferenceUiTests):
         self.assertFalse(qt.evaluate(frame,'Theme.partyStripEnabled'))
         self.assertEqual(qt.evaluate(frame,'Theme.loadedFont.status'),1)
         self.assertIn('Departure',qt.evaluate(frame,'Theme.bodyFont'))
-        source=QImage(str(ROOT/'themes/deltarune/wallpaper-source.jpeg'))
+        original=QImage(str(ROOT/'themes/deltarune/wallpaper-source.jpeg'))
+        source=QImage(str(ROOT/'themes/deltarune/files/style/wallpaper.png'))
         wallpaper=QImage(str(qt.ROOT/'payload/style/wallpaper.png'))
-        self.assertEqual((wallpaper.width(),wallpaper.height()),(1200,675))
+        self.assertEqual((original.width(),original.height()),(1200,675))
+        self.assertEqual((wallpaper.width(),wallpaper.height()),(original.width()*4,original.height()*4))
         self.assertEqual(source.convertToFormat(QImage.Format_RGBA8888),wallpaper.convertToFormat(QImage.Format_RGBA8888))
 
 

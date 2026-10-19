@@ -3,9 +3,10 @@
 ## Güncel öncelik — dört Deltarune teması
 
 Kullanıcı dört görsel referansın tamamını ayrı tema olarak kabul etti. Önce
-mevcut `deltarune` son indigo/fuşya ağaç/Kris görünümüne taşınır: 0.3.0 kaynakta
-uygulandı; yeni cihaz/görünüm kontrolü açık. Eski 0.2.0 onayı korunur, yeni
-görünüm kendiliğinden onaylanmış sayılmaz. Ardından Guardian, neşeli gün batımı
+mevcut `deltarune` son indigo/fuşya ağaç/Kris görünümüne taşındı. 19 Ekim 22:57
+kullanıcı 0.3.0 check/apply ve push logunu paylaştı, “bu hazır” dedi; tek yeni
+eksik düşük wallpaper kalitesi. 22:58 isteğiyle 0.3.1 için Real-ESRGAN 4×
+restorasyonu uygulanır; bu yeni görüntünün cihaz kabulü açık. Ardından Guardian, neşeli gün batımı
 ve Snowgrave sonbahar ayrı üç tam tema olacak. Henüz uygulanmadılar.
 [Karar ve kaynaklar](decisions/0016-deltarune-four-worlds.md).
 Bu yeni öncelik, aşağıdaki harici adaptör otomasyonu önerisinden önce gelir.
