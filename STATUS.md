@@ -1,8 +1,23 @@
 # Güncel durum
 
 Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
-Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; fotoğraflı seçici uygulandı / yeni arayüz native denemesi bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
+Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; tema çizgisi görünüm/normal kullanım kullanıcı onaylı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 19 Ekim 13:22 — Tema çizgisi kullanıcı onayı
+
+Europe/Riga 13:22 kullanıcı: “oo bu çok güzel olmuş güzel de çalışıyor.”
+Tema çizgisinin görünüm/normal kullanım kabulü kaydedildi. Son paylaşılan kaynak
+`a80d08e0fa80f3069f4e4c37fb49570b77ea568f`; cihazdaki SHA ayrıca raporlanmadı.
+Bu onay aynı arayüzün tekrar normal kullanım kabulünü istememek içindir; tek tek
+reboot/harici ekran/felaket kurtarma senaryoları ölçülmüş gibi işaretlenmez.
+Önceki yeni seçici-native-bekliyor notları bu beyanla güncellenmiştir.
+
+Güncel kısa kalanlar [CURRENT_BACKLOG](docs/CURRENT_BACKLOG.md) içindedir. Şu an
+kullanıcı tarafından bildirilmiş açık günlük kullanım hatası yok. Harici uygulama
+uyarlamalarının otomatik tema geçişine bağlanması henüz uygulanmamış bir kapsam
+seçeneğidir; bu durum eski kurucuların bozuk olduğu anlamına gelmez. Son onay
+sonrası bu işte yeni özellik veya merge yapılmadı; yalnız kayıtlar güncellendi.
 
 ## 19 Ekim 01:07 — Tema çizgisi ve koşullu Super+G
 

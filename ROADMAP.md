@@ -4,6 +4,14 @@ Karar tarihi: **18 Ekim 2026**. Ürün kapsamı: [PROJECT_BRIEF.txt](PROJECT_BRI
 Durumlar: **planlandı**, **uygulandı / doğrulama bekliyor**, **doğrulandı**, **ertelendi**.
 Tarihler taahhüt edilmedi; bir aşama kendi çıkış koşulları karşılanınca kapanır.
 
+## Güncel özet — 19 Ekim 13:22
+
+Kullanıcı yeni tema çizgisinin görünümünü ve normal çalışmasını onayladı.
+Plague Tale, mevcut Deltarune ve yeni seçici için aynı kabul tekrar istenmez.
+Kalan işler, sınırlar ve henüz seçilmemiş fikirler
+[CURRENT_BACKLOG](docs/CURRENT_BACKLOG.md) içinde ayrıdır. Aşağıdaki aşama tarihçesi
+bu üst kayıtla birlikte okunur; eski bekleme cümleleri güncel açık hata sayılmaz.
+
 ## M0 — Projeyi kayıt altına al ve GitHub'a taşı — tamamlandı
 
 Bu görevde yapılan iş. Ürün ve ajan talimatları; güncel durum; referanslar;
@@ -146,7 +154,7 @@ kapanmış olduğu anlamına gelmez.
 
 ## M5 — Tema değiştirici
 
-**19 Ekim 01:07 revizyonu uygulandı / native denemesi bekliyor.** Kullanıcı
+**19 Ekim 01:07 revizyonu uygulandı; 13:22 görünüm/normal kullanım kullanıcı onaylı.** Kullanıcı
 önceki arayüzü yeterince stilize/rahat bulmadı. Ortada yatay çizgi, hover ile
 fotoğrafı genişleyen temalar ve tek seçimle arka plan kontrollü geçiş geldi.
 Ayrı app penceresi kalktı, sıcak Wayland katmanı IPC ile toggle olur. Super+G
