@@ -1,5 +1,18 @@
 # Deltarune tamamlama denetimi
 
+19 Ekim kullanıcı Dolphin düzeltmesini de onaylayıp devam istedi. Önceki diğer
+uyarlamalar/komutlar çalışıyor beyanıyla mevcut Deltarune görünüm/kullanım kabulü
+kaydedildi. Yeni fotoğraflı seçicinin native denemesi ayrı iştir. Aşağıdaki
+denetim bulguları ve eski beklemeler tarihsel kayıttır.
+
+
+**Sonraki uygulama:** 2.9.0'da ortak controller/şablonlar, PanelSlot ve dış
+Deltarune adaptörleri eklendi. Aşağıdaki bulgular bu düzeltmeden önceki kayıttır.
+[Yeni karar ve sınırlar](decisions/0014-shared-interaction-templates.md),
+[güvenli yükseltme](UPGRADE_2_9.md). Bu 18 Ekim beklemesinin yerini üstteki
+19 Ekim kullanıcı onayı alır.
+
+
 18 Ekim 2026 · Kaynak 2.8.0 / paket 0.1.1.
 İncelenen uzak commit: `7ae39b6086270d28df847c4e14831b1195d061c3`.
 Yerel eşdeğer kaynak ağacı: `65c6d0e3c26f59a962f4940920568e0a13b4ad9a`.

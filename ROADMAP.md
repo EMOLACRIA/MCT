@@ -4,6 +4,14 @@ Karar tarihi: **18 Ekim 2026**. Ürün kapsamı: [PROJECT_BRIEF.txt](PROJECT_BRI
 Durumlar: **planlandı**, **uygulandı / doğrulama bekliyor**, **doğrulandı**, **ertelendi**.
 Tarihler taahhüt edilmedi; bir aşama kendi çıkış koşulları karşılanınca kapanır.
 
+## Güncel özet — 19 Ekim 13:22
+
+Kullanıcı yeni tema çizgisinin görünümünü ve normal çalışmasını onayladı.
+Plague Tale, mevcut Deltarune ve yeni seçici için aynı kabul tekrar istenmez.
+Kalan işler, sınırlar ve henüz seçilmemiş fikirler
+[CURRENT_BACKLOG](docs/CURRENT_BACKLOG.md) içinde ayrıdır. Aşağıdaki aşama tarihçesi
+bu üst kayıtla birlikte okunur; eski bekleme cümleleri güncel açık hata sayılmaz.
+
 ## M0 — Projeyi kayıt altına al ve GitHub'a taşı — tamamlandı
 
 Bu görevde yapılan iş. Ürün ve ajan talimatları; güncel durum; referanslar;
@@ -146,6 +154,20 @@ kapanmış olduğu anlamına gelmez.
 
 ## M5 — Tema değiştirici
 
+**19 Ekim 01:07 revizyonu uygulandı; 13:22 görünüm/normal kullanım kullanıcı onaylı.** Kullanıcı
+önceki arayüzü yeterince stilize/rahat bulmadı. Ortada yatay çizgi, hover ile
+fotoğrafı genişleyen temalar ve tek seçimle arka plan kontrollü geçiş geldi.
+Ayrı app penceresi kalktı, sıcak Wayland katmanı IPC ile toggle olur. Super+G
+canlı boşluk kontrolüyle ayrı bind kurucusunda eklenir; doluysa korunur.
+Menü yeri artık açık karar değildir; eski kayıtlar aşağıda tarihseldir.
+
+**19 Ekim: fotoğraflı ilk arayüz uygulandı.** `bash theme.sh menu` ayrı repo
+penceresidir; kartlar, büyük resim, aktif tema, kontrol→uygula, iki aşamalı geri
+dönüş vardır. Yeni bar/ayar yeri veya global kısayol atanmadı. Mevcut core işlem
+korumaları kullanılır. Harici uygulama/SDDM adaptörleri ayrı kalır ve arayüzde
+belirtilir. Yeni arayüzün native kullanıcı denemesi beklenir.
+[Rehber](docs/THEME_PICKER.md). Aşağıdaki önceki M5 kayıtları tarihsel temeldir.
+
 **2.7.0: CLI paket çekirdeği uygulandı.** Manifest + gerçek fotoğraf + 38 görsel
 kaynak; doğrulama/uygulama/rollback/recover, tercih koruma, güncelleme çakışma
 koruması. 28 çekirdek ve 27 mevcut izole test geçti. [Rehber](docs/THEME_PACKAGES.md).
@@ -178,12 +200,18 @@ bir sonraki temanın bunlardan biri olacağı kararlaştırılmadı.
 - Oyun kütüphanesi: ertelendi, yol haritası için engel değil.
 - AI sohbeti, takvim/hava durumu, masaüstü notları: talep edilmedi.
 
-## M6 — Deltarune ilk deneme — uygulandı / kullanıcı kabulü bekliyor
+## M6 — Deltarune mevcut görünüm/kullanım onaylı
+
+19 Ekim 00:24 Europe/Riga: kullanıcı Dolphin'in de değiştiğini onaylayıp devam
+istedi. Önceki diğer uyarlamalar/komutlar çalışıyor beyanıyla son bilinen sorun
+kapandı; yeni tema seçicisine geçildi. Tek tek PAM/sensör alt testleri icat edilmez.
+Aşağıdaki 18 Ekim denetim ve revizyon beklemeleri tarihsel kayıttır.
 
 18 Ekim tamamlama denetiminde açık eksikler bulundu:
 [bulgular ve kapanış koşulları](docs/DELTARUNE_AUDIT.md). Tema seçiciye geçiş
-koşulu henüz karşılanmadı. Öncelik Loader uyarısını ayrıştırma ve ortak davranış
-ayrımı; sonra aşağıdaki harici yüzey adaptasyonlarıdır.
+koşulu henüz karşılanmadı. 2.9.0'da Loader yaşam döngüsü/ortak davranış ayrımı ve harici görsel adaptörler
+uygulandı; offscreen/mock kontrolleri geçti. Yeni native görünüm/işlev kabulü
+beklenir. [Deneme adımları](docs/UPGRADE_2_9.md).
 
 18 Ekim kullanıcı ikinci temanın geliştirilmesini başlattı. Seçilen wallpaper,
 siyah/camgöbeği piksel dil ve karakter portreleri ilk pakette var. 18 Ekim ilk
@@ -198,3 +226,8 @@ yeni images_upscaled.jpeg wallpaper kullanıldı. Ortak launcher/hesaplama/Alt+T
 
 Plague Tale'in son kullanım onayı tekrar istenmez. Deltarune ilk denemesi henüz
 ikinci temanın bütün adaptörleriyle tamamlandığı anlamına gelmez.
+
+18 Ekim 2.9 denemesi: kullanıcı komutları ve Dolphin dışındaki uyarlamaları
+çalışır bildirdi. Dolphin fotoğrafı eski klasör renklerini gösterdi; kaynakta
+aynı SVG'lerin taşındığı doğrulandı ve cyan basamaklı ikonlar düzeltildi.
+Yeni Dolphin görünümünün cihazdaki onayı açık; tema seçicisi henüz başlamadı.

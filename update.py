@@ -80,11 +80,13 @@ def patch_bindings(text):
     return patch_switcher_bindings(patch_terminal(patch_file_manager(''.join(lines))))
 
 def lock_config(text):
-    block='# desktop-style media begin\nsource = '+str(m.STYLE/'hyprlock/media.conf')+'\n# desktop-style media end'
-    text=re.sub(r'(?m)^(\s*hide_cursor\s*=\s*)true\s*$',r'\1false',text)
-    if '# desktop-style media begin' in text:
-        text=re.sub(r'# desktop-style media begin.*?# desktop-style media end',lambda _:block,text,flags=re.S)
-    else:text=text.rstrip()+'\n\n'+block+'\n'
+    legacy=(m.PACKAGE/'legacy-hyprlock.conf').read_text().replace('@STYLE@',str(m.STYLE))
+    desired=(m.PACKAGE/'payload/hypr/hyprlock.conf').read_text().replace('@STYLE@',str(m.STYLE))
+    normalize=lambda value:re.sub(r'(?m)^(\s*hide_cursor\s*=\s*)true\s*$',r'\1false',value).strip()
+    # Only migrate our exact published layout. Custom password configs are not replaced.
+    if normalize(text) in {normalize(legacy),normalize(desired)}:return desired
+    if '# desktop-style layout begin' not in text:
+        print('Custom hyprlock.conf kept; full theme styling requires its layout.conf source.')
     return text
 
 def check():
@@ -104,6 +106,7 @@ def check():
     # Preflight also refuses a pending journal or a skin the payload would reset.
     import theme_core
     theme_core.Engine(m.PACKAGE, m.STYLE, m.STATE, m.HYPR).guard_update()
+    lock_config((m.HYPR/'hyprlock.conf').read_text())
     ensure_clean_config();m.check_quickshell()
     return patch_bindings((m.HYPR/'keybinds.lua').read_text())
 
@@ -185,8 +188,8 @@ def update(check_only=False):
                 if target.exists():shutil.rmtree(target)
                 shutil.copytree(m.PACKAGE/'payload/style'/part,target)
             for script in (m.STYLE/'scripts').glob('*.sh'):script.chmod(0o755)
-            fragment=m.STYLE/'hyprlock/media.conf'
-            m.replace_text(fragment,fragment.read_text().replace('@STYLE@',str(m.STYLE)))
+            for fragment in (m.STYLE/'hyprlock').glob('*.conf'):
+                m.replace_text(fragment,fragment.read_text().replace('@STYLE@',str(m.STYLE)))
             m.replace_text(keybinds,text)
             m.replace_text(lockfile,lock_config(lockfile.read_text() if lockfile.exists() else ''))
             original=json.loads(original_manifest().read_text())

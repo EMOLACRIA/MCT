@@ -5,9 +5,17 @@ HyprCADE'in daha bütünlüklü devamı için geliştirilen Hyprland/QuickShell 
 Önce bu tema tamamen bitirilecek; ardından aynı işlev/kısayollarla görsel açıdan
 çok farklı temalar ve bir tema değiştirici gelecek.
 
-**Durum:** 2.7.0 geliştirme sürümü. Kullanıcı Plague Tale'in son canlı kontrolünü
-ve gün boyu kullanımını onayladı. Tema paket çekirdeği eklendi; fotoğraflı tema
-menüsünün konumu açık, ikinci tema henüz seçilmedi. Genel yayın/lisans işleri ayrı.
+**Durum:** 2.9.0 / Deltarune 0.2.0 denemesi. Plague Tale son kullanım onayı
+korunur. İki tema ortak etkileşim şablonlarını kullanır; Deltarune lock, SDDM,
+Dolphin, Spotify ve karakter terminal uyarlamaları eklendi; kullanıcı mevcut
+Deltarune görünümünü de onayladı. Fotoğraflı seçici `bash theme.sh menu` ile
+masaüstü üzerinde yatay tema çizgisi olarak denenebilir. Hover önizleme,
+tek seçimle kontrollü geçiş; `bash theme.sh bind` boşsa Super+G ekler.
+[Seçici kullanımı ve kapsamı](docs/THEME_PICKER.md).
+
+**2.8'den geçiş:** dal değiştirmeden önce eski aktif tema geçişlerini eski
+kaynakla geri al, sonra source update ve yeni apply yap.
+[Komutlar ve ayrı uygulama/SDDM adımları](docs/UPGRADE_2_9.md).
 
 ## Projeyi okumaya buradan başla
 

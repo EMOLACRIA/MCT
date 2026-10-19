@@ -1,6 +1,46 @@
 # Mimari: mevcut durum ve hedef
 
-## Mevcut 2.7.0
+`payload/style/shell/behavior/` Launcher, Power, Feedback ve WindowSwitcher
+controller'larını ayrıca sunar. Bunlar görsel geometri içermez; tamamen yeni
+bir sunum bu controller'ları kullanabilir. `surfaces/` onların ortak varsayılan
+çizimidir. Mevcut iki skin bu çizimi property/delegate ile özelleştirir.
+
+## 19 Ekim 01:07 — kalıcı Wayland tema çizgisi
+
+Aşağıdaki ilk FloatingWindow tasarımı kullanıcı revizyonuyla değişti.
+`theme-picker/shell.qml` artık PanelWindow/WlrLayer.Overlay ve exclusive klavye
+odağı kullanır. `themes.toggle` IPC pencere yaratmadan aç/kapatır. Qt saf state ve
+sunum, core Engine ve ana masaüstü process sınırı korunur. `theme_bindings.py`
+kurulu keybinds.lua'ya yalnız canlı boşsa sahipli Super+G bloğunu ekler.
+[ADR-0016](decisions/0016-theme-rail.md). ABI/kurulu shell dosyaları değişmez.
+
+## 19 Ekim — ilk fotoğraflı seçici (tarihsel)
+
+`theme_picker.py` katalog/JSON taşıma katmanıdır; değişiklikleri yalnız mevcut
+`theme_core.Engine` yapar. `theme-picker/PickerState.qml` seçim/check/onay modelidir;
+PickerView/Card/Button saf Qt sunumudur; shell.qml küçük QuickShell Process ve
+FloatingWindow adaptörüdür. Paket preview PNG'si doğrulanmış mutlak file URI'sidir.
+
+Seçici payload/skin/ABI dışında repo aracıdır. Ana MCT shell'i yeniden başlarken
+kendi penceresi kalır; yeni kurulu dosya veya global kısayol gerekmez. Normal pencere
+kapama işlem sırasında görünümü gizler, helper bittikten sonra çıkar; zorla process
+kill halinde mevcut core journal/recover geçerlidir. Ayrıntı
+[ADR-0015](decisions/0015-photo-theme-picker.md).
+
+## Mevcut 2.9.0
+
+`payload/style/shell/surfaces/` 17 ortak etkileşim/sunum şablonu ve PanelSlot'u
+barındırır. Paket `ui/` wrapper'ları yalnız görsel property/delegate seçer;
+komut/input/onay tekrar etmez. Native servis/state/IPC önceki ortak yerde kalır.
+Şablon varsayılan çizim de içerir; çok farklı tasarım için sunum delegate'i
+verilir. Bu güvenilir QML kaynak modeli, sandbox değildir.
+
+Hyprlock general/auth ana dosyadadır; tema layout ve media görsellerini taşır.
+Dış adaptörler `adapter_assets.py` ile aynı kurucunun farklı kaynaklarını seçer.
+SDDM tek login controller'ı ve ayrı LoginSkin'i kullanır. Tam sınırlar ve yaşam
+döngüsü [ADR-0014](decisions/0014-shared-interaction-templates.md) içindedir.
+
+## Önceki 2.7.0
 
 Yeni CLI çekirdeği [THEME_PACKAGES](THEME_PACKAGES.md) ve
 [ADR-0012](decisions/0012-theme-package-core.md) içindedir. Paket, görsel QML/varlık

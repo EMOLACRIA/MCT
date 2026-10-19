@@ -1,3 +1,11 @@
+# Tema seçimi — 2.9.0
+
+Dolphin ve Spotify aynı kurucuya `--theme plague-tale` / `--theme deltarune`
+ile uygulanır. Uygulamayı tamamen kapat; önce --check, sonra install kullan.
+Tema verilmezse mevcut shell kaydı okunur. Restore ilk orijinal yedeğe döner,
+tekrar tema uygulama bu yedeği değiştirmez. Spotify adblock Exec ortamı korunur.
+[Komutlar ve sınırlar](../docs/UPGRADE_2_9.md).
+
 # Spotify ve Dolphin
 
 Masaüstünün kömür, taş ve soluk pirinç paleti kullanılır. Arayüze tema veya oyun logosu eklenmez. Bu eklentiler `update.sh` tarafından kendiliğinden uygulanmaz.

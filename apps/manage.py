@@ -17,6 +17,13 @@ import tempfile
 from datetime import datetime
 
 PACKAGE=Path(__file__).resolve().parent
+sys.path.insert(0,str(PACKAGE.parent))
+import adapter_assets
+SELECTED_THEME="plague-tale"
+
+def theme_source(adapter):
+    return PACKAGE/adapter if SELECTED_THEME=="plague-tale" else adapter_assets.source(SELECTED_THEME,adapter)
+
 HOME=Path.home()
 CONFIG=Path(os.environ.get('XDG_CONFIG_HOME',HOME/'.config'))
 DATA=Path(os.environ.get('XDG_DATA_HOME',HOME/'.local/share'))
@@ -120,6 +127,7 @@ def app_paths():
 DOLPHIN_KEYS=[('UiSettings','ColorScheme','DesktopStyle'),('Icons','Theme','DesktopStyle')]
 
 def qt_palette():
+    if SELECTED_THEME!='plague-tale':return (theme_source('dolphin')/'Qt.conf').read_text()
     # QPalette ColorRole order, including PlaceholderText and Qt 6.6 Accent.
     colors=['#ffffff','#292a23','#666454','#454638','#10110f','#777766','#ffffff','#ffffff',
             '#ffffff','#191a18','#191a18','#080907','#514b3a','#ffffff','#d3bd8d','#c3ae95',
@@ -168,8 +176,8 @@ def dolphin(check=False,restore=False):
     with tempfile.TemporaryDirectory(dir=STATE,prefix='dolphin-') as tmp:
         tmp=Path(tmp);current=[snapshot(path,tmp/str(i)) for i,path in enumerate(targets)]
         try:
-            atomic(targets[1],(PACKAGE/'dolphin/DesktopStyle.colors').read_text())
-            remove(targets[2]);shutil.copytree(PACKAGE/'dolphin/icons',targets[2])
+            atomic(targets[1],(theme_source('dolphin')/'DesktopStyle.colors').read_text())
+            remove(targets[2]);shutil.copytree(theme_source('dolphin')/'icons',targets[2])
             for group,key,value in DOLPHIN_KEYS:text=set_key(text,group,key,value)
             atomic(targets[0],text)
             for key,value in qt_values.items():qt_text=set_key(qt_text,'Appearance',key,value)
@@ -179,6 +187,7 @@ def dolphin(check=False,restore=False):
             desktop=redirect_desktop(template,{'dolphin','/usr/bin/dolphin'},['env','QT_QPA_PLATFORMTHEME=qt6ct','QT_STYLE_OVERRIDE=Fusion','dolphin'])
             desktop=re.sub(r'^DBusActivatable=.*$','DBusActivatable=false',desktop,flags=re.M)
             atomic(targets[5],desktop);record['launcher']=desktop
+            record['theme']=SELECTED_THEME
             atomic(pointer,json.dumps(record,indent=2))
         except Exception:
             for i,item in enumerate(current):restore_item(item,tmp/str(i))
@@ -240,9 +249,9 @@ def verify_spotify_theme(client):
     for name in ['user.css','colors.css']:
         if name not in links or not (xpui/name).is_file() or not (xpui/name).stat().st_size:
             raise RuntimeError('Spotify theme output missing or not linked: '+name)
-    if (xpui/'user.css').read_bytes()!=(PACKAGE/'spotify/user.css').read_bytes():
+    if (xpui/'user.css').read_bytes()!=(theme_source('spotify')/'user.css').read_bytes():
         raise RuntimeError('Spotify theme output does not contain the requested user.css.')
-    palette=configparser.ConfigParser();palette.read(PACKAGE/'spotify/color.ini')
+    palette=configparser.ConfigParser();palette.read(theme_source('spotify')/'color.ini')
     colors=(xpui/'colors.css').read_text()
     for key,value in palette['Ash'].items():
         if not re.search(r'--spice-'+re.escape(key)+r'\s*:\s*#'+re.escape(value)+r'\s*;',colors,re.I):
@@ -348,7 +357,7 @@ def spotify(check=False,restore=False):
     try:
         client=SPOTIFY/'client';shutil.copytree(source,client,symlinks=False)
         for f in [client,*client.rglob('*')]:os.chmod(f,stat.S_IMODE(f.stat().st_mode)|stat.S_IWUSR)
-        spice_config=SPOTIFY/'config';theme=spice_config/'spicetify/Themes/DesktopStyle';shutil.copytree(PACKAGE/'spotify',theme)
+        spice_config=SPOTIFY/'config';theme=spice_config/'spicetify/Themes/DesktopStyle';shutil.copytree(theme_source('spotify'),theme)
         config='[Setting]\nspotify_path = '+str(client)+'\nprefs_path = '+str(prefs)+'\ncurrent_theme = DesktopStyle\ncolor_scheme = Ash\ninject_css = 1\nreplace_colors = 1\ninject_theme_js = 0\ncheck_spicetify_update = 0\n\n[Preprocesses]\ndisable_sentry = 0\ndisable_ui_logging = 0\nremove_rtl_rule = 0\nexpose_apis = 0\n\n[AdditionalOptions]\nexperimental_features = 0\nhome_config = 0\nsidebar_config = 0\nextensions = \ncustom_apps = \n'
         atomic(spice_config/'spicetify/config-xpui.ini',config)
         env={**os.environ,'SPICETIFY_CONFIG':str(spice_config/'spicetify'),'XDG_CONFIG_HOME':str(spice_config),'XDG_STATE_HOME':str(SPOTIFY/'state')}
@@ -370,6 +379,7 @@ def spotify(check=False,restore=False):
         for path,desktop in entries:
             atomic(path,desktop);record['launchers'][str(path)]=desktop
         record['launcher']=dict(entries)[launcher]
+        record['theme']=SELECTED_THEME
         atomic(pointer,json.dumps(record,indent=2))
     except Exception:
         remove(SPOTIFY)
@@ -382,7 +392,10 @@ def spotify(check=False,restore=False):
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('app',choices=['dolphin','spotify']);parser.add_argument('--check',action='store_true');parser.add_argument('--restore',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('app',choices=['dolphin','spotify']);parser.add_argument('--check',action='store_true');parser.add_argument('--restore',action='store_true');parser.add_argument('--theme',choices=adapter_assets.THEMES);args=parser.parse_args()
+    global SELECTED_THEME
+    choice=args.theme or ("plague-tale" if args.restore else None)
+    SELECTED_THEME=adapter_assets.selected(choice)
     if os.geteuid()==0:raise RuntimeError('Run as your normal user, without sudo.')
     if args.check:(dolphin if args.app=='dolphin' else spotify)(True,args.restore);return
     STATE.mkdir(parents=True,exist_ok=True,mode=0o700)

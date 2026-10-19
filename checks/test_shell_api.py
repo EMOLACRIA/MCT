@@ -20,6 +20,7 @@ contracts={
  'PopupWindow':['window/popupwindow.hpp','window/windowinterface.hpp'],
  'Region':['core/region.hpp'],
  'ShellRoot':['core/shell.hpp','core/reload.hpp'],
+ 'FloatingWindow':['window/floatingwindow.hpp','window/windowinterface.hpp'],
  'Scope':['core/reload.hpp'],
  'IpcHandler':['io/ipchandler.hpp'],
  'Process':['io/process.hpp'],
@@ -103,8 +104,8 @@ failures=inspect(negative,'old-shell.qml')
 assert any('Variants.variants absent' in f for f in failures),failures
 print('Reproduced old Variants.variants mismatch against native header.',flush=True)
 checked.clear()
-for file in sorted(shell.rglob('*.qml')):
- failures=inspect(file.read_text(),str(file.relative_to(shell)))
+for file in sorted(shell.rglob('*.qml')) + sorted((root/'theme-picker').glob('*.qml')):
+ failures=inspect(file.read_text(),str(file.relative_to(root)))
  assert not failures,'\n'.join(failures)
 print(f'PASS: {len(checked)} native property/handler bindings match QuickShell 0.3.1 source declarations.',flush=True)
 

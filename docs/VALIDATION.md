@@ -1,5 +1,43 @@
 # Doğrulama sınırları
 
+## 2.9.0 — Ortak davranış ve Deltarune adaptörleri (18 Ekim 2026)
+
+Temiz geliştirme dalında son seri: **183 unittest vakası / 16 komut, tamamı geçti**.
+PySide6 Essentials 6.10.2 offscreen/software; geçici HOME/dizinler, mock servisler.
+
+| Komut (`checks/` altında) | Sonuç |
+|---|---|
+| test_theme_core.py | 33; ortak şablon tamper ve özel lock config koruması dahil |
+| test_preferences.py / test_file_manager.py | 15 / 12 |
+| test_theme_adapters.py / test_lock_layout.py | 5 / 3 |
+| test_spotify_install.py / test_terminal_medallion.py / test_sddm_install.py | 10 / 6 / 4 |
+| test_deltarune.py | 42; settings/tray/launcher/Alt+Tab ve paket revizyonu |
+| test_shared_surfaces.py | 2; iki skin kaynak kopya koruması, 12 tur × 4 panel ve tek instance/onay temizliği |
+| test_osd_themes.py | 1; iki ayrı Qt sürecinde gerçek mouse drag/hover/ikon sözleşmesi |
+| test_greeter_themes.py | 10; iki skin'de aynı 5 giriş/boş model/yeniden deneme/power Esc testi |
+| test_preferences_ui.py / test_shell_ui.py / test_launcher_calculator.py / test_window_switcher.py | Plague Tale 10 / 12 / 7 / 11 |
+
+Qt komutları `MCT_QT_TEST_PATH` ile bu ortama yönlendirildi. `test_shell_imports.py`
+ortak behavior/surfaces qmldir ve Calculator.js'i HTTP import yolunda yükledi.
+`test_shell_syntax.py` **60 QML** bytecode derlemesi geçti (MCT_QMLCACHEGEN).
+`test_shell_api.py` **132 native binding** için v0.3.1 kaynak sözleşmesini geçti
+(MCT_QS_SOURCE). İki lock layout'unda **76 property binding** Hyprlock 0.9.6
+ConfigManager.cpp beyanlarıyla eşleşti. `test_revision_helpers.py`, Node backend
+ve preferences şeması kontrolleri de geçti. Python/Bash syntax ve belge linkleri
+kontrol edildi. Genişletilen GitHub workflow aynı 183 vakayı çalıştıracak şekilde
+kaynakla kaydedildi; yerel sonuç CI sonucu yerine sunulmaz.
+
+Eski Loader bulgusu yaşam döngüsüyle giderildi: yalnız async/deferred denemeleri
+uyarıyı bitirmedi; nihai lazy/kalıcı PanelSlot sonrasında önceki 12 tekrar ve iki
+skin'in tekrarlı etkileşim testi geçti. Ara refactor sırasında OSD drag kontrolünde
+bir başarısızlık da görüldü; nihai controller ve her skin için taze süreçli OSD
+kontrolüyle son seride geçti. Eski başarısız kayıtlar final yeşil seriye karıştırılmaz.
+
+Gerçek Wayland input/focus, PAM, sonraki SDDM girişi, çalışan Spotify/adblock ve
+Dolphin, fiziksel sensör veya native kaynak upgrade burada çalıştırılmadı.
+[Deneme ve geri dönüş sırası](UPGRADE_2_9.md). Fotoğraflı seçici henüz uygulanmadı.
+
+
 ## Bu checkout'ta çalıştırılabilen statik kontroller
 
 Python dosyaları çalıştırılmadan `ast.parse` ile okunabilir; Bash dosyaları
@@ -431,3 +469,86 @@ bu revizyon için kullanıcı kabulünü bekliyor.
 
 Launcher ve controls/media/osd/switcher Qt önizlemeleri taze süreçlerde yenilendi.
 Native Hyprland oturumu ve fiziksel wallpaper IPC burada çalıştırılmadı.
+
+## 2026-10-18 — Dolphin native geri bildirimi sonrası görsel düzeltme
+
+Kullanıcı: rehber komutları çalışıyor, Dolphin dışındaki uyarlamalar değişmiş.
+Fotoğrafta mavi/siyah palet + beyaz yazı, eski pirinç klasör ikonları görüldü.
+Kaynakta 14 Deltarune SVG'si önceki paketle aynıydı; düzeltildi. Canlı yeni
+Dolphin sonucu henüz alınmadı.
+
+- `python3 checks/test_theme_adapters.py`: 5 test geçti; tema başına kurulan
+  ikon dosyaları, farklılık, ilk yedek, orijinal kullanıcı ikonuna restore dahil.
+- `MCT_QT_TEST_PATH=.../build/qs-qt-check python3 checks/test_app_revision23.py`:
+  üç regresyon grubu geçti; gerçek Qt palette/kontrast, launcher göçü ve restore.
+- Qt 6.10.2 QSvgRenderer: klasör/home/documents/download/music/pictures 16 ve
+  80 px offscreen çizildi ve görsel incelendi. Bu, native Dolphin testi değildir.
+- `git diff --check`: geçti.
+
+Ortak shell/ABI değişmedi; 2.9 yükseltmesi tekrarlanmaz.
+
+## 2026-10-19 — Fotoğraflı seçici / kullanıcı kabulü
+
+19 Ekim 00:24 Europe/Riga kullanıcı Dolphin'in de değiştiğini onaylayıp devam
+istedi. Önceki diğer uyarlamalar/komutlar çalışıyor beyanıyla Deltarune mevcut
+kullanım/görünüm kabulü kaydedildi. Ayrı PAM/sensör alt testleri yapıldığı iddia
+edilmez. Son Dolphin kaynak düzeltmesinin push/PR CI koşuları
+[39141160782](https://github.com/EMOLACRIA/MCT/actions/runs/39141160782) ve
+[39141164701](https://github.com/EMOLACRIA/MCT/actions/runs/39141164701) başarılı.
+
+Yeni repo seçicisi için hazırlama ortamında:
+
+| Komut | Sonuç / kapsam |
+|---|---|
+| `python3 checks/test_theme_core.py` | 33 geçti; mevcut core/transaction korumaları. |
+| `python3 checks/test_theme_picker.py` | 4 geçti; readonly katalog/bozuk paket, check/apply/noop/rollback, failed start recovery ve manuel dosya koruması, bağımsız başlatma. Fake native runtime. |
+| `MCT_QT_TEST_PATH=.../build/qs-qt-check python3 checks/test_theme_picker_ui.py` | 5 geçti; gerçek Qt fotoğraf yükleme/seçim, check ömrü/hata, ikinci geri dönüş onayı, Esc, 1080×760/640×480/480×400 düğme sınırları, kaydırma, pending/bozuk/boş katalog. Helper istekleri yakalanır, uygulanmaz. |
+| `MCT_QMLCACHEGEN=.../qmlcachegen python3 checks/test_shell_syntax.py` | Payload + seçicinin 65 QML dosyası bytecode'a derlendi; eski iki syntax hatası negatif kontrolle yakalandı. |
+| `MCT_QS_SOURCE=.../quickshell-0.3.1 python3 checks/test_shell_api.py` | 152 native property/handler kaynağa uyuyor; seçici FloatingWindow/Process dahil. Gerçek QS instance testi değildir. |
+| `python3 -m py_compile theme_picker.py checks/test_theme_picker.py checks/test_theme_picker_ui.py`; `bash -n theme.sh`; `git diff --check` | Geçti. |
+
+Qt render'ları normal ve küçük boyutta görsel incelendi. İlk koşuda 760 px
+pencerede işlem düğmelerinin kısmen dışarıda kaldığı bulundu; sabit footer'a
+alındı ve fare/input/bounds kontrolleri yeniden geçti. Native Process stdout/
+close sıralaması, ana shell restart'ı sırasında pencerenin kalması ve gerçek
+Wayland tema apply/rollback yeni arayüzle cihazda henüz çalıştırılmadı.
+SDDM/uygulama/PAM işlemi yapılmadı. ABI/kurulu shell dosyaları değişmedi.
+
+## 2026-10-19 01:07 talebi — Wayland tema çizgisi
+
+Kullanıcı ilk seçiciyi yeterince stilize/rahat bulmadı; normal uygulama ve iki
+adımlı geçişi değiştirmeyi istedi. Kabul edilen tasarım: orta yatay çizgi, hover
+fotoğrafı, tek seçim/apply, canlı boşsa Super+G. İlk seçici kabul edilmiş sayılmaz.
+
+Hazırlama ortamı kontrolleri:
+
+- `python3 checks/test_theme_picker.py`: 4 geçti; katalog/bozuk paket, core
+  check/apply/noop/rollback/recovery, warm IPC toggle ve yalnız yoksa daemon
+  başlatma. Gerçek session process seçicisi overlay'i masaüstü shell'i saymıyor.
+- `python3 checks/test_theme_bindings.py`: 5 geçti; geçici config ve fake canlı
+  binds. Readonly check, dolu G/keycode/okunamayan veri, idempotent kurulum/ilk
+  binding yedeği, özel blok koruması, reload hatası geri dönüşü, unbind sonrasındaki
+  yeni kullanıcı bağlarının kalması. Hiç gerçek compositor değişmedi.
+- `MCT_QT_TEST_PATH=.../build/qs-qt-check python3 checks/test_theme_picker_ui.py`:
+  5 geçti; hover seçimi apply değil, click/Enter tek apply, busy duplicate red,
+  hata/aktif kayıt, restore onayı, Esc, 1600×1000/900×600/640×480/480×400 ve
+  %90/%120 yazıda orta çizgi/fotoğraf sınırları; animasyon ve reduceMotion.
+  Asenkron image testinde sabit bekleme yerine gerçek Ready durumuna sınırlı
+  beklenir. D→PT font değişimindeki boş URL uyarısı font kaynağını koruyarak giderildi.
+- `MCT_QMLCACHEGEN=.../qmlcachegen python3 checks/test_shell_syntax.py`: 65 QML
+  geçti. Kullanılmayan PickerButton kalktı; native-only validate.qml eklendi.
+- `MCT_QS_SOURCE=.../quickshell-0.3.1 python3 checks/test_shell_api.py`: 159
+  native property/handler kaynağa uyuyor. Layer/IPC tipi gerçek compositor testi değil.
+- Python compile, `bash -n theme.sh` ve `git diff --check` geçti.
+
+Qt render'ında demo backdrop ile çizgi/hover sunumu incelendi; canlı ekran
+fotoğrafı değildir. Yeni PanelWindow/IPC toggle, exclusive odak, Super+G'nin
+boşluğu ve Lua reload'u hedef oturumda binder tarafından kontrol edilmeli.
+Burada kullanıcının klavyesine bağ eklenmedi; yeni native kabul bekler.
+Ortak payload/ABI değişmedi ve ana restore yedeği değiştirilmedi.
+
+Binding adapter'ı yayımlanmadan önce 0.56.2 `hlBind` birincil kaynağı ayrıca
+okundu: Lua `__lua` + değişken registry ref üretir. İlk taslaktaki `exec`/command
+JSON varsayımı bu nedenle kaldırıldı. Yeni fixture gerçek Lua biçimini ve ref
+42→84 değişimini denetler; 5 test tekrar geçti. Native canlı reload sonucu
+hâlâ kullanıcı oturumundaki bind kurucusuna aittir.

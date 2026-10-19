@@ -14,6 +14,10 @@ import sys
 import tempfile
 
 PACKAGE = Path(__file__).resolve().parent
+sys.path.insert(0,str(PACKAGE.parent))
+adapter_assets=None
+if (PACKAGE.parent/"adapter_assets.py").is_file():
+    import adapter_assets
 STATE = Path(os.environ.get('XDG_STATE_HOME', str(Path.home()/'.local/state'))) / 'terminal-medallion'
 ASSET = Path(os.environ.get('XDG_DATA_HOME', str(Path.home()/'.local/share'))) / 'terminal-medallion/medallion.txt'
 
@@ -141,11 +145,12 @@ def discover(explicit):
 
 def logo(args, source):
     return {'type':'file', 'source':str(source), 'position':'left',
-            'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':'#b5a37c'}}
+            'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':'#00d9ef' if getattr(args,'theme','plague-tale')=='deltarune' else '#b5a37c'}}
 
 
 def source_asset(args):
-    return PACKAGE/('medallion-compact.txt' if getattr(args, 'compact', False) else 'medallion.txt')
+    directory=adapter_assets.source('deltarune','terminal') if adapter_assets and getattr(args,'theme','plague-tale')=='deltarune' else PACKAGE
+    return directory/('medallion-compact.txt' if getattr(args, 'compact', False) else 'medallion.txt')
 
 
 def preflight(args):
@@ -290,8 +295,14 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--config', help='Explicit Fastfetch config used by a custom greeting')
     parser.add_argument('--compact', action='store_true', help='Use the smaller 39-column, 17-row drawing')
+    parser.add_argument('--theme',choices=adapter_assets.THEMES if adapter_assets else ('plague-tale',))
     args = parser.parse_args()
     try:
+        if adapter_assets:
+            choice=args.theme or ("plague-tale" if args.action=="restore" else None)
+            args.theme=adapter_assets.selected(choice)
+        else:
+            args.theme="plague-tale"
         if args.action == 'preview':
             return preview(args)
         if args.check:

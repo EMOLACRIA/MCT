@@ -1,3 +1,12 @@
+# Tema seçimi — 2.9.0
+
+MCT içindeyken `bash preview.sh --theme deltarune` ve
+`bash install.sh --theme deltarune` yeni karakter fountain çizimini kullanır;
+`--theme plague-tale` önceki madalyona döner. `--compact` desteklenir. Bilgi
+modülleri/yorumlar ve ilk restore yedeği aynı kurucuyla korunur. Gerçek CP437
+byte kopyaları Deltarune adapters/terminal klasöründedir. Ayrı eski madalyon
+paketi MCT helper'ı olmadan da Plague Tale varsayılanıyla çalışır.
+
 # Terminal madalyonu — 1.3 CP437
 
 Ağaç, sağ üstte güneş ve sol altta ay; çevresinde çift yuvarlak çerçeve. Çizim CP437'nin `░`, `▒`, `▓`, `█`, `│`, `─`, `·` ve `°` karakterleriyle düzenlendi. Varsayılan çizim **61 sütun × 29 satır**: ince dal çatalları, kabuk çizgileri, yayılan kökler ve güneş/ay motifleri. Soluk pirinç renkli gerçek karakter çizimidir. Terminalde PNG veya görüntü protokolü kullanılmaz.

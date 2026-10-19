@@ -14,6 +14,7 @@ uygulanır. Yeni tema kabulünde her satır denetlenir.
 | Super+M | Beş seçenekli oturum menüsü; arama alanı yok. Tekrar basınca kapanır. |
 | Super+B | Bildirim geçmişi ve DND; tema değiştirme kısayolu olarak yeniden kullanılmaz. |
 | Super+T | Donanım paneli; launcher açmaz. |
+| Super+G | 19 Ekim: canlı bağ boşsa tema çizgisini aç/kapat. Dolu kişisel bağ değiştirilmez; ayrı koşullu kurulum gerekir. |
 | Super+L | Güvenli kilit; medya alanı mevcut seçili oynatıcıya bağlı. |
 | Alt+Tab / Alt+Shift+Tab | Tüm çalışma alanlarından ileri/geri pencere seçimi; alan numarası görünür. **2.3.0 normal kullanım kullanıcı onayı.** |
 | Ses/parlaklık tuşları | Gerçek cihazı değiştirir, ölçülen değeri OSD'de gösterir; Dunst bildirimine dönmez. |
@@ -121,14 +122,16 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
   gösterir; sağ tık/orta tık/tekerlek uygulamanın kendi eylemi olarak korunur.
   Yerleşim kontrol kapsamı ve çok dar ekran sınırı `VALIDATION.md` içindedir.
 - Odaklı ekran, mantıksal koordinatlar ve ekran sınırına sığma ortak davranıştır.
-- Tema paketinde iş komutu veya yeni global kısayol tanımlanmaz. Bu hedef mimaridir;
-  mevcut dosyaların henüz bu kurala tamamen taşındığı varsayılmaz.
+- Tema paketinde iş komutu veya yeni global kısayol tanımlanmaz. 2.9.0'da
+  iki paketin işlevli ui wrapper'ları ortak surfaces şablonlarını kullanır;
+  kaynak testi view'lara olay/komut kopyalanmasını reddeder.
 - Kullanıcı ayarı, tema varsayılanından ayrıdır. Tema değişiminde kısayollar,
   uygulama tercihleri ve erişilebilirlik tercihleri sıfırlanmaz.
 - Başarısız tema uygulaması bir önceki geçerli duruma döner. Bu gelecek M5 kabulüdür.
 - M5 tema seçimi her temanın gerçek ekran görüntüsünü önizleme kartında gösterir.
-  Bu gereksinim 17 Ekim kullanıcı onayıdır; henüz uygulanmadı. Kart dizilimi ve
-  menünün açıldığı yer kullanıcıyla ayrıca seçilir.
+  19 Ekim ilk seçici `theme.sh menu` ile ayrı pencerede uygulanmıştır; iki kart,
+  büyük görüntü, aktif sürüm, uyumluluk kontrolü ve uygulama/geri dönüş sunar.
+  Kalıcı menü yeri/global kısayol atanmaz; kullanıcıyla ayrıca seçilir.
 
 ## Tema çekirdeği — 2.7.0 uygulanmış sınır
 
@@ -163,3 +166,42 @@ bu, bir temanın özelliği unuttuğu anlamına gelmez.
 - 18 Ekim sürüm gate düzeltmesi: kurucu ve tema geçişi aynı minimum QuickShell
   0.3.1 kuralını kullanır. Kaynak referans sürümü tam eşitlik kilidi değildir;
   aday QML native kontrolden geçmeden hiçbir tema dosyası uygulanmaz.
+
+## 2.9.0 tamamlama sınırı
+
+İki tema aynı 17 etkileşim şablonunu kullanır. Panel başına tek lazy instance,
+close/reopen'da temiz güç/reset onayı, eski panelin focus timer'ını durdurma
+sözleşmeye dahildir. Ortak davranış düzeltmesi kaynak update ile iki temaya
+birden gider. Farklı görünüm property/delegate/çerçeve/font/layout ile sağlanır.
+
+Hyprlock parola/saat layout'u da paket işlemindedir; auth/general ortak kalır.
+Deltarune dış adaptörleri hazırdır, ayrı --theme kurulumu ister. SDDM sudo altında
+aktif masaüstü kullanıcısını tahmin etmez. Shell apply, Spotify/Dolphin/SDDM veya
+terminal süsünü otomatik yeniden kurmuş gibi raporlamaz. Yeni native kabul açık.
+
+## Fotoğraflı seçici — 19 Ekim ilk arayüz
+
+- Açılış/katalog/resmi büyütmek salt okunurdur; gerçek paket PNG'si kullanılır.
+- Geçersiz paket açık hata ile pasif kalır, diğer sağlam kartları gizlemez.
+- Başka seçim/yenileme/hata eski check onayını kaldırır. İşlem sırasında ikinci
+  eylem başlatılmaz. Core apply kendi kontrollerini kilit içinde tekrar yapar.
+- Previous theme ikinci onay ister; Esc iptal eder. Bu, source update veya ilk
+  desktop restore değildir. Hata core'un gerçek mesajını ve yenilenmiş aktif
+  durumu gösterir; başarı gibi sunulmaz. Pending journal varken işlem engellenir.
+- Dar pencerede kartlar kayar, işlem düğmeleri sabit alanda kalır. Sol/sağ seçimi,
+  Tab/Enter/Space düğmeleri, Esc büyük resmi/geri dönüş onayını/pencereyi kapatır.
+- Masaüstü/lock/Kitty değişir. Dolphin/Spotify/SDDM/terminal süsü ayrı kuruculardır;
+  arayüz bunların otomatik geçtiğini iddia etmez. Tercihler/kısayollar korunur.
+
+## 19 Ekim 01:07 seçici revizyonu
+
+Önceki ayrı pencere/check düğmeli arayüzün yerini yatay, ekranın orta çizgisindeki
+Wayland rail alır. Hover yalnız fotoğrafı/boyutu değiştirir; click veya Enter aynı
+Engine.apply'dan kontrollü tek işlem başlatır. Bozuk paket, pending journal,
+config/ABI/elle dosya değişikliği korumaları atlanmaz. İşlem sırasında ikinci
+apply/hover seçimi yoktur. Başarı kısa geri bildirimle gizlenir; hata kalır.
+Esc/dışarı tıklama/Super+G gizlemek helper'ı öldürmez. Normal uygulama penceresi
+ve ayrı manuel check adımı yoktur. Sol/sağ/Tab gezinir, Enter/Space seçer.
+Önceki tema restore'un ikinci onayı korunur. FontScale/reduceMotion okunur.
+Super+G canlı listedeki modmask/key/keycode ve sahipli blokla kontrol edilir;
+bulunmayan/bozuk veri “boş” kabul edilmez. Kişisel kısayol üzerine yazılmaz.

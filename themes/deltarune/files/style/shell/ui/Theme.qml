@@ -6,6 +6,7 @@ QtObject {
     readonly property bool partyStripEnabled:false
     readonly property real fontScale:preferences.fontScale
     readonly property bool reduceMotion:preferences.reduceMotion
+    function applicationSymbol(name) {return /kitty|terminal|alacritty/i.test(name) ? "terminal" : /dolphin|files/i.test(name) ? "folder" : /browser|firefox|zen/i.test(name) ? "browser" : /music|spotify/i.test(name) ? "music" : "windows";}
     function fontSize(pixels) {return Math.max(9,Math.round(pixels*fontScale));}
     function duration(milliseconds) {return reduceMotion ? 0 : milliseconds;}
     readonly property color background:Qt.rgba(0,0.012,0.025,preferences.surfaceOpacity)

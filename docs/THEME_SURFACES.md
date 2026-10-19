@@ -1,5 +1,10 @@
 # Görsel yüzey haritası
 
+18 Ekim 2026 güncellemesi: **2.9.0 mevcut kaynak** için
+[ortak şablon kararı](decisions/0014-shared-interaction-templates.md) ve
+[yükseltme rehberi](UPGRADE_2_9.md) esas alınır. İşlevli ui view'ları artık ortak
+surfaces şablonlarının skin wrapper'larıdır; aşağıdaki 2.6.1 haritası tarihseldir.
+
 2026-10-17 · **2.6.1 kaynak durumu**. Bu harita mevcut Plague Tale sunumunu
 tanımlar. Yeni bir tema paketi yükleyicisi veya tema seçici uygulanmış değildir.
 İkinci tema M4 sonrasında başlar. İşlevlerin kaynağı [özellik sözleşmesidir](FEATURE_CONTRACT.md).

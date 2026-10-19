@@ -61,3 +61,18 @@ birebir saklandı. SHA256: `bd8a46c7f008a18b45081c8f7506727ab4a803550399e029a3b5
 Üç runtime PNG kopyası Qt ile format dönüştürüldü; decode edilmiş RGBA pikselleri
 kaynağa eşit. Ek upscale, yeniden çizim veya yeniden JPEG sıkıştırması yapılmadı.
 Preview PNG'leri yeni wallpaper ve şeritsiz düzenle yeniden Qt'den render edildi.
+
+### Deltarune 0.2.0 adaptör varlıkları
+
+SDDM wallpaper aynı kullanıcı PNG'sinin birebir kopyasıdır; Departure Mono ve
+OFL metni greeter'in kendi sürecinde fontu kaydetmesi için değişmeden kopyalandı.
+Yeni cyan kesik köşe SVG'leri ve CP437/UTF-8 fountain terminal çizimi bu işte
+kod/metin olarak yazıldı. Deltarune Dolphin/Spotify palet/CSS ve klasör ikonları
+mevcut proje kaynaklarından uyarlanır; harici tema kodu alınmadı. LoginSkin
+sunum verisidir; Main.qml ortak giriş kodudur. previews/deltarune/login.png ve
+previews/greeters/ görselleri gerçek Qt sahneleri, sahte SDDM modelleridir; PAM
+girişi veya gerçek kullanıcı oturumu ekran görüntüsü diye sunulmaz.
+
+18 Ekim Dolphin düzeltmesi: Deltarune klasör/yer SVG'lerinin 14'ü projedeki
+mevcut çizimlerden camgöbeği basamaklı dış hatlara düzenlendi. Yeni harici ikon
+paketi alınmadı; Breeze uygulama/eylem ikon mirası korundu.

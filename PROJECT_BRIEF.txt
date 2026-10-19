@@ -31,15 +31,16 @@ DEĞİŞMEZ ÜRÜN KARARLARI
 7. Okunabilirlik süsten önce gelir. Dolphin'in normal ve seçili yazıları beyazdır.
 8. Açılan paneller kısayola tekrar basılınca kapanır; üst üste kopyalar açılmaz.
 9. Kullanıcının monitör, ölçek, GPU, VRR ve kişisel kısayol ayarları korunur.
-10. Tema menüsünün konumu açık karardır; kullanıcı düşünüp seçecek. Preferences
-    veya başka bir yüzeye yerleştirme kararı alınmadı. M4 öncesi yalnız tema
-    değiştirme yaklaşımları araştırılır; seçici arayüzü uygulanmaz.
+10. 19 Ekim 01:07: tema seçimi masaüstü üstünde ortadaki yatay çizgi boyunca
+    sıralanır; hover genişleyip küçük gerçek fotoğraf gösterir. Seçmek tek adımda
+    arka plan kontrolü ve apply başlatır. Super+G yalnız canlı bağlarda boşsa
+    eklenir; dolu kısayol değiştirilmez. Önceki konum-açık kararı bu taleple değişti.
 11. 17 Ekim: kullanıcı ortak davranış + ayrı görsel paket + uygulama adaptörleri
     yaklaşımını onayladı. Tema seçiminde her temayı temsil eden gerçek ekran
     görüntülü önizleme kartları bulunacak. Kartların dizilimi ve menünün açıldığı
     yer açık. 2.7.0 paket şeması/CLI çekirdeği docs/THEME_PACKAGES.md içindedir.
 
-SON KAPANIŞ / SIRADAKİ İŞ (2026-10-18)
+SON KAPANIŞ / SIRADAKİ İŞ (2026-10-19)
 Kullanıcı son canlı kontrol maddesinin tamamlandığını, gün boyu full kullandığını
 ve güzel çalıştığını açıkça onayladı. Bu, Plague Tale ürün/kullanım kapanışıdır;
 ayrı ayrı ölçülmüş tüm donanım logları veya genel yayın lisansı onayı değildir.
@@ -50,6 +51,16 @@ images_upscaled.jpeg (2048×1151) kullanılır. Siyah/camgöbeği piksel çerçe
 ve karakter portreleri korunur. Kullanıcı alt parti şeridini kaldırdı; kontrol
 menüsü sağda, arama önceki sol konumunda açılır.
 Kısayollar ve ortak özellikler korunur. Tema menüsünün yeri hâlâ seçilmedi.
+18 Ekim 2.9.0: kullanıcı eksiklerin kapatılmasını başlattı. Ortak etkileşim
+şablonları, cache edilen panel yaşam döngüsü ve Deltarune lock/SDDM/uygulama/
+terminal adaptörleri uygulandı; yeni native kabulü bekliyor. UPGRADE_2_9.md
+eski aktif temayı eski kaynakla geri almayı ve ayrı kurucuların sınırını açıklar.
+
+19 Ekim 00:24 Europe/Riga: kullanıcı son Dolphin görünümünü de onayladı ve
+ilerlemeyi istedi. Önceki çalışan komutlar/diğer uyarlamalar beyanıyla Deltarune
+mevcut görünüm/kullanım kapanışı kabul edildi. Ayrı PAM/sensör ölçümleri uydurulmaz.
+Fotoğraflı seçici repo komutu (theme.sh menu) olarak uygulanır; bar/ayar konumu
+ve yeni global kısayol kararı hâlâ yoktur. Yeni seçicinin canlı denemesi ayrıdır.
 
 KABUL EDİLEN YAKIN ÖZELLİKLER
 - Alt+Tab: bütün çalışma alanlarındaki açık pencereleri gösteren seçici.
@@ -96,3 +107,8 @@ Sadece önizlemenin güzel görünmesi, dosya testlerinin geçmesi veya özellik
 kodunun bulunması yeterli değil. Canlı oturum kontrolleri ve kullanıcının
 son görsel onayı kaydedilir. Açık Spotify/Dolphin sorunları kapanmadan ilk
 Plague Tale teması tamamlandı olarak işaretlenmez.
+
+19 Ekim 01:07 revizyonu: ayrı uygulama/grid ve check→apply UI kullanıcı tarafından
+rahat/stilize bulunmadı. Kalıcı Wayland rail overlay, hover ve tek seçim uygulanır.
+Repo aracı ana shell restart'ından bağımsız kalır, normal uygulama penceresi açmaz.
+Ayrı uygulama/SDDM adaptör sınırı aynı kalır; her yüzey otomatik değişiyor denmez.

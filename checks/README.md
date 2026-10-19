@@ -1,3 +1,19 @@
+## Ortak davranış ve iki tema — 2.9.0
+
+`theme-core.yml` 183 unittest vakası çalıştırır: 33 core, 15 preferences, 12
+file-manager, 5 theme-adapter, 3 lock layout, 10 Spotify, 6 terminal, 4 SDDM
+filesystem; 42 Deltarune, 2 shared-surface, 1 iki-skin OSD sürükleme, 10 iki-skin
+SDDM; Plague Tale'de 10 settings, 12 shell, 7 calculator, 11 switcher. Qt için
+MCT_QT_TEST_PATH desteklenir. Eski tüm checks dosyalarının CI'a taşındığı iddia edilmez.
+
+Yeni komutlar: `python3 checks/test_shared_surfaces.py`,
+`python3 checks/test_osd_themes.py`, `python3 checks/test_theme_adapters.py`,
+`python3 checks/test_lock_layout.py`, `python3 checks/test_greeter_themes.py`.
+Hepsi geçici sahne/dizin/mock kullanır; installer, gerçek giriş veya cihaz
+kısayolu çalıştırmaz. Ortak controller şablonları iki skin'e aynı davranışı verir;
+cache testi eski uyarıyı gizlemez, Qt log'unda hiçbir uyarı kabul etmez.
+Ayrıntılı sonuç/sınır: [VALIDATION](../docs/VALIDATION.md).
+
 ## Son cila (2.6.2)
 
 ```bash
@@ -198,3 +214,24 @@ köküne yönlendirir: 42 Qt testi. 0.1.1 revizyon kontrolleri sağ kontrol/sol 
 alt şeridin yokluğu, font ve wallpaper decode piksel eşitliğini denetler. Render komutu her yüzey
 için taze süreçte gerçek QML ekran görüntüsü üretir; native Quickshell çalıştırmaz.
 MCT_QT_TEST_PATH desteklenir. Core suite sürüm gate kontrolleriyle 31 stdlib/fake-runtime testidir.
+
+## Fotoğraflı seçici — 19 Ekim
+
+```bash
+python3 checks/test_theme_picker.py
+python3 checks/test_theme_picker_ui.py
+```
+
+4 stdlib/fake-runtime + 5 gerçek Qt input/render testi. Qt komutu önceki suite'ler
+gibi PySide6-Essentials / MCT_QT_TEST_PATH kullanır. Check/apply/noop/restore,
+başarısız start'ta core recovery, kullanıcı düzenlemesi, bozuk preview, readonly
+katalog; seçim/check ömrü, aktif fotoğraflar, iki aşamalı geri dönüş, Esc ve dar
+pencere denetlenir. Native Wayland/Process çalıştırmaz. Source syntax kontrolü
+artık bağımsız seçicinin beş QML dosyasını da bytecode'a derler.
+
+19 Ekim 01:07 rail revizyonu: ilk picker input testleri hover/tek click/Enter,
+animasyon/reduce-motion, orta çizgi ve yatay sığma için güncellendi (5 Qt).
+`python3 checks/test_theme_bindings.py` 5 geçici config/live-bind fixture testi
+ekler: boşluk kontrolü, Super+G/keycode çakışması, idempotence/orijinal yedek,
+kullanıcı düzenlemesi, reload rollback ve unbind'da sonradan eklenen bağın kalması.
+Native kurulum veya gerçek kısayol tetiklemez. 4 bridge/core testi de korunur.

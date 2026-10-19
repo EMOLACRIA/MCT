@@ -2,8 +2,8 @@
   "schema": 1,
   "id": "plague-tale",
   "name": "Plague Tale",
-  "version": "1.0.1",
-  "shellAbi": "mct-shell-2.8",
+  "version": "2.9.0",
+  "shellAbi": "mct-shell-2.9",
   "preview": {
     "source": "preview.png",
     "gitBlob": "685a63cfb8a997865927ddef3857ba66c88cedfe"
@@ -99,17 +99,17 @@
     {
       "source": "files/style/shell/ui/Bar.qml",
       "target": "style/shell/ui/Bar.qml",
-      "gitBlob": "2b2d8776d4176adce653b317271da7ce1b9ac0e7"
+      "gitBlob": "bbb20a48c79bf0b1417f5740cd11485b5c69bef8"
     },
     {
       "source": "files/style/shell/ui/Controls.qml",
       "target": "style/shell/ui/Controls.qml",
-      "gitBlob": "2fc540a9aeee26a27b48dae216b6586bea512cd1"
+      "gitBlob": "722e10e03bd910de1e18f4cecec2c42c8961d3fb"
     },
     {
       "source": "files/style/shell/ui/Feedback.qml",
       "target": "style/shell/ui/Feedback.qml",
-      "gitBlob": "e878fdb3e23df314699634d60ce7062ab1c807ba"
+      "gitBlob": "d37f707f46999f3aedcaad7681dee5a40b93367f"
     },
     {
       "source": "files/style/shell/ui/Glyph.qml",
@@ -119,7 +119,7 @@
     {
       "source": "files/style/shell/ui/Hardware.qml",
       "target": "style/shell/ui/Hardware.qml",
-      "gitBlob": "c4d77452f1d2b02da23e31058ecfa8ba5a6bae0a"
+      "gitBlob": "199102b8a514601da6e6c8f847c28dbb1097f721"
     },
     {
       "source": "files/style/shell/ui/HintBubble.qml",
@@ -129,27 +129,27 @@
     {
       "source": "files/style/shell/ui/Launcher.qml",
       "target": "style/shell/ui/Launcher.qml",
-      "gitBlob": "d90df6ebd3bba155a79e6e824efe24e5ab7264e5"
+      "gitBlob": "23b33de03b7909d429e53522bcb179707cca3d32"
     },
     {
       "source": "files/style/shell/ui/LevelControl.qml",
       "target": "style/shell/ui/LevelControl.qml",
-      "gitBlob": "d5f7893aef745a0c877ad575d5da72017b38fd2c"
+      "gitBlob": "60f38feda6233a7ec8134d067c15dea2c44bf2a4"
     },
     {
       "source": "files/style/shell/ui/Media.qml",
       "target": "style/shell/ui/Media.qml",
-      "gitBlob": "afb269bf697bf3722060eb135843005337a85cbe"
+      "gitBlob": "1c7152156c2afc4ab226d4b20bac14fbf1effe64"
     },
     {
       "source": "files/style/shell/ui/NotificationActions.qml",
       "target": "style/shell/ui/NotificationActions.qml",
-      "gitBlob": "117d6e852917d6ec9ba848379cf9b5faae803ae1"
+      "gitBlob": "4abade7ac18b52c29055610afaadccc8d647c137"
     },
     {
       "source": "files/style/shell/ui/Notifications.qml",
       "target": "style/shell/ui/Notifications.qml",
-      "gitBlob": "bc909054f8e39d3caf2c3066d037e69c046b575d"
+      "gitBlob": "c9d03ef88ef0ace1f13193d826b445193a1bc4f1"
     },
     {
       "source": "files/style/shell/ui/OrnamentFrame.qml",
@@ -159,7 +159,7 @@
     {
       "source": "files/style/shell/ui/Overlay.qml",
       "target": "style/shell/ui/Overlay.qml",
-      "gitBlob": "01c067d407a80d4bc0c2b8fd4d5de30ed4f4abd0"
+      "gitBlob": "50c3d41fa10b69dd0dce4ce89c426fd9ea8d7936"
     },
     {
       "source": "files/style/shell/ui/PanelHeader.qml",
@@ -174,52 +174,57 @@
     {
       "source": "files/style/shell/ui/Power.qml",
       "target": "style/shell/ui/Power.qml",
-      "gitBlob": "b90a23666ea55d8666c113ae1ddbbd58fbe7f0cb"
+      "gitBlob": "d540306547bb46dce25f3424bceaf411b5e4c96b"
     },
     {
       "source": "files/style/shell/ui/PreferenceChoice.qml",
       "target": "style/shell/ui/PreferenceChoice.qml",
-      "gitBlob": "87c3bef53b92228c18a917dfcedc75d7fa213ec1"
+      "gitBlob": "3cf951fff63fa38e840206d9de81d03c86d30708"
     },
     {
       "source": "files/style/shell/ui/PreferenceSlider.qml",
       "target": "style/shell/ui/PreferenceSlider.qml",
-      "gitBlob": "dadb02681dbfaa911ae7122e4df7ef7f6fae412d"
+      "gitBlob": "5be5344d57291a266aa2552373108422e6f3fa88"
     },
     {
       "source": "files/style/shell/ui/Settings.qml",
       "target": "style/shell/ui/Settings.qml",
-      "gitBlob": "cc0a774a6f106d98e19c29c5de939caffbc80da0"
+      "gitBlob": "8bce1f17b4f390d1e61b7536e6991995d6b6d71e"
     },
     {
       "source": "files/style/shell/ui/SurfaceLayout.qml",
       "target": "style/shell/ui/SurfaceLayout.qml",
-      "gitBlob": "22d8a42a726bcc3ef9e00f0c0c95a8f24580cb91"
+      "gitBlob": "6ca33da213e33467d7d977868b021c5eef7f311b"
     },
     {
       "source": "files/style/shell/ui/Theme.qml",
       "target": "style/shell/ui/Theme.qml",
-      "gitBlob": "fea72bae9bc02f85a8702b4ddc7821222bb8cd24"
+      "gitBlob": "af8bdb139bb1834f28cd6bb3e6cb8c1e77b767f6"
     },
     {
       "source": "files/style/shell/ui/Toast.qml",
       "target": "style/shell/ui/Toast.qml",
-      "gitBlob": "1ad78efee0c6e701d9dc9f4a09ef978c83d9c746"
+      "gitBlob": "89946945062b7a2634f5f57528b17a6c96bf5150"
     },
     {
       "source": "files/style/shell/ui/ToastStack.qml",
       "target": "style/shell/ui/ToastStack.qml",
-      "gitBlob": "6879be6977c041886badafdc67634ee7c3a738b2"
+      "gitBlob": "06db916f1608a3eff7f2a800fefef981cd6fc156"
     },
     {
       "source": "files/style/shell/ui/WindowSwitcher.qml",
       "target": "style/shell/ui/WindowSwitcher.qml",
-      "gitBlob": "045b9f3c6639a9f7ba7083af647b859aad8e0d0c"
+      "gitBlob": "e0b9b9bd0bc78a0322c086661552b236ef30a089"
     },
     {
       "source": "files/style/wallpaper.png",
       "target": "style/wallpaper.png",
       "gitBlob": "86a682e768ba308e6fb73cf2ad8afe99c2bfca95"
+    },
+    {
+      "source": "files/style/hyprlock/layout.conf",
+      "target": "style/hyprlock/layout.conf",
+      "gitBlob": "0107eeef35bb48a8945342f321509be7bc120002"
     }
   ],
   "adapters": {

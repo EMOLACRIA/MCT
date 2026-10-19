@@ -2,16 +2,34 @@ name: Theme core checks
 
 on:
   push:
-    branches: [feature/theme-core, feature/deltarune]
+    branches: [feature/theme-core, feature/deltarune, fix/shared-theme-behavior]
     paths:
       - theme_core.py
       - checks/test_theme_core.py
       - checks/test_deltarune.py
       - theme_preview.py
+      - theme_picker.py
+      - theme_bindings.py
+      - checks/test_theme_bindings.py
+      - theme-picker/**
+      - theme.sh
+      - checks/test_theme_picker*.py
       - preview.sh
       - payload/style/shell/**
       - .github/workflows/theme-core.yml
       - update.py
+      - adapter_assets.py
+      - apps/**
+      - sddm/**
+      - terminal-medallion/**
+      - payload/hypr/hyprlock.conf
+      - payload/style/hyprlock/**
+      - legacy-hyprlock.conf
+      - checks/test_shared_surfaces.py
+      - checks/test_osd_themes.py
+      - checks/test_theme_adapters.py
+      - checks/test_lock_layout.py
+      - checks/test_greeter_themes.py
       - themes/**
   pull_request:
     paths:
@@ -19,10 +37,28 @@ on:
       - checks/test_theme_core.py
       - checks/test_deltarune.py
       - theme_preview.py
+      - theme_picker.py
+      - theme_bindings.py
+      - checks/test_theme_bindings.py
+      - theme-picker/**
+      - theme.sh
+      - checks/test_theme_picker*.py
       - preview.sh
       - payload/style/shell/**
       - .github/workflows/theme-core.yml
       - update.py
+      - adapter_assets.py
+      - apps/**
+      - sddm/**
+      - terminal-medallion/**
+      - payload/hypr/hyprlock.conf
+      - payload/style/hyprlock/**
+      - legacy-hyprlock.conf
+      - checks/test_shared_surfaces.py
+      - checks/test_osd_themes.py
+      - checks/test_theme_adapters.py
+      - checks/test_lock_layout.py
+      - checks/test_greeter_themes.py
       - themes/**
 
 permissions:
@@ -48,6 +84,13 @@ jobs:
       - name: Theme core checks
         run: |
           python3 checks/test_theme_core.py
+          python3 checks/test_theme_picker.py
+          python3 checks/test_theme_bindings.py
+          python3 checks/test_theme_adapters.py
+          python3 checks/test_lock_layout.py
+          python3 checks/test_spotify_install.py
+          python3 checks/test_terminal_medallion.py
+          python3 checks/test_sddm_install.py
       - name: Deltarune shared interaction contract
         env:
           MCT_QT_TEST_PATH: ${{ runner.temp }}/mct-qt
@@ -56,7 +99,17 @@ jobs:
           sudo apt-get install -y --no-install-recommends libegl1 libopengl0 libgl1 libxkbcommon0
           python3 -m pip install --target "$MCT_QT_TEST_PATH" PySide6-Essentials==6.10.2
           python3 checks/test_deltarune.py
+          python3 checks/test_theme_picker_ui.py
+          python3 checks/test_shared_surfaces.py
+          python3 checks/test_osd_themes.py
+          python3 checks/test_greeter_themes.py
+          python3 checks/test_preferences_ui.py
+          python3 checks/test_shell_ui.py
+          python3 checks/test_launcher_calculator.py
+          python3 checks/test_window_switcher.py
+          python3 checks/test_shell_imports.py
+          MCT_QMLCACHEGEN="$MCT_QT_TEST_PATH/PySide6/Qt/libexec/qmlcachegen" python3 checks/test_shell_syntax.py
       - name: Source syntax
         run: |
-          python3 -m py_compile theme_core.py theme_preview.py update.py checks/test_theme_core.py checks/test_deltarune.py
+          python3 -m py_compile theme_core.py theme_picker.py theme_bindings.py theme_preview.py adapter_assets.py update.py apps/manage.py sddm/manage.py sddm/prepare.py terminal-medallion/terminal.py checks/test_theme_core.py checks/test_deltarune.py checks/test_shared_surfaces.py checks/test_osd_themes.py checks/test_theme_adapters.py checks/test_greeter_themes.py checks/test_lock_layout.py
           bash -n theme.sh preview.sh

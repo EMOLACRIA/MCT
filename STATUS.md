@@ -1,8 +1,110 @@
 # Güncel durum
 
-Son inceleme: **2026-10-18**. Kaynak taban: **2.8.0 / Deltarune 0.1.1**.
-Aşama: **Plague Tale ürün/kullanım kapanışı onaylandı; Deltarune ilk paket uygulandı / hedef oturum kabulü bekliyor**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
+Son inceleme: **2026-10-19**. Kaynak taban: **2.9.0 / Deltarune 0.2.0**.
+Aşama: **Plague Tale ve Deltarune mevcut görünüm/kullanım onaylı; tema çizgisi görünüm/normal kullanım kullanıcı onaylı**. Genel yayın/lisans ve geniş dağıtım matrisi ayrı açık iş olarak kalır.
 Bu kayıt uygulamaları kullanıcının cihazında çalıştırmış gibi yorumlanamaz.
+
+## 19 Ekim 13:22 — Tema çizgisi kullanıcı onayı
+
+Europe/Riga 13:22 kullanıcı: “oo bu çok güzel olmuş güzel de çalışıyor.”
+Tema çizgisinin görünüm/normal kullanım kabulü kaydedildi. Son paylaşılan kaynak
+`a80d08e0fa80f3069f4e4c37fb49570b77ea568f`; cihazdaki SHA ayrıca raporlanmadı.
+Bu onay aynı arayüzün tekrar normal kullanım kabulünü istememek içindir; tek tek
+reboot/harici ekran/felaket kurtarma senaryoları ölçülmüş gibi işaretlenmez.
+Önceki yeni seçici-native-bekliyor notları bu beyanla güncellenmiştir.
+
+Güncel kısa kalanlar [CURRENT_BACKLOG](docs/CURRENT_BACKLOG.md) içindedir. Şu an
+kullanıcı tarafından bildirilmiş açık günlük kullanım hatası yok. Harici uygulama
+uyarlamalarının otomatik tema geçişine bağlanması henüz uygulanmamış bir kapsam
+seçeneğidir; bu durum eski kurucuların bozuk olduğu anlamına gelmez. Son onay
+sonrası bu işte yeni özellik veya merge yapılmadı; yalnız kayıtlar güncellendi.
+
+## 19 Ekim 01:07 — Tema çizgisi ve koşullu Super+G
+
+Kullanıcı önceki ayrı uygulama/grid ve check→apply akışını rahat/stilize bulmadı.
+Yeni talep: ortada çizgi, sıralı temalar, hover ile genişleyen fotoğraf, tek seçimle
+arka planda kontrol/apply; Super+G yalnız boşsa. Bu yeni talep önceki açık konum
+kararının yerini alır. Eski arayüzün beğenildiği veya son kabulü olduğu söylenmez.
+
+`theme.sh menu` artık normal pencere değil, odaklı ekranda keyboard-exclusive
+Wayland overlay açar. Warm katman `themes.toggle` IPC ile anında toggle edilir;
+ana masaüstü shell restart'ında worker'ın kesilmemesi için ayrı QS yaşam döngüsü
+korunur. UI'da FloatingWindow veya görünür ikinci uygulama yoktur. Başarılı geçiş
+650 ms sonra kapanır; Esc/dışarı tıklama/Super+G gizler, devam eden işlemi kesmez.
+Fotoğraf büyümesi hover'dır; click/Enter mevcut Engine.apply içindeki zorunlu
+kontrolleri bir kez yapar, ikinci check düğmesi yoktur. Hata gerçek aktif temayı
+korur ve panelde kalır. Kullanıcının fontScale/reduceMotion tercihleri okunur.
+
+`theme.sh bind --check` canlı `hyprctl -j binds`, temiz config ve yeni overlay QML
+compile kontrolü yapar. `theme.sh bind` ortak kilit altında tekrar kontrol eder,
+yalnız sahipli Super+G bloğunu ekler ve reload sonucunu doğrular. Dolu/dinamik
+keycode/bozuk JSON veya kişisel block değişikliği korunur. İlk masaüstü yedeği
+oynamaz; ayrı binding yedeği tutulur. `theme.sh unbind` yalnız aynı bloğu kaldırır.
+Yeni root/ABI/source update gerekmez. [Kullanım](docs/THEME_PICKER.md).
+Native yeni layer/focus/Super+G sonucu kullanıcı cihazında hâlâ denenmelidir.
+
+## 19 Ekim — Deltarune onayı ve fotoğraflı tema seçici
+
+00:24 Europe/Riga kullanıcı: “Aynen dolphin de değişti. Devam edebiliriz.”
+Önceki komutlar/diğer uyarlamalar çalışıyor beyanıyla birlikte son bilinen
+Dolphin görsel sorunu kapanmıştır. Deltarune mevcut görünüm/kullanım onayı
+alındı; her PAM/sensör/harici ekran alt testi ayrıca ölçülmüş sayılmaz.
+Plague Tale'in önceki onayı korunur. Aşağıdaki bekleyen kabul kayıtları tarihsel.
+
+`bash theme.sh menu` ayrı QuickShell penceresinde gerçek paket fotoğraflarını,
+aktif sürümü, büyütülmüş resmi, kontrol/uygula ve onaylı önceki temaya dönüşü sunar.
+Yerleşim/bar düğmesi/global kısayol seçilmedi. Pencere ana shell'in dosyalarını
+ithal etmez ve durdurulan shell süreci değildir; görsel işlem mevcut core'un
+snapshot/kilit/journal/geri dönüşünü kullanır. Sadece katalog açmak kurulum yapmaz.
+Dolphin/Spotify/SDDM/terminal süsü ayrı kurucular olarak görünür biçimde açıklanır.
+
+Seçici repo aracıdır: kurulu 2.9.0 üstüne git pull yeterli; update.sh/tema rollback
+ve adaptörlerin tekrar kurulması gerekmez. [Kullanım](docs/THEME_PICKER.md).
+Hazırlama kontrolü ve native sınırı [VALIDATION](docs/VALIDATION.md) içinde.
+Yeni seçicinin hedef Wayland oturumunda denenmesi beklenir.
+
+## 18 Ekim — 2.9 kullanıcı denemesi / Dolphin ikon düzeltmesi
+
+Kullanıcı yükseltme rehberindeki komutların çalıştığını ve Dolphin dışındaki
+uyarlamaların değiştiğini bildirdi. Bu, yeni kullanım geri bildirimidir; ayrı
+ölçülmüş bütün PAM/donanım senaryolarının testi sayılmaz. Paylaşılan Dolphin
+fotoğrafında koyu mavi zemin/beyaz yazılar uygulanmış, klasörler eski pirinç
+rengindedir. Kaynakta Deltarune SVG klasörlerinin Plague Tale ile birebir aynı
+olduğu doğrulandı; önceki adaptör tamamlama iddiasının bu kısmı hatalıydı.
+
+14 klasör/yer SVG'si camgöbeği basamaklı biçime uyarlandı. Header/Complementary
+zeminindeki kalan eski zeytin tonları giderildi. Ortak kurucu, beyaz yazılar,
+başlatma yolları ve ilk yedek değişmedi. Var olan adaptör testi iki temada kurulan
+ikonların kaynakla eşitliğini, farklılığını ve kullanıcının orijinal ikonunun
+restore edilmesini de denetler. Qt render'ında 16/80 px örnekler incelendi.
+Hedef cihazda yeni Dolphin görünümü onayı bekleniyor. Bu düzeltme için kaynak
+update/tema rollback gerekmez; yalnız Dolphin adaptörü tekrar uygulanır.
+
+## 2.9.0 — Ortak etkileşim ve Deltarune tamamlama
+
+18 Ekim kullanıcı denetim bulgularını kapatmayı başlattı. `shell/surfaces/`
+17 işlevli şablon ve ortak PanelSlot içerir; iki temanın ui view'ları görsel
+property/delegate sağlayan wrapper'lardır. Menülerde komut, input veya onay
+mantığının ikinci kopyası yok. Palet/font/çerçeve/yerleşim ayrılığı korunur.
+Ortak kaynak düzeltmesi iki temaya da gider; yeni görsel tema salt paletle sınırlanmaz.
+
+Panel ilk kullanımda yüklenip yeniden kullanılır. Eski Loader uyarısını üreten
+12 tekrar geçti; iki temada 12 tur/4 panel yeniden boyutlandırma, tek instance ve
+onay temizliği kontrolü de geçti. Aynı ayarlar/launcher/Alt+Tab sözleşmeleri her
+iki temada çalıştırıldı. Sensör izlemesi panel kapalıyken hâlâ durur.
+
+Hyprlock'un görsel layout'u source fragment oldu; stok eski görünüm güvenli
+şekilde taşınır, özel config korunur ve tam tema check uyarlama ister. Deltarune
+saat/parola/medya sunumu, Dolphin beyaz metinli palet/ikonları, Spotify CSS/paleti,
+CP437 fountain süsü ve SDDM skin'i var. SDDM login controller'ı ortaktır. Harici
+kurucular aynı first-backup/restore ve adblock başlatıcı korumasını kullanır;
+shell apply bunları sessizce yeniden kurmaz.
+
+ABI `mct-shell-2.9`. Eski aktif tema **eski kaynakla** geri alınmadan dal değiştirilmez.
+[Yükseltme](docs/UPGRADE_2_9.md) · [Karar](docs/decisions/0014-shared-interaction-templates.md).
+Yerel offscreen/mock doğrulama [VALIDATION](docs/VALIDATION.md) içinde. Gerçek yeni
+lock/PAM/giriş, Spotify/Dolphin ve Wayland son kabulü açık. Fotoğraflı tema menüsü
+bu işte eklenmedi; konumu hâlâ kullanıcı kararıdır. Önceki denetim aşağıda tarihsel kayıttır.
 
 ## Kaynakta bulunanlar
 

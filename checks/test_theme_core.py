@@ -56,6 +56,7 @@ class CoreTests(unittest.TestCase):
         self.engine.state.mkdir(parents=True)
         (self.engine.state / "current-backup").write_text("/original-backup")
         self.engine.hypr.mkdir(parents=True)
+        (self.engine.hypr/"hyprlock.conf").write_text("source = "+str(self.engine.style/"hyprlock/layout.conf")+"\n")
         self.protected = {
             self.base / "config/mct/preferences.json": b'{"schema":1,"fontScale":1.2}',
             self.engine.state / "notifications.json": b'{"history":["keep"]}',
@@ -75,10 +76,9 @@ class CoreTests(unittest.TestCase):
             path = self.engine.path(name)
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data.replace(b"@STYLE@", str(self.engine.style).encode()))
-        for name in theme.SHARED:
-            data = (ROOT / "payload/style" / name).read_bytes()
-            for path in (self.package / "payload/style" / name, self.engine.style / name):
-                path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(data)
+        for destination in (self.package/'payload/style/shell',self.engine.style/'shell'):
+            shutil.copytree(ROOT/'payload/style/shell',destination,dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
 
     def tearDown(self):
         for path, data in self.protected.items():
@@ -116,6 +116,26 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(self.engine.check("plague-tale")["id"], "plague-tale")
         self.assertEqual(before, self.state())
         self.assertEqual(self.runtime.events, ["preflight", "validate"])
+
+    def test_shared_interaction_template_is_protected_from_theme_mutation(self):
+        path=self.engine.style/'shell/surfaces/LauncherSurface.qml'
+        path.write_text(path.read_text()+'\n// edited interaction\n')
+        before=self.state()
+        with self.assertRaisesRegex(theme.ThemeError,'Shared shell ABI differs'):
+            self.engine.check('deltarune')
+        self.assertEqual(before,self.state())
+        self.assertFalse(theme.allowed('style/shell/surfaces/LauncherSurface.qml'))
+
+    def test_custom_lock_config_requires_explicit_visual_adaptation(self):
+        path=self.engine.hypr/'hyprlock.conf'
+        path.write_text('general {\n ignore_empty_input = true\n}\n# My custom layout\n')
+        before=self.state()
+        with self.assertRaisesRegex(theme.ThemeError,'Hyprlock layout source'):
+            self.engine.check('deltarune')
+        self.assertEqual(before,self.state())
+        self.assertFalse(self.runtime.events)
+        path.write_text("  source  =  "+str(self.engine.style/'hyprlock/layout.conf')+"  # visual source\n")
+        self.engine.check('deltarune')
 
     def test_deltarune_apply_switch_back_and_rollback_restore_theme_only_assets(self):
         self.engine.apply("deltarune")
