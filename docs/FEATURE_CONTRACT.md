@@ -1,3 +1,8 @@
+<!-- snowgrave-frost-0.2.0 -->
+## 20 Ekim Snowgrave Frost 0.2.0
+
+Yalnız Snowgrave görseli/paleti ve Fastfetch varlığı değişir. Kısayollar, panel etkileşimleri, kullanıcı ayarları ve beş tema envanteri korunur. Aktif sync, Spotify/Dolphin/Fastfetch/SDDM için mevcut journal ve korumaları kullanır. Eski ayrı-kurucu notları mevcut sync etkin kullanıcıya yeniden kurulum talebi değildir.
+
 # Ortak özellik sözleşmesi
 
 Bu belge hedef davranışı tanımlar; kaynakta her şeyin uygulandığını söylemez.
@@ -205,3 +210,8 @@ ve ayrı manuel check adımı yoktur. Sol/sağ/Tab gezinir, Enter/Space seçer.
 Önceki tema restore'un ikinci onayı korunur. FontScale/reduceMotion okunur.
 Super+G canlı listedeki modmask/key/keycode ve sahipli blokla kontrol edilir;
 bulunmayan/bozuk veri “boş” kabul edilmez. Kişisel kısayol üzerine yazılmaz.
+
+
+## Steam launcher ayrımı — 20 Ekim
+
+Native ve Flatpak görünen adda ayrılır; desktop id/execute ve oyun kısayolları korunur. Bütün temalarda aynı arama/etiket davranışı vardır.

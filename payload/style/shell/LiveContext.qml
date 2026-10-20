@@ -46,7 +46,18 @@ Scope {
         const w=Hyprland.workspaces.values.find(w=>w.id===i+1);
         return {id:i+1,count:w ? w.toplevels.values.length : 0,active:w ? w.active : false,monitor:w && w.monitor ? w.monitor.name : ""};
     })
-    readonly property var applications:DesktopEntries.applications.values.map(e=>({id:e.id,name:e.name,comment:e.genericName || e.comment || "",icon:e.icon ? Quickshell.iconPath(e.icon,true) : ""})).sort((a,b)=>a.name.localeCompare(b.name))
+    function applicationName(entry) {
+        const id=String(entry.id || "").replace(/\.desktop$/i,"").toLowerCase();
+        const name=String(entry.name || "");
+        const steamName=/^steam(?:\s*\((?:native|runtime|flatpak)\))?$/i.test(name.trim());
+        const command=Array.from(entry.command || []).map(arg=>String(arg));
+        const binaries=command.map(arg=>arg.split("/").pop());
+        const flatpak=binaries.indexOf("flatpak")>=0 && command.some(arg=>arg.toLowerCase()==="com.valvesoftware.steam");
+        if(id==="com.valvesoftware.steam" || (steamName && flatpak))return "Steam (Flatpak)";
+        if(["steam","steam-native","steam-runtime"].indexOf(id)>=0 || (steamName && binaries.some(arg=>["steam","steam-native","steam-runtime"].indexOf(arg)>=0)))return "Steam (Native)";
+        return name;
+    }
+    readonly property var applications:DesktopEntries.applications.values.map(e=>({id:e.id,name:root.applicationName(e),comment:e.genericName || e.comment || "",icon:e.icon ? Quickshell.iconPath(e.icon,true) : ""})).sort((a,b)=>a.name.localeCompare(b.name))
     readonly property var trayItems:SystemTray.items.values.map(i=>({icon:i.icon,title:i.tooltipTitle || i.title || i.id}))
     readonly property var sink:Pipewire.defaultAudioSink
     readonly property var microphone:Pipewire.defaultAudioSource

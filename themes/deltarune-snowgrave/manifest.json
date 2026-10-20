@@ -2,11 +2,11 @@
   "schema": 1,
   "id": "deltarune-snowgrave",
   "name": "Snowgrave",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "shellAbi": "mct-shell-2.9",
   "preview": {
     "source": "preview.png",
-    "gitBlob": "0340ab796408cd5c9e4a725679d6aca71aa9f813"
+    "gitBlob": "e5fe3c308519b5d4b6d064dbc04c786cf372dcd7"
   },
   "surfaces": [
     "bar",
@@ -29,52 +29,52 @@
     {
       "source": "files/hypr/appearance.lua",
       "target": "hypr/appearance.lua",
-      "gitBlob": "d8bb41cd4e2a9890f2068016be3fbf949c205d3d"
+      "gitBlob": "4966d60a64a2cdc7113fb0eece528e04478c9e9a"
     },
     {
       "source": "files/style/hyprlock/cover.png",
       "target": "style/hyprlock/cover.png",
-      "gitBlob": "4a6fa3b5aa49834113b895a364eb359d160344ed"
+      "gitBlob": "b15a205dcb024fc9a9cb8e8cfb4830042f7d4a67"
     },
     {
       "source": "files/style/hyprlock/media.conf",
       "target": "style/hyprlock/media.conf",
-      "gitBlob": "63a4a830f42f1ef1bf36334daffb2c41575faa06"
+      "gitBlob": "1a14472523e1c581b7300b048eb9ba81b562f6b6"
     },
     {
       "source": "files/style/hyprlock/next.png",
       "target": "style/hyprlock/next.png",
-      "gitBlob": "0a85a060bd0ce2d33df87856ff2bfeaaa20693c6"
+      "gitBlob": "9b85226f273c5483a4445ef891eb71fe8e27a67e"
     },
     {
       "source": "files/style/hyprlock/pause.png",
       "target": "style/hyprlock/pause.png",
-      "gitBlob": "e635c980f705ff20a64f370d45a4eb2db5bef907"
+      "gitBlob": "522538480aa5e8eb4258a1b2670477306e8cd324"
     },
     {
       "source": "files/style/hyprlock/play.png",
       "target": "style/hyprlock/play.png",
-      "gitBlob": "769d62e08c3db9ae0af8c9867f5ae74c4f577b63"
+      "gitBlob": "1883d12b962d2b819b5dab7109a6ba6e02870c39"
     },
     {
       "source": "files/style/hyprlock/previous.png",
       "target": "style/hyprlock/previous.png",
-      "gitBlob": "ff485e553d915162366a0d21097bf83f9928e8fc"
+      "gitBlob": "1034f64e77032a9b61dd23f11c90f2a57aa43e22"
     },
     {
       "source": "files/style/kitty/theme.conf",
       "target": "style/kitty/theme.conf",
-      "gitBlob": "ab7b6c728167b7d995a0e17f000898adc30be0f8"
+      "gitBlob": "1d3c8f6d2a82531b0971f6a37ed628e76332c0ec"
     },
     {
       "source": "files/style/shell/assets/bl.svg",
       "target": "style/shell/assets/bl.svg",
-      "gitBlob": "89d04b4b3b0fb353f9a3d309bae263cd6631e896"
+      "gitBlob": "d04f5949ca624f40e110322d8ead935523d380c3"
     },
     {
       "source": "files/style/shell/assets/br.svg",
       "target": "style/shell/assets/br.svg",
-      "gitBlob": "ab92e053db3d76a3ec2e5afc070fab85750c6b4c"
+      "gitBlob": "1888041e3c36408abbebb6119a92fe2693b20fcf"
     },
     {
       "source": "files/style/shell/assets/departure-mono-license.txt",
@@ -104,17 +104,17 @@
     {
       "source": "files/style/shell/assets/tl.svg",
       "target": "style/shell/assets/tl.svg",
-      "gitBlob": "aebc8ef642e2b7f21e88b098b8696d9ca058dc3e"
+      "gitBlob": "9f82eea90c85dff586e7381dd6492d2809a0d176"
     },
     {
       "source": "files/style/shell/assets/tr.svg",
       "target": "style/shell/assets/tr.svg",
-      "gitBlob": "d4c8f365e6bae4ea3e996a6b17d8c54b88c4ba21"
+      "gitBlob": "248ab0b538ffa85fffe35d3be0ca3e0521c0ed27"
     },
     {
       "source": "files/style/shell/assets/wallpaper.png",
       "target": "style/shell/assets/wallpaper.png",
-      "gitBlob": "4a6fa3b5aa49834113b895a364eb359d160344ed"
+      "gitBlob": "b15a205dcb024fc9a9cb8e8cfb4830042f7d4a67"
     },
     {
       "source": "files/style/shell/ui/ActionButton.qml",
@@ -124,7 +124,7 @@
     {
       "source": "files/style/shell/ui/Bar.qml",
       "target": "style/shell/ui/Bar.qml",
-      "gitBlob": "419f167736d9d828ab8d54e40f151f507ca8646a"
+      "gitBlob": "c51c164df935a8c825733436c4bd4ce6b1cd2125"
     },
     {
       "source": "files/style/shell/ui/Controls.qml",
@@ -179,7 +179,7 @@
     {
       "source": "files/style/shell/ui/OrnamentFrame.qml",
       "target": "style/shell/ui/OrnamentFrame.qml",
-      "gitBlob": "9901e7b61d596b1663d9ccfd568569269d4704ed"
+      "gitBlob": "696662920ac61f0ec00f414cf15cdcc4351766f3"
     },
     {
       "source": "files/style/shell/ui/Overlay.qml",
@@ -224,7 +224,7 @@
     {
       "source": "files/style/shell/ui/Theme.qml",
       "target": "style/shell/ui/Theme.qml",
-      "gitBlob": "5165010a95b0757995239e77be7d100299097c75"
+      "gitBlob": "1b2132cfa70ff95642840f7652fa3ba02a26ffac"
     },
     {
       "source": "files/style/shell/ui/Toast.qml",
@@ -244,12 +244,12 @@
     {
       "source": "files/style/wallpaper.png",
       "target": "style/wallpaper.png",
-      "gitBlob": "4a6fa3b5aa49834113b895a364eb359d160344ed"
+      "gitBlob": "b15a205dcb024fc9a9cb8e8cfb4830042f7d4a67"
     },
     {
       "source": "files/style/hyprlock/layout.conf",
       "target": "style/hyprlock/layout.conf",
-      "gitBlob": "ee373532a364f47dc29d1d5a69d94aa3a868b696"
+      "gitBlob": "8b74c92a2ecdc6ff35d153247ac06a83ec6fa064"
     }
   ],
   "adapters": {

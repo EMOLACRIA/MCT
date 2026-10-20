@@ -1,34 +1,12 @@
 {
-  "source": "wallpaper-source.jpeg",
-  "sourceDimensions": [
-    1200,
-    675
-  ],
-  "sourceSha256": "32d0731f679761606f7b2b60ba7c9204bb5d0aaae193f52975681f447a831726",
+  "source": "User-approved AI recolor of image(20261020-163940).png",
   "output": "files/style/wallpaper.png",
   "outputDimensions": [
-    3600,
-    2025
+    1586,
+    992
   ],
-  "outputSha256": "1b0cf8b4c4a1e5b2a99ea2c5049f4978c52b2ab7508699381fb4658a8c371b9e",
-  "method": "Real-ESRGAN neural super-resolution; derived restoration, not a native high-resolution original",
-  "model": "RealESRGAN_x4plus",
-  "modelUrl": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
-  "modelSha256": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1",
-  "architecture": "RRDBNet, 23 RRDB blocks, 64 features, 32 growth channels, scale 4",
-  "architectureUrl": "https://github.com/XPixelGroup/BasicSR/blob/master/basicsr/archs/rrdbnet_arch.py",
-  "architectureSha256": "6aa8eb3f77e918b90eeff4ebfaf8745abe0c40eb8fcc03abbc1928693d70ab58",
-  "architectureUtilitiesSha256": "be2cec6482fba5455cc1f03ff40da84a89e27feadf886018a4fa7b97b8a1bb55",
-  "runtime": "PyTorch 2.6.0+cpu, float32, evaluation/inference mode, channels_last",
-  "tileInputPixels": 256,
-  "tileOverlapPaddingInputPixels": 32,
-  "tta": false,
-  "postprocess": "4x RGB restoration then Lanczos downsample to 3600x2025, lossless PNG compression level 9; no colour grading or extra sharpening; blend 40% restoration with 60% Lanczos-resized original to moderate exaggerated canvas weave",
-  "selection": "Same official general model used for the accepted hidden-tree restoration; painterly source, not the smoothing anime model",
-  "userAuthorization": "2026-10-19 23:13 Europe/Riga: start Snowgrave next; retain the accepted high-resolution restoration approach",
-  "neuralOutputDimensions": [
-    4800,
-    2700
-  ],
-  "restorationBlend": 0.4
+  "outputSha256": "8731a4dfe229ea7ba27c938f68c3f776a9b291f9f452b3d89a6e9297e853ca2a",
+  "method": "Approved imagegen color edit, copied byte-for-byte; no new upscale or sharpening",
+  "approval": "2026-10-20 19:47 Europe/Riga: use this wallpaper and last silhouette Fastfetch; redo the color scheme",
+  "previousRestoration": "restoration-autumn-0.1.0.json"
 }

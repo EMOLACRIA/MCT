@@ -108,7 +108,7 @@ class ThemeAdapterTests(unittest.TestCase):
     def test_deltarune_greeter_uses_common_login_controller_and_restores(self):
         fixture=greeter.GreeterInstallTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
         m=greeter.greeter
-        for theme,accent in [('deltarune','#f32baf'),('deltarune-snowgrave','#d8b779')]:
+        for theme,accent in [('deltarune','#f32baf'),('deltarune-snowgrave','#9cdfff')]:
           with tempfile.TemporaryDirectory() as folder:
             source=assets.stage_greeter(theme,Path(folder)/'theme')
             self.assertEqual((source/'Main.qml').read_bytes(),(ROOT/'sddm/theme/Main.qml').read_bytes())

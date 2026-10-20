@@ -28,13 +28,13 @@ Rectangle {
                 c.quadraticCurveTo(x+direction*7,y+4,x,y);c.fill();
             }
             c.strokeStyle=Theme.brass;
-            // Slender autumn twigs around opposite corners; the centre stays quiet.
+            // Frosted twigs around opposite corners; the centre stays quiet.
             branch([[2,48],[9,36],[12,23],[24,14],[35,10],[47,2]]);
             branch([[12,23],[5,14],[6,4]]);branch([[24,14],[25,4]]);
             branch([[9,36],[20,36],[27,28]]);
             branch([[w-2,h-48],[w-10,h-34],[w-12,h-22],[w-25,h-14],[w-38,h-10],[w-48,h-2]]);
             branch([[w-12,h-22],[w-4,h-15]]);branch([[w-25,h-14],[w-24,h-3]]);
-            c.fillStyle=Theme.danger;
+            c.fillStyle=Theme.brass;
             leaf(7,18,1);leaf(w-12,h-35,-1);
             c.fillStyle=Theme.brass;leaf(20,36,1);leaf(w-38,h-10,-1);
         }

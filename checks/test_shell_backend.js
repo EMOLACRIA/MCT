@@ -23,6 +23,23 @@ global.SystemTray={items:{values:[]}};
 const root={historyLoaded:false,history:[],unread:0,doNotDisturb:false,toasts:[],liveNotifications:{},notificationGenerations:{},notificationTimers:{},toastTimers:{},workspaces:[{id:9,count:1,active:true,monitor:'eDP-1'}],audioAvailable:true,sink:{audio:{volume:.5,muted:false}},microphoneAvailable:true,microphone:{audio:{volume:.8,muted:false}},feedbackRequested:(...v)=>events.push(v),lastError:'',networkSettingsAvailable:true};
 Object.defineProperties(root,{volume:{get:()=>Math.round(root.sink.audio.volume*100)},muted:{get:()=>root.sink.audio.muted},microphoneMuted:{get:()=>root.microphone.audio.muted}});
 new Function('root','with(root){'+funcs.join('\n')+'}')(root);
+// Distribution labels are presentation only; game shortcuts keep their titles.
+for(const [entry,want] of [
+ [{id:'steam.desktop',name:'Steam',command:['/usr/bin/steam','%U']},'Steam (Native)'],
+ [{id:'steam-native',name:'Steam (Native Runtime)'},'Steam (Native)'],
+ [{id:'com.valvesoftware.Steam.desktop',name:'Steam'},'Steam (Flatpak)'],
+ [{id:'steam.desktop',name:'Steam',command:['/usr/bin/flatpak','run','com.valvesoftware.Steam','%U']},'Steam (Flatpak)'],
+ [{id:'my-steam',name:'Steam',command:['env','STEAM_RUNTIME=1','/usr/bin/steam']},'Steam (Native)'],
+ [{id:'steam_app_730.desktop',name:'Counter-Strike 2',command:['steam','-applaunch','730']},'Counter-Strike 2'],
+ [{id:'steam-game',name:'My Game',command:['flatpak','run','com.valvesoftware.Steam','steam://rungameid/1']},'My Game'],
+ [{id:'dolphin',name:'Dolphin'},'Dolphin'],
+ [{id:'steam-tools',name:'Steam Tools'},'Steam Tools']
+])assert.strictEqual(root.applicationName(entry),want);
+const steamNative={id:'steam',name:'Steam',execute:()=>events.push('native Steam')};
+const steamFlatpak={id:'com.valvesoftware.Steam',name:'Steam',execute:()=>events.push('flatpak Steam')};
+DesktopEntries.byId=id=>[steamNative,steamFlatpak].find(entry=>entry.id===id);
+root.launchApplication(steamNative.id);assert.strictEqual(events.pop(),'native Steam');
+root.launchApplication(steamFlatpak.id);assert.strictEqual(events.pop(),'flatpak Steam');
 root.copyText('0.333333333333');assert.strictEqual(Quickshell.clipboardText,'0.333333333333');
 root.restoreHistory();assert(root.history.length===1&&root.history[0].actions.length===0);
 function note(id,opts={}){const callbacks=[];return {id,appName:'Files',summary:'Copy complete',body:'<b>Done</b>',actions:[],tracked:false,transient:false,lastGeneration:false,expireTimeout:5000,callbacks,closed:{connect:f=>callbacks.push(f)},dismiss(){callbacks.forEach(f=>f(1));},expire(){callbacks.forEach(f=>f(2));},...opts};}

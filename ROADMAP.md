@@ -1,3 +1,8 @@
+<!-- snowgrave-frost-0.2.0 -->
+# 20 Ekim — Snowgrave Frost revizyonu
+
+Görsel/palet kaynakları 0.2.0 için tamamlandı. Ortak QML ve geçici dosya testleri kayıtlıdır; gerçek Wayland, giriş ekranı ve kullanıcıdaki son görünüm kabulü bekleniyor. Diğer dört tema korunur.
+
 # 19 Ekim 21:34 — Yeni öncelik: dört Deltarune görsel dünyası
 
 **23:13 güncellemesi:** kullanıcı üçüncü tema için Snowgrave'i seçti. Ayrı

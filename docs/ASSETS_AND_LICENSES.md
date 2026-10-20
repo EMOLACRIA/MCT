@@ -1,3 +1,21 @@
+<!-- snowgrave-frost-0.2.0 -->
+## Snowgrave Frost 0.2.0 varlık kökeni — 20 Ekim 2026
+
+Kullanıcının image(20261020-163940).png referansından imagegen ile buz mavisi
+recolor; onaylı çıktı exec-7779ffac-5ab6-4024-846f-331b12800914.png,
+1586×992, SHA256 8731a4dfe229ea7ba27c938f68c3f776a9b291f9f452b3d89a6e9297e853ca2a.
+Fastfetch çıktısı exec-0dcdfb0f-6392-41c3-baa6-65ca4498adb3.png,
+1254×1254 RGBA, SHA256 68c45e1e4f0b0dfca1994a126288924fdef14e7fbee7b3af0a21d99413f55136.
+Klasik Noelle Dark World sprite'ı referansı: https://deltarune.wiki/w/Noelle
+(https://deltarune.wiki/images/Noelle_overworld_Dark_World.png).
+Noelle/Deltarune karakteri Toby Fox / ilgili hak sahiplerine aittir. Kullanıcı
+referans tablosunun özgün sanatçı kimliği bu kayıtta doğrulanmamıştır; AI
+düzenlemesi özgün sanatın lisansını değiştirdiği şeklinde sunulmaz.
+İki onaylı PNG pakette byte-identical kullanılır. Önceki JPEG/ESRGAN kayıtları
+silinmez. Medya düğmeleri mevcut kod-native SVG kontrollerinden Qt 6.10.2 ile
+yeniden render edildi; yeni görsel üretim değildir.
+
+
 # Varlıklar ve lisans kaydı
 
 Bu dosya köken kaydıdır; mevcut hakları değiştiren bir lisans değildir.

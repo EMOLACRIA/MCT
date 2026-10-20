@@ -1,0 +1,10 @@
+{
+  "payload/style/shell/LiveContext.qml": {
+    "beforeSha256": "b1c7f130d40239d4e2845dc94bb4038db12e4efbba3b3bf94f9dec06406577b8",
+    "afterSha256": "76f0ec11e29109e466716a970762c8083bcac3deb0d018b911372d2386f0d5af"
+  },
+  "checks/test_shell_backend.js": {
+    "beforeSha256": "549dbd5580ded60739b5cfd1b61cd57a15a9680c5ec4a47bcf85995b7218e8e6",
+    "afterSha256": "1080f1a1e84658acd366b3b75163901e9d49b1454c789c0f9441b9cd6f7ac01b"
+  }
+}
