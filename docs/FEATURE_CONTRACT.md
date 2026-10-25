@@ -1,3 +1,8 @@
+<!-- snowgrave-frost-0.2.0 -->
+## 20 Ekim Snowgrave Frost 0.2.0
+
+Yalnız Snowgrave görseli/paleti ve Fastfetch varlığı değişir. Kısayollar, panel etkileşimleri, kullanıcı ayarları ve beş tema envanteri korunur. Aktif sync, Spotify/Dolphin/Fastfetch/SDDM için mevcut journal ve korumaları kullanır. Eski ayrı-kurucu notları mevcut sync etkin kullanıcıya yeniden kurulum talebi değildir.
+
 # Ortak özellik sözleşmesi
 
 Bu belge hedef davranışı tanımlar; kaynakta her şeyin uygulandığını söylemez.

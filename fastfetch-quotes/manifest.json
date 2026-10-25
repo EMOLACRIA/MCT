@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "size": [
+    1536,
+    1280
+  ],
+  "assets": {
+    "plague-tale": {
+      "sha256": "4d381ce737bfcfebde8bde3270884734cb2a5cedad64c41a06c81a136cf88b4e",
+      "text": "We will live. And we will heal.",
+      "lines": [
+        "We will live.",
+        "And we will heal."
+      ],
+      "font": "DejaVu Serif",
+      "fontSha256": "8f2c103bfa3fd5de71f1b92b18f21906b5a26871fb7e19a9a4c9af539c3cc7ab",
+      "fontSize": 148,
+      "inkBounds": [
+        124,
+        445,
+        1398,
+        776
+      ]
+    },
+    "deltarune": {
+      "sha256": "0cf5324f81b4bc7a7847173b837e83d545c3cb3d13eb347c55f9df4231d1a05b",
+      "text": "(Well, there is a man here.)",
+      "lines": [
+        "(Well, there is",
+        "a man here.)"
+      ],
+      "renderMode": "full-color",
+      "size": [
+        1254,
+        1254
+      ],
+      "source": "User-approved generated Forgotten Tree with small pixel lettering, 20 October 2026"
+    },
+    "deltarune-snowgrave": {
+      "sha256": "68c45e1e4f0b0dfca1994a126288924fdef14e7fbee7b3af0a21d99413f55136",
+      "text": "Proceed",
+      "lines": [
+        "Proceed"
+      ],
+      "renderMode": "full-color",
+      "size": [
+        1254,
+        1254
+      ],
+      "source": "User-approved generated dark Noelle silhouette with large ice-blue Proceed, 20 October 2026"
+    },
+    "deltarune-adventure": {
+      "sha256": "08d6b89cb94fba4b9e665d8e78cd61f83a2134c5e294a2e0d5ae29b05b01b98e",
+      "text": "Nothing is stronger than... a... Flower's... dream...!",
+      "lines": [
+        "Nothing is",
+        "stronger than...",
+        "a... Flower's...",
+        "dream...!"
+      ],
+      "font": "Departure Mono",
+      "fontSha256": "4d53f663155cf8bf7ffc8e688776e719625f7bbb80a8d90073438b249261a2e0",
+      "fontSize": 132,
+      "inkBounds": [
+        108,
+        244,
+        1404,
+        964
+      ]
+    },
+    "deltarune-guardian": {
+      "sha256": "d170021d7987c2942311ae9f4b50384cae5cd23f641a6f74d8d5758642c06a37",
+      "text": "AND TITANS SHAPE FROM DARKENED EYES.",
+      "lines": [
+        "AND TITANS",
+        "SHAPE FROM",
+        "DARKENED EYES."
+      ],
+      "font": "Departure Mono",
+      "fontSha256": "4d53f663155cf8bf7ffc8e688776e719625f7bbb80a8d90073438b249261a2e0",
+      "fontSize": 148,
+      "inkBounds": [
+        122,
+        312,
+        1387,
+        886
+      ]
+    }
+  }
+}

@@ -1,3 +1,8 @@
+<!-- snowgrave-frost-0.2.0 -->
+20 EKİM 19:47 — KABUL EDİLEN REVİZYON
+
+Snowgrave yeni buz mavisi duvar kâğıdı, son silüetli Proceed Fastfetch ve tüm adaptörlerde yeni soğuk paletle güncellenir. Diğer dört tema ve kısayollar korunur. Kaynak uygulanmış, native cihaz kabulü bekliyor. Ayrıntı: docs/SNOWGRAVE_FROST.md.
+
 20 Ekim 2026 — Güncel öncelik: kullanıcı Snowgrave'i beğenip normal görünümü
 onayladı; Chapter 5 trailer/gün batımı referansı ayrı `deltarune-adventure` 0.1.0
 paketi olarak uygulandı. Mürdüm/mercan/altın ve basamaklı çatı köşeleri; ortak

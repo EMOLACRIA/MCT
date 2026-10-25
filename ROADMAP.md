@@ -1,3 +1,8 @@
+<!-- snowgrave-frost-0.2.0 -->
+# 20 Ekim — Snowgrave Frost revizyonu
+
+Görsel/palet kaynakları 0.2.0 için tamamlandı. Ortak QML ve geçici dosya testleri kayıtlıdır; gerçek Wayland, giriş ekranı ve kullanıcıdaki son görünüm kabulü bekleniyor. Diğer dört tema korunur.
+
 20 Ekim 2026 — Güncel öncelik: kullanıcı Snowgrave'i beğenip normal görünümü
 onayladı; Chapter 5 trailer/gün batımı referansı ayrı `deltarune-adventure` 0.1.0
 paketi olarak uygulandı. Mürdüm/mercan/altın ve basamaklı çatı köşeleri; ortak

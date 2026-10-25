@@ -16,9 +16,10 @@ FocusScope {
     readonly property bool pixelTitle: !!state.selected && !!state.selected.fontSource && titleFace.status === FontLoader.Ready
     FontLoader { id: titleFace; source: root.state.selected && root.state.selected.fontSource ? root.state.selected.fontSource : root.state.monoFontSource }
     function revealSelection() {
-        for (let i = 0; i < rail.count; ++i) {
-            const card = rail.itemAtIndex(i);
-            if (card && card.entry.id === state.selectedId) {
+        rail.forceLayout();
+        // Offscreen ListView delegates may not exist. Use the catalog index.
+        for (let i = 0; i < root.state.themes.length; ++i) {
+            if (root.state.themes[i].id === root.state.selectedId) {
                 rail.positionViewAtIndex(i, ListView.Contain);
                 return;
             }

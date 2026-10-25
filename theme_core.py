@@ -269,7 +269,7 @@ class Native:
 
 
 class Engine:
-    def __init__(self, root=ROOT, style=None, state=None, hypr=None, runtime=None):
+    def __init__(self, root=ROOT, style=None, state=None, hypr=None, runtime=None, integrations=None):
         home = Path.home()
         self.root = Path(root).absolute()
         self.style = Path(style or home / ".config/desktop-style").absolute()
@@ -277,6 +277,7 @@ class Engine:
         self.hypr = Path(hypr or home / ".config/hypr").absolute()
         self.data = self.state / "theme-core"
         self.runtime = runtime or Native(self)
+        self.integrations = integrations or load_module(Path(__file__).with_name("theme_integrations.py")).Integrations(self)
 
     def path(self, target):
         if not allowed(target):
@@ -418,7 +419,8 @@ class Engine:
                 fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except BlockingIOError as exc:
                 raise ThemeError("Another update/theme operation is running.") from exc
-            yield
+            with self.integrations.lease():
+                yield
 
     def stage(self, output, remove):
         stage = tempfile.TemporaryDirectory(prefix="mct-theme-check-")
@@ -448,6 +450,10 @@ class Engine:
         manifest, output = self.load(name)
         _, known = self.ownership(output)
         self.stage(output, set(known) - output.keys())
+        try:
+            self.integrations.preflight(name)
+        except (RuntimeError, OSError, ValueError) as exc:
+            raise ThemeError(str(exc)) from exc
         return manifest, output, known
 
     def check(self, name):
@@ -482,7 +488,7 @@ class Engine:
             else:
                 atomic(path, json_bytes(value))
 
-    def transact(self, output, remove, after_active, after_last, kind, modes=None, after_runtime=None):
+    def transact(self, output, remove, after_active, after_last, kind, modes=None, after_runtime=None, integration_theme=None, integration_restore=None):
         before_active = self.optional("active.json")
         before_last = self.pointer()
         ident = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ-") + os.urandom(4).hex()
@@ -499,9 +505,11 @@ class Engine:
             else:
                 record["before"][name] = None
             record["after"][name] = digest(output[name]) if name in output else None
+        record["integrations"] = self.integrations.capture(dest, integration_theme, integration_restore)
         atomic(dest / "manifest.json", json_bytes(record))
         atomic(self.data / "pending.json", json_bytes({"transaction": ident}))
         try:
+            self.integrations.apply(dest, record.get("integrations"))
             self.runtime.stop()
             for name in remove:
                 self.path(name).unlink(missing_ok=True)
@@ -521,12 +529,14 @@ class Engine:
                 (self.data / "last.json").unlink(missing_ok=True)
             else:
                 atomic(self.data / "last.json", json_bytes(desired_last))
+            self.integrations.finish(dest, record.get("integrations"))
             record["status"] = "committed"
             atomic(dest / "manifest.json", json_bytes(record))
             (self.data / "pending.json").unlink()
         except Exception as original:
             try:
                 self.runtime.stop()
+                self.integrations.undo(dest, record.get("integrations"))
                 self.restore_record(dest, record)
                 self.runtime.restore(record["beforeRuntime"])
                 self.runtime.start()
@@ -564,9 +574,13 @@ class Engine:
             active = {"schema": 1, "installation": self.installation(), "id": name, "version": manifest["version"],
                       "files": {key: digest(data) for key, data in output.items()},
                       "adapters": {key: "separate-installer" for key in manifest["adapters"]}}
+            if self.integrations.enabled():
+                active["integrationFingerprint"] = self.integrations.fingerprint(name)
+                active["adapters"].update(spotify="integrated", sddm="integrated")
+                if self.integrations.dolphin_enabled():active["adapters"]["dolphin"]="integrated"
             if self.optional("active.json") == active:
                 return None
-            return self.transact(output, set(known) - output.keys(), active, None, "apply")
+            return self.transact(output, set(known) - output.keys(), active, None, "apply", integration_theme=name)
 
     def rollback(self, check_only=False):
         self.verify_installed()
@@ -589,11 +603,17 @@ class Engine:
                       for name, item in record["before"].items() if item is not None}
             remove = {name for name, item in record["before"].items() if item is None}
             self.stage(output, remove)
+            if record.get("integrations") is not None:
+                self.integrations.verify_snapshot(dest, record["integrations"], expect_after=True)
+            elif self.integrations.enabled():
+                self.integrations.preflight((record["beforeActive"] or {}).get("id", "plague-tale"))
             if check_only:
                 return pointer["transaction"]
             modes = {name: item["mode"] for name, item in record["before"].items() if item is not None}
             return self.transact(output, remove, record["beforeActive"], record["beforeLast"], "rollback",
-                                 modes, record["beforeRuntime"])
+                                 modes, record["beforeRuntime"],
+                                 integration_theme=(record["beforeActive"] or {}).get("id", "plague-tale"),
+                                 integration_restore=(dest, record["integrations"]) if record.get("integrations") is not None else None)
 
     def recover(self):
         self.verify_installed()
@@ -618,11 +638,13 @@ class Engine:
                     actual = digest(path.read_bytes()) if path.is_file() else None
                     if actual != expected:
                         raise ThemeError("Committed file changed; journal retained: " + name)
+                self.integrations.committed(dest, record.get("integrations"))
                 (self.data / "pending.json").unlink()
                 return token
             # Recovery must work when the candidate cannot answer IPC.
             self.runtime.prepare_recovery()
             self.runtime.stop()
+            self.integrations.undo(dest, record.get("integrations"))
             self.restore_record(dest, record)
             self.runtime.restore(record["beforeRuntime"])
             self.runtime.start()
@@ -662,7 +684,7 @@ def main():
         elif args.action == "apply":
             ident = engine.apply(args.theme)
             print("Theme applied. Snapshot: " + ident if ident else "Theme is already active; no restart needed.")
-            print("SDDM, Dolphin and Spotify use separate installers; they were not reinstalled.")
+            print("Fastfetch, Spotify, Hyprlock and SDDM followed the theme."+(" Dolphin followed too." if engine.integrations.dolphin_enabled() else "") if engine.integrations.enabled() else "SDDM, Dolphin and Spotify use separate installers; automatic sync is not enabled.")
         elif args.action == "rollback":
             print("Rollback check passed." if args.check and engine.rollback(True)
                   else "Previous theme restored. Snapshot: " + engine.rollback())

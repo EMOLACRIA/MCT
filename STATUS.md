@@ -1,3 +1,45 @@
+<!-- steam-launcher-labels-0.1.0 -->
+## 20 Ekim — Steam launcher etiketleri 0.1.0
+
+Kullanıcı Snowgrave görünümünü ve normal kullanımı onayladı; ayrı PAM/donanım ölçümü
+raporlanmadı. Launcher Steam girdileri Steam (Native) ve Steam (Flatpak) olarak
+ayrılır. Desktop ID/execute ve oyun kısayollarının adları değişmez. Native/flatpak
+araması desteklenir. Ortak katmandır; tema paketleri, wallpaper, ilk restore noktası
+ve çalışan Steam korunur. Node backend + 3 izole kurucu/geri alma kontrolü geçti.
+Native QuickShell/Steam burada çalıştırılmadı; kurucu cihazda native QML ön kontrolü
+yapıp yalnız MCT shell'i yeniden açar.
+
+
+<!-- snowgrave-frost-0.2.0 -->
+## 20 Ekim — Snowgrave Frost 0.2.0
+
+19:47 Europe/Riga kullanıcı onayı: buz mavisi duvar kâğıdını, son koyu Noelle
+silüetli büyük Proceed Fastfetch tasarımını kullan; renk şemasını yeniden yap.
+
+0.1.0'ın sıcak sonbahar paleti bu sürümde değiştirilir. Koyu yüzey #0b1421,
+yükseltilmiş yüzey #162d45, metin #edf7ff, ikincil metin #9fb8d0, vurgu
+#9cdfff, çerçeve #365873 ve seçim #224c6b. Hata/uyarılar ayırt edilebilir
+soğuk gül tonundadır; dekorlar buz mavisidir. Dolphin normal/seçili metni beyaz.
+
+Duvar kâğıdı, shell varlığı, Hyprlock cover ve SDDM wallpaper aynı onaylı dosya.
+Kitty ANSI renkleri, Hyprland sınırları, shell Theme.qml ve SVG dekorlar,
+Hyprlock layout/media/SVG'den üretilen kontroller, Dolphin KDE/Qt paleti ve
+klasör ikonları, Spotify INI/CSS ve SDDM LoginSkin aynı palete geçirilir.
+
+Fastfetch'te son onaylanan silüet PNG'si yeniden renklendirilmez; normal
+50×25 / compact 40×20 hücre. Forgotten Man ve diğer üç tema değiştirilmez.
+Ortak işlev/controller, kısayol, kullanıcı tercihi ve ilk restore yedeği değişmez.
+
+Paket ABI mct-shell-2.9 olarak kalır; yalnız Snowgrave manifesti 0.2.0 olur.
+SDDM sync cache, yeni fingerprint için mevcut kurucuyla yenilenir. Display
+manager restart veya oturum kapatma yapılmaz. Apply/journal/undo mevcut çekirdektir.
+Native Wayland/Fastfetch, gerçek Spotify/Dolphin, PAM veya sonraki giriş bu
+hazırlama ortamında doğrulanmış sayılmaz; kullanıcıdaki son görünüm kontrolü bekler.
+
+
+20 Ekim hazırlama sonucu: 34 çekirdek + 5 adaptör + 15 Qt greeter + 7 güncelleme/journal testi = 61 geçti. QML/SDDM önizlemeleri görsel olarak incelendi. Komutlar ve native sınır MCT-snowgrave-0.2.0/VALIDATION.md kaydında.
+
+
 20 Ekim 2026 hazırlama doğrulaması — Adventure 0.1.0:
 163 unittest geçti: core 34, Adventure 42, Snowgrave regresyon 42, picker UI 6,
 picker bridge 4, adaptörler 5, dört-skin greeter 20, dört-skin OSD 1,

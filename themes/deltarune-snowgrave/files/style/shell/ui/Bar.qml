@@ -17,7 +17,7 @@ BarSurface {
                 c.moveTo(12,h-19);c.lineTo(23,h-24);c.lineTo(31,h-21);
                 c.moveTo(w-2,h-25);c.lineTo(w-15,h-17);c.lineTo(w-19,h-7);c.lineTo(w-33,h);
                 c.moveTo(w-15,h-17);c.lineTo(w-27,h-22);c.stroke();
-                c.fillStyle=Theme.danger;
+                c.fillStyle=Theme.brass;
                 c.beginPath();c.moveTo(23,h-24);c.lineTo(30,h-30);c.lineTo(32,h-21);c.closePath();c.fill();
                 c.beginPath();c.moveTo(w-27,h-22);c.lineTo(w-35,h-28);c.lineTo(w-35,h-19);c.closePath();c.fill();
             }
