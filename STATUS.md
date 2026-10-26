@@ -1,20 +1,23 @@
 <!-- integration-five-themes-20261026 -->
-## 26 Ekim — Beş tema tek dalda: integration/five-themes
+## 26 Ekim — Beş tema tek dalda ve kullanıcı kabulü
 
-- Dal `integration/five-themes` (0581134) GitHub'a pushlandı; yerel ve uzak hash eşleşti.
+- 26 Ekim 13:40 Europe/Riga kullanıcı onayı: Adventure görünüm/kullanımı onaylandı;
+  kullanıcı beş temanın da düzgün çalıştığını bildirdi.
+- Dal `integration/five-themes` GitHub üzerine pushlandı; yerel ve uzak hash eşleşti.
 - İçerik: Plague Tale 2.9.0, Deltarune (Forgotten Tree) 0.3.1, Snowgrave Frost 0.2.0,
   Adventure 0.1.0, Guardian 0.1.1; Fastfetch quotes, SDDM sync, Steam launcher etiketleri.
-- Guardian 0.1.1 paketi hazır; önceki "Guardian henüz uygulanmadı" kayıtları tarihseldir.
+  Önceki "Guardian henüz uygulanmadı" kayıtları tarihseldir.
 - `checkpoint/snowgrave-frost-steam-20261020` merge edildi. Snowgrave dosyaları checkpoint
   ile birebir aynı. Çakışmalarda cihaz sürümü korundu (Dolphin entegrasyonu, beş temalı
-  kayıtlar); checkpoint'ten yalnız greeter testindeki Snowgrave vurgusu #9cdfff alındı.
+  kayıtlar); checkpoint dalından yalnız greeter testindeki Snowgrave vurgusu #9cdfff alındı.
+- Steam (Native) / Steam (Flatpak) etiketleri kurulu; kullanıcı launcher içinde iki ayrı
+  girdiyi doğruladı.
 - Cihaz doğrulaması: `theme_core.py check` beş temada geçti. test_theme_adapters,
   test_lock_layout, test_terminal_medallion ve test_shell_backend.js geçti. 11 test
-  başarısız (Qt test ortamı ve beş tema beklentileri şüpheli); incelenmedi, açık iş.
-- Kurulu: aktif tema Adventure 0.1.0 (Dolphin/SDDM/Spotify integrated). Steam (Native) /
-  Steam (Flatpak) etiketleri kurulu; kullanıcı launcher'da iki ayrı girdiyi doğruladı.
-- Bekleyen: Adventure ve Guardian canlı görünüm/kullanım kabulü, başarısız testlerin
-  sınıflandırılması, tema sisteminin main'e PR ile birleştirilmesi.
+  başarısız (Qt test ortamı ve beş tema beklentileri şüpheli); incelenmedi.
+- Açık işler: başarısız testlerin sınıflandırılması, adaptör testlerine Guardian eklenmesi,
+  tema sisteminin main dalına PR ile birleştirilmesi.
+
 
 <!-- steam-launcher-labels-0.1.0 -->
 ## 20 Ekim — Steam launcher etiketleri 0.1.0
