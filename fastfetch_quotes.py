@@ -16,6 +16,7 @@ QUOTES={
     'deltarune-guardian':('AND TITANS', 'SHAPE FROM', 'DARKENED EYES.'),
     # Caesar +3 of THE WOODS REMEMBER WHAT THE TOWN FORGETS.
     'gravity-falls':('WKH ZRRGV UHPHPEHU', 'ZKDW WKH WRZQ', 'IRUJHWV.'),
+    'spider-punk':('BREAK THE', 'CANON.'),
 }
 
 def quote_asset(theme):

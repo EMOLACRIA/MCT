@@ -144,7 +144,7 @@ def discover(explicit):
 
 
 def logo(args, source):
-    accent={'plague-tale': '#b5a37c', 'deltarune': '#f32baf', 'deltarune-snowgrave': '#9cdfff', 'deltarune-adventure': '#ffcf77', 'deltarune-guardian': '#a7e5f7', 'gravity-falls': '#f0a84a'}[getattr(args,'theme','plague-tale')]
+    accent={'plague-tale': '#b5a37c', 'deltarune': '#f32baf', 'deltarune-snowgrave': '#9cdfff', 'deltarune-adventure': '#ffcf77', 'deltarune-guardian': '#a7e5f7', 'gravity-falls': '#f0a84a', 'spider-punk': '#e8285a'}[getattr(args,'theme','plague-tale')]
     return {'type':'file', 'source':str(source), 'position':'left',
             'padding':{'top':1, 'left':1, 'right':5}, 'color':{'1':accent}}
 

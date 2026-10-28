@@ -1,0 +1,11 @@
+{
+  "wallpaper": "User-supplied image (2026-10-28); third-party artwork, licence unknown, colours unchanged",
+  "wallpaperSourceSha256": "ea5193ddbab0d8ae34a798b2f83369645c1c494a130df34e210d12961f509d87",
+  "quote": {
+    "text": "BREAK THE CANON.",
+    "note": "Original line, not a film quote"
+  },
+  "fonts": {
+    "Permanent Marker": "Apache License 2.0, Font Diner (npm @fontsource/permanent-marker 5.3.0, latin subset, WOFF2 converted to TTF)"
+  }
+}

@@ -395,6 +395,8 @@ def main():
     write(index, re.sub(r'(?m)^Name=.*$', 'Name=Gravity Falls Dusk', re.sub(
         r'(?m)^Comment=.*$', 'Comment=Dusk-coloured folders with lamp-orange outlines with inherited application and action icons',
         index.read_text())))
+    colors = dest / 'adapters/dolphin/DesktopStyle.colors'
+    write(colors, re.sub(r'(?m)^Name=.*$', 'Name=Gravity Falls Dusk', colors.read_text()))
     qt = dest / 'adapters/dolphin/Qt.conf'
     write(qt, re.sub(r'(?m)^Name=.*$', 'Name=Gravity Falls Dusk', qt.read_text()))
 

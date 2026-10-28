@@ -1,3 +1,12 @@
+<!-- spider-punk-0.1.0 -->
+## Spider-Punk 0.1.0 varlık kökeni — 28 Ekim 2026
+
+- Duvar kâğıdı: kullanıcının 28 Ekim'de verdiği resim (üçüncü taraf görsel, lisansı
+  bilinmiyor; renkleri değiştirilmedi). Orijinal `themes/spider-punk/wallpaper-source.jpeg`.
+- Permanent Marker: Apache License 2.0, Font Diner.
+- Yırtık kâğıt, kaymış baskı, terminal şimşeği ve Fastfetch görseli
+  `design/spider-punk/build.py` ile üretildi; karakter/sembol/logo yok.
+
 <!-- gravity-falls-0.1.0 -->
 ## Gravity Falls 0.1.0 varlık kökeni — 28 Ekim 2026
 

@@ -1,3 +1,15 @@
+<!-- spider-punk-0.1.0 -->
+## 28 Ekim — Spider-Punk 0.1.0 (yedinci tema)
+
+- Kullanıcı 20:00 Europe/Riga: açık "Zine" varyantını seçti. Cümle (`BREAK THE CANON.`)
+  ve font izin listesi önerilen varsayılanlarla uygulandı; değiştirilebilir.
+  Dolphin beyaz yazı kuralı nedeniyle Kitty/Dolphin/Spotify koyu "Xerox" yüzündedir.
+  Ayrıntı: docs/SPIDER_PUNK.md.
+- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+- Hazırlama doğrulaması: bütün paneller render edildi; sandbox apply → Frost → rollback,
+  adaptör fixture'ları ve SDDM greeter UI (5) bu tema için geçti; aynı 14 test dosyası
+  değişiklik öncesi koda karşı da çalıştırıldı, yeni başarısızlık yok.
+
 <!-- gravity-falls-0.1.0 -->
 ## 28 Ekim 16:12 — Gravity Falls canlı kabul
 

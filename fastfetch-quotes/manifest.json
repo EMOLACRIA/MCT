@@ -103,6 +103,23 @@
         1401,
         807
       ]
+    },
+    "spider-punk": {
+      "sha256": "d5a718b5ea948da7b7c69dab3400464fb80b470ad62e710b4cade1d243b542db",
+      "text": "BREAK THE CANON.",
+      "lines": [
+        "BREAK THE",
+        "CANON."
+      ],
+      "font": "Permanent Marker",
+      "fontSha256": "291ca2ae1fd8bd07ac7624a63e05eba76f0ac31d0141999137e7581f67d467d0",
+      "fontSize": 230,
+      "inkBounds": [
+        101,
+        461,
+        1434,
+        903
+      ]
     }
   }
 }
