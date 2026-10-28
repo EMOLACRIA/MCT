@@ -9,7 +9,7 @@ FocusScope {
     readonly property color accent: state.selected && state.selected.accent ? state.selected.accent : "#c7b28b"
     readonly property real edge: width < 700 ? 20 : 64
     readonly property real photoHeight: Math.min(230, height * (height < 600 ? .24 : .28))
-    readonly property real railHeight: photoHeight + 136
+    readonly property real railHeight: photoHeight + 176
     readonly property real axisY: Math.round(height * .5)
     readonly property real expandedWidth: Math.min(430, width * .54)
     readonly property real collapsedWidth: Math.max(126, Math.min(210, width * .22))
@@ -17,9 +17,9 @@ FocusScope {
     FontLoader { id: titleFace; source: root.state.selected && root.state.selected.fontSource ? root.state.selected.fontSource : root.state.monoFontSource }
     function revealSelection() {
         rail.forceLayout();
-        // Offscreen ListView delegates may not exist. Use the catalog index.
-        for (let i = 0; i < root.state.themes.length; ++i) {
-            if (root.state.themes[i].id === root.state.selectedId) {
+        // Offscreen ListView delegates may not exist. Use the rail index.
+        for (let i = 0; i < root.state.railThemes.length; ++i) {
+            if (root.state.railThemes[i].id === root.state.selectedFamily) {
                 rail.positionViewAtIndex(i, ListView.Contain);
                 return;
             }
@@ -33,6 +33,9 @@ FocusScope {
             event.accepted = true;
         } else if (event.key === Qt.Key_Left || event.key === Qt.Key_Right || event.key === Qt.Key_Tab) {
             state.navigate(event.key === Qt.Key_Left || (event.modifiers & Qt.ShiftModifier) ? -1 : 1);
+            event.accepted = true;
+        } else if (event.key === Qt.Key_Up || event.key === Qt.Key_Down) {
+            state.step(event.key === Qt.Key_Up ? -1 : 1);
             event.accepted = true;
         } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
             state.activate(state.selectedId); event.accepted = true;
@@ -65,23 +68,29 @@ FocusScope {
         orientation: ListView.Horizontal; spacing: 28; clip: true
         boundsBehavior: Flickable.StopAtBounds
         contentX: 0
-        header: Item {width: Math.max(0, (rail.width - root.expandedWidth - (root.state.themes.length - 1) * (root.collapsedWidth + rail.spacing)) / 2); height: 1}
+        header: Item {width: Math.max(0, (rail.width - root.expandedWidth - (root.state.railThemes.length - 1) * (root.collapsedWidth + rail.spacing)) / 2); height: 1}
         footer: Item {width: rail.headerItem ? rail.headerItem.width : 0; height: 1}
-        model: root.state.themes
+        model: root.state.railThemes
         delegate: PickerCard {
             required property var modelData
             entry: modelData
-            selected: root.state.selectedId === entry.id
-            active: root.state.activeTheme !== null && root.state.activeTheme.id === entry.id && root.state.activeTheme.version === entry.version
+            members: root.state.familyMembers(entry.id)
+            selected: root.state.selectedFamily === entry.id
+            selectedId: root.state.selectedId
+            activeId: root.state.activeTheme !== null ? root.state.activeTheme.id : ""
+            activeVersion: root.state.activeTheme !== null ? root.state.activeTheme.version : ""
             locked: root.state.busy; reduceMotion: root.state.reduceMotion; fontScale: root.state.fontScale
             expandedWidth: root.expandedWidth; collapsedWidth: root.collapsedWidth; previewHeight: root.photoHeight
-            onHighlighted: {root.state.choose(entry.id);root.forceActiveFocus();}
-            onActivated: {root.state.activate(entry.id);root.forceActiveFocus();}
+            // Hovering a family that is already open keeps the chosen variant.
+            onHighlighted: {if (!selected) root.state.choose(entry.id);root.forceActiveFocus();}
+            onActivated: {root.state.activate(selected ? root.state.selectedId : entry.id);root.forceActiveFocus();}
+            onMemberHighlighted: id => {root.state.choose(id);root.forceActiveFocus();}
+            onMemberActivated: id => {root.state.activate(id);root.forceActiveFocus();}
         }
     }
     ScrollView {
         id: statusArea
-        x: root.edge; y: root.axisY + 125
+        x: root.edge; y: root.axisY + 165
         width: root.width - 2 * root.edge; height: Math.max(30, root.height - y - 110)
         contentWidth: availableWidth; clip: true
         Text {
@@ -97,6 +106,7 @@ FocusScope {
         x: root.edge; anchors.bottom: parent.bottom; anchors.bottomMargin: root.height < 600 ? 20 : 40
         spacing: 22
         Text {text: "← →  EXPLORE"; color: "#83949e"; font.family: "monospace"; font.pixelSize: 10}
+        Text {objectName: "variantHint"; visible: root.state.familyMembers(root.state.selectedFamily).length > 1; text: "↑ ↓  VARIANT"; color: "#83949e"; font.family: "monospace"; font.pixelSize: 10}
         Text {text: "ENTER  SWITCH"; color: "#83949e"; font.family: "monospace"; font.pixelSize: 10}
         Text {text: "ESC  CLOSE"; color: "#83949e"; font.family: "monospace"; font.pixelSize: 10}
     }

@@ -23,6 +23,18 @@ QtObject {
             if (themes[i].id === selectedId) return themes[i];
         return null;
     }
+    // Rail entries are family heads; variants (deltarune-*) appear under their head.
+    readonly property var railThemes: themes.filter(t => (t.family || t.id) === t.id)
+    function familyOf(id) {
+        for (let i = 0; i < themes.length; ++i)
+            if (themes[i].id === id) return themes[i].family || id;
+        return id;
+    }
+    function familyMembers(head) {
+        const members = themes.filter(t => (t.family || t.id) === head);
+        return members.filter(t => t.id === head).concat(members.filter(t => t.id !== head));
+    }
+    readonly property string selectedFamily: familyOf(selectedId)
     readonly property bool blocked: busy || !ready || pending || stateError !== ""
     readonly property bool isActive: selected !== null && activeTheme !== null
                                     && selected.id === activeTheme.id && selected.version === activeTheme.version
@@ -35,10 +47,20 @@ QtObject {
         selectedId = id; checkedId = ""; message = ""; failed = false; rollbackArmed = false;
     }
     function navigate(delta) {
-        if (busy || !themes.length) return;
+        // Left/right: between rail entries; a family is entered at its head.
+        const rail = railThemes;
+        if (busy || !rail.length) return;
         let index = 0;
-        for (let i = 0; i < themes.length; ++i) if (themes[i].id === selectedId) index = i;
-        choose(themes[(index + delta + themes.length) % themes.length].id);
+        for (let i = 0; i < rail.length; ++i) if (rail[i].id === selectedFamily) index = i;
+        choose(rail[(index + delta + rail.length) % rail.length].id);
+    }
+    function step(delta) {
+        // Up/down: within the selected family (head first, then variants).
+        const members = familyMembers(selectedFamily);
+        if (busy || members.length < 2) return;
+        let index = 0;
+        for (let i = 0; i < members.length; ++i) if (members[i].id === selectedId) index = i;
+        choose(members[Math.max(0, Math.min(members.length - 1, index + delta))].id);
     }
     function activate(id) {
         if (blocked) return;

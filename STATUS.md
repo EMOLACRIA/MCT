@@ -1,3 +1,13 @@
+<!-- picker-families-20261028 -->
+## 28 Ekim — Super+G: Deltarune temaları tek kartta
+
+- Kullanıcı 20:15 Europe/Riga: Guardian, Adventure, Deltarune ve Snowgrave tek seçenek
+  altında olsun; Deltarune'a gelince diğerleri altta görünsün. Spider-Punk'ı bu haliyle
+  (BREAK THE CANON., koyu uygulamalar) kabul etti. Ayrıntı: docs/THEME_PICKER.md.
+- Durum: yazıldı, yerel commit. Kurulmadı (picker repo'dan çalışır), canlı test edilmedi, pushlanmadı.
+- Doğrulama: picker UI testleri 7/7 (yeni aile testi dahil); aynı 14 test dosyası
+  değişiklik öncesi koda karşı da çalıştırıldı, yeni başarısızlık yok.
+
 <!-- spider-punk-0.1.0 -->
 ## 28 Ekim — Spider-Punk 0.1.0 (yedinci tema)
 

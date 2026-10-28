@@ -54,13 +54,11 @@ class PickerUiTests(unittest.TestCase):
     def test_hover_expands_photo_without_switch_then_one_click_applies(self):
         self.assertEqual(self.js('model.selectedId'),'deltarune')
         self.assertFalse(self.js('model.canApply'))
-        for theme in ('deltarune','deltarune-snowgrave','deltarune-adventure','plague-tale'):
+        for theme in ('deltarune','gravity-falls','plague-tale','spider-punk'):
             for _ in range(100):
                 if qt.evaluate(self.item('themeImage-'+theme),'status') != 2:break
                 qt.QTest.qWait(20)
             self.assertEqual(qt.evaluate(self.item('themeImage-'+theme),'status'),1)
-        # With six packages the rail is wider than the window; bring the card into view first.
-        qt.evaluate(self.item('themeRail'),'positionViewAtEnd()'); qt.QTest.qWait(40)
         qt.QTest.mouseMove(self.view,self.center('selectTheme-plague-tale')); qt.QTest.qWait(40)
         self.assertEqual(self.js('model.selectedId'),'plague-tale')
         self.assertEqual(self.requests,[('catalog','')])
@@ -96,12 +94,12 @@ class PickerUiTests(unittest.TestCase):
 
     def test_keyboard_enter_switch_escape_and_restore_confirmation(self):
         qt.QTest.keyClick(self.view,qt.Qt.Key_Right)
-        self.assertEqual(self.js('model.selectedId'),'deltarune-adventure')
+        self.assertEqual(self.js('model.selectedId'),'gravity-falls')
         qt.QTest.keyClick(self.view,qt.Qt.Key_Return)
-        self.assertEqual(self.requests[-1],('apply','deltarune-adventure'))
+        self.assertEqual(self.requests[-1],('apply','gravity-falls'))
         qt.QTest.keyClick(self.view,qt.Qt.Key_Escape)
         self.assertTrue(self.closed);self.assertTrue(self.js('model.busy'))
-        self.reply('apply',ok=False,theme='deltarune-adventure',message='fixture',catalog=self.catalog)
+        self.reply('apply',ok=False,theme='gravity-falls',message='fixture',catalog=self.catalog)
         self.click('rollbackTheme');self.assertTrue(self.js('model.rollbackArmed'))
         qt.QTest.keyClick(self.view,qt.Qt.Key_Escape);self.assertFalse(self.js('model.rollbackArmed'))
         self.click('rollbackTheme');self.click('rollbackTheme');self.assertEqual(self.requests[-1],('rollback',''))
@@ -114,14 +112,40 @@ class PickerUiTests(unittest.TestCase):
                 spine=self.item('themeSpine')
                 self.assertAlmostEqual(spine.y(),round(height*.5),delta=1)
                 self.assertGreaterEqual(spine.x(),0);self.assertLessEqual(spine.x()+spine.width(),width)
-                for theme in ('deltarune','deltarune-snowgrave','deltarune-adventure','plague-tale'):
+                for theme,card in (('deltarune','deltarune'),('deltarune-snowgrave','deltarune'),('deltarune-adventure','deltarune'),('plague-tale','plague-tale')):
                     self.js('model.choose('+json.dumps(theme)+')');qt.QTest.qWait(30)
-                    photo=self.item('themePhoto-'+theme)
+                    photo=self.item('themePhoto-'+card)
                     self.assertGreaterEqual(photo.mapToScene(photo.boundingRect().topLeft()).y(),0)
                     self.assertLessEqual(photo.mapToScene(photo.boundingRect().bottomRight()).y(),height)
                 self.assertFalse(self.view.grabWindow().isNull())
         self.view.resize(1600,1000);self.js('model.fontScale=1;model.reduceMotion=false;model.choose("deltarune")');qt.QTest.qWait(260)
         if os.environ.get('MCT_PICKER_PREVIEW'):self.assertTrue(self.view.grabWindow().save(os.environ['MCT_PICKER_PREVIEW']))
+
+    def test_deltarune_variants_live_under_one_rail_entry(self):
+        families={t['id']:t['family'] for t in self.catalog['themes']}
+        self.assertEqual({k for k,v in families.items() if v=='deltarune'},
+                         {'deltarune','deltarune-adventure','deltarune-guardian','deltarune-snowgrave'})
+        self.assertEqual([t['id'] for t in self.js('model.railThemes')],['deltarune','gravity-falls','plague-tale','spider-punk'])
+        self.assertTrue(self.item('themeMembers-deltarune').isVisible())
+        # Up/down walk the family, head first; the ends clamp.
+        qt.QTest.keyClick(self.view,qt.Qt.Key_Down);self.assertEqual(self.js('model.selectedId'),'deltarune-adventure')
+        qt.QTest.keyClick(self.view,qt.Qt.Key_Down);self.assertEqual(self.js('model.selectedId'),'deltarune-guardian')
+        qt.QTest.keyClick(self.view,qt.Qt.Key_Up);qt.QTest.keyClick(self.view,qt.Qt.Key_Up);qt.QTest.keyClick(self.view,qt.Qt.Key_Up)
+        self.assertEqual(self.js('model.selectedId'),'deltarune')
+        # Hovering a member chooses it and the photo follows; hovering the card keeps it.
+        qt.QTest.mouseMove(self.view,self.center('selectMember-deltarune-snowgrave'));qt.QTest.qWait(40)
+        self.assertEqual(self.js('model.selectedId'),'deltarune-snowgrave')
+        self.assertIn('deltarune-snowgrave',qt.evaluate(self.item('themeImage-deltarune'),'source.toString()'))
+        qt.QTest.mouseMove(self.view,self.center('themeTitle-deltarune'));qt.QTest.qWait(40)
+        self.assertEqual(self.js('model.selectedId'),'deltarune-snowgrave')
+        self.assertEqual(self.requests,[('catalog','')])
+        self.click('selectMember-deltarune-snowgrave')
+        self.assertEqual(self.requests[-1],('apply','deltarune-snowgrave'))
+        self.reply('apply',theme='deltarune-snowgrave',catalog=dict(self.catalog,active=dict(id='deltarune-snowgrave',version=next(t['version'] for t in self.catalog['themes'] if t['id']=='deltarune-snowgrave'))))
+        # Left/right leave the family; an active variant is shown on the closed card.
+        qt.QTest.keyClick(self.view,qt.Qt.Key_Right);self.assertEqual(self.js('model.selectedId'),'gravity-falls')
+        self.assertIsNone(qt.visual_child(self.root,'themeMembers-deltarune'))
+        qt.QTest.keyClick(self.view,qt.Qt.Key_Left);self.assertEqual(self.js('model.selectedId'),'deltarune')
 
     def test_pending_invalid_and_empty_catalog_prevent_apply(self):
         for changes in (dict(pending=True),dict(stateError='fixture bad state'),dict(themes=[])):

@@ -75,3 +75,21 @@ denemedir; offscreen test başarıları bu native sonucun yerine geçmez.
 göre dallanmak yerine Engine.load ile bütünlüğü kontrol edilen Theme.qml ve font
 envanterinden okunur. Üç kart dar ekranda aynı yatay rail içinde kayar; yeni
 uygulama penceresi, kısayol veya ayrı check düğmesi eklenmedi. [Snowgrave](SNOWGRAVE.md).
+
+<!-- picker-families-20261028 -->
+## 28 Ekim 2026 — Aileler: Deltarune tek kart
+
+Kimliği başka bir paketin kimliği ve `-ad` ile başlayan paket o paketin varyantıdır
+(`deltarune-snowgrave` → `deltarune`); en uzun eşleşen üst kazanır. Katalog her
+satıra `family` alanını ekler; paket manifestleri değişmez.
+
+- Şeritte yalnız aile başları durur: Deltarune, Gravity Falls, Plague Tale, Spider-Punk.
+- Deltarune kartı açıkken altında üyeleri görünür (Deltarune, Adventure, Guardian,
+  Snowgrave). Üzerine gelmek seçer, tıklamak uygular. Fotoğraf seçili üyeyi gösterir.
+- Açık bir ailenin kartına tekrar gelmek seçili varyantı bozmaz.
+- Klavye: ← → aileler arası, ↑ ↓ aile içinde (baş önce, uçlarda durur), Enter uygular.
+- Kapalı kart, kurulu varyantı `CURRENT · AD` olarak gösterir.
+- Kart başlıkları her temanın kendi Theme.qml görüntü fontuyla yazılır.
+
+Yeni bir Deltarune teması `deltarune-<ad>` kimliğiyle eklenirse otomatik olarak bu
+kartın altına girer; ayrı kayıt gerekmez.

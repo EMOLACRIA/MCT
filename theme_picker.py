@@ -28,11 +28,19 @@ def catalog(engine):
             for field,token in [('accent','brass'),('surface','inputSurface')]:
                 match=re.search(r'readonly\s+property\s+color\s+'+token+r'\s*:\s*"(#[0-9a-fA-F]{6})"',skin)
                 if match:row[field]=match.group(1)
-            if 'style/shell/assets/departure-mono.otf' in files:
-                row['fontSource'] = theme_core.safe(folder, 'files/style/shell/assets/departure-mono.otf').as_uri()
+            # Title face: the skin's own display font (first FontLoader in Theme.qml).
+            face=re.search(r'FontLoader\s*\{\s*source\s*:\s*Qt\.resolvedUrl\("\.\./assets/([A-Za-z0-9_.-]+\.(?:otf|ttf))"\)',skin)
+            if face and 'style/shell/assets/'+face.group(1) in files:
+                row['fontSource'] = theme_core.safe(folder, 'files/style/shell/assets/'+face.group(1)).as_uri()
         except (theme_core.ThemeError, OSError, ValueError) as exc:
             row['error'] = str(exc)
         rows.append(row)
+    # A package whose id is another package's id plus "-name" is shown as a
+    # variant of it (deltarune-snowgrave -> deltarune). Longest parent wins.
+    ids = {row['id'] for row in rows}
+    for row in rows:
+        parents = [other for other in ids if other != row['id'] and row['id'].startswith(other + '-')]
+        row['family'] = max(parents, key=len) if parents else row['id']
     preferences = theme_core.load_module(ROOT / 'payload/style/scripts/preferences.py')
     try:
         values = preferences.read()
