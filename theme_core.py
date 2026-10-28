@@ -85,10 +85,20 @@ def allowed(name):
         return True
     return (str(p.parent) in ("style/shell/assets", "style/hyprlock")
             and bool(re.fullmatch(r"[A-Za-z0-9_-]+\.(png|svg)", p.name))) or (
-                str(p.parent) == "style/shell/assets" and p.name in (
-                    "departure-mono.otf", "departure-mono-license.txt",
-                    "courier-prime-regular.ttf", "courier-prime-bold.ttf", "courier-prime-license.txt",
-                    "permanent-marker.ttf", "permanent-marker-license.txt"))
+                str(p.parent) == "style/shell/assets" and bool(FONT.fullmatch(p.name) or LICENSE.fullmatch(p.name)))
+
+
+# Any skin font is allowed in style/shell/assets as long as the package also ships
+# its licence: "<prefix>-license.txt" where the font name starts with "<prefix>".
+FONT = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\.(?:otf|ttf)")
+LICENSE = re.compile(r"([a-z0-9]+(?:-[a-z0-9]+)*)-license\.txt")
+
+
+def unlicensed_fonts(targets):
+    names = [PurePosixPath(t).name for t in targets if str(PurePosixPath(t).parent) == "style/shell/assets"]
+    prefixes = [m.group(1) for m in map(LICENSE.fullmatch, names) if m]
+    return sorted(n for n in names if FONT.fullmatch(n)
+                  and not any(n == p + n[len(p):] and n[len(p):len(p) + 1] in ("-", ".") for p in prefixes))
 
 
 def png(data):
@@ -347,6 +357,9 @@ class Engine:
                     "style/shell/ui/SurfaceLayout.qml"}
         if not required <= output.keys() or total > 64 * 1024 * 1024:
             raise ThemeError("Incomplete or oversized theme package")
+        missing = unlicensed_fonts(output)
+        if missing:
+            raise ThemeError("Font without a licence file in the package: " + ", ".join(missing))
         return manifest, output
 
     def optional(self, name):

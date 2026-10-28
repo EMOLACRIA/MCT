@@ -120,6 +120,23 @@
         1434,
         903
       ]
+    },
+    "little-prince": {
+      "sha256": "2bc57c85710e59c102e212576664ea756cfc83f55cd4cdcd1e5343646cfd8c2c",
+      "text": "TEND THE ROSE YOU CHOSE.",
+      "lines": [
+        "TEND THE ROSE",
+        "YOU CHOSE."
+      ],
+      "font": "Lora Italic",
+      "fontSha256": "22d8d8854b53807aa664ca34f2031a9ed57a1d0dea296b8b96cdd3aad937a2b3",
+      "fontSize": 190,
+      "inkBounds": [
+        23,
+        478,
+        1510,
+        835
+      ]
     }
   }
 }

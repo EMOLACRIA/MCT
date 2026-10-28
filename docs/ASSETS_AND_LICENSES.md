@@ -1,3 +1,12 @@
+<!-- little-prince-0.1.0 -->
+## Little Prince 0.1.0 varlık kökeni — 28 Ekim 2026
+
+- Duvar kâğıdı: kullanıcının 28 Ekim'de verdiği resim (üçüncü taraf film karesi, lisansı
+  bilinmiyor; renkleri değiştirilmedi). Orijinal `themes/little-prince/wallpaper-source.jpeg`.
+- Lora Italic: SIL OFL 1.1, The Lora Project Authors.
+- Kâğıt katmanları, terminal gezegeni ve Fastfetch görseli
+  `design/little-prince/build.py` ile üretildi; karakter/sembol/logo yok.
+
 <!-- spider-punk-0.1.0 -->
 ## Spider-Punk 0.1.0 varlık kökeni — 28 Ekim 2026
 

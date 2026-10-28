@@ -1,3 +1,14 @@
+<!-- little-prince-0.1.0 -->
+## 28 Ekim — Little Prince 0.1.0 (sekizinci tema)
+
+- Kullanıcı: mavi "Asteroid" paleti, biraz açık ve %80 saydam ("%80 olan iyi duruyor");
+  cümle `TEND THE ROSE YOU CHOSE.`; fontlara sınırsız izin. Ayrıntı: docs/LITTLE_PRINCE.md.
+- Ortak değişiklik: font izin listesi genelleştirildi (lisans dosyası zorunlu).
+- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+- Hazırlama doğrulaması: bütün paneller render edildi; sandbox apply → Snowgrave → rollback,
+  adaptör fixture'ları, SDDM greeter UI (5) ve font testleri (3) geçti; aynı 14 test dosyası
+  değişiklik öncesi koda karşı da çalıştırıldı, yeni başarısızlık yok.
+
 <!-- picker-families-20261028 -->
 ## 28 Ekim — Super+G: Deltarune temaları tek kartta
 

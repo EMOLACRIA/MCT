@@ -17,6 +17,7 @@ QUOTES={
     # Caesar +3 of THE WOODS REMEMBER WHAT THE TOWN FORGETS.
     'gravity-falls':('WKH ZRRGV UHPHPEHU', 'ZKDW WKH WRZQ', 'IRUJHWV.'),
     'spider-punk':('BREAK THE', 'CANON.'),
+    'little-prince':('TEND THE ROSE', 'YOU CHOSE.'),
 }
 
 def quote_asset(theme):
