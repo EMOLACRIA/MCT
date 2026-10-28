@@ -1,0 +1,12 @@
+{
+  "wallpaper": "User-supplied image (2026-10-27); third-party fan render, licence unknown, colours unchanged",
+  "wallpaperSourceSha256": "39ec405d17987f1ac788ab40a724bca386c52a1cf5dc032f141d1f4f9b97e60e",
+  "cipher": {
+    "method": "Caesar +3",
+    "plain": "THE WOODS REMEMBER WHAT THE TOWN FORGETS.",
+    "text": "WKH ZRRGV UHPHPEHU ZKDW WKH WRZQ IRUJHWV."
+  },
+  "fonts": {
+    "Courier Prime": "SIL OFL 1.1, The Courier Prime Project Authors (npm @fontsource/courier-prime 5.3.0, latin subset, WOFF2 converted to TTF)"
+  }
+}

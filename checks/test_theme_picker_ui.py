@@ -59,6 +59,8 @@ class PickerUiTests(unittest.TestCase):
                 if qt.evaluate(self.item('themeImage-'+theme),'status') != 2:break
                 qt.QTest.qWait(20)
             self.assertEqual(qt.evaluate(self.item('themeImage-'+theme),'status'),1)
+        # With six packages the rail is wider than the window; bring the card into view first.
+        qt.evaluate(self.item('themeRail'),'positionViewAtEnd()'); qt.QTest.qWait(40)
         qt.QTest.mouseMove(self.view,self.center('selectTheme-plague-tale')); qt.QTest.qWait(40)
         self.assertEqual(self.js('model.selectedId'),'plague-tale')
         self.assertEqual(self.requests,[('catalog','')])

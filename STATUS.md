@@ -1,3 +1,16 @@
+<!-- gravity-falls-0.1.0 -->
+## 28 Ekim — Gravity Falls 0.1.0 (altıncı tema)
+
+- Kullanıcı 28 Ekim 15:58 Europe/Riga: alacakaranlık varyantını, Sezar +3 ile
+  "THE WOODS REMEMBER WHAT THE TOWN FORGETS." cümlesini ve Courier Prime için
+  izin listesi değişikliğini onayladı. Ayrıntı: docs/GRAVITY_FALLS.md.
+- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+- Hazırlama doğrulaması (PySide6 6.12 offscreen): bütün paneller uyarısız render
+  edildi; sandbox apply → Frost → rollback geçti; Dolphin/Spotify/terminal/greeter
+  adaptör fixture'ları ve SDDM greeter UI (5) bu tema için geçti. Aynı 14 test dosyası
+  değişiklik öncesi koda karşı da çalıştırıldı; yeni başarısızlık yok.
+- Ortak shell değişmedi; kurulum için SDDM önbelleği yenilenir, update gerekmez.
+
 <!-- integration-five-themes-20261026 -->
 ## 26 Ekim — Beş tema tek dalda ve kullanıcı kabulü
 

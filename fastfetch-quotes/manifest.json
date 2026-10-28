@@ -85,6 +85,24 @@
         1387,
         886
       ]
+    },
+    "gravity-falls": {
+      "sha256": "15fe5448215635fa11ffaaeb60fe1ac7e114eadf4c059680df8a7b40a8ad23ba",
+      "text": "WKH ZRRGV UHPHPEHU ZKDW WKH WRZQ IRUJHWV.",
+      "lines": [
+        "WKH ZRRGV UHPHPEHU",
+        "ZKDW WKH WRZQ",
+        "IRUJHWV."
+      ],
+      "font": "Courier Prime",
+      "fontSha256": "6f0c3d05868bec7ad9568cfeb8dab3b1220296f29975c4214a16f05065e93b53",
+      "fontSize": 118,
+      "inkBounds": [
+        130,
+        442,
+        1401,
+        807
+      ]
     }
   }
 }

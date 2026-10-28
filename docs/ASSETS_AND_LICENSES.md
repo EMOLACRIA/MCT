@@ -1,3 +1,12 @@
+<!-- gravity-falls-0.1.0 -->
+## Gravity Falls 0.1.0 varlık kökeni — 28 Ekim 2026
+
+- Duvar kâğıdı: kullanıcının 27 Ekim'de verdiği resim (üçüncü taraf fan render'ı,
+  lisansı bilinmiyor; renkleri değiştirilmedi). Orijinal `themes/gravity-falls/wallpaper-source.jpeg`.
+- Courier Prime Regular/Bold: SIL OFL 1.1, The Courier Prime Project Authors.
+- Kâğıt bant süsleri, terminal medallion çamları ve Fastfetch şifre görseli
+  `design/gravity-falls/build.py` ile üretildi; dizinin karakter/sembol/logosu yok.
+
 <!-- snowgrave-frost-0.2.0 -->
 ## Snowgrave Frost 0.2.0 varlık kökeni — 20 Ekim 2026
 

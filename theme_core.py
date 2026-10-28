@@ -86,7 +86,8 @@ def allowed(name):
     return (str(p.parent) in ("style/shell/assets", "style/hyprlock")
             and bool(re.fullmatch(r"[A-Za-z0-9_-]+\.(png|svg)", p.name))) or (
                 str(p.parent) == "style/shell/assets" and p.name in (
-                    "departure-mono.otf", "departure-mono-license.txt"))
+                    "departure-mono.otf", "departure-mono-license.txt",
+                    "courier-prime-regular.ttf", "courier-prime-bold.ttf", "courier-prime-license.txt"))
 
 
 def png(data):

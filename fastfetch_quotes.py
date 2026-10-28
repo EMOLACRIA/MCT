@@ -14,6 +14,8 @@ QUOTES={
     'deltarune-snowgrave':('Proceed',),
     'deltarune-adventure':('Nothing is', 'stronger than...', 'a... Flower\'s...', 'dream...!'),
     'deltarune-guardian':('AND TITANS', 'SHAPE FROM', 'DARKENED EYES.'),
+    # Caesar +3 of THE WOODS REMEMBER WHAT THE TOWN FORGETS.
+    'gravity-falls':('WKH ZRRGV UHPHPEHU', 'ZKDW WKH WRZQ', 'IRUJHWV.'),
 }
 
 def quote_asset(theme):
