@@ -9,10 +9,11 @@ ColumnLayout {
     property real from:0
     property real to:100
     property real step:1
+    property string unit:"%"
     signal chosen(real value)
     RowLayout {
         Text { font.family:Theme.bodyFont;text:root.label;color:Theme.ink;font.pixelSize:Theme.fontSize(13);Layout.fillWidth:true}
-        Text { font.family:Theme.bodyFont;text:Math.round(slider.value)+"%";color:Theme.brass;font.pixelSize:Theme.fontSize(12)}
+        Text { font.family:Theme.bodyFont;text:Math.round(slider.value)+root.unit;color:Theme.brass;font.pixelSize:Theme.fontSize(12)}
     }
     Slider {
         id:slider;objectName:root.objectName+"Slider"

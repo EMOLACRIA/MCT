@@ -1,7 +1,8 @@
 # Ortak ayarlar — 2.5.0
 
 Bardaki ses düğmesi → kontrol panelinin üstündeki dişli → **Preferences**.
-Esc kapatır. Panelde aşağı kaydırarak uygulama seçimi, tanılama ve reset'e ulaşılır.
+Esc kapatır. Üstte üç sekme var: Shell (bu sayfa), Layout ve aktif tema; son ikisi
+[THEME_CONFIG](THEME_CONFIG.md)'da. Panelde aşağı kaydırarak uygulama seçimi, tanılama ve reset'e ulaşılır.
 Yeni global kısayol yoktur; gerekirse `python3 ~/.config/desktop-style/scripts/shellctl.py settings`.
 
 | Tercih | Aralık / seçenek | Varsayılan |

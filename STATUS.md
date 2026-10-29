@@ -1,3 +1,14 @@
+<!-- theme-config-0.1.0 -->
+## 29 Ekim — Tema ayarları arayüzü
+
+- Kullanıcı tasarımı onayladı: Preferences'ta Shell · Layout · aktif tema sekmeleri; layout
+  ortak, duvar kâğıdı/cümle/renkler temaya özel. Ayrıntı: docs/THEME_CONFIG.md.
+- Ortak shell değişti (yeni sekmeler, store, helper): kurulum `update.sh` ister.
+- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+- Hazırlama doğrulaması: theme_config 14 test (sandbox apply → değişiklik → rollback dahil),
+  panel UI 5 test (Fastfetch görseli çizimi dahil), shell import/palet kuralı geçti; aynı
+  14 test dosyası değişiklik öncesi koda karşı da çalıştırıldı, yeni başarısızlık yok.
+
 <!-- little-prince-0.1.0 -->
 ## 28 Ekim — Little Prince 0.1.0 (sekizinci tema)
 

@@ -15,6 +15,8 @@ Scope {
     property alias preferences:preferenceStore.state
     function reloadPreferences() {preferenceStore.run("read",null);}
     function diagnosePreferences() {preferenceStore.run("diagnose",null);}
+    ThemeConfigStore {id:themeConfigStore}
+    property alias themeConfig:themeConfigStore.state
     readonly property var fileManagerChoices:DesktopEntries.applications.values.filter(e=>e.categories.indexOf("FileManager")>=0 || e.id.replace(/\.desktop$/,"")==="org.kde.dolphin").map(e=>({id:e.id.endsWith(".desktop") ? e.id : e.id+".desktop",name:e.name}))
     property bool hardwareMonitoring:false
     property var hardware:({})

@@ -183,24 +183,39 @@ class Integrations:
         app=load(self.engine.root/'apps/manage.py');tags=app.ScriptTags();tags.feed((xpui/'index.html').read_text())
         if not {'colors.css','user.css'}<={s.split('?')[0].lstrip('/') for s in tags.stylesheets}:raise ValueError('Spotify CSS entry points are missing.')
         source=self.source(theme,'spotify');ini=(source/'color.ini').read_bytes();css=(source/'user.css').read_bytes()
+        tc,_,_,old,new=self.overrides(theme)
+        if old!=new:ini,css=tc.swap_color(ini,old,new),tc.swap_color(css,old,new)
         palette=configparser.ConfigParser(interpolation=None);palette.read_string(ini.decode());lines=[]
         for key,value in palette['Ash'].items():
             if not re.fullmatch(r'[a-z][a-z0-9-]*',key) or not re.fullmatch(r'[0-9a-fA-F]{6}',value):raise ValueError('Unsupported Spotify palette value.')
             rgb=', '.join(str(int(value[i:i+2],16)) for i in (0,2,4));lines.extend(['--spice-'+key+': #'+value+';','--spice-rgb-'+key+': '+rgb+';'])
         colors=(':root {\n'+ '\n'.join(lines)+'\n}\n').encode();record['theme']=theme
         return dict(zip(paths,[colors,css,ini,css,encoded(record)]))
+    def overrides(self,theme):
+        """User theme settings for one theme: (module, config, entry, approved accent, chosen accent)."""
+        tc=self.engine.settings();config=tc.read(self.engine.settings_env);entry=config['themes'].get(theme,{})
+        _,files=self.engine.load(theme);old,new=tc.accent_of(theme,files,config)
+        return tc,config,entry,old,new
     def fastfetch_plan(self,theme):
         t=self.terminal();profile=self.settings();marker=t.STATE/'current.json'
         if not marker.is_file():raise ValueError('The Fastfetch adapter must be enrolled once: bash theme.sh integrations enable')
         record=json.loads(marker.read_text());compact=record.get('variant')=='compact'
         args=SimpleNamespace(config=profile['fastfetchConfig'],compact=compact,theme=theme,check=True)
         target,_,updated=t.preflight(args);asset=quote_asset(theme)
+        tc,_,entry,old,new=self.overrides(theme)
+        if asset is not None and 'quote' in entry:
+            asset=('\n'.join('$1'+line.center(26).rstrip() for line in entry['quote'])+'\n').encode()
         image=None
         if asset is None:
             asset=t.source_asset(args).read_bytes();record.pop('image',None);record.pop('image_sha256',None)
         else:
             color=t.logo(args,t.ASSET).get('color',{}).get('1','#ffffff')
-            image=quote_png(theme,color);updated=t.with_logo(updated,image_logo(self.quote_path(),compact,theme=theme))
+            if old!=new:color='#'+new
+            # A changed line uses the image the Preferences panel rendered for it;
+            # until one matches, Fastfetch keeps the approved line in the chosen accent.
+            custom=tc.quote_image(theme,entry,color) if 'quote' in entry else None
+            image=custom or quote_png(theme,color)
+            updated=t.with_logo(updated,image_logo(self.quote_path(),compact,theme=None if custom else theme))
             record.update(image=str(self.quote_path()),image_sha256=sha(image))
         record.update(asset=str(t.ASSET),variant='compact' if compact else 'detailed',revision='quote-png-1' if image else 'cp437-1.3',theme=theme,asset_sha256=sha(asset),installed_sha256=sha(updated.encode()))
         return {target:updated.encode(),t.ASSET:asset,marker:encoded(record),self.quote_path():image}
@@ -225,12 +240,15 @@ class Integrations:
         expected={p.relative_to(self.userdata/'icons/DesktopStyle') for p in paths[2:-2]}
         if source_files!=expected:raise ValueError('Dolphin icon inventory changed; review the adapter before enrolling it.')
         colors=safe_file(source/'DesktopStyle.colors').read_bytes()
+        tc,_,_,old,new=self.overrides(theme)
+        if old!=new:colors=tc.swap_color(colors,old,new)
         palette=configparser.ConfigParser(interpolation=None);palette.read_string(colors.decode())
         for section in ('Colors:View','Colors:Selection','Colors:Window'):
             if palette[section]['ForegroundNormal'].replace(' ','')!='255,255,255':raise ValueError('Dolphin text must remain white.')
         app.SELECTED_THEME=theme
         # Use the existing first-theme palette; other themes supply their own Qt.conf.
         qt_palette=app.qt_palette().encode() if theme=='plague-tale' else safe_file(source/'Qt.conf').read_bytes()
+        if old!=new:qt_palette=tc.swap_color(qt_palette,old,new)
         output={paths[0]:colors,paths[1]:qt_palette}
         for p in paths[2:-2]:output[p]=safe_file(source/'icons'/p.relative_to(self.userdata/'icons/DesktopStyle')).read_bytes()
         record['theme']=theme;output[pointer]=encoded(record)

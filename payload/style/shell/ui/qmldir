@@ -28,3 +28,4 @@ PreferenceSlider 1.0 PreferenceSlider.qml
 PreferenceChoice 1.0 PreferenceChoice.qml
 Settings 1.0 Settings.qml
 PartyStrip 1.0 PartyStrip.qml
+ThemeConfigState 1.0 ThemeConfigState.qml

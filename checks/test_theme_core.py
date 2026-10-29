@@ -51,8 +51,12 @@ class CoreTests(unittest.TestCase):
         self.package = self.base / "source"
         shutil.copytree(ROOT / "themes", self.package / "themes")
         self.runtime = Runtime()
+        for name in ("payload/style/scripts/theme_config.py", "fastfetch_quotes.py"):
+            (self.package / name).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(ROOT / name, self.package / name)
         self.engine = theme.Engine(self.package, self.base / "config/desktop-style",
-                                  self.base / "state/desktop-style", self.base / "config/hypr", self.runtime)
+                                  self.base / "state/desktop-style", self.base / "config/hypr", self.runtime,
+                                  settings_env={"HOME": str(self.base), "XDG_CONFIG_HOME": str(self.base / "config")})
         self.engine.state.mkdir(parents=True)
         (self.engine.state / "current-backup").write_text("/original-backup")
         self.engine.hypr.mkdir(parents=True)

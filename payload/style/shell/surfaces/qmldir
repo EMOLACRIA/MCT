@@ -16,3 +16,5 @@ ToastSurface 1.0 ToastSurface.qml
 ToastStackSurface 1.0 ToastStackSurface.qml
 WindowSwitcherSurface 1.0 WindowSwitcherSurface.qml
 PanelSlot 1.0 PanelSlot.qml
+LayoutTab 1.0 LayoutTab.qml
+ThemeTab 1.0 ThemeTab.qml

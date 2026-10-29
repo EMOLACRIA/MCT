@@ -10,6 +10,23 @@ Item {
         id:preferenceState;ephemeral:true
         onWriteRequested:(action,candidate)=>accept({ok:true,action:action,values:candidate})
     }
+    property alias themeConfig:themeConfigState
+    // Preview: the active skin's own colours as defaults; nothing is written.
+    ThemeConfigState {
+        id:themeConfigState;ephemeral:true
+        function hex(c,alpha) {const h=v=>("0"+Math.round(v*255).toString(16)).slice(-2);return "#"+(alpha && c.a<.995 ? h(c.a) : "")+h(c.r)+h(c.g)+h(c.b);}
+        function packet(action) {
+            return {ok:true,action:action,path:"Preview · memory only",config:action==="apply" ? JSON.parse(JSON.stringify(draft)) : config,
+                    active:{id:"preview",name:"Theme",version:"preview"},lockQuote:true,applied:true,wallpaper:String(Theme.wallpaper).replace(/^file:\/\//,""),
+                    defaults:{quote:["TEND THE ROSE","YOU CHOSE."],layout:{gapsIn:5,gapsOut:14,border:2,rounding:8},
+                              colors:{accent:hex(Theme.brass),surface:hex(Theme.background,true),raised:hex(Theme.raised,true),selection:hex(Theme.selectedSurface,true),
+                                      text:hex(Theme.ink),secondary:hex(Theme.muted),line:hex(Theme.line,true),warning:hex(Theme.danger)}}};
+        }
+        property string pending:""
+        onRequested:(action,args)=> {pending=action;answer.restart();}
+        property Timer answer:Timer {interval:0;onTriggered:themeConfigState.accept(themeConfigState.pending==="pick" ? Object.assign(themeConfigState.packet("pick"),{ok:false,error:"Preview · no file chooser"}) : themeConfigState.packet(themeConfigState.pending))}
+        Component.onCompleted:accept(packet("read"))
+    }
     property var fileManagerChoices:[{id:"org.kde.dolphin.desktop",name:"Dolphin"},{id:"thunar.desktop",name:"Thunar"}]
     function reloadPreferences() {}
     function diagnosePreferences() {preferences.diagnostics="Preview · no native diagnostics run";}

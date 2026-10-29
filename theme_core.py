@@ -281,8 +281,11 @@ class Native:
 
 
 class Engine:
-    def __init__(self, root=ROOT, style=None, state=None, hypr=None, runtime=None, integrations=None):
+    def __init__(self, root=ROOT, style=None, state=None, hypr=None, runtime=None, integrations=None, settings_env=None):
         home = Path.home()
+        # Environment used to locate ~/.config/mct theme settings (tests pass a fixture).
+        self.settings_env = settings_env
+        self._settings = None
         self.root = Path(root).absolute()
         self.style = Path(style or home / ".config/desktop-style").absolute()
         self.state = Path(state or home / ".local/state/desktop-style").absolute()
@@ -361,6 +364,43 @@ class Engine:
         if missing:
             raise ThemeError("Font without a licence file in the package: " + ", ".join(missing))
         return manifest, output
+
+    def _module(self, relative):
+        # Read-only operations (check, catalog) must not leave __pycache__ behind.
+        previous, sys.dont_write_bytecode = sys.dont_write_bytecode, True
+        try:
+            return load_module(self.root / relative)
+        finally:
+            sys.dont_write_bytecode = previous
+
+    def settings(self):
+        """Theme settings module shared with the installed shell (payload copy in this checkout)."""
+        if self._settings is None:
+            self._settings = self._module("payload/style/scripts/theme_config.py")
+        return self._settings
+
+    def quotes(self):
+        return self._module("fastfetch_quotes.py").QUOTES
+
+    def resolved(self, name):
+        """The approved package plus the user's theme settings: exactly what apply installs."""
+        manifest, output = self.load(name)
+        settings = self.settings()
+        try:
+            config = settings.read(self.settings_env)
+            output = settings.resolve(name, output, config, self.quotes().get(name), self.settings_env)
+        except (settings.SettingsError, OSError) as exc:
+            raise ThemeError("Theme settings (" + str(settings.config_path(self.settings_env)) + "): " + str(exc)) from exc
+        if not all(allowed(target) for target in output) or sum(map(len, output.values())) > 64 * 1024 * 1024:
+            raise ThemeError("Theme settings produced a forbidden or oversized file set.")
+        return manifest, output
+
+    def record_source(self):
+        # Lets the installed Preferences panel find this checkout to apply settings.
+        wanted = json_bytes({"root": str(self.root)})
+        pointer = safe(self.data, "source.json")
+        if not pointer.is_file() or pointer.read_bytes() != wanted:
+            atomic(pointer, wanted)
 
     def optional(self, name):
         path = safe(self.data, name)
@@ -462,7 +502,7 @@ class Engine:
         if self.optional("pending.json") is not None:
             raise ThemeError("Interrupted theme transaction found. Run theme.sh recover first.")
         self.runtime.preflight()
-        manifest, output = self.load(name)
+        manifest, output = self.resolved(name)
         _, known = self.ownership(output)
         self.stage(output, set(known) - output.keys())
         try:
@@ -586,6 +626,7 @@ class Engine:
     def apply(self, name):
         with self.lock():
             manifest, output, known = self.prepare(name)
+            self.record_source()
             active = {"schema": 1, "installation": self.installation(), "id": name, "version": manifest["version"],
                       "files": {key: digest(data) for key, data in output.items()},
                       "adapters": {key: "separate-installer" for key in manifest["adapters"]}}
