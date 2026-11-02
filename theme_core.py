@@ -37,6 +37,29 @@ class ThemeError(RuntimeError):
     pass
 
 
+# Hyprland releases whose Lua config, hyprctl output and hyprpaper IPC MCT was
+# checked against. A newer series stays refused until it is reviewed.
+HYPRLAND_TESTED = ((0, 56), (0, 57))
+
+
+def hyprland_version(text):
+    """(major, minor, patch) from `hyprctl version`, or None."""
+    match = (re.search(r"(?:Hyprland|Tag:|branch)\s+v?(\d+)\.(\d+)\.(\d+)", text or "")
+             or re.search(r"\bv?(0)\.(\d+)\.(\d+)\b", text or ""))
+    return tuple(map(int, match.groups())) if match else None
+
+
+def hyprland_supported(text):
+    version = hyprland_version(text)
+    return version is not None and version >= (0, 56, 2) and version[:2] in HYPRLAND_TESTED
+
+
+def hyprland_requirement(text):
+    found = hyprland_version(text)
+    return ("Hyprland 0.56.2 or 0.57.x is required; found "
+            + (".".join(map(str, found)) if found else "an unrecognised version") + ".")
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -163,8 +186,8 @@ class Native:
             if not shutil.which(name):
                 raise ThemeError("Missing command: " + name)
         result = self.run(["hyprctl", "version"])
-        if "0.56.2" not in result.stdout:
-            raise ThemeError("Hyprland 0.56.2 is required.")
+        if not hyprland_supported(result.stdout):
+            raise ThemeError(hyprland_requirement(result.stdout))
         result = self.run(["quickshell", "--version"])
         match = re.search(r"(\d+)\.(\d+)\.(\d+)", result.stdout + result.stderr)
         if not match or tuple(map(int, match.groups())) < (0, 3, 1):

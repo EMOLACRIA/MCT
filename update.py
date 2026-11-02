@@ -99,7 +99,7 @@ def check():
     missing=[n for n in m.REQUIRED if shutil.which(n) is None]
     if missing:raise RuntimeError('Missing commands: '+', '.join(missing))
     version=m.run(['hyprctl','version'])
-    if version.returncode or '0.56.2' not in version.stdout:raise RuntimeError('This package targets the supplied Hyprland 0.56.2 Lua configuration.')
+    if version.returncode or not m.hyprland_supported(version.stdout):raise RuntimeError('This package targets the Hyprland Lua configuration: '+m.hyprland_requirement(version.stdout))
     original=Path((m.STATE/'current-backup').read_text().strip())/'manifest.json'
     if not original.is_file():raise RuntimeError('The original restore manifest is missing.')
     # The shared updater and theme engine serialize on the same update.lock.

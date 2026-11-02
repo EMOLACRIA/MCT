@@ -10,6 +10,7 @@ import subprocess
 import sys
 import time
 import importlib.util
+from theme_core import hyprland_requirement, hyprland_supported
 import tempfile
 import re
 from datetime import datetime
@@ -43,8 +44,8 @@ def check():
     if not os.environ.get('HYPRLAND_INSTANCE_SIGNATURE'):
         raise RuntimeError('Run from a terminal inside your active Hyprland session.')
     result = run(['hyprctl', 'version'])
-    if result.returncode or '0.56.2' not in result.stdout:
-        raise RuntimeError('This package targets the supplied Hyprland 0.56.2 Lua configuration.')
+    if result.returncode or not hyprland_supported(result.stdout):
+        raise RuntimeError('This package targets the Hyprland Lua configuration: ' + hyprland_requirement(result.stdout))
     baseline = run(['hyprctl', 'configerrors'])
     if baseline.returncode or baseline.stdout.strip():
         raise RuntimeError('Resolve existing Hyprland config errors first:\n' + baseline.stdout + baseline.stderr)

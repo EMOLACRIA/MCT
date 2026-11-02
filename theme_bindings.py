@@ -69,8 +69,9 @@ class Installer:
         if os.geteuid() == 0 or not os.environ.get('HYPRLAND_INSTANCE_SIGNATURE'):
             raise theme_core.ThemeError('Run as your desktop user inside Hyprland, without sudo.')
         self.engine.verify_installed()
-        if '0.56.2' not in self.run(['hyprctl', 'version']):
-            raise theme_core.ThemeError('This binding adapter targets Hyprland 0.56.2 Lua.')
+        version = self.run(['hyprctl', 'version'])
+        if not theme_core.hyprland_supported(version):
+            raise theme_core.ThemeError('Binding adapter: ' + theme_core.hyprland_requirement(version))
         if self.run(['hyprctl', 'configerrors']).strip():
             raise theme_core.ThemeError('Resolve existing Hyprland configuration errors first.')
         theme_core.safe(self.engine.hypr, 'keybinds.lua')

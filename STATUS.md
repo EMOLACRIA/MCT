@@ -1,3 +1,14 @@
+<!-- hyprland-057 -->
+## 2 Kasım — Hyprland 0.57 uyumu
+
+- Kullanıcı Hyprland'i güncelledi; tema geçişi "Hyprland 0.56.2 is required." ile duruyordu.
+- Tam sürüm kilidi yerine test edilmiş seri kontrolü: 0.56.2+ ve 0.57.x kabul, 0.58 ve
+  sonrası sürümü yazarak reddedilir (theme_core, Super+G bağlayıcısı, install, update).
+  0.57.0 sürüm notu: eski .conf kaldırıldı, Lua yapılandırma sürüyor; MCT zaten Lua.
+- Durum: yazıldı, yerel commit. Kurulmadı, 0.57 üzerinde canlı test edilmedi, pushlanmadı.
+- Doğrulama: sürüm ayrıştırma testi, theme_core (bilinen tek eski hata dışında), bağlayıcı
+  ve dosya yöneticisi testleri geçti.
+
 <!-- theme-config-0.1.0 -->
 ## 29 Ekim — Tema ayarları arayüzü
 
