@@ -3,7 +3,7 @@
 
 - Kullanıcı: Nebula paleti (sarı yok), cümle `CHART YOUR OWN COURSE.`. Ayrıntı:
   docs/TREASURE_PLANET.md.
-- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+- Durum: kullanıcı kurdu ve onayladı ("gayet güzel duruyor", 9 Kasım). Pushlanmadı.
 - Hazırlama doğrulaması: 8 panel ve Super+G render; sandbox apply → başka tema → rollback,
   adaptör fixture'ları, SDDM greeter UI (5) geçti; test dosyaları değişiklik öncesi koda
   karşı da çalıştırıldı, yeni başarısızlık yok.
