@@ -58,7 +58,7 @@ class PickerUiTests(unittest.TestCase):
     def test_hover_expands_photo_without_switch_then_one_click_applies(self):
         self.assertEqual(self.js('model.selectedId'),'deltarune')
         self.assertFalse(self.js('model.canApply'))
-        for theme in ('deltarune','gravity-falls','little-prince','plague-tale','spider-punk'):
+        for theme in ('deltarune','gravity-falls','little-prince','plague-tale','spider-punk','treasure-planet'):
             for _ in range(100):
                 if qt.evaluate(self.item('themeImage-'+theme),'status') != 2:break
                 qt.QTest.qWait(20)
@@ -129,7 +129,7 @@ class PickerUiTests(unittest.TestCase):
         families={t['id']:t['family'] for t in self.catalog['themes']}
         self.assertEqual({k for k,v in families.items() if v=='deltarune'},
                          {'deltarune','deltarune-adventure','deltarune-guardian','deltarune-snowgrave'})
-        self.assertEqual([t['id'] for t in self.js('model.railThemes')],['deltarune','gravity-falls','little-prince','plague-tale','spider-punk'])
+        self.assertEqual([t['id'] for t in self.js('model.railThemes')],['deltarune','gravity-falls','little-prince','plague-tale','spider-punk','treasure-planet'])
         self.assertTrue(self.item('themeMembers-deltarune').isVisible())
         # Up/down walk the family, head first; the ends clamp.
         qt.QTest.keyClick(self.view,qt.Qt.Key_Down);self.assertEqual(self.js('model.selectedId'),'deltarune-adventure')

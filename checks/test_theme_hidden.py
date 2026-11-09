@@ -21,7 +21,7 @@ class HiddenThemes(unittest.TestCase):
 
     def test_rail_shows_only_visible_themes(self):
         self.assertEqual(theme_picker.hidden_ids(ROOT), HIDDEN)
-        self.assertEqual(self.ids(), ['gravity-falls', 'little-prince', 'spider-punk'])
+        self.assertEqual(self.ids(), ['gravity-falls', 'little-prince', 'spider-punk', 'treasure-planet'])
 
     def test_active_hidden_theme_stays_visible_and_loadable(self):
         self.assertIn('plague-tale', self.ids('plague-tale'))

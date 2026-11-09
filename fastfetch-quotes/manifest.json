@@ -137,6 +137,23 @@
         1510,
         835
       ]
+    },
+    "treasure-planet": {
+      "sha256": "6b3c0f01ae563b62f92b52aa5a444f455eafea924a39d84fd4ffd7707eb526da",
+      "text": "CHART YOUR OWN COURSE.",
+      "lines": [
+        "CHART YOUR",
+        "OWN COURSE."
+      ],
+      "font": "Cinzel",
+      "fontSha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34",
+      "fontSize": 190,
+      "inkBounds": [
+        104,
+        470,
+        1437,
+        829
+      ]
     }
   }
 }

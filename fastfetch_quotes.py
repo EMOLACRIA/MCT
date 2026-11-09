@@ -18,6 +18,7 @@ QUOTES={
     'gravity-falls':('WKH ZRRGV UHPHPEHU', 'ZKDW WKH WRZQ', 'IRUJHWV.'),
     'spider-punk':('BREAK THE', 'CANON.'),
     'little-prince':('TEND THE ROSE', 'YOU CHOSE.'),
+    'treasure-planet':('CHART YOUR', 'OWN COURSE.'),
 }
 
 def quote_asset(theme):

@@ -1,3 +1,13 @@
+<!-- treasure-planet-0.1.0 -->
+## 9 Kasım — Treasure Planet 0.1.0 (dokuzuncu tema)
+
+- Kullanıcı: Nebula paleti (sarı yok), cümle `CHART YOUR OWN COURSE.`. Ayrıntı:
+  docs/TREASURE_PLANET.md.
+- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+- Hazırlama doğrulaması: 8 panel ve Super+G render; sandbox apply → başka tema → rollback,
+  adaptör fixture'ları, SDDM greeter UI (5) geçti; test dosyaları değişiklik öncesi koda
+  karşı da çalıştırıldı, yeni başarısızlık yok.
+
 <!-- hidden-themes -->
 ## 9 Kasım — Plague Tale ve Deltarune ailesi Super+G'den gizlendi
 

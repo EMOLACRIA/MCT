@@ -1,3 +1,12 @@
+<!-- treasure-planet-0.1.0 -->
+## Treasure Planet 0.1.0 varlık kökeni — 9 Kasım 2026
+
+- Duvar kâğıdı: kullanıcının 9 Kasım'da verdiği resim (imzalı üçüncü taraf hayran çizimi,
+  lisansı bilinmiyor; renkleri değiştirilmedi). Orijinal `themes/treasure-planet/wallpaper-source.jpeg`.
+- Cinzel: SIL OFL 1.1, The Cinzel Project Authors (google/fonts deposundaki değişken TTF).
+- Navigasyon plakası çerçevesi, terminal gezegeni ve Fastfetch görseli
+  `design/treasure-planet/build.py` ile üretildi; karakter/gemi/logo yok.
+
 <!-- little-prince-0.1.0 -->
 ## Little Prince 0.1.0 varlık kökeni — 28 Ekim 2026
 

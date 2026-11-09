@@ -1,0 +1,67 @@
+/* Midnight navy, frost-white text and icy blue selections; CSS only. */
+:root {
+  --background-base:#0e2230 !important;
+  --background-highlight:#1a3a50 !important;
+  --background-press:#23506a !important;
+  --background-elevated-base:#163246 !important;
+  --background-elevated-highlight:#23506a !important;
+  --background-elevated-press:#23506a !important;
+  --background-tinted-base:#10283a !important;
+  --background-tinted-highlight:#23506a !important;
+  --text-base:#eef8ff !important;
+  --text-subdued:#a3c2cf !important;
+  --text-bright-accent:#c4f6fb !important;
+  --essential-base:#eef8ff !important;
+  --essential-subdued:#a3c2cf !important;
+  --essential-bright-accent:#7fe3ef !important;
+  --decorative-subdued:#34586a !important;
+}
+.encore-dark-theme {
+  --background-base:#0e2230 !important;
+  --background-elevated-base:#163246 !important;
+  --text-base:#eef8ff !important;
+  --text-subdued:#a3c2cf !important;
+  --essential-bright-accent:#7fe3ef !important;
+  --background-highlight:#23506a !important;
+}
+.main-rootlist-rootlist, .main-yourLibraryX-library, .main-view-container,
+.main-nowPlayingView-contextItemInfo, .Root__right-sidebar {
+  background-color:var(--spice-main) !important;
+}
+.Root__nav-bar, .Root__main-view, .Root__right-sidebar {
+  border:1px solid #34586a !important;
+  border-radius:0px !important;
+}
+.main-nowPlayingBar-container {
+  background:linear-gradient(90deg,#08161f,#163246 50%,#08161f) !important;
+  border-top:1px solid #34586a !important;
+  box-shadow:0 -6px 24px #0004 !important;
+  position:relative;
+}
+
+.main-trackList-trackListHeader {border-bottom:1px solid #34586a !important;}
+.main-trackList-trackListRow:hover {background:#23506a !important;}
+.main-trackList-trackListRow[aria-selected="true"] {background:#23506a !important;}
+.main-trackList-trackListRow, .main-card-card {border-radius:0px !important;}
+.main-playButton-PlayButton, [data-testid="control-button-playpause"] {
+  background-color:#7fe3ef !important; color:#0e2230 !important;
+  box-shadow:0 0 0 1px #c4f6fb44;
+}
+.main-playButton-PlayButton:hover, [data-testid="control-button-playpause"]:hover {
+  background-color:#c4f6fb !important;
+}
+.main-playPauseButton-button {background-color:#7fe3ef !important;color:#0e2230 !important;}
+.main-image-image {border-radius:0px;}
+.main-nowPlayingWidget-coverArt {border:1px solid #34586a;box-shadow:none !important;}
+.main-trackInfo-name {font-family:"Noto Sans Mono",monospace !important;font-weight:400 !important;}
+.main-trackInfo-artists {color:#a3c2cf !important;}
+.progress-bar__fg, .progress-bar--is-active .progress-bar__fg {background:#7fe3ef !important;}
+.progress-bar__slider {background:#eef8ff !important;}
+.progress-bar:hover .progress-bar__slider {box-shadow:0 0 12px #7fe3ef80;}
+.main-contextMenu-menu {background:#163246 !important;border:1px solid #34586a;border-radius:0px !important;}
+.main-contextMenu-menuItemButton:hover {background:#23506a !important;}
+*:focus-visible {outline-color:#7fe3ef !important;}
+::-webkit-scrollbar-thumb {background:#34586a !important;border-radius:0px !important;}
+
+body, button, input {font-family:"Noto Sans Mono",monospace !important;}
+.main-nowPlayingBar-container {border-top:2px solid #7fe3ef !important;}
