@@ -31,7 +31,11 @@ class PickerUiTests(unittest.TestCase):
         self.model.requested.connect(lambda action,theme:self.requests.append((action,theme)))
         self.page.closeRequested.connect(lambda:self.closed.append(True))
         engine=theme_picker.theme_core.Engine(style=self.folder/'style',state=self.folder/'state',hypr=self.folder/'hypr')
-        self.catalog=theme_picker.catalog(engine)
+        # Rail behaviour (incl. the Deltarune family) is tested on every package,
+        # independent of which ids theme-picker/hidden.json currently hides.
+        hidden,theme_picker.hidden_ids=theme_picker.hidden_ids,lambda root:set()
+        try:self.catalog=theme_picker.catalog(engine)
+        finally:theme_picker.hidden_ids=hidden
         version=next(entry['version'] for entry in self.catalog['themes'] if entry['id']=='deltarune')
         self.catalog.update(active=dict(id='deltarune',version=version),canRollback=True,reduceMotion=True,fontScale=1)
         self.js('model.run("catalog")'); self.reply('catalog',catalog=self.catalog)

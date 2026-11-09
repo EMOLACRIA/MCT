@@ -13,10 +13,27 @@ import theme_core
 ROOT = Path(__file__).resolve().parent
 
 
+def hidden_ids(root):
+    """Ids left out of the rail (theme-picker/hidden.json). A bad file hides nothing."""
+    path = root / 'theme-picker/hidden.json'
+    try:
+        values = json.loads(path.read_text()).get('hidden', []) if path.is_file() else []
+    except (OSError, ValueError, AttributeError):
+        return set()
+    return {v for v in values if isinstance(v, str) and re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', v)}
+
+
 def catalog(engine):
     rows = []
+    hidden = hidden_ids(engine.root)
+    try:
+        current = (engine.optional('active.json') or {}).get('id')
+    except (theme_core.ThemeError, OSError, ValueError, AttributeError):
+        current = None
     for folder in sorted((engine.root / 'themes').iterdir()):
         if not folder.is_dir():
+            continue
+        if folder.name in hidden and folder.name != current:
             continue
         row = dict(id=folder.name, name=folder.name, version='', preview='', valid=False, error='')
         try:

@@ -1,0 +1,4 @@
+{
+  "note": "Themes kept in the repo but left out of the Super+G rail. They can still be applied with theme.sh; the active theme is always shown.",
+  "hidden": ["deltarune", "deltarune-adventure", "deltarune-guardian", "deltarune-snowgrave", "plague-tale"]
+}

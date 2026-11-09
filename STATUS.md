@@ -1,3 +1,12 @@
+<!-- hidden-themes -->
+## 9 Kasım — Plague Tale ve Deltarune ailesi Super+G'den gizlendi
+
+- Kullanıcı: Plague Tale ile Deltarune, Snowgrave, Adventure, Guardian kalkıyor; seçim
+  "sadece gizle". Liste: theme-picker/hidden.json. Paketler repoda, theme.sh ile
+  uygulanabilir; aktif tema gizli olsa da rayda görünür.
+- Temel temanın Little Prince olması (kullanıcı seçimi) ayrı iş; kapsamı kullanıcıya soruldu.
+- Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
+
 <!-- hyprland-057 -->
 ## 2 Kasım — Hyprland 0.57 uyumu
 
