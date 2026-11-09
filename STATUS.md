@@ -4,7 +4,9 @@
 - Kullanıcı: Plague Tale ile Deltarune, Snowgrave, Adventure, Guardian kalkıyor; seçim
   "sadece gizle". Liste: theme-picker/hidden.json. Paketler repoda, theme.sh ile
   uygulanabilir; aktif tema gizli olsa da rayda görünür.
-- Temel temanın Little Prince olması (kullanıcı seçimi) ayrı iş; kapsamı kullanıcıya soruldu.
+- Temel tema: kullanıcı payload'ı taşımak yerine otomatik update'i seçti. Plague Tale gizli
+  temel kalır; update.sh artık aktif temayı koruyup güncel checkout'tan yeniden uygular
+  (docs/THEME_PACKAGES.md "Kaynak güncellemesi"). Gerçek oturumda update denenmedi.
 - Durum: yazıldı, yerel commit. Kurulmadı, canlı test edilmedi, pushlanmadı.
 
 <!-- hyprland-057 -->

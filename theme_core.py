@@ -628,23 +628,36 @@ class Engine:
         return ident
 
     def guard_update(self):
-        """Stop a source update from silently resetting a managed skin.
+        """What a source update must keep so the active theme survives it.
 
-        A byte-identical update is safe; a changed presentation needs an explicit
-        rollback/apply, keeping the original installer restore point untouched.
+        Returns (active id or None, {style-relative path: installed bytes}). The
+        updater rewrites style/scripts, shell and hyprlock wholesale; the active
+        theme's own files there are put back afterwards and the theme is then
+        re-applied from the updated checkout, so no switch to a base theme is needed.
         """
         if self.optional("pending.json") is not None:
             raise ThemeError("Recover the interrupted theme transaction before updating.")
-        active = self.optional("active.json")
+        active, known = self.ownership(())  # refuses manually changed theme files
         if active is None:
-            return
-        _, known = self.ownership(())
-        for name in known:
+            return None, {}
+        keep = {}
+        for name in sorted(known):
+            parts = name.split("/")
+            if parts[0] != "style" or len(parts) < 3 or parts[1] not in ("scripts", "shell", "hyprlock"):
+                continue  # the updater does not touch these
+            data = self.path(name).read_bytes()
             source = safe(self.root / "payload", name)
-            data = source.read_bytes().replace(b"@STYLE@", str(self.style).encode()) if source.is_file() else None
-            if data is None or digest(data) != known[name]:
-                raise ThemeError("Update would replace the active theme. Run 'bash theme.sh rollback' "
-                                 "until no active theme remains, update, then apply the theme again.")
+            if source.is_file() and data == source.read_bytes().replace(b"@STYLE@", str(self.style).encode()):
+                continue  # the update writes the same bytes
+            keep["/".join(parts[1:])] = data
+        if keep:
+            try:
+                self.load(active["id"])
+            except ThemeError as exc:
+                raise ThemeError("The active theme '" + active["id"] + "' does not load in this update (" + str(exc)
+                                 + "). Run 'bash theme.sh rollback' until no active theme remains, update, "
+                                 "then apply a theme again.") from exc
+        return active["id"], keep
 
     def apply(self, name):
         with self.lock():

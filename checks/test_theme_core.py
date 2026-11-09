@@ -394,20 +394,49 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(before, self.state())
         self.assertNotIn("stop", self.runtime.events)
 
-    def test_update_allows_identical_payload_and_blocks_theme_loss(self):
-        self.engine.apply("plague-tale"); self.engine.guard_update()
+    def test_update_keeps_the_active_theme_files_it_would_replace(self):
+        self.assertEqual(self.engine.guard_update(), (None, {}))
+        self.engine.apply("plague-tale")
+        self.assertEqual(self.engine.guard_update(), ("plague-tale", {}))
         source = self.package / "payload/style/shell/ui/Theme.qml"
+        installed = (self.engine.style / "shell/ui/Theme.qml").read_bytes()
         source.write_bytes(source.read_bytes() + b"\n// source update")
         before = self.state()
-        with self.assertRaisesRegex(theme.ThemeError, "would replace"): self.engine.guard_update()
+        self.assertEqual(self.engine.guard_update(), ("plague-tale", {"shell/ui/Theme.qml": installed}))
         self.assertEqual(before, self.state())
 
-    def test_update_guard_blocks_variant_and_interrupted_transaction(self):
-        self.variant(); self.engine.apply("fixture-variant")
-        with self.assertRaisesRegex(theme.ThemeError, "would replace"): self.engine.guard_update()
+    def test_update_guard_keeps_variant_refuses_drift_unloadable_and_interrupted(self):
+        folder, _ = self.variant(); self.engine.apply("fixture-variant")
+        active, keep = self.engine.guard_update()
+        self.assertEqual(active, "fixture-variant")
+        self.assertEqual(keep["shell/ui/Theme.qml"], (self.engine.style / "shell/ui/Theme.qml").read_bytes())
+        self.assertNotIn("wallpaper.png", keep)  # outside the folders the updater rewrites
+        manifest = folder / "manifest.json"; saved = manifest.read_bytes(); manifest.write_text("{}")
+        with self.assertRaisesRegex(theme.ThemeError, "does not load"): self.engine.guard_update()
+        manifest.write_bytes(saved)
+        theme_file = self.engine.style / "shell/ui/Theme.qml"; original = theme_file.read_bytes()
+        theme_file.write_bytes(original + b"\n// hand edit")
+        with self.assertRaisesRegex(theme.ThemeError, "changed manually"): self.engine.guard_update()
+        theme_file.write_bytes(original)
         self.engine.rollback()
         self.interrupt()
         with self.assertRaisesRegex(theme.ThemeError, "interrupted"): self.engine.guard_update()
+
+    def test_updater_copy_then_restore_leaves_theme_owned_and_reapplicable(self):
+        sys.path.insert(0, str(ROOT))
+        import update as updater
+        self.variant(); self.engine.apply("fixture-variant")
+        shared = self.package / "payload/style/shell/LiveContext.qml"
+        shared.write_bytes(shared.read_bytes() + b"\n// new shared code")
+        active, keep = self.engine.guard_update()
+        # What update.py does to the three folders, then the restore step.
+        target = self.engine.style / "shell"
+        shutil.rmtree(target); shutil.copytree(self.package / "payload/style/shell", target)
+        updater.restore_theme_files(self.engine.style, keep)
+        self.engine.ownership(())        # theme files match the inventory again
+        self.engine.verify_installed()   # shared shell matches the updated checkout
+        self.engine.apply(active)        # re-apply from the new checkout is accepted
+        self.assertIn(b"#aa9966", (self.engine.style / "shell/ui/Theme.qml").read_bytes())
 
     def test_old_installation_snapshot_is_never_restored_into_a_fresh_install(self):
         self.engine.apply("plague-tale")
@@ -423,14 +452,15 @@ class CoreTests(unittest.TestCase):
     def test_real_updater_rechecks_theme_guard_inside_its_lock(self):
         sys.path.insert(0, str(ROOT))
         import update as updater
-        self.variant(); self.engine.apply("fixture-variant")
+        folder, _ = self.variant(); self.engine.apply("fixture-variant")
+        (folder / "manifest.json").write_text("{}")  # the update no longer carries this theme
         before = self.state()
         with patch.object(updater, "check", return_value="fixture binds"), \
              patch.object(updater.m, "STATE", self.engine.state), \
              patch.object(updater.m, "STYLE", self.engine.style), \
              patch.object(updater.m, "HYPR", self.engine.hypr), \
              patch.object(updater.m, "PACKAGE", self.package):
-            with self.assertRaisesRegex(RuntimeError, "would replace"):
+            with self.assertRaisesRegex(RuntimeError, "does not load"):
                 updater.update()
         self.assertEqual(before, self.state())
 

@@ -116,12 +116,19 @@ ayrıca arşivlenip uyarlanmalıdır. Bütün restore yedeklerini silmek çözü
 
 ## Kaynak güncellemesi
 
-Byte-identical aktif görsel dosyalarla update yapılabilir. Yeni kaynak aktif
-temayı değiştirecekse updater ön kontrolde ve kilit içinde tekrar durur.
-`bash theme.sh rollback` ile status'ta active null olana kadar önceki apply'lar
-geri alınır; sonra update ve istenen tema için check/apply yapılır. Böylece eski
-bir güncelleme aktif görünümü sessizce varsayılana sıfırlamaz.
-Aktif skin'i otomatik yeni sürüme taşıma bu ilk çekirdeğin kapsamı değildir.
+Update hangi tema aktifken çalıştırılırsa çalıştırılsın aktif tema korunur (9 Kasım).
+Updater `style/scripts`, `shell` ve `hyprlock` klasörlerini yeniden yazar; aktif temanın
+bu klasörlerdeki kendi dosyaları ön kontrolde okunur, kopyadan sonra geri konur, shell
+hazır olunca tema güncel checkout'tan normal bir tema işlemiyle yeniden uygulanır
+(tema ayarları dahil). Paket değişmediyse yeniden uygulama hiçbir şey yapmaz.
+
+Updater yine durur: yarım kalmış tema işlemi varsa (`theme.sh recover`), aktif temanın
+dosyası elle değiştirilmişse ya da aktif tema yeni checkout'ta yüklenmiyorsa. Son
+durumda `bash theme.sh rollback` ile active null olana kadar geri alınır, update yapılır,
+sonra tema uygulanır. Yeniden uygulama hata verirse update geçerli kalır ve shell temanın
+önceki dosyalarıyla çalışır; mesajdaki `theme.sh apply` komutu tekrar denenir.
+Update'i geri almak için önce `theme.sh rollback` (yeniden uygulamayı geri alır), sonra
+`rollback-update.sh`.
 
 Theme rollback yalnız theme apply işlemini geri alır. `rollback-update.sh`
 masaüstü kaynak revizyonunu, `restore.sh` ilk masaüstü kurulumunu geri alır;

@@ -110,6 +110,22 @@ def check():
     ensure_clean_config();m.check_quickshell()
     return patch_bindings((m.HYPR/'keybinds.lua').read_text())
 
+def restore_theme_files(style,keep):
+    """Put the active theme's own shell/hyprlock files back after the payload copy."""
+    for relative,data in sorted(keep.items()):
+        m.replace_bytes(style/relative,data,0o644)
+
+def reapply(theme_id):
+    """Install the active theme from the updated checkout (a normal, reversible theme transaction)."""
+    import theme_core
+    try:
+        changed=theme_core.Engine(m.PACKAGE,m.STYLE,m.STATE,m.HYPR).apply(theme_id)
+        print('Theme '+theme_id+(' re-applied from the updated checkout.' if changed else ' is already current.'))
+    except theme_core.ThemeError as exc:
+        print('Updated, but re-applying '+theme_id+' stopped: '+str(exc)+'\nThe shell keeps that theme\'s previous files. Try: bash '+str(m.PACKAGE/'theme.sh')+' apply '+theme_id,file=sys.stderr)
+        return False
+    return True
+
 def original_manifest():return Path((m.STATE/'current-backup').read_text().strip())/'manifest.json'
 
 def legacy_history(session):
@@ -165,7 +181,7 @@ def update(check_only=False):
     with (m.STATE/'update.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         import theme_core
-        theme_core.Engine(m.PACKAGE, m.STYLE, m.STATE, m.HYPR).guard_update()
+        active_id,keep=theme_core.Engine(m.PACKAGE, m.STYLE, m.STATE, m.HYPR).guard_update()
         dest=m.STATE/'revisions'/datetime.now().strftime('%Y%m%d-%H%M%S-%f');dest.mkdir(parents=True,mode=0o700)
         shutil.copytree(m.STYLE,dest/'style',symlinks=True)
         keybinds=m.HYPR/'keybinds.lua';shutil.copy2(keybinds,dest/'keybinds.lua')
@@ -190,6 +206,7 @@ def update(check_only=False):
             for script in (m.STYLE/'scripts').glob('*.sh'):script.chmod(0o755)
             for fragment in (m.STYLE/'hyprlock').glob('*.conf'):
                 m.replace_text(fragment,fragment.read_text().replace('@STYLE@',str(m.STYLE)))
+            restore_theme_files(m.STYLE,keep)
             m.replace_text(keybinds,text)
             m.replace_text(lockfile,lock_config(lockfile.read_text() if lockfile.exists() else ''))
             original=json.loads(original_manifest().read_text())
@@ -215,7 +232,8 @@ def update(check_only=False):
         m.replace_text(m.STATE/'last-update',str(dest),0o600)
         print('Updated. QuickShell owns the bar, application/session menus, controls, notifications, media and feedback.')
         print('Original restore point retained. Revision snapshot: '+str(dest))
-        print('Undo this update: bash '+str(m.PACKAGE/'rollback-update.sh'))
+        print('Undo this update: bash '+str(m.PACKAGE/'rollback-update.sh')+(' (first undo the theme re-apply: bash '+str(m.PACKAGE/'theme.sh')+' rollback)' if active_id else ''))
+    if active_id:reapply(active_id)
 
 def rollback(check_only=False):
     if os.geteuid()==0:raise RuntimeError('Run without sudo.')
